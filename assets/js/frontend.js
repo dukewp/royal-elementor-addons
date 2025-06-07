@@ -159,7 +159,7 @@
 				    stickySectionExists = $scope.hasClass('wpr-sticky-section-yes') || $scope.find('.wpr-sticky-section-yes-editor') ? true : false,
 				    positionStyle,
                     adminBarHeight,
-					stickyEffectsOffset = 0,
+					stickyEffectsOffset = $(window).scrollTop(),
 					stickyHideDistance = 0,
 					$window = $(window),
 					prevScrollPos = $window.scrollTop(),
@@ -238,24 +238,28 @@
 						clearTimeout(timeout);
 						timeout = setTimeout(() => func.apply(context, args), wait);
 					};
-				}
-
-				// Function to be called when mutations are observed
-				const handleMutations = debounce(function(mutationsList) {
-					for (let mutation of mutationsList) {
-						if (mutation.type === 'childList') {
-							// Recalculate variables when new content is added
-							$(window).trigger('scroll');
-							recalculateVariables();
-						}
-					}
-				}, 100); // Adjust the debounce delay as needed
+				}// Adjust the debounce delay as needed
 
 				// Create a MutationObserver instance
-				const observer = new MutationObserver(handleMutations);
-
-				// Start observing the target node for configured mutations
-				observer.observe(document.body, { childList: true, subtree: true });
+				if ( !WprElements.editorCheck() ) {
+					if ( 'yes' !== $scope.data('wpr-replace-header') ) {
+						// Function to be called when mutations are observed
+						const handleMutations = debounce(function(mutationsList) {
+							for (let mutation of mutationsList) {
+								if (mutation.type === 'childList') {
+									// Recalculate variables when new content is added
+									$(window).trigger('scroll');
+									recalculateVariables();
+								}
+							}
+						}, 100); 
+	
+						const observer = new MutationObserver(handleMutations);
+	
+						// Start observing the target node for configured mutations
+						observer.observe(document.body, { childList: true, subtree: true });
+					}
+				}
 
 				$(window).scroll(function() {
 					if ($scope && $scope.css('position') === 'relative') {
@@ -275,9 +279,7 @@
 					
 			        viewportWidth = $('body').prop('clientWidth') + 17;
 					
-					if ( $(window).scrollTop() <= stickyEffectsOffset ) {
-						changePositionType();
-					}
+					changePositionType();
 				}
 
 			    function changePositionType() {
@@ -10137,24 +10139,31 @@
 			}
 		
 			// plus
-			qtyInput.on('click', 'i:'+plusIconChild, function() {
+			// Ensure event handlers are not attached multiple times
+			qtyInput.off('click', 'i:' + plusIconChild).on('click', 'i:' + plusIconChild, function() {
+				var $qtyInput = jQuery(this).prev('.quantity').find('input.qty');
+				var currentVal = parseInt($qtyInput.val(), 10);
 
-				if ( parseInt(jQuery(this).prev('.quantity').find('input.qty').val(), 10) < qtyInputInStock && qtyLayout == 'both' ) {
-					jQuery(this).prev('.quantity').find('input.qty').val( parseInt(jQuery(this).prev('.quantity').find('input.qty').val(), 10) + 1);
+				if (currentVal < qtyInputInStock && qtyLayout == 'both') {
+					$qtyInput.val(currentVal + 1);
 					jQuery('input[name="update_cart"]').removeAttr('disabled');
-				} else if ( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) < qtyInputInStock && qtyLayout !== 'both' && qtyLayout !== 'default' ) {
-					jQuery(this).parent().siblings('.quantity').find('input.qty').val( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) + 1);
+				} else if (currentVal < qtyInputInStock && qtyLayout !== 'both' && qtyLayout !== 'default') {
+					$qtyInput = jQuery(this).parent().siblings('.quantity').find('input.qty');
+					$qtyInput.val(currentVal + 1);
 					jQuery('input[name="update_cart"]').removeAttr('disabled');
 				}
 			});
 			
-			// minus
-			qtyInput.on('click', 'i:'+minusIconChild, function() {
-				if ( parseInt(jQuery(this).next('.quantity').find('input.qty').val(), 10) > 0 && qtyLayout == 'both' ) {
-					jQuery(this).next('.quantity').find('input.qty').val( parseInt(jQuery(this).next('.quantity').find('input.qty').val(), 10) - 1);
+			qtyInput.off('click', 'i:' + minusIconChild).on('click', 'i:' + minusIconChild, function() {
+				var $qtyInput = jQuery(this).next('.quantity').find('input.qty');
+				var currentVal = parseInt($qtyInput.val(), 10);
+
+				if (currentVal > 0 && qtyLayout == 'both') {
+					$qtyInput.val(currentVal - 1);
 					jQuery('input[name="update_cart"]').removeAttr('disabled');
-				} else if ( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) > 0 && qtyLayout !== 'both' && qtyLayout !== 'default' ) {
-					jQuery(this).parent().siblings('.quantity').find('input.qty').val( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) - 1);
+				} else if (currentVal > 0 && qtyLayout !== 'both' && qtyLayout !== 'default') {
+					$qtyInput = jQuery(this).parent().siblings('.quantity').find('input.qty');
+					$qtyInput.val(currentVal - 1);
 					jQuery('input[name="update_cart"]').removeAttr('disabled');
 				}
 			});
