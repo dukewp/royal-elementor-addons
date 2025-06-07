@@ -15090,13 +15090,12 @@ flex-grow: 0; */
     background-color: transparent !important;
 }
 
-.wpr-wishlist-sidebar .wpr-wishlist,
-.wpr-wishlist-sidebar .wpr-wishlist-goga-wrap {
+.wpr-wishlist-sidebar .wpr-wishlist {
     position: fixed;
     top: 0;
     left: 0;
     width: 100% !important;
-    height: 100%;
+    height: 100vh;
     z-index: 999;
     margin: 0 !important;
 }
