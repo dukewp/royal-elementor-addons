@@ -1996,7 +1996,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$duration = round(($end - $start) * 1000, 2); // in ms
 		wp_send_json_success([
 			'output' => $output,
-			'duration' => $duration
+			'duration' => $duration,
+			'found_posts' => $posts->found_posts
 		]);
 
 		wp_die();
