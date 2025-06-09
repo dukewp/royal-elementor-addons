@@ -14263,6 +14263,10 @@ flex-grow: 0; */
     transition: visibility 0s linear !important;
 }
 
+.wpr-sticky-active {
+    position: fixed !important;
+}
+
 .wpr-sticky-replace-header-yes + div,
 .wpr-sticky-replace-header-yes + section,
 .wpr-sticky-replace-header-yes + header {

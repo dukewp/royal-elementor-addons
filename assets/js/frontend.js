@@ -183,12 +183,6 @@
 
 					var stickyAnimDuration = $scope.attr('data-wpr-animation-duration') ? $scope.attr('data-wpr-animation-duration') + 's' : 500 + 's';
 
-					// if ( WprElements.editorCheck() ) { // needs different approach
-					// 	if ( $scope.next('section').length > 0 && ($scope.next('section').offset().top < ($scope.offset().top + $scope.height())) ) {
-					// 		$scope.next('section').css('margin-top', $scope.offset().top + $scope.height() + 'px');
-					// 	}
-					// }
-
 				if ( $scope.closest('div[data-elementor-type="wp-post"]').length > 0 ) {
 					stickyHeaderFooter = $scope.closest('div[data-elementor-type="wp-post"]');
 				} else if ( $scope.closest('div[data-elementor-type="header"]').length > 0 ) {
@@ -421,13 +415,6 @@
                             $scope.next().get(0).style.setProperty('--wpr-animation-duration', stickyAnimDuration);
                         }
 					}
-					
-					function debounceScroll(method, delay) {
-						clearTimeout(method._tId);
-						method._tId= setTimeout(function(){
-							method();
-						}, delay);
-					}
 
 					let scrollEndTimeout;
 			    }
@@ -446,7 +433,9 @@
 					
 					$scope.css({'position': stickType });
 
-					$('.wpr-close-cart span').trigger('click');
+                    if ( $('.wpr-close-cart span').length && !WprElements.editorCheck() ) {
+                        $('.wpr-close-cart span').trigger('click');
+                    }
 			    }
 
 			    function changeAdminBarOffset() {	
@@ -10102,6 +10091,11 @@
 				plusIconChild = !$scope.find('.wpr-add-to-cart-icons-wrap').length ? 'last-child' : 'first-child',
 				minusIconChild = !$scope.find('.wpr-add-to-cart-icons-wrap').length ? 'first-child' : 'last-child';
 
+                if ( qtyWrapper.length === 0 ) {
+                    plusIconChild = 'last-child';
+                    minusIconChild = 'first-child';
+                }
+
 			if ( WprElements.editorCheck() && $scope.find('select').length > 0 ) {
 				$scope.find('select').on('change', function() {
 					$scope.find('.reset_variations').css('visibility', 'visible');
@@ -10140,31 +10134,37 @@
 		
 			// plus
 			// Ensure event handlers are not attached multiple times
-			qtyInput.off('click', 'i:' + plusIconChild).on('click', 'i:' + plusIconChild, function() {
+			$scope.off('click', 'i:' + plusIconChild).on('click', 'i:' + plusIconChild, function() {
 				var $qtyInput = jQuery(this).prev('.quantity').find('input.qty');
+                if ($qtyInput.length === 0) {
+                    $qtyInput = jQuery(this).closest('.wpr-product-add-to-cart').find('.quantity').find('input.qty');
+                }
+                
 				var currentVal = parseInt($qtyInput.val(), 10);
 
 				if (currentVal < qtyInputInStock && qtyLayout == 'both') {
 					$qtyInput.val(currentVal + 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
 				} else if (currentVal < qtyInputInStock && qtyLayout !== 'both' && qtyLayout !== 'default') {
-					$qtyInput = jQuery(this).parent().siblings('.quantity').find('input.qty');
 					$qtyInput.val(currentVal + 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
 				}
 			});
 			
-			qtyInput.off('click', 'i:' + minusIconChild).on('click', 'i:' + minusIconChild, function() {
+			$scope.off('click', 'i:' + minusIconChild).on('click', 'i:' + minusIconChild, function() {
 				var $qtyInput = jQuery(this).next('.quantity').find('input.qty');
+                if ($qtyInput.length === 0) {
+                    $qtyInput = jQuery(this).closest('.wpr-product-add-to-cart').find('.quantity').find('input.qty');
+                }
+                
 				var currentVal = parseInt($qtyInput.val(), 10);
 
 				if (currentVal > 0 && qtyLayout == 'both') {
 					$qtyInput.val(currentVal - 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
 				} else if (currentVal > 0 && qtyLayout !== 'both' && qtyLayout !== 'default') {
-					$qtyInput = jQuery(this).parent().siblings('.quantity').find('input.qty');
 					$qtyInput.val(currentVal - 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
 				}
 			});
 		
