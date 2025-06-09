@@ -753,7 +753,7 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <select name="wpr_google_map_language" id="wpr_google_map_language">
-                    <option value=""><?php esc_html_e('None', 'wpr-addons'); ?></option>
+                    <option value=""><?php esc_html_e('Default', 'wpr-addons'); ?></option>
                     <option value="en" <?php selected(get_option('wpr_google_map_language'), 'en'); ?>><?php esc_html_e('English', 'wpr-addons'); ?></option>
                     <option value="es" <?php selected(get_option('wpr_google_map_language'), 'es'); ?>><?php esc_html_e('Spanish', 'wpr-addons'); ?></option>
                     <option value="fr" <?php selected(get_option('wpr_google_map_language'), 'fr'); ?>><?php esc_html_e('French', 'wpr-addons'); ?></option>
