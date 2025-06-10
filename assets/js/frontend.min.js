@@ -10137,7 +10137,7 @@
 			$scope.off('click', 'i:' + plusIconChild).on('click', 'i:' + plusIconChild, function() {
 				var $qtyInput = jQuery(this).prev('.quantity').find('input.qty');
                 if ($qtyInput.length === 0) {
-                    $qtyInput = jQuery(this).closest('.wpr-product-add-to-cart').find('.quantity').find('input.qty');
+                    $qtyInput = jQuery(this).closest('.wpr-quantity-wrapper').find('.quantity').find('input.qty');
                 }
                 
 				var currentVal = parseInt($qtyInput.val(), 10);
@@ -10154,7 +10154,7 @@
 			$scope.off('click', 'i:' + minusIconChild).on('click', 'i:' + minusIconChild, function() {
 				var $qtyInput = jQuery(this).next('.quantity').find('input.qty');
                 if ($qtyInput.length === 0) {
-                    $qtyInput = jQuery(this).closest('.wpr-product-add-to-cart').find('.quantity').find('input.qty');
+                    $qtyInput = jQuery(this).closest('.wpr-quantity-wrapper').find('.quantity').find('input.qty');
                 }
                 
 				var currentVal = parseInt($qtyInput.val(), 10);
