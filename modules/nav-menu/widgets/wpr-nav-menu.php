@@ -751,7 +751,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 				],
 				'range' => [
 					'px' => [
-						'min' => 1,
+						'min' => 0,
 						'max' => 10,
 					],
 				],
@@ -761,18 +761,40 @@ class Wpr_Nav_Menu extends Widget_Base {
 					 {{WRAPPER}}.wpr-pointer-double-line .wpr-menu-item:before,
 					 {{WRAPPER}}.wpr-pointer-double-line .wpr-menu-item:after' => 'height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.wpr-pointer-border-fx .wpr-menu-item:before' => 'border-width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-underline>nav .wpr-menu-item:after,
-					 {{WRAPPER}}.wpr-pointer-overline>nav .wpr-menu-item:before,
-					 {{WRAPPER}}.wpr-pointer-double-line>nav .wpr-menu-item:before,
-					 {{WRAPPER}}.wpr-pointer-double-line>nav .wpr-menu-item:after' => 'height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-border-fx>nav .wpr-menu-item:before' => 'border-width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-underline.elementor-widget-container>nav .wpr-menu-item:after,
-					 {{WRAPPER}}.wpr-pointer-overline.elementor-widget-container>nav .wpr-menu-item:before,
-					 {{WRAPPER}}.wpr-pointer-double-line.elementor-widget-container>nav .wpr-menu-item:before,
-					 {{WRAPPER}}.wpr-pointer-double-line.elementor-widget-container>nav .wpr-menu-item:after' => 'height: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-pointer-border-fx.elementor-widget-container>nav .wpr-menu-item:before' => 'border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-pointer-underline>nav>ul>li>.wpr-menu-item:after,
+					 {{WRAPPER}}.wpr-pointer-overline>nav>ul>li>.wpr-menu-item:before,
+					 {{WRAPPER}}.wpr-pointer-double-line>nav>ul>li>.wpr-menu-item:before,
+					 {{WRAPPER}}.wpr-pointer-double-line>nav>ul>li>.wpr-menu-item:after' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-pointer-border-fx>nav>ul>li>.wpr-menu-item:before' => 'border-width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-pointer-underline>.elementor-widget-container>nav>ul>li>.wpr-menu-item:after,
+					 {{WRAPPER}}.wpr-pointer-overline>.elementor-widget-container>nav>ul>li>.wpr-menu-item:before,
+					 {{WRAPPER}}.wpr-pointer-double-line>.elementor-widget-container>nav>ul>li>.wpr-menu-item:before,
+					 {{WRAPPER}}.wpr-pointer-double-line>.elementor-widget-container>nav>ul>li>.wpr-menu-item:after' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-pointer-border-fx>.elementor-widget-container>nav>ul>li>.wpr-menu-item:before' => 'border-width: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'pointer_distance',
+			[
+				'label' => esc_html__( 'Pointer Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'devices' => [ self::RESPONSIVE_DESKTOP, self::RESPONSIVE_TABLET ],
+				'default' => [
+					'size' => 13,
+				],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-menu-item.wpr-pointer-item:before' => 'transform: translateY(-{{SIZE}}{{UNIT}});',
+					'{{WRAPPER}}:not(.wpr-pointer-border-fx) .wpr-menu-item.wpr-pointer-item:after' => 'transform: translateY({{SIZE}}{{UNIT}});',
+				]
 			]
 		);
 
