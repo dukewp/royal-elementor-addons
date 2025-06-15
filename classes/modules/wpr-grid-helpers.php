@@ -24,7 +24,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 		add_action('wp_ajax_nopriv_wpr_grid_filters_ajax', [$this, 'wpr_grid_filters_ajax']);
 		add_action('wp_ajax_wpr_get_filtered_count_posts', [$this, 'wpr_get_filtered_count_posts']);
 		add_action('wp_ajax_nopriv_wpr_get_filtered_count_posts', [$this, 'wpr_get_filtered_count_posts']);
+		add_action('wp_ajax_wpr_get_dependent_terms', [$this, 'get_dependent_terms']);
+		add_action('wp_ajax_nopriv_wpr_get_dependent_terms', [$this, 'get_dependent_terms']);
     }
+
+	public function get_dependent_terms() {
+		// check_ajax_referer('wpr_addons_elementor', 'nonce');
+
+		$taxonomy = sanitize_text_field($_POST['taxonomy']);
+		$parent_term = sanitize_text_field($_POST['parent_term']);
+
+		$terms = get_terms([
+			'taxonomy' => $taxonomy,
+			'hide_empty' => true,
+			'parent' => $parent_term ? get_term_by('slug', $parent_term, $taxonomy)->term_id : 0
+		]);
+
+		$options = [];
+		foreach ($terms as $term) {
+			$options[] = [
+				'slug' => $term->slug,
+				'name' => $term->name
+			];
+		}
+
+		wp_send_json_success($options);
+	}
     
 	// Get Taxonomies Related to Post Type
 	public static function get_related_taxonomies() {
