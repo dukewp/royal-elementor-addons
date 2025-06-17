@@ -540,12 +540,21 @@ class Plugin {
 
 	public function enqueue_scripts() {
 
+		// Register DOMPurify
+		wp_enqueue_script(
+			'dompurify',
+			'https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js',
+			['jquery', 'elementor-frontend'],
+			'3.0.6',
+		);
+
 		wp_enqueue_script(
 			'wpr-addons-js',
 			WPR_ADDONS_URL . 'assets/js/frontend'. $this->script_suffix() .'.js',
 			[
 				'jquery',
-				'elementor-frontend'
+				'elementor-frontend',
+				'dompurify'
 			],
 			Plugin::instance()->get_version(),
 			true
