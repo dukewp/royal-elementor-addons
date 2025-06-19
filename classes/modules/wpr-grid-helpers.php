@@ -82,7 +82,7 @@ public function get_dependent_terms() {
 	$options = [];
 	foreach ( $terms as $term ) {
 		$options[] = [
-			'slug' => $term->slug,
+			'id' => $term->term_id,
 			'name' => $term->name,
 		];
 	}
