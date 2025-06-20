@@ -3,6 +3,9 @@
 	"use strict";
 
 	var actionTargetProductId;
+	var finalURL = window.location.href;
+	var gridLoadMoreItems;
+	var paramsObj = {};
 
 	var WprElements = {
 
@@ -48,6 +51,7 @@
 				'wpr-product-add-to-cart.default' : WprElements.widgetProductAddToCart,
 				'wpr-product-mini-cart.default' : WprElements.widgetProductMiniCart,
 				'wpr-product-filters.default' : WprElements.widgetProductFilters,
+				'wpr-advanced-filters-pro.default' : WprElements.widgetGridFilters,
 				'wpr-page-cart.default' : WprElements.widgetPageCart,
 				'wpr-my-account-pro.default' : WprElements.widgetPageMyAccount,
 				'wpr-reading-progress-bar.default' : WprElements.widgetReadingProgressBar,
@@ -63,6 +67,7 @@
 				'wpr-compare-pro.default' : WprElements.widgetCompare,
 				'wpr-form-builder.default': WprElements.widgetFormBuilder,
 				'wpr-image-scroll.default': WprElements.widgetImageScroll,
+				'wpr-video-playlist.default': WprElements.widgetVideoPlaylist,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -1224,6 +1229,9 @@
 				});
 			}
 
+			// Settings
+			var settings = iGrid.attr( 'data-settings' );
+
 			// Grid
 			if ( typeof settings !== typeof undefined && settings !== false ) {
 				settings = JSON.parse( iGrid.attr( 'data-settings' ) );
@@ -1283,41 +1291,41 @@
 				}
 
 				// Init Functions
-				isotopeLayout( settings );
+				WprElements.isotopeLayout( settings, '', '', $scope );
 				setTimeout(function() {
-					isotopeLayout( settings );
+					WprElements.isotopeLayout( settings, '', '', $scope );
 				}, 100 );
 
 				if ( WprElements.editorCheck() ) {
 					setTimeout(function() {
-						isotopeLayout( settings );
+						WprElements.isotopeLayout( settings, '', '', $scope );
 					}, 500 );
 					setTimeout(function() {
-						isotopeLayout( settings );
+						WprElements.isotopeLayout( settings, '', '', $scope );
 					}, 1000 );
 				}
 
 				$( window ).on( 'load', function() {
 					setTimeout(function() {
-						isotopeLayout( settings );
+						WprElements.isotopeLayout( settings, '', '', $scope );
 					}, 100 );
 				});
 
 				$(document).ready(function() {
 					setTimeout(function() {
-						isotopeLayout( settings );
+						WprElements.isotopeLayout( settings, '', '', $scope );
 					}, 100 );
 				});
 
 				$(window).smartresize(function(){
 					setTimeout(function() {
-						isotopeLayout( settings );
+						WprElements.isotopeLayout( settings, '', '', $scope );
 					}, 200 );
 				});
 				
 				if ( settings.grid_settings ) {
 					var pagesLoadedExperiment = 0;
-					loadMoreExperiment();
+					// loadMoreExperiment();
 					filtersExperiment();
 				}
 
@@ -1452,11 +1460,11 @@
 							iGrid.isotopewpr( 'appended', items );
 
 							items.imagesLoaded().progress( function( instance, image ) {
-								isotopeLayout( settings );
+								WprElements.isotopeLayout( settings, '', '', $scope );
 
 								// Fix Layout
 								setTimeout(function() {
-									isotopeLayout( settings );
+									WprElements.isotopeLayout( settings, '', '', $scope );
 									isotopeFilters( settings );
 								}, 10 );
 					
@@ -1506,14 +1514,14 @@
 							// }, 300 );
 
 							// Init Lightbox
-							lightboxPopup( settings );
+							WprElements.lightboxPopup( settings, $scope, iGrid );
 
 							// Fix Lightbox
 							iGrid.data( 'lightGallery' ).destroy( true );
 							iGrid.lightGallery( settings.lightbox );
 
 							// Init Media Hover Link
-							mediaHoverLink();
+							WprElements.mediaHoverLink($scope, iGrid);
 
 							// Init Post Sharing
 							postSharing();
@@ -1893,7 +1901,7 @@
 			}
 
 			// Init Media Hover Link
-			mediaHoverLink();
+			WprElements.mediaHoverLink($scope, iGrid);
 				
 			function isValidHttpUrl(string) {
 				let url;
@@ -1905,198 +1913,9 @@
 				return url.protocol === "http:" || url.protocol === "https:";
 			}
 
-			// Media Hover Link
-			function mediaHoverLink() {
-				// console.log(iGrid.find('.wpr-grid-media-wrap').find('img').length);
-				if ( 'yes' === $scope.find('.wpr-grid-image-wrap').data('img-on-hover') ) {
-					var img;
-					var thisImgSrc;
-					let secondaryImg;
-					iGrid.find('.wpr-grid-media-wrap').on('mouseover', function() {
-							// img = $(this).find( 'img' );
-							// thisImgSrc = img.attr('src');
-							
-							// secondaryImg = $(this).find('.wpr-grid-image-wrap').data('src-secondary');
-							
-							// if ( isValidHttpUrl(secondaryImg) ) {
-							// 	img.attr( 'src', secondaryImg );
-							// }
-							
-							if ( $(this).find('img:nth-of-type(2)').attr('src') !== undefined && $(this).find('img:nth-of-type(2)').attr('src') !== '' ) {
-								// $(this).find('img:first-of-type').fadeOut(0).addClass('wpr-hidden-img');
-								// $(this).find('img:nth-of-type(2)').fadeIn(500).removeClass('wpr-hidden-img');
-								$(this).find('img:first-of-type').addClass('wpr-hidden-img');
-								$(this).find('img:nth-of-type(2)').removeClass('wpr-hidden-img');
-							}
-						});
-		
-						iGrid.find('.wpr-grid-media-wrap').on('mouseleave', function() {
-							// if ( secondaryImg == img.attr('src') ) {
-							// 	img.attr('src', thisImgSrc);
-							// }
-		
-							if ( $(this).find('img:nth-of-type(2)').attr('src') !== undefined && $(this).find('img:nth-of-type(2)').attr('src') !== '' ) {
-								// $(this).find('img:nth-of-type(2)').fadeOut(0).addClass('wpr-hidden-img');
-								// $(this).find('img:first-of-type').fadeIn(500).removeClass('wpr-hidden-img');
-								$(this).find('img:nth-of-type(2)').addClass('wpr-hidden-img');
-								$(this).find('img:first-of-type').removeClass('wpr-hidden-img');
-							}
-						});
-				}
-
-				if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
-					iGrid.find( '.wpr-grid-media-wrap' ).css('cursor', 'pointer');
-
-					iGrid.find( '.wpr-grid-media-wrap' ).on( 'click', function( event ) {
-
-						var targetClass = event.target.className;
-
-						if ( -1 !== targetClass.indexOf( 'inner-block' ) || -1 !== targetClass.indexOf( 'wpr-cv-inner' ) || 
-							 -1 !== targetClass.indexOf( 'wpr-grid-media-hover' ) ) {
-								event.preventDefault();
-								event.stopPropagation();
-
-							var itemUrl = $(this).find( '.wpr-grid-media-hover-bg' ).attr( 'data-url' ),
-								itemUrl = itemUrl.replace('#new_tab', '');
-
-                            if (itemUrl) {
-                                try {
-                                    // Create a URL object to validate the URL
-                                    var url = new URL(itemUrl);
-
-                                    // Define a list of allowed protocols
-                                    var allowedProtocols = ['http:', 'https:'];
-
-                                    // Check if the URL's protocol is allowed
-                                    if (allowedProtocols.includes(url.protocol)) {
-                                        // Safe to use the URL
-                                        var safeUrl = url.href;
-
-                                        if ('_blank' === iGrid.find('.wpr-grid-item-title a').attr('target')) {
-                                            window.open(safeUrl, '_blank').focus();
-                                        } else {
-                                            window.location.href = safeUrl;
-                                        }
-                                    } else {
-                                        console.error('Invalid URL scheme:', url.protocol);
-                                    }
-                                } catch (e) {
-                                    console.error('Invalid URL:', itemUrl);
-                                }
-                            }
-						}
-					});
-				}				
-			}
-
 			// Init Lightbox
 			if ( !$scope.hasClass('elementor-widget-wpr-woo-category-grid-pro') && !$scope.hasClass('elementor-widget-wpr-category-grid-pro') ) {
-				lightboxPopup( settings );
-			}
-
-			// Lightbox Popup
-			function lightboxPopup( settings ) {
-				if ( -1 === $scope.find( '.wpr-grid-item-lightbox' ).length ) {
-					return;
-				}
-
-				var lightbox = $scope.find( '.wpr-grid-item-lightbox' ),
-					lightboxOverlay = lightbox.find( '.wpr-grid-lightbox-overlay' ).first();
-
-				// Set Src Attributes
-				lightbox.each(function() {
-					var source = $(this).find('.inner-block > span').attr( 'data-src' ),
-						gridItem = $(this).closest( 'article' ).not('.slick-cloned');
-
-					if ( ! iGrid.hasClass( 'wpr-media-grid' ) ) {
-						gridItem.find( '.wpr-grid-image-wrap' ).attr( 'data-src', source );
-					}
-
-					var dataSource = gridItem.find( '.wpr-grid-image-wrap' ).attr( 'data-src' );
-
-					if ( typeof dataSource !== typeof undefined && dataSource !== false ) {
-						if ( -1 === dataSource.indexOf( 'wp-content' ) ) {
-							gridItem.find( '.wpr-grid-image-wrap' ).attr( 'data-iframe', 'true' );
-						}
-					}
-				});
-
-				// Init Lightbox
-				iGrid.lightGallery( settings.lightbox );
-
-				// Fix LightGallery Thumbnails
-				iGrid.on('onAfterOpen.lg',function() {
-					if ( $('.lg-outer').find('.lg-thumb-item').length ) {
-					    $('.lg-outer').find('.lg-thumb-item').each(function() {
-					    	var imgSrc = $(this).find('img').attr('src'),
-					    		newImgSrc = imgSrc,
-					    		extIndex = imgSrc.lastIndexOf('.'),
-					    		imgExt = imgSrc.slice(extIndex),
-					    		cropIndex = imgSrc.lastIndexOf('-'),
-					    		cropSize = /\d{3,}x\d{3,}/.test(imgSrc.substring(extIndex,cropIndex)) ? imgSrc.substring(extIndex,cropIndex) : false;
-					    	
-					    	if ( 42 <= imgSrc.substring(extIndex,cropIndex).length ) {
-					    		cropSize = '';
-					    	}
-
-					    	if ( cropSize !== '' ) {
-					    		if ( false !== cropSize ) {
-					    			newImgSrc = imgSrc.replace(cropSize, '-150x150');
-					    		} else {
-					    			newImgSrc = [imgSrc.slice(0, extIndex), '-150x150', imgSrc.slice(extIndex)].join('');
-					    		}
-					    	}
-
-					    	// Change SRC
-					    	$(this).find('img').attr('src', newImgSrc);
-					    });
-				    }
-				});
-
-				// Show/Hide Controls
-				$scope.find( '.wpr-grid' ).on( 'onAferAppendSlide.lg, onAfterSlide.lg', function( event, prevIndex, index ) {
-					var lightboxControls = $( '#lg-actual-size, #lg-zoom-in, #lg-zoom-out, #lg-download' ),
-						lightboxDownload = $( '#lg-download' ).attr( 'href' );
-
-					if ( $( '#lg-download' ).length ) {
-						if ( -1 === lightboxDownload.indexOf( 'wp-content' ) ) {
-							lightboxControls.addClass( 'wpr-hidden-element' );
-						} else {
-							lightboxControls.removeClass( 'wpr-hidden-element' );
-						}
-					}
-
-					// Autoplay Button
-					if ( '' === settings.lightbox.autoplay ) {
-						$( '.lg-autoplay-button' ).css({
-							 'width' : '0',
-							 'height' : '0',
-							 'overflow' : 'hidden'
-						});
-					}
-				});
-
-				// Overlay
-				if ( lightboxOverlay.length ) {
-					$scope.find( '.wpr-grid-media-hover-bg' ).after( lightboxOverlay.remove() );
-
-					$scope.find( '.wpr-grid-lightbox-overlay' ).on( 'click', function() {
-						if ( ! WprElements.editorCheck() ) {
-							$(this).closest( 'article' ).find( '.wpr-grid-image-wrap' ).trigger( 'click' );
-						} else {
-							alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
-						}
-					});
-				} else {
-					lightbox.find( '.inner-block > span' ).on( 'click', function() {
-						if ( ! WprElements.editorCheck() ) {
-							var imageWrap = $(this).closest( 'article' ).find( '.wpr-grid-image-wrap' );
-								imageWrap.trigger( 'click' );
-						} else {
-							alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
-						}
-					});
-				}
+				WprElements.lightboxPopup( settings, $scope, iGrid );
 			}
 
 			// Init Likes
@@ -2161,324 +1980,6 @@
 					}
 
 					return false;
-				});
-			}
-
-			// Isotope Layout
-			function isotopeLayout( settings, $response = '' ) {
-				var grid = $scope.find( '.wpr-grid' ),
-					item = grid.find( '.wpr-grid-item' ),
-					itemVisible = item.filter( ':visible' ),
-					layout = settings.layout,
-					defaultLayout = settings.layout,
-					mediaAlign = settings.media_align,
-					mediaWidth = settings.media_width,
-					mediaDistance = settings.media_distance,
-					columns = 3,
-					columnsMobile = 1,
-					columnsMobileExtra,
-					columnsTablet = 2,
-					columnsTabletExtra,
-					columnsDesktop = parseInt(settings.columns_desktop, 10),
-					columnsLaptop,
-					columnsWideScreen,
-					gutterHr = settings.gutter_hr,
-					gutterVr = settings.gutter_vr,
-					gutterHrMobile = settings.gutter_hr_mobile,
-					gutterVrMobile = settings.gutter_vr_mobile,
-					gutterHrMobileExtra = settings.gutter_hr_mobile_extra,
-					gutterVrMobileExtra = settings.gutter_vr_mobile_extra,
-					gutterHrTablet = settings.gutter_hr_tablet,
-					gutterVrTablet = settings.gutter_vr_tablet,
-					gutterHrTabletExtra = settings.gutter_hr_tablet_extra,
-					gutterVrTabletExtra = settings.gutter_vr_tablet_extra,
-					gutterHrWideScreen = settings.gutter_hr_widescreen,
-					gutterVrWideScreen = settings.gutter_vr_widescreen,
-					gutterHrLaptop = settings.gutter_hr_laptop,
-					gutterVrLaptop = settings.gutter_vr_laptop,
-					contWidth = grid.width() + gutterHr - 0.3,
-					// viewportWidth = $( 'body' ).prop( 'clientWidth' ),
-					viewportWidth = $(window).outerWidth(),
-					defaultLayout,
-					transDuration = 400;
-
-					if ( $response != '' ) {
-						item = $response
-					}
-
-				// Get Responsive Columns
-				var prefixClass = $scope.attr('class'),
-					prefixClass = prefixClass.split(' ');
-
-				for ( var i=0; i < prefixClass.length - 1; i++ ) {
-
-					if ( -1 !== prefixClass[i].search(/mobile\d/) ) {
-						columnsMobile = prefixClass[i].slice(-1);
-					}
-
-					if ( -1 !== prefixClass[i].search(/mobile_extra\d/) ) {
-						columnsMobileExtra = prefixClass[i].slice(-1);
-					}
-
-					if ( -1 !== prefixClass[i].search(/tablet\d/) ) {
-						columnsTablet = prefixClass[i].slice(-1);
-					}
-
-					if ( -1 !== prefixClass[i].search(/tablet_extra\d/) ) {
-						columnsTabletExtra = prefixClass[i].slice(-1);
-					}
-
-					if ( -1 !== prefixClass[i].search(/widescreen\d/) ) {
-						columnsWideScreen = prefixClass[i].slice(-1);
-					}
-
-					if ( -1 !== prefixClass[i].search(/laptop\d/) ) {
-						columnsLaptop = prefixClass[i].slice(-1);
-					}
-				}
-
-				var MobileResp = +elementorFrontend.config.responsive.breakpoints.mobile.value;
-				var MobileExtraResp = +elementorFrontend.config.responsive.breakpoints.mobile_extra.value;
-				var TabletResp = +elementorFrontend.config.responsive.breakpoints.tablet.value;
-				var TabletExtraResp = +elementorFrontend.config.responsive.breakpoints.tablet_extra.value;
-				var LaptopResp = +elementorFrontend.config.responsive.breakpoints.laptop.value;
-				var wideScreenResp = +elementorFrontend.config.responsive.breakpoints.widescreen.value;
-
-				var activeBreakpoints = elementorFrontend.config.responsive.activeBreakpoints;
-
-				// Mobile
-				if ( MobileResp >= viewportWidth && activeBreakpoints.mobile != null ) {
-					columns = columnsMobile;
-					gutterHr = gutterHrMobile;
-					gutterVr = gutterVrMobile;
-
-				// Mobile Extra
-				} else if ( MobileExtraResp >= viewportWidth && activeBreakpoints.mobile_extra != null ) {
-					columns = (columnsMobileExtra) ? columnsMobileExtra : columnsTablet;
-					gutterHr = gutterHrMobileExtra;
-					gutterVr = gutterVrMobileExtra;
-
-				// Tablet
-				} else if ( TabletResp >= viewportWidth && activeBreakpoints.tablet != null ) {
-					columns = columnsTablet;
-					gutterHr = gutterHrTablet;
-					gutterVr = gutterVrTablet;
-
-				// Tablet Extra
-				} else if ( TabletExtraResp >= viewportWidth && activeBreakpoints.tablet_extra != null ) {
-					columns = (columnsTabletExtra) ? columnsTabletExtra : columnsTablet;
-					gutterHr = gutterHrTabletExtra;
-					gutterVr = gutterVrTabletExtra;
-
-				// Laptop
-				} else if ( LaptopResp >= viewportWidth && activeBreakpoints.laptop != null ) {
-					columns = (columnsLaptop) ? columnsLaptop : columnsDesktop;
-					gutterHr = gutterHrLaptop;
-					gutterVr = gutterVrLaptop;
-
-				// Desktop
-				} else if ( wideScreenResp > viewportWidth ) {
-					columns = columnsDesktop;
-					gutterHr = settings.gutter_hr;
-					gutterVr = settings.gutter_vr;
-				}  else {
-					columns = (columnsWideScreen) ? columnsWideScreen : columnsDesktop;
-					gutterHr = gutterHrWideScreen;
-					gutterVr = gutterVrWideScreen;
-				}
-
-				// Limit Columns for Higher Screens
-				if ( columns > 8 ) {
-					columns = 8;
-				}
-
-				if ( 'string' == typeof(columns) && -1 !== columns.indexOf('pro') ) {
-					columns = 3;
-				}
-
-				contWidth = grid.width() + gutterHr - 0.3;
-
-				// Calculate Item Width
-				item.outerWidth( Math.floor( contWidth / columns - gutterHr ) );
-
-				// Set Vertical Gutter
-				item.css( 'margin-bottom', gutterVr +'px' );
-
-				// Reset Vertical Gutter for 1 Column Layout
-				if ( 1 === columns ) {
-					item.last().css( 'margin-bottom', '0' );
-				}
-
-				// add last row & make all post equal height
-				var maxTop = -1;
-				itemVisible.each(function ( index ) {
-
-					// define
-					var thisHieght = $(this).outerHeight(),
-						thisTop = parseInt( $(this).css( 'top' ) , 10 );
-
-					// determine last row
-					if ( thisTop > maxTop ) {
-						maxTop = thisTop;
-					}
-					
-				});
-
-				if ( 'fitRows' === layout ) {
-					itemVisible.each(function() {
-						if ( parseInt( $(this).css( 'top' ) ) === maxTop  ) {
-							$(this).addClass( 'rf-last-row' );
-						}
-					});
-				}
-
-				// List Layout
-				if ( 'list' === layout ) {
-					var imageHeight = item.find( '.wpr-grid-image-wrap' ).outerHeight();
-						item.find( '.wpr-grid-item-below-content' ).css( 'min-height', imageHeight +'px' );
-
-					if ( $( 'body' ).prop( 'clientWidth' ) < 480 ) {
-
-						item.find( '.wpr-grid-media-wrap' ).css({
-							'float' : 'none',
-							'width' : '100%'
-						});
-
-						item.find( '.wpr-grid-item-below-content' ).css({
-							'float' : 'none',
-							'width' : '100%',
-						});
-
-						item.find( '.wpr-grid-image-wrap' ).css( 'padding', '0' );
-
-						item.find( '.wpr-grid-item-below-content' ).css( 'min-height', '0' );
-
-						if ( 'zigzag' === mediaAlign ) {
-							item.find( '[class*="elementor-repeater-item"]' ).css( 'text-align', 'center' );
-						}
-
-					} else {
-
-						if ( 'zigzag' !== mediaAlign ) {
-
-							item.find( '.wpr-grid-media-wrap' ).css({
-								'float' : mediaAlign,
-								'width' : mediaWidth +'%'
-							});
-
-							var listGutter = 'left' === mediaAlign ? 'margin-right' : 'margin-left';
-								item.find( '.wpr-grid-media-wrap' ).css( listGutter, mediaDistance +'px' );
-
-							item.find( '.wpr-grid-item-below-content' ).css({
-								'float' : mediaAlign,
-								'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
-							});
-
-						// Zig-zag
-						} else {
-							// Even
-							item.filter(':even').find( '.wpr-grid-media-wrap' ).css({
-								'float' : 'left',
-								'width' : mediaWidth +'%'
-							});
-							item.filter(':even').find( '.wpr-grid-item-below-content' ).css({
-								'float' : 'left',
-								'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
-							});
-							item.filter(':even').find( '.wpr-grid-media-wrap' ).css( 'margin-right', mediaDistance +'px' );
-
-							// Odd
-							item.filter(':odd').find( '.wpr-grid-media-wrap' ).css({
-								'float' : 'right',
-								'width' : mediaWidth +'%'
-							});
-							item.filter(':odd').find( '.wpr-grid-item-below-content' ).css({
-								'float' : 'right',
-								'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
-							});
-							item.filter(':odd').find( '.wpr-grid-media-wrap' ).css( 'margin-left', mediaDistance +'px' );
-
-							// Fix Elements Align
-							if ( ! grid.hasClass( 'wpr-grid-list-ready' ) ) {
-								item.each( function( index ) {
-									var element = $(this).find( '[class*="elementor-repeater-item"]' );
-
-									if ( index % 2 === 0 ) {
-										element.each(function() {
-											if ( ! $(this).hasClass( 'wpr-grid-item-align-center' ) ) {
-												if ( 'none' === $(this).css( 'float' ) ) {
-													$(this).css( 'text-align', 'left' );
-												} else {
-													$(this).css( 'float', 'left' );
-												}
-
-												var inner = $(this).find( '.inner-block' );
-											}
-										});
-									} else {
-										element.each(function( index ) {
-											if ( ! $(this).hasClass( 'wpr-grid-item-align-center' ) ) {
-												if ( 'none' === $(this).css( 'float' ) ) {
-													$(this).css( 'text-align', 'right' );
-												} else {
-													$(this).css( 'float', 'right' );
-												}
-
-												var inner = $(this).find( '.inner-block' );
-
-												if ( '0px' !== inner.css( 'margin-left' ) ) {
-													inner.css( 'margin-right', inner.css( 'margin-left' ) );
-													inner.css( 'margin-left', '0' );
-												}
-
-												// First Item
-												if ( 0 === index ) {
-													if ( '0px' !== inner.css( 'margin-right' ) ) {
-														inner.css( 'margin-left', inner.css( 'margin-right' ) );
-														inner.css( 'margin-right', '0' );
-													}
-												}
-											}
-										});
-									}
-								});
-
-							}
-
-							setTimeout(function() {
-								if ( ! grid.hasClass( 'wpr-grid-list-ready' ) ) {
-									grid.addClass( 'wpr-grid-list-ready' );
-								}
-							}, 500 );
-						}
-
-					}
-				}
-
-				// Set Layout
-				defaultLayout = layout;
-				if ( 'list' === layout ) {
-					layout = 'fitRows';
-				}
-
-				// No Transition
-				if ( 'default' !== settings.filters_animation ) {
-					transDuration = 0;
-				}
-
-				// Run Isotope
-				var iGrid = grid.isotopewpr({
-					layoutMode: layout,
-					masonry: {
-						// columnWidth: contWidth / columns,
-						gutter: gutterHr
-					},
-					fitRows: {
-						// columnWidth: contWidth / columns,
-						gutter: gutterHr
-					},
-					transitionDuration: transDuration,
-  					percentPosition: true
 				});
 			}
 
@@ -2610,7 +2111,7 @@
 						settings.lightbox.selector = ' .wpr-grid-image-wrap';
 					}
 
-					lightboxPopup( settings );
+					WprElements.lightboxPopup( settings, $scope, iGrid );
 				}
 
 				// Hide Empty Filters
@@ -2653,7 +2154,7 @@
 	
 						// Sub Filters
 						if ( 'parent' === filterRole ) {
-							if ( filterWrap.parent( 'ul' ).find( 'ul[data-parent="'+ filterClass +'"]').length ) {
+							if ( filterWrap.parent( 'ul' ).find( 'ul[data-parent="'+ filterClass +'"]' ).length ) {
 								filterWrap.parent( 'ul' ).children( 'li' ).css( 'display', 'none' );
 								filterWrap.siblings( 'ul[data-parent="'+ filterClass +'"]' ).css( 'display', 'block' );
 							}
@@ -2722,7 +2223,6 @@
 						iGrid.lightGallery( settings.lightbox );
 					});
 				}
-
 			}
 
 			function checkWishlistAndCompare() {
@@ -3087,7 +2587,7 @@
 					if ( iGrid.find('.wpr-grid-loader-wrap').length < 1 ) {
 						iGrid.append(loader);
 					}
-
+					const start = performance.now();
 					$.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
@@ -3104,7 +2604,10 @@
                             console.log(response);
 							var pageCount = response.data.page_count;
 							var foundPosts = response.data.query_found;
+							const end = performance.now();
+							console.log(`AJAX call took ${end - start} ms`);
 
+							const start2 = performance.now();
 							currentRequest = $.ajax({
 								type: 'POST',
 								url: WprConfig.ajaxurl,
@@ -3120,8 +2623,9 @@
 									setTimeout(function() {
 										// iGrid.addClass('wpr-zero-opacity');
 										// $scope.find('.wpr-grid').html($(response));
-										// isotopeLayout( settings, $(response), true);
-
+										// WprElements.isotopeLayout( settings, '', '', $scope );
+										const end2 = performance.now();
+										console.log(`AJAX call took ${end2 - start2} ms`);
 										var newItems = $(response);
 										iGrid.find('.wpr-grid-loader-wrap').remove();
 										iGrid.addClass('wpr-fix-grid-height');
@@ -3149,21 +2653,21 @@
 											}
 										}
 
-										isotopeLayout( settings );
-										lightboxPopup( settings );
+										WprElements.isotopeLayout( settings, '', '', $scope );
+										WprElements.lightboxPopup( settings, $scope, iGrid );
 			
 										// Fix Lightbox
 										iGrid.data( 'lightGallery' ).destroy( true );
 										iGrid.lightGallery( settings.lightbox );
 
                                         setTimeout(function() {
-                                            isotopeLayout( settings );
+                                            WprElements.isotopeLayout( settings, '', '', $scope );
 
 											window.dispatchEvent(new Event('resize'));
 											window.dispatchEvent(new Event('scroll'));
                                         }, 500);
 										
-										mediaHoverLink();
+										WprElements.mediaHoverLink($scope, iGrid);
 										// iGrid.removeClass('wpr-zero-opacity');
 										initialItems = 0;
 									}, 800);
@@ -3245,11 +2749,11 @@
 									// isotopeFilters( settings ); // GOGA - if not images loaded
 		
 									items.imagesLoaded().progress( function( instance, image ) {
-										isotopeLayout( settings );
+										WprElements.isotopeLayout( settings, '', '', $scope );
 			
 										// Fix Layout
 										setTimeout(function() {
-											isotopeLayout( settings );
+											WprElements.isotopeLayout( settings, '', '', $scope );
 											// isotopeFilters( settings );
 										}, 100 );
 							
@@ -3280,14 +2784,14 @@
 									// }, 300 );
 			
 									// Init Lightbox
-									lightboxPopup( settings );
+									WprElements.lightboxPopup( settings, $scope, iGrid );
 			
 									// Fix Lightbox
 									iGrid.data( 'lightGallery' ).destroy( true );
 									iGrid.lightGallery( settings.lightbox );
 			
 									// Init Media Hover Link
-									mediaHoverLink();
+									WprElements.mediaHoverLink($scope, iGrid);
 			
 									// Init Post Sharing
 									postSharing();
@@ -4461,7 +3965,6 @@
 				// });
 				// $scope.find('.slick-slide').each(function() {
 				// if ($(this).height() < maxHeight) {
-				// 	console.log(Math.ceil((maxHeight-$(this).height())/2) + 'px 0');
 				// 	$(this).css('margin', Math.ceil((maxHeight-$(this).height())/2) + 'px 0');
 				// 	// $(this).css('transform', 'translateY(-50%)');
 				// }
@@ -6719,7 +6222,6 @@
 					// 		return newSwiperInstance;
 					// 	});
 					//  } else {
-					// 	console.log(Swiper);
 					// 	return swiperPromise(swiperElement, swiperConfig);  
 					// }
 
@@ -7188,13 +6690,7 @@
             }
             
             var widgetID = $scope.attr('data-id');
-            
-            // if ( loadMoreSettings.is_mobile === 'mobile') {
-            // 	var nextPostsIndex = loadMoreSettings.limit_mobile;
-            // 	console.log(nextPostsIndex);
-            // } else {
-            // 	var nextPostsIndex = loadMoreSettings.limit;
-            // }
+			
             var nextPostsIndex = loadMoreSettings.limit;
             var pagination = $scope.find( '.wpr-grid-pagination' ); // Isotope Layout
 
@@ -8798,7 +8294,6 @@
 			// 		// 	wpr_compare_page_id: WprConfig.comparePageID // Replace with the ID of the page you want to retrieve
 			// 		// },
 			// 		// success: function(response) {
-			// 		// 	console.log(response);
 			// 		// 	// $scope.find('.wpr-compare-popup').append(response.data.content);
 			// 		// 	$scope.find('.wpr-compare-popup').append(response);
 			// 		// },
@@ -8808,7 +8303,6 @@
 			// 				elementorFrontend.init();
 			// 		},
 			// 		error: function(xhr, status, error) {
-			// 			console.log(xhr.responseText);
 			// 		}
 			// 	});
 			// });
@@ -9094,7 +8588,7 @@
 				// Create an array to store the promises of the file uploads
 				let fileUploadPromises = [];
 
-				if ( 0 < $scope.find('input[type="file"').length ) {
+				if ( 0 < $scope.find('input[type="file"]').length ) {
 					$scope.find('input[type="file"]').each(function() {
 						var files = this.files;
 						var thisInput = $(this);
@@ -9900,6 +9394,174 @@
 			}
 		}, // end widgetImageScroll
 
+		widgetVideoPlaylist: function($scope) {
+			const wprVideoPlaylist = {
+				players: {},
+				isAPIReady: false,
+				pendingPlayers: [],
+				apiLoaded: false,
+		
+				init: function($widget) {
+					console.log('Works', $widget);
+					if (!$widget || !$widget.length) return;
+					// Load YouTube IFrame API only once
+					if (!this.apiLoaded && typeof YT === 'undefined') {
+						const tag = document.createElement('script');
+						tag.src = "//www.youtube.com/iframe_api";
+						const firstScriptTag = document.getElementsByTagName('script')[0];
+						firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+						this.apiLoaded = true;
+		
+						window.onYouTubeIframeAPIReady = () => {
+							wprVideoPlaylist.isAPIReady = true;
+							wprVideoPlaylist.pendingPlayers.forEach(playerData => {
+								wprVideoPlaylist.createPlayer(playerData.$container, playerData.videoId, playerData.$widget);
+							});
+						};
+					}
+		
+					const urls = $widget.find('.wpr-vplaylist-thumbs').data('urls');
+					if (urls && Array.isArray(urls)) {
+						this.processVideos($widget, urls);
+					}
+				},
+		
+				processVideos: function($widget, urls) {
+					const $playlistUl = $widget.find('.wpr-vplaylist-thumbs ul');
+					const title_tag = $widget.find('.wpr-vplaylist-current-title').prop('tagName').toLowerCase();
+		
+					const videoPromises = urls.map((url, index) => {
+						return new Promise(resolve => {
+							const videoId = wprVideoPlaylist.extractVideoId(url);
+							if (!videoId) {
+								resolve(null);
+								return;
+							}
+		
+							$.get('https://www.youtube.com/oembed', {
+								url: url,
+								format: 'json'
+							})
+							.done(response => {
+								resolve({
+									videoId: videoId,
+									title: response.title,
+									index: index
+								});
+							})
+							.fail(() => {
+								resolve(null);
+							});
+						});
+					});
+		
+					Promise.all(videoPromises).then(results => {
+						const validResults = results.filter(r => r !== null).sort((a, b) => a.index - b.index);
+		
+						validResults.forEach((video, index) => {
+							const $li = $('<li>').attr('data-video', video.videoId);
+							const thumbnailUrl = 'https://i.ytimg.com/vi/' + video.videoId + '/maxresdefault.jpg';
+		
+							$li.append($('<img>').attr({
+								'src': thumbnailUrl,
+								'alt': video.title
+							}));
+		
+							const $info = $('<div>').addClass('wpr-vplaylist-info');
+							$info.append($('<' + title_tag + '>').addClass('wpr-vplaylist-info-title').text(video.title));
+							$li.append($info);
+							$playlistUl.append($li);
+		
+							if (index === 0) {
+								$widget.find('.wpr-vplaylist-current-title').text(video.title);
+								$widget.find('.wpr-vplaylist-highlight').attr('data-video', video.videoId);
+		
+								const $player = $widget.find('.wpr-vplaylist-main');
+								if (wprVideoPlaylist.isAPIReady) {
+									wprVideoPlaylist.createPlayer($player, video.videoId, $widget);
+								} else {
+									wprVideoPlaylist.pendingPlayers.push({
+										$container: $player,
+										videoId: video.videoId,
+										$widget: $widget
+									});
+								}
+							}
+						});
+		
+						$widget.find('.wpr-vplaylist-thumbs li').on('click', function() {
+							const videoId = $(this).data('video');
+							const playerId = $widget.find('.wpr-vplaylist-main').attr('id');
+							const videoTitle = $(this).find('.wpr-vplaylist-info-title').text();
+		
+							if (wprVideoPlaylist.players[playerId]) {
+								wprVideoPlaylist.players[playerId].loadVideoById(videoId);
+								$widget.find('.wpr-vplaylist-highlight').attr('data-video', videoId);
+								$widget.find('.wpr-vplaylist-current-title').text(videoTitle);
+								$widget.find('.wpr-play').hide();
+								$widget.find('.wpr-pause').show();
+							}
+						});
+					});
+				},
+		
+				createPlayer: function($container, videoId, $widget) {
+					const playerId = 'wpr-player-' + Math.random().toString(36).substr(2, 9);
+					$container.attr('id', playerId);
+		
+					this.players[playerId] = new YT.Player(playerId, {
+						height: '360',
+						width: '640',
+						videoId: videoId,
+						playerVars: {
+							'autoplay': 0,
+							'controls': 1,
+							'rel': 0,
+							'showinfo': 0
+						},
+						events: {
+							'onReady': function() {
+								$widget.find('.wpr-vplaylist-controller').on('click', function() {
+									const player = wprVideoPlaylist.players[playerId];
+		
+									if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+										player.pauseVideo();
+										$(this).find('.wpr-play').show();
+										$(this).find('.wpr-pause').hide();
+									} else {
+										player.playVideo();
+										$(this).find('.wpr-play').hide();
+										$(this).find('.wpr-pause').show();
+									}
+								});
+							},
+							'onStateChange': function(event) {
+								const $controller = $widget.find('.wpr-vplaylist-controller');
+		
+								if (event.data === YT.PlayerState.PLAYING) {
+									$controller.find('.wpr-play').hide();
+									$controller.find('.wpr-pause').show();
+								} else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+									$controller.find('.wpr-play').show();
+									$controller.find('.wpr-pause').hide();
+								}
+							}
+						}
+					});
+		
+					return playerId;
+				},
+		
+				extractVideoId: function(url) {
+					const pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+					const match = url.match(pattern);
+					return match ? match[1] : null;
+				}
+			};
+		
+			wprVideoPlaylist.init($scope);		
+		}, // end widgetVideoPlaylist
+
 		widgetProductAddToCart: function($scope) {
 			var qtyInput = jQuery('.woocommerce .wpr-quantity-wrapper'),
 				qtyInputInStock = qtyInput.find('input.qty').attr('max') ? qtyInput.find('input.qty').attr('max') : 99999999,
@@ -9946,7 +9608,6 @@
 		
 			// plus
 			qtyInput.on('click', 'i:'+plusIconChild, function() {
-
 				if ( parseInt(jQuery(this).prev('.quantity').find('input.qty').val(), 10) < qtyInputInStock && qtyLayout == 'both' ) {
 					jQuery(this).prev('.quantity').find('input.qty').val( parseInt(jQuery(this).prev('.quantity').find('input.qty').val(), 10) + 1);
 					jQuery('input[name="update_cart"]').removeAttr('disabled');
@@ -9973,16 +9634,28 @@
 					jQuery(this).val( qtyInputInStock );
 				}
 			});
-
-			if ( 'yes' === $scope.find('.wpr-product-add-to-cart').data('ajax-add-to-cart') ) {
-				if ( !$('div[data-elementor-type="wpr-theme-builder"]').hasClass('product-type-external') ) {
-					$scope.find('.single_add_to_cart_button').on('click', ajaxAddToCart);
+			
+			var addToCartTimeout; 
+			// var isAddingToCart = false;
+			$(document).ready(function () {
+				if ( 'yes' === $scope.find('.wpr-product-add-to-cart').data('ajax-add-to-cart') ) {
+					if ( !$('div[data-elementor-type="wpr-theme-builder"]').hasClass('product-type-external') ) {
+						$scope.find('.single_add_to_cart_button').on('click', ajaxAddToCart);
+					}
 				}
-			}
+			});
 
 			function ajaxAddToCart(e) {
-				e.preventDefault();
-			
+				e.preventDefault();  
+				
+				// If an AJAX request is already in progress, prevent another one
+				// if (isAddingToCart) {
+				// 	return;
+				// }
+
+				// Set the flag to indicate that an AJAX request is in progress
+				// isAddingToCart = true;
+
 				let $form = $( this ).closest('form');
 
 				var $variationForm = $form.closest('.variations_form');
@@ -10001,7 +9674,6 @@
 					
 					// // Get the ID of the selected variation
 					// let variation_id = $scope.find('input[name="variation_id"]').val();
-					// console.log(window['wc_variation_form']);
 					// // Get the data of the selected variation
 					// let variation_data = window['wc_variation_form'].variation_data[variation_id];
 					
@@ -10010,9 +9682,7 @@
 					
 					// // Check if the variation is in stock
 					// if (availability_html.indexOf('In stock') !== -1) {
-					//   console.log('Selected variation is in stock');
 					// } else {
-					//   console.log('Selected variation is out of stock');
 					// }
 				
 				if (isGrouped) {
@@ -10529,6 +10199,1432 @@
 			}
 		}, // End of widgetProductFilters
 
+		widgetGridFilters: function($scope) {
+			var visualFilters = $scope.find('.wpr-gf-visual'),
+				rangeFilter = $scope.find('.wpr-range-container'),
+				viewMoreLess = $scope.find('.wpr-view-more-less'),
+				datePickers = [],
+                actionSelector = '#' + $scope.find('.wpr-grid-filters-wrap').data('widget-selector'),
+				experimentActionCount = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ? 'wpr_get_filtered_count_products' : 'wpr_get_filtered_count_posts',
+				experimentActionContent = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ?  'wpr_woo_grid_filters_ajax' : 'wpr_grid_filters_ajax',
+				settings,
+				isDebounceAjaxCallRunning = false,
+				pagesLoadedExperiment = 0,
+				pageCount = 0;
+
+			if ( $scope.find('.wpr-from-slider').length > 0 ) {
+				// Range filter slider
+				const fromSlider = $scope.find('#wpr-from-slider-' + $scope.data('id'));
+				const toSlider = $scope.find('#wpr-to-slider-' + $scope.data('id'));
+				const fromInput = $scope.find('#wpr-from-input-' + $scope.data('id'));
+				const toInput = $scope.find('#wpr-to-input-' + $scope.data('id'));
+	
+				// Controls slider bg color change
+				fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+	
+				// Controls slider handlers z-index
+				setToggleAccessible(toSlider, 'to');
+				
+				fromSlider.on('input', () => controlFromSlider(fromSlider, toSlider, fromInput));
+				toSlider.on('input', () => controlToSlider(fromSlider, toSlider, toInput));
+				fromInput.on('input', () => controlFromInput(fromSlider, fromInput, toInput, toSlider));
+				toInput.on('input', () => controlToInput(toSlider, fromInput, toInput, toSlider));
+			}
+
+            if ( $scope.find('input[name="wpr_gf_date"]').length > 0 ) {
+                const elem = $scope.find('input[name="wpr_gf_date"]')[0];
+				datePickers.push(elem);
+            }
+
+			if ( $scope.find('input[name="wpr_gf_date_range"').length > 0 ) {
+                const elem1 = $scope.find('#wpr-datepicker-1[name="wpr_gf_date_range"]')[0];
+                const elem2 = $scope.find('#wpr-datepicker-2[name="wpr_gf_date_range"]')[0];
+				
+				datePickers.push(elem1);
+				datePickers.push(elem2);
+			}
+
+			// Loop through the datePickers array and initialize AirDatepicker for each
+			$.each(datePickers, function(index, elem) {
+				new AirDatepicker(elem, {  // elem[0] since `elem` is a jQuery object, but AirDatepicker needs a DOM element
+					dateFormat: 'yyyy-MM-dd', // Specify the desired date format,
+					multipleDates: false,
+					onShow: function() {
+						var scopeId = 'air-datepicker-' + $scope.attr('data-id');
+
+						// Access the AirDatepicker's container
+						var datepickerContainer = document.querySelector('#air-datepicker-global-container .air-datepicker'); // Adjust if different
+
+						// Add the class to the AirDatepicker container
+						if (datepickerContainer) {
+							datepickerContainer.classList.add(scopeId);
+						}
+					},
+					onSelect: function({date, formattedDate, datepicker}) {
+						var selectedName = $(elem).attr('name'),
+							selectedValue = formattedDate;
+
+						$(elem).attr('data-date-val', formattedDate);
+
+						// Check if AJAX filters are enabled and trigger accordingly
+						if ('yes' == $(elem).closest('.wpr-grid-filters-wrap').data('enable-ajax')) {
+							ajaxFilters($(elem));
+						} else {
+							updateURL(selectedName, selectedValue, $(elem));
+						}
+					}
+				});
+
+				// Handle the resetDate event to clear the AirDatepicker
+				$(elem).on('resetDate', function() {
+					// Use the AirDatepicker API to clear the date
+					if (elem.airdatepicker) {
+						elem.airdatepicker.clear();
+					}
+				});
+			});
+
+			visualFiltersFunc($scope);
+
+			onFilterChange();
+
+			renderActiveFilters();
+
+			updateActiveFilters();
+
+			removeFilters();
+
+			applyButton();
+
+			viewMoreLessFunc();
+
+			initDependentSelect($scope);
+
+			function initDependentSelect($scope) {
+				var mainSelect = $scope.find('.wpr-main-select-filter'),
+					dependentSelects = $scope.find('.wpr-dependent-select'),
+					noneLabel = $scope.find('.wpr-grid-filters-wrap').data('none-label') || 'None';
+
+
+				// Handle main select change
+				mainSelect.on('change', function() {
+					var selectedValue = $(this).val();
+					var taxonomy = $(this).closest('.wpr-grid-filters-wrap').find('.wpr-dependent-select').first().data('taxonomy');
+					var relatedTax = $(this).data('taxonomy');
+
+					// Reset and disable all dependent selects
+					dependentSelects.each(function() {
+						$(this).prop('disabled', true).empty().append('<option value="0">' + noneLabel + '</option>');
+					});
+
+					if (selectedValue) {
+						loadDependentOptions(selectedValue, taxonomy, dependentSelects.first(), relatedTax);
+					}
+				});
+
+				// Handle dependent select changes
+				dependentSelects.on('change', function() {
+					var selectedValue = $(this).val();
+					var nextSelect = $(this).closest('.wpr-grid-filters-select-wrap').nextAll('.wpr-grid-filters-select-wrap').first().find('.wpr-dependent-select');
+					var relatedTax = $(this).data('taxonomy');
+
+					// Reset and disable all following selects
+					$(this).nextAll('.wpr-dependent-select').each(function() {
+						$(this).prop('disabled', true).empty().append('<option value="0">' + noneLabel + '</option>');
+					});
+
+					if (selectedValue && nextSelect.length) {
+						loadDependentOptions(selectedValue, nextSelect.data('taxonomy'), nextSelect, relatedTax);
+					}
+				});
+
+				function loadDependentOptions(parentTerm, taxonomy, targetSelect, relatedTax) {
+					console.log(parentTerm, taxonomy, targetSelect);
+					$.ajax({
+						url: WprConfig.ajaxurl,
+						type: 'POST',
+						data: {
+							action: 'wpr_get_dependent_terms',
+							nonce: WprConfig.nonce,
+							taxonomy: taxonomy,
+							parent_term: parentTerm,
+							related_taxonomy: relatedTax
+						},
+						success: function(response) {
+							console.log(response);
+							if (response.success && response.data.length) {
+								var options = '<option value="">' + targetSelect.find('option:first').text() + '</option>';
+								response.data.forEach(function(term) {
+									options += '<option value="' + term.id + '">' + term.name + '</option>';
+								});
+								targetSelect.html(options).prop('disabled', false);
+							}
+						}
+					});
+				}
+			}
+
+			function viewMoreLessFunc() {
+				if ( viewMoreLess.length > 0 ) { // DOESN'T WORK IN EDITOR FOR SOME REASON - maybe localstorage ?
+					// localstorage to keep the state of the view more/less button
+					var itemsToShow = $scope.find('.wpr-view-ml-wrap').data('item-count'),
+						moreLess = $scope.find('.wpr-gf-checkbox-group').find('.wpr-view-more-less'),
+						inputWraps = $scope.find('.wpr-gf-checkbox-group .wpr-gf-input-wrap'),
+						inputWrapsToHide = $scope.find('.wpr-gf-checkbox-group .wpr-gf-input-wrap:gt(' + (itemsToShow - 1) + ')'),
+						isItemSelected = $scope.find('.wpr-gf-checkbox-group .wpr-gf-input-wrap input:checked').length > 0;
+					
+					// Hide items exceeding the initial limit, only if no item is selected
+					if (!isItemSelected) {
+						$scope.find('.wpr-gf-checkbox-group .wpr-gf-input-wrap:gt(' + (itemsToShow - 1) + ')').hide();
+					} else {
+							moreLess.addClass('expanded');
+							moreLess.text(moreLess.data('less-text'));
+					}
+	
+					if ( $scope.find('.wpr-gf-checkbox-group .wpr-gf-input-wrap').length <= itemsToShow ) {
+							moreLess.hide();
+					}
+			
+					// Toggle visibility on "View More" click
+                    moreLess.on('click', function (e) {
+						e.preventDefault();
+						$(this).toggleClass('expanded');
+			
+						if ($(this).hasClass('expanded')) {
+							// Show all items
+							inputWraps.show();
+							$(this).text($(this).data('less-text'));
+						} else {
+							// Hide items exceeding the limit
+							inputWrapsToHide.hide();
+							$(this).text($(this).data('more-text'));
+						}
+					}); 
+				}
+			}
+			
+			function applyButton() {
+				let widgetSelector = $('#' + $(document).find('.wpr-grid-filters-wrap').data('widget-selector'));
+
+				if ( $('.wpr-gf-apply-btn').length > 0 ) {
+					$('.wpr-gf-apply-btn').on('click', function() {
+                        ajaxFilters($(this));
+					});
+				}
+
+				if ( widgetSelector.find('.wpr-load-more-btn').length > 0 ) {
+					widgetSelector.find('.wpr-load-more-btn').on('click', function(e) {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						ajaxFilters($(this));
+					});
+				}
+			}
+
+			function visualFiltersFunc($scope) {
+				if (visualFilters.length > 0) {
+					visualFilters.each(function(index) {
+						$(this).on('click', function(e) {
+                            e.preventDefault();
+
+							// Find the corresponding input element by index
+							var correspondingInput = $(this).prev('.wpr-gf-input-wrap').find('input'); // TODO: choose approach for colors
+                                if ( 'img' == $(this).prop('tagName') ) {
+                                    correspondingInput = $scope.find('input[value="'+ $(this).data('replace-value') +'"]');
+                                }
+				
+							// Set the checked property to true
+							if ( correspondingInput.prop('checked') == true ) {
+                                $(this).removeClass('wpr-gf-visual-active');
+								correspondingInput.prop('checked', false);
+							} else {
+                                if  ( 'radio' == $scope.find('input').attr('type') )  {
+                                    $scope.find('.wpr-gf-visual').removeClass('wpr-gf-visual-active');
+                                }
+                                $(this).addClass('wpr-gf-visual-active');
+								correspondingInput.prop('checked', true);
+							}
+                            
+                            setTimeout(function() {
+                                // Trigger the change event on the corresponding input
+                                correspondingInput.trigger('change');
+                            }, 500);
+						});
+					});
+				}
+			}
+
+			function updateActiveFilters() {
+				$scope.on('click', '.wpr-gf-active-filters span.wpr-remove-filter', function () {
+					var thisEl = $(this),
+						dataValue = thisEl.data('value').toString(),
+						currentUrl = window.location.href;
+
+					// Split the URL into base URL and query string
+					var urlParts = currentUrl.split('?'),
+						baseUrl = urlParts[0],
+						queryString = urlParts[1] || '';
+			
+					// Split the query string into individual parameters
+					var params = queryString.split('&');
+			
+					// Update parameters based on dataValue
+					var updatedParams = params.map(function (param) {
+						var parts = param.split('=');
+						var key = parts[0];
+						var value = decodeURIComponent(parts[1] || '').replace(/\+/g, ' ');
+			
+						if (value.includes(',')) {
+
+                            if ( dataValue == value ) {
+                                return;
+                            }
+
+							// Convert comma-separated values to an array
+							var valuesArray = value.split(',');
+			
+							// Remove the clicked dataValue from the array
+							valuesArray = valuesArray.filter(function (val) {
+								return val != dataValue;
+							});
+			
+							return valuesArray.length > 0 ? key + '=' + valuesArray.join(',') : null;
+						} else {
+							return value != dataValue ? param : null;
+						}
+					});
+			
+					// Remove null or undefined values from updatedParams
+					updatedParams = updatedParams.filter(function (param) {
+						return param != null;
+					});
+			
+					// Find keys to remove with _gfr_ if their _gf_ counterparts are removed
+					var removedKeys = updatedParams
+						.filter(param => param === null)
+						.map(param => params[params.indexOf(param)].split('=')[0].replace('_gf_', '_gfr_'));
+			
+					// Remove those _gfr_ keys
+					updatedParams = updatedParams.filter(function (param) {
+						var key = param.split('=')[0];
+						return !removedKeys.includes(key);
+					});
+			
+					// Join the base URL and updated parameters
+					var updatedUrl = baseUrl + (updatedParams.length > 0 ? '?' + updatedParams.join('&') : '');
+			
+					if ( $('.wpr-gf-active-filters').closest('.wpr-grid-filters-wrap').data('enable-ajax') == 'yes' ) {
+
+						let matchingVisualFilter = $('body').find('*[data-replace-value="'+ thisEl.data('value') +'"]');
+
+						matchingVisualFilter.removeClass('wpr-gf-visual-active');
+
+						if ( $('body').find('*[data-date-val="'+ thisEl.data('value') +'"]').length > 0 ) {
+
+							$('body').find('*[data-date-val="'+ thisEl.data('value') +'"]').val('').trigger('resetDate');
+
+							ajaxFilters($('body').find('*[data-date-val="'+ thisEl.data('value') +'"]'));
+
+						} else {
+
+							if ( $('body').find('*[value="'+ thisEl.data('value') +'"]').prop('tagName') == 'OPTION' ) {
+								$('body').find('*[value="'+ thisEl.data('value') +'"]').closest('select').prop('selectedIndex', 0).trigger('change');	
+							} else {
+								$('body').find('*[value="'+ thisEl.data('value') +'"]').prop('checked', false).trigger('change');
+							}
+
+							var values = thisEl.data('value').toString();
+
+							if (values && values.includes(',') && $('.wpr-rf-control-min-input').filter((_, el) => values.split(',')[0] == $(el).val()).length > 0) {
+								let [minValue, maxValue] = values.split(',');
+								let rangeMin = $('.wpr-rf-control-min-input').filter((_, el) => minValue == $(el).val());
+								let rangeMax = $('.wpr-rf-control-max-input').filter((_, el) => maxValue == $(el).val());
+		
+								rangeMin.val(rangeMin.attr('min')).trigger('input');
+								rangeMax.val(rangeMax.attr('max')).trigger('input');
+
+								// TODO: check when not needed
+								rangeMax.closest('.wpr-range-container').find('input.wpr-from-slider').trigger('change');
+							} else {
+								ajaxFilters($('body').find('*[value="'+ thisEl.data('value') +'"]'));
+							}
+
+						}
+
+						thisEl.remove();
+					} else {
+						// Update the URL
+						window.location.href = updatedUrl;
+					}
+				});
+			}
+			
+			function renderActiveFilters( $origin = '' ) {
+				if ( $origin == 'ajax' ) {
+					var activeFilters = $('.wpr-gf-active-filters');
+				} else {
+					var activeFilters = $scope.find('.wpr-gf-active-filters');
+				}
+
+				if ( activeFilters ) {
+					if ( WprElements.editorCheck() && $scope.find('.wpr-gf-active-filters').length > 0 ) {
+						let activeExample = '<div class="wpr-af-wrap-99999999" data-wpr-aft="checkbox"><span class="wpr-remove-filter" data-value="99999" class="custom-cursor-on-hover">Tags: Tasty(7) <span>&times;</span></span></div>';
+						activeFilters.prepend(activeExample);
+					}
+	
+					$('.wpr-grid-filters-wrap').each(function () {
+						var label = $(this).find('h4').text().trim();
+						var values = [];
+					
+						// Checkboxes and Radios
+						$(this).find('input[type="checkbox"]:checked, input[type="radio"]:checked').each(function () {
+							var checkboxLabel = $(this).next('label').text().trim();
+							values.push({ label: label, value: checkboxLabel, realVal: $(this).val() });
+						});
+	
+						$(this).find('input[type="checkbox"]:not(:checked), input[type="radio"]:not(:checked)').each(function () {
+							$('body').find('span[data-value="'+ $(this).val() +'"]').remove();
+						});
+	
+						$(this).find('input[type="date"]').each(function() {
+							values.push({ label: label, value: $(this).val(), realVal: $(this).val() });
+						});
+	
+						$(this).find('input[type="text"]').each(function() {
+							values.push({ label: label, value: $(this).val(), realVal: $(this).val() });
+						});
+					
+						// Range Filter
+						if ($(this).find('.wpr-rf-control').length > 0) {
+							var rangeValues = $(this).find('.wpr-rf-control input[type="number"]').map(function () {
+								return $(this).val();
+							}).get();
+							values.push({ label: label, value: rangeValues.join(' - '), realVal: rangeValues});
+						}
+					
+						// Select
+						var selectValue = $(this).find('select').val();
+	
+						if ( selectValue ) {
+							$(this).find('select option:selected').each(function () {
+								values.push({ label: label, value: $(this).text().trim(), realVal: $(this).val() });
+							});
+	
+							if ( selectValue == 0 ) {
+								$('body').find('.wpr-af-wrap-' + $(this).closest('.elementor-element').data('id')).remove();
+							}
+						}
+					
+						// If there are values, render results
+						if ( values.length > 0 ) {
+							var container = $('<div class="wpr-af-wrap-'+ $(this).closest('.elementor-element').data('id') +'" data-wpr-aft="'+ $(this).data('wpr-filter-type') +'">'),
+								replaceFilters = ['select', 'radio', 'date','range']
+	
+							if ( $('body').find('.wpr-af-wrap-'+ $(this).closest('.elementor-element').data('id')).length > 0 ) {
+								container = $('body').find('.wpr-af-wrap-'+ $(this).closest('.elementor-element').data('id'));
+							}
+							values.forEach(function (item) {
+								// Append value span
+								var thisLabel = item.label ? item.label : 'No Label';
+	
+								if ( item.value != 'None' && item.value != '' ) {
+									if (true) {
+										if ( $('[data-value="' + item.realVal + '"]').length == 0 ) {
+
+											var itemElement = $('<span class="wpr-remove-filter" data-value="' + item.realVal + '">').text(thisLabel + ': ' + item.value);
+											// Add remove icon in a separate span
+											var removeIcon = $('<span>&times;</span>');
+
+											itemElement.append(removeIcon);
+				
+											if (replaceFilters.includes(container.attr('data-wpr-aft'))) {
+												container.html(itemElement);
+											} else if ( 'date_range' == container.attr('data-wpr-aft') ) {
+												let dateElementClass = $('*[data-date-val='+ item.realVal +']').attr('class');
+
+												if ( 'wpr-date-filter-start' == dateElementClass ) {
+													itemElement = $('<span class="wpr-remove-filter '+ dateElementClass +'" data-value="' + item.realVal + '">').text(thisLabel + ': ' + item.value);
+												} else {
+													itemElement = $('<span class="wpr-remove-filter '+ dateElementClass +'" data-value="' + item.realVal + '">').text(item.value);
+												}
+
+												if ( container.find('.' + dateElementClass) ) {
+													container.find('.' + dateElementClass).remove();
+													if ( 'wpr-date-filter-start' == dateElementClass ) {
+														container.prepend(itemElement);
+													} else {
+														container.append(itemElement);
+													}
+												} else {
+													container.append(itemElement);
+												}
+											} else {
+												container.append(itemElement);
+											}
+
+										}
+									}
+								} else {
+									$('span[data-value="'+ item.realVal +'"]').remove();
+								}
+							});
+					
+							// Prepend container to .wpr-gf-active-filters
+							if ( $('body').find('.wpr-af-wrap-'+ $(this).closest('.elementor-element').data('id')).length == 0 && container.find('span').length > 0 ) {
+								activeFilters.prepend(container);
+							}
+						}
+					});
+					
+				}
+			}
+
+			function onFilterChange() {
+
+                $scope.find('input, select, textarea').on('change', function() {
+                    var $this = $(this);
+                    if ('checkbox' == $this.attr('type')) {
+                        var $option = $this.closest('.wpr-gf-input-wrap');
+                        if ($option.hasClass('wpr-checked')) {
+                            $option.removeClass('wpr-checked');
+                        } else {
+                            $option.addClass('wpr-checked');
+                        }
+                    } else if ('radio' == $this.attr('type')) {
+                        // Find all radio buttons in the same group
+                        var name = $this.attr('name');
+                        var $group = $('input[type="radio"][name="' + name + '"]');
+                
+                        // Remove 'wpr-checked' from all options in the group
+                        $group.closest('.wpr-gf-input-wrap').removeClass('wpr-checked');
+                
+                        // Add 'wpr-checked' to the selected option
+                        if ($this.is(':checked')) {
+                            $this.closest('.wpr-gf-input-wrap').addClass('wpr-checked');
+                        }
+                    }
+                });
+
+				if ( $('.wpr-gf-apply-btn').length == 0 ) {
+					$scope.find('input[type="checkbox"], input[type="radio"]').on('change', function() {
+						var selectedName = $(this).attr('name'),
+                            selectedValue = $(this).val();
+
+                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                            ajaxFilters($(this));
+                        } else {
+						    updateURL(selectedName, selectedValue, $(this));
+                        }
+					});
+                    
+                    $scope.on('changeDate', 'input[name="wpr_gf_date"]', function(e) { // GOGA - does it work at all ?
+                        const date = e.detail.date;
+                        
+                        if ( date ) {
+
+                            // Adjust for the timezone offset
+                            const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+
+                            // Format the date as 'YYYY-MM-DD'
+                            var selectedName = 'wpr_gf_date',
+                                selectedValue = localDate.toISOString().split('T')[0];
+                        
+                            // const formattedDate = localDate.toISOString().split('T')[0];
+                            
+                            ajaxFilters($scope.find('input[name="wpr_gf_date"]'));
+                        }
+                    });
+
+					$scope.find('input[type="date"]').on('change', function() {
+						var selectedName = $(this).attr('name'),
+                            selectedValue = $(this).val();
+
+                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                            ajaxFilters($(this));
+                        } else {
+						    updateURL(selectedName, selectedValue, $(this));
+                        }
+					});
+		
+					$scope.find('select').on('change', function() {
+						var selectedName = $(this).attr('name');
+						var selectedValue = $(this).val();
+                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                            ajaxFilters($(this));
+                        } else {
+						    updateURL(selectedName, selectedValue, $(this));
+                        }
+					});
+		
+					// $scope.on('click', '.wpr-gf-range-apply-btn', function() {
+                    //     var selectedElement = $scope.find('.wpr-rf-control').find('input[type="number"]');
+					$scope.find('.wpr-range-container input[type="range"]').on('change', function() {
+						var selectedElement = $scope.find('.wpr-rf-control').find('input[type="number"]');
+						var selectedValue = [];
+						var selectedName = selectedElement.attr('name');
+		
+						selectedElement.each(function() {
+							selectedValue.push($(this).val());
+						});
+		
+                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+							$(this).closest('.wpr-grid-filters-wrap').attr('data-wpr-applied', 'yes');
+                            ajaxFilters($(this));
+                        } else {
+						    updateURL(selectedName, selectedValue, $(this));
+                        }
+					});
+				}
+			}
+
+			function updateURL(selectedName, selectedValue, element, ajaxFilterURL = '') {
+				
+				var currentURL = window.location.href,
+					dataRelation = '',
+					dataFilterType = '';
+
+
+				if ( '' != ajaxFilterURL ) {
+					currentURL = ajaxFilterURL;
+				}
+				
+				if ( $('.wpr-gf-apply-btn').length > 0 ) {
+					currentURL = finalURL;
+					dataRelation = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-relation');
+					dataFilterType = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-filter-type');
+				} else {
+					dataRelation = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-relation');
+					dataFilterType = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-filter-type');
+				}
+
+				const url = new URL(currentURL);
+
+                if ( dataRelation && dataFilterType ) {
+                    url.searchParams.set(selectedName.replace('wpr_gf', 'wpr_gfr'), dataRelation + ',' + dataFilterType);
+                }
+
+				if ( element.prop('tagName') == "SELECT" ) {
+					if ( selectedValue == 0 ) {
+						url.searchParams.delete(selectedName);
+						url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+					} else {
+						url.searchParams.set(selectedName, selectedValue);
+					}
+				} else if ( element.hasClass('wpr-gf-range-apply-btn') || element.hasClass('wpr-from-slider') || element.hasClass('wpr-to-slider') ) {
+					url.searchParams.set(selectedName, selectedValue);
+				} else if ( element.attr('type') == "text" || element.attr('type') == "date"  || element.attr('type') == "date_range" )  {
+
+					if (url.searchParams.has(selectedName)) {
+
+						var currentValue = '';
+
+						// Get the current value of the query parameter
+						if ( url.searchParams.get(selectedName) !== null ) {
+							currentValue = url.searchParams.get(selectedName);
+						}
+
+						// Combine the current value and the new selected value
+						var updatedValue = selectedValue;
+
+						if ( element.hasClass('wpr-date-filter') ) {
+							if ( selectedValue == '' ) {
+								url.searchParams.delete(selectedName);
+								url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+							} else {
+								url.searchParams.set(selectedName, selectedValue);
+							}
+						}
+
+						if ( element.hasClass('wpr-date-filter-start') ) {
+							if ( currentValue.indexOf(',') !== -1 ) {
+								updatedValue = selectedValue + ',' + currentValue.split(',')[1];
+
+								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								}
+							} else {
+								if ( selectedValue !== '' ) {
+									updatedValue = selectedValue + ',' + currentValue;
+								} else {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								}
+
+								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								}
+							}
+						}
+
+						if ( element.hasClass('wpr-date-filter-end') ) {
+							if ( currentValue.indexOf(',') !== -1 ) {
+								updatedValue = currentValue.split(',')[0] + ',' + selectedValue;
+
+								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								}
+							} else {
+								if ( selectedValue !== '' ) {
+									updatedValue = currentValue + ',' + selectedValue;
+								} else {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								}
+
+								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								}
+							}
+						}
+
+						if ( updatedValue.includes(',') ) {
+							updatedValue = updatedValue.split(',');
+							updatedValue = [...new Set(updatedValue)];
+							
+							// updatedValue = updatedValue.filter(function(value) {
+							// 	return value !== "";
+							// });
+							
+							updatedValue = updatedValue.join(',');
+						}
+						
+						if (updatedValue !== '') {
+							// Set the query parameter with the updated value
+							url.searchParams.set(selectedName, updatedValue);
+						}
+					} else {
+						if ( element.hasClass('wpr-date-filter') ) {
+							url.searchParams.set(selectedName, selectedValue);
+						}
+
+						// If the query parameter doesn't exist, set it with the selected value
+						if ( element.hasClass('wpr-date-filter-start') ) {
+							url.searchParams.set(selectedName, selectedValue + ',' + '');
+						}
+
+						if ( element.hasClass('wpr-date-filter-end') ) {
+							url.searchParams.set(selectedName, ',' + '' + selectedValue);
+						}
+					}
+
+				} else {
+					if ( element.attr('type') == "radio" ) {
+						url.searchParams.delete(selectedName);
+						url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+					}
+					
+					if ( element.is(':checked') ) {
+						if ( url.searchParams.has(selectedName) ) {
+							// Get the current value of the query parameter
+							const currentValue = url.searchParams.get(selectedName);
+					
+							// Combine the current value and the new selected value
+							var updatedValue = selectedValue;
+							updatedValue = currentValue + ',' + selectedValue;
+
+							if ( $.inArray(selectedValue, currentValue.split(',')) !== -1 ||  currentValue == selectedValue ) {
+								return;
+							}
+
+							if ( updatedValue.includes(',') ) {
+								updatedValue = updatedValue.split(',');
+								updatedValue = [...new Set(updatedValue)];
+								updatedValue = updatedValue.filter(function(value) {
+									return value !== "";
+								});
+								
+								updatedValue = updatedValue.join(',');
+							}
+
+							// Set the query parameter with the updated value
+							url.searchParams.set(selectedName, updatedValue);
+						} else {
+							// If the query parameter doesn't exist, set it with the selected value
+							url.searchParams.set(selectedName, selectedValue);
+						}
+					} else {
+						if (url.searchParams.has(selectedName)) {
+
+							// Get the current value of the query parameter
+
+							const currentValue = url.searchParams.get(selectedName);
+
+							if ( currentValue.includes(',') || currentValue !== false ) {
+								const currentValueArray = currentValue.split(',');
+
+								// Remove duplicates using Set
+								const uniqueArray = [...new Set(currentValueArray)];
+		
+								// Omit the selectedValue from the array if it exists
+								const indexToRemove = uniqueArray.indexOf(selectedValue);
+
+								if (indexToRemove !== -1) {
+									uniqueArray.splice(indexToRemove, 1);
+								}
+								
+								// Join the updated array back into a string using a comma (',') as the separator
+								var updatedValue = uniqueArray.join(',');
+					
+								// Set the query parameter with the updated value
+								url.searchParams.set(selectedName, updatedValue);
+							} else {
+								url.searchParams.delete(selectedName);
+								url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+							}
+						} else {
+							// If the query parameter doesn't exist, set it with the selected value
+							url.searchParams.delete(selectedName);
+							url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+						}
+					}
+
+					if (url.searchParams.get(selectedName) == '') {
+						url.searchParams.delete(selectedName);
+						url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+					}
+				}
+
+				// Replace the current URL with the updated one
+				if ( $('.wpr-gf-apply-btn').length == 0 && 'yes' !== element.closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+					window.location.href = url.toString();
+				} else {
+					if ( $('.wpr-gf-apply-btn').length > 0 && $('.wpr-gf-apply-btn').data('redirect-url') != '#' ) {
+						url.pathname = $('.wpr-gf-apply-btn').data('redirect-url');
+					}
+					WprElements.changeFinalURL(url.toString());
+				}
+			}
+
+			function controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
+				const [from, to] = getParsed(fromInput, toInput);
+				fillSlider(fromInput, toInput, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), controlSlider);
+				setToggleAccessible(fromInput, 'from');
+				if (from > to) {
+					fromSlider.val(to);
+					fromInput.val(to);
+				} else {
+					fromSlider.val(from);
+				}
+			}
+			
+			function controlToInput(toSlider, fromInput, toInput, controlSlider) {
+				const [from, to] = getParsed(fromInput, toInput);
+				fillSlider(fromInput, toInput, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), controlSlider);
+				setToggleAccessible(toInput, 'to');
+				if (from <= to) {
+					toSlider.val(to);
+					toInput.val(to);
+				} else {
+					toInput.val(from);
+				}
+			}
+			
+			function controlFromSlider(fromSlider, toSlider, fromInput) {
+				const [from, to] = getParsed(fromSlider, toSlider);
+				fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+				setToggleAccessible(fromSlider, 'from');
+				if (from > to) {
+					fromSlider.val(to);
+					fromInput.val(to);
+				} else {
+					fromInput.val(from);
+				}
+			}
+			
+			function controlToSlider(fromSlider, toSlider, toInput) {
+				const [from, to] = getParsed(fromSlider, toSlider);
+				fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+				setToggleAccessible(toSlider, 'to');
+				if (from <= to) {
+					toSlider.val(to);
+					toInput.val(to);
+				} else {
+					toInput.val(from);
+					toSlider.val(from);
+				}
+			}
+			
+			function getParsed(currentFrom, currentTo) {
+				const from = parseInt(currentFrom.val(), 10);
+				const to = parseInt(currentTo.val(), 10);
+				return [from, to];
+			}
+			
+			function fillSlider(from, to, sliderColor, rangeColor, controlSlider) {
+				const rangeDistance = to.prop('max') - to.prop('min');
+				const fromPosition = from.val() - to.prop('min');
+				const toPosition = to.val() - to.prop('min');
+			
+				controlSlider.css('background', `linear-gradient(
+					to right,
+					${sliderColor} 0%,
+					${sliderColor} ${fromPosition / rangeDistance * 100}%,
+					${rangeColor} ${fromPosition / rangeDistance * 100}%,
+					${rangeColor} ${toPosition / rangeDistance * 100}%,
+					${sliderColor} ${toPosition / rangeDistance * 100}%,
+					${sliderColor} 100%
+				)`);
+			}
+			
+			function setToggleAccessible(currentSlider, direction = 'to') {
+				if ( direction == 'to' ) {
+					const toSlider = $scope.find('#wpr-to-slider-' + $scope.data('id'));
+					
+					if ( Number(currentSlider.val()) <= +currentSlider.attr('min') ) {
+						toSlider.css('z-index', 2);
+					} else {
+						toSlider.css('z-index', 0);
+					}
+				} else {
+					const fromSlider = $scope.find('#wpr-from-slider-' + $scope.data('id'));
+
+					if ( Number(currentSlider.val()) >= +currentSlider.attr('max') ) {
+						fromSlider.css('z-index', 2);
+					} else {
+						fromSlider.css('z-index', 0);
+					}
+				}
+			}
+
+			function removeFilters() {
+				$scope.on('click', '.wpr-gf-remove-btn', function() {
+					// Create a new URL object from the current URL
+					var currentUrl = new URL(window.location.href);
+				
+					// Get all parameter keys and iterate over them
+					var keys = Array.from(currentUrl.searchParams.keys());
+					
+					keys.forEach(function(key) {
+						// Check if the parameter key starts with "wpr_"
+						if (key.indexOf('wpr_') === 0) {
+							// Remove the parameter
+							currentUrl.searchParams.delete(key);
+						}
+					});
+					
+					if ( 'yes' !== $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+						// Redirect to the new URL
+						window.location.href = currentUrl.toString();
+					} else {
+						// let rangeMin = $('body').find('.wpr-grid-filters-wrap .wpr-range-container').find('input[type="number"].wpr-rf-control-min-input');
+						// let rangeMax = $('body').find('.wpr-grid-filters-wrap .wpr-range-container').find('input[type="number"].wpr-rf-control-max-input');
+
+						// rangeMin.val(rangeMin.attr('min')).trigger('input');
+						// rangeMax.val(rangeMax.attr('max')).trigger('input');
+
+						// // Reset all select elements to their default option (usually the first option)
+						// $('body').find('.wpr-grid-filters-wrap').find('select').prop('selectedIndex', 0).trigger('change');
+
+						// // Uncheck only checked checkboxes and radio buttons
+						// $('body').find('.wpr-grid-filters-wrap').find('input[type="checkbox"]:checked, input[type="radio"]:checked').prop('checked', false).trigger('change');
+
+						// // Reset all date inputs to empty
+						// $('body').find('span.wpr-remove-filter').remove();
+						// $('body').find('input[name="wpr_gf_date"]').val('').trigger('resetDate').trigger('change');
+						// $('body').find('input[name="wpr_gf_date_range"]').val('').trigger('resetDate').trigger('change');
+
+						// $('body').find('.wpr-gf-visual').removeClass('wpr-gf-visual-active');
+						ajaxFilters($(this));
+					}
+				
+					// Optionally, add logic to reset or remove filters as needed
+				});													
+			}
+
+			function updateResultsCount(settings) {
+				if (isDebounceAjaxCallRunning) {
+					return;
+				}
+			
+				let paramsArray = [];
+				let elementsToUpdate = [];
+			
+				$('.wpr-grid-filters-wrap').each(function () {
+					const $wrap = $(this);
+			
+					if (
+						$wrap.attr('data-show-count') === 'yes' &&
+						$wrap.attr('data-change-counter') !== 'never'
+					) {
+						if (
+							$wrap.attr('data-change-counter') === 'other_filters' &&
+							$wrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope)
+						) {
+							return true; // skip this wrap
+						}
+			
+						const $inputs = $wrap.find('input[type="checkbox"], input[type="radio"], option');
+			
+						$inputs.each(function () {
+							const $input = $(this);
+							const isOption = $input.prop('tagName') === 'OPTION';
+							const selectedName = isOption ? $input.closest('select').attr('name') : $input.attr('name');
+							const selectedValue = $input.val();
+			
+							if (!selectedName || selectedValue === '') return;
+			
+							// Clone the current state
+							let paramsObjTemp = { ...paramsObj };
+			
+							// Get current values for this key if exist
+							let existingValues = paramsObjTemp[selectedName] ? paramsObjTemp[selectedName].split(',') : [];
+			
+							// Ensure selectedValue is included
+							if (!existingValues.includes(selectedValue)) {
+								existingValues.push(selectedValue);
+							}
+			
+							paramsObjTemp[selectedName] = existingValues.join(',');
+			
+							// Store the element and its key info to update later
+							elementsToUpdate.push({
+								element: $input,
+								name: selectedName,
+								value: selectedValue
+							});
+			
+							// Store for AJAX batch call
+							paramsArray.push(paramsObjTemp);
+						});
+					}
+				});
+			
+				if (paramsArray.length === 0) {
+					console.warn('No filters to analyze.');
+					return;
+				}
+			
+				// Make a single AJAX request with all hypothetical filter states
+				$.ajax({
+					type: 'POST',
+					url: WprConfig.ajaxurl,
+					data: {
+						action: experimentActionCount,
+						grid_settings: settings.grid_settings,
+						wpr_url_params: paramsArray
+					},
+					success: function (response) {
+						if (!response || !Array.isArray(response.data)) {
+							console.warn('Invalid response:', response);
+							return;
+						}
+			
+						setTimeout(() => {
+							response.data.forEach((dataEntry, index) => {
+								const countText = `(${dataEntry.found_posts})`;
+								const { element, value } = elementsToUpdate[index];
+			
+								const $el = $(element);
+
+								if ($el.closest('.wpr-grid-filters-wrap').attr('data-wpr-relation') == 'or') {
+									if ( $el.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope) ) {
+										return true;
+									}
+								}
+
+								if ($el.prop('tagName') === 'OPTION') {
+									if ( $el.attr('value') != 0 ) {
+										const cleanText = $el.text().replace(/\(\d+\)/, '');
+										$el.text(cleanText + countText);
+									}
+								} else {
+									$el.closest('.wpr-gf-input-wrap').find('.wpr-gf-count').text(countText);
+			
+									// Also update active filters area if it exists
+									let $filterTag = $('.wpr-gf-active-filters').find(`span[data-value="${value}"]`);
+									if ($filterTag.length > 0) {
+										let baseText = $filterTag.text().replace(/\(\d+\)/, '');
+										$filterTag.text(baseText + countText);
+									}
+								}
+
+								// Disable element if count is 0 and data-empty-action is set to disable
+								if (dataEntry.found_posts === 0) {
+									if ($el.closest('.wpr-grid-filters-wrap').attr('data-empty-action') === 'hide') {
+										if ( $el.attr('value') != 0 ) {
+											$el.hide();
+											if ($el.is(':checkbox') || $el.is(':radio')) {
+												$el.closest('.wpr-gf-input-wrap').hide();
+											}
+										}
+									} else if ($el.closest('.wpr-grid-filters-wrap').attr('data-empty-action') === 'disable') {
+										$el.prop('disabled', true);
+									}
+								} else {
+									$el.prop('disabled', false);
+									$el.show();
+									if ($el.is(':checkbox') || $el.is(':radio')) {
+										$el.closest('.wpr-gf-input-wrap').show();
+									}
+								}
+							});
+						}, 800);
+					},
+					error: function (err) {
+						console.error('AJAX error:', err);
+					}
+				});
+			}		
+
+            function ajaxFilters(self) {
+				var triggerElement = self,
+				activeFilters = $('.wpr-gf-active-filters');
+
+				if ( activeFilters.length > 0 && activeFilters.hasClass('wpr-hidden-element') ) {
+					activeFilters.removeClass('wpr-hidden-element');
+				}
+
+                $('.wpr-grid-filters-wrap').each(function() {
+                    if ( $(this).find('input[type="checkbox"], input[type="radio"]').length > 0 ) {
+                        $(this).find('input[type="checkbox"], input[type="radio"]').each(function() {
+                                let isRadioChecked = true;
+
+                                if ( $(this).attr('type') == 'radio' && (!$(this).is(':checked')) && $(this).val() != self.val() ) {
+                                    isRadioChecked = false;
+                                } else {
+                                    isRadioChecked = true;
+                                }
+                                
+                                if ( isRadioChecked	) {
+                                    var selectedName = $(this).attr('name');
+                                    var selectedValue = $(this).val();
+
+                                    updateURL(selectedName, selectedValue, $(this), finalURL);
+                                }
+                        });	
+                    }
+
+                    if ( $(this).find('input[type="text"]').length > 0 ) {
+                        $(this).find('input[type="text"]').each(function() {
+                                var selectedName = $(this).attr('name');
+                                var selectedValue = $(this).val();
+
+                                updateURL(selectedName, selectedValue, $(this), finalURL);
+                        });	
+                    }
+
+                    if ( $(this).find('input[type="date"]').length > 0 ) {
+                        $(this).find('input[type="date"]').each(function() {
+                                var selectedName = $(this).attr('name');
+                                var selectedValue = $(this).val();
+
+                                updateURL(selectedName, selectedValue, $(this), finalURL);
+                        });	
+                    }
+
+                    if ( $(this).find('select').length == 1 ) {
+                        var selectedName = $(this).find('select').attr('name');
+                        var selectedValue = $(this).find('select').val();
+
+                        updateURL(selectedName, selectedValue, $(this).find('select'), finalURL);
+                    } else if ( $(this).find('select').length > 1 ) {
+						if ( self.hasClass('wpr-main-select-filter') ) {			
+							$(this).find('select').each(function() {
+								if ( $(this).hasClass('wpr-main-select-filter') ) {
+									var selectedName = $(this).attr('name');
+									var selectedValue = $(this).val();
+
+									updateURL(selectedName, selectedValue, $(this), finalURL);
+								} else {
+									var selectedName = $(this).attr('name');
+									var selectedValue = 0;
+
+									updateURL(selectedName, selectedValue, $(this), finalURL);
+								}
+							});
+						} else {
+							$(this).find('select').each(function() {
+								var selectedName = $(this).attr('name');
+								var selectedValue = $(this).val();
+
+								updateURL(selectedName, selectedValue, $(this), finalURL);
+							});
+						}
+					}
+
+                    if ( $(this).find('.wpr-gf-range-apply-btn').length > 0 && $(this).data('wpr-applied') == 'yes' ) {
+                        var selectedElement = $(this).find('.wpr-rf-control').find('input[type="number"]');
+                        var selectedValue = [];
+                        var selectedName = selectedElement.attr('name');
+
+                        selectedElement.each(function() {
+                            selectedValue.push($(this).val());
+                        });
+                        
+                        updateURL(selectedName, selectedValue, $(this).find('.wpr-gf-range-apply-btn'), finalURL);
+                    }
+
+					renderActiveFilters('ajax');
+                });
+
+				var widgetSelector = '#' + (self.closest('.wpr-grid-filters-wrap').data('widget-selector') || self.closest('.elementor-widget-wpr-grid').attr('id')),
+					targetGrid = $(widgetSelector).find('.wpr-grid');
+
+                // If not ajax relocate
+                if ( self.closest('.wpr-grid-filters-wrap').length > 0 && 'yes' !== self.closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                    window.location.href = finalURL;
+                } else {
+                    // Settings
+                    settings = targetGrid.attr( 'data-settings' );
+
+                    if ( typeof settings !== typeof undefined && settings !== false ) {
+                        settings = JSON.parse( targetGrid.attr( 'data-settings' ) );
+                    }
+                    
+                    // Create a URL object
+                    var url = new URL(finalURL);
+
+                    // Extract the search query parameters
+                    var queryParams = new URLSearchParams(url.search),
+						loader = '<div class="wpr-filters-loader-wrap"><div class="wpr-ring"><div></div><div></div><div></div><div></div></div></div>';
+
+                    // Convert queryParams into an object
+                    paramsObj = {};
+                    
+                    queryParams.forEach(function(value, key) {
+                        paramsObj[key] = value;
+                    });
+
+					if (targetGrid.data('isotopewpr')) {
+						// targetGrid.isotopewpr('remove', targetGrid.children());
+						// targetGrid.isotopewpr('destroy');
+						if ( $('body').find('.wpr-filters-loader-wrap').length == 0 ) {
+							// targetGrid.append(loader);
+						}
+					}
+
+					let debounceTimer;
+
+					// Loading
+					$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).hide();
+					
+					if ( triggerElement.hasClass('wpr-gf-remove-btn') ) {
+						paramsObj = {};
+					}
+
+					debounceAjaxCall(debounceTimer, paramsObj, targetGrid, settings, widgetSelector, triggerElement);
+                }
+            }
+
+			function updateGrid(data, cache, startvar, targetGrid, settings, widgetSelector) {
+
+				setTimeout(function() {
+					if ( !cache ) {
+						console.log('no cache');
+						$('body').find('.wpr-filters-loader-wrap').remove();
+					}
+			
+					// Ensure data is a jQuery object
+					var newItems = $(data.data.output);
+			
+					// Wait for images to load before layout
+					targetGrid.imagesLoaded(function() {
+						if ( cache ) {
+							targetGrid.removeClass( 'wpr-grid-cache' );
+							$('body').find('.wpr-filters-loader-wrap').remove();
+						}
+
+						targetGrid.isotopewpr('remove', targetGrid.children());
+						targetGrid.removeClass('wpr-grid-loading');
+			
+						// Append new items
+						targetGrid.append(newItems);
+						targetGrid.isotopewpr('appended', newItems).isotopewpr('layout');
+						WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+						WprElements.mediaHoverLink($scope, targetGrid);
+
+						if ( targetGrid.data('lightGallery') ) {
+							targetGrid.data( 'lightGallery' ).destroy( true );
+						}
+
+						setTimeout(function() {
+							WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+							WprElements.lightboxPopup( settings, $scope, targetGrid );
+							updateResultsCount(settings);
+
+							if ( data.data.found_posts > 0 && !(data.data.found_posts <= $(widgetSelector).find('.wpr-grid-item').length) ) {
+								if ( 'load-more' === settings.pagination_type ) {
+									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn();
+								}
+							} else {
+								$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).hide();
+								$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+								$(widgetSelector).find( '.wpr-grid-pagination' ).delay( 2000 ).fadeOut( 1000 );
+								setTimeout(function() {
+									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+								}, 500 );
+							}
+						}, 500);
+					});
+					const end = performance.now();
+					console.log(`AJAX call took ${end - startvar} ms`);
+				}, 500);
+			}
+
+			function debounceAjaxCall(debounceTimer, paramsObj, targetGrid, settings, widgetSelector, triggerElement = '') {
+
+				targetGrid.addClass('wpr-grid-loading');
+
+				clearTimeout(debounceTimer);
+
+				debounceTimer = setTimeout(function() {
+					// isDebounceAjaxCallRunning = true;
+					
+					const start = performance.now();
+					const cacheKey = 'wpr_grid_cache_' + JSON.stringify(paramsObj);
+
+					// Check if data is already cached
+					const cachedData = localStorage.getItem(cacheKey);
+					const expiryTime = 24 * 60 * 60 * 1000; // 24 hours
+					const now = new Date().getTime();
+
+					if (cachedData && 'goga' === 'droga') {
+						const cachedDataParsed = JSON.parse(cachedData);
+
+						if (cachedDataParsed && ((now - cachedDataParsed.timestamp) < expiryTime)) {
+
+							console.log((now - cachedDataParsed.timestamp), expiryTime);
+							
+							targetGrid.addClass( 'wpr-grid-cache' );
+							updateGrid((cachedDataParsed.data), true, start, targetGrid, settings, widgetSelector);
+							return;
+							// Use cached data
+						} else {
+							localStorage.removeItem(cacheKey);
+						}
+					}
+
+					if ( triggerElement.hasClass('wpr-load-more-btn') ) {
+						$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
+
+						settings.grid_settings.query_offset = +settings.grid_settings.query_offset + targetGrid.find('.wpr-grid-item').length;
+						$.ajax({
+							type: 'POST',
+							url: WprConfig.ajaxurl,
+							data: {
+								action: experimentActionContent,
+								nonce: WprConfig.nonce,
+								wpr_offset: +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length,
+								wpr_item_length: targetGrid.find('.wpr-grid-item').length,
+								grid_settings: settings.grid_settings,
+								wpr_url_params: paramsObj
+							},
+							success: function(response) { // GOGA: extend from filtersExperiment if/when needed
+								console.log(response.data);
+								pagesLoadedExperiment++;
+								// iGrid.css('opacity', 0);
+								var items = $(response.data.output)
+	
+								// $data.each(function() {
+								// 	$(this).addClass('wpr-grid-hidden-item');
+								// });
+						
+								targetGrid.infiniteScroll( 'appendItems', items );
+								targetGrid.isotopewpr( 'appended', items );
+								// isotopeFilters( settings ); // GOGA - if not images loaded
+	
+								items.imagesLoaded().progress( function( instance, image ) {
+									WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+		
+									// Fix Layout
+									setTimeout(function() {
+										WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+										// isotopeFilters( settings );
+									}, 100 );
+						
+									setTimeout(function() {
+										targetGrid.addClass( 'grid-images-loaded' );
+									}, 500 );
+								});
+								
+								if ( response.data.found_posts > 0 && response.data.found_posts > $(widgetSelector).find('.wpr-grid-item').length ) {
+									if ( 'load-more' === settings.pagination_type ) {
+										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn();
+									}
+								} else {
+									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+									$(widgetSelector).find( '.wpr-grid-pagination' ).delay( 2000 ).fadeOut( 1000 );
+									setTimeout(function() {
+										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+									}, 500 );
+								}
+		
+								// Init Likes
+								// No need for this anymore
+								// setTimeout(function() {
+								// 	postLikes( settings );
+								// }, 300 );
+		
+								// Init Lightbox
+								WprElements.lightboxPopup( settings, $(widgetSelector), targetGrid );
+		
+								// Fix Lightbox
+								targetGrid.data( 'lightGallery' ).destroy( true );
+								targetGrid.lightGallery( settings.lightbox );
+		
+								// Init Media Hover Link
+								WprElements.mediaHoverLink($scope, targetGrid);
+								targetGrid.removeClass('wpr-grid-loading');
+		
+								// Init Post Sharing
+								// postSharing();
+		
+								// lazyLoadObserver();
+								// Maybe there is some other way
+								window.dispatchEvent(new Event('resize'));
+								window.dispatchEvent(new Event('scroll'));
+								$(window).trigger('scroll');
+							},
+							error: function(error) {
+								console.log(error);
+							}
+						});
+					} else {
+						$.ajax({
+							type: 'POST',
+							url: WprConfig.ajaxurl,
+							data: {
+								action: experimentActionContent,
+								wpr_item_length: targetGrid.find('.wpr-grid-item').length,
+								grid_settings: settings.grid_settings,
+								wpr_url_params: paramsObj
+							},
+							success: function(response) { // GOGA: extend from filtersExperiment if/when needed
+								// Set item with expiration
+								const cacheData = {
+									data: response.data.output,
+									timestamp: new Date().getTime()
+								};
+	
+								// Cache the response
+								// localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+								updateGrid(response, false, start, targetGrid, settings, widgetSelector);
+
+								console.log(response.data.found_posts);
+
+								if ( response.data.found_posts > 0 ) {
+									if ( 'load-more' === settings.pagination_type ) {
+										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeOut( 1000 );
+										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn( 1000 );
+										$(widgetSelector).find( '.wpr-grid-pagination' ).delay( 2000 ).fadeIn( 1000 );
+									}
+								}
+							},
+							error: function(error) {
+								console.log(error);
+							}
+						});
+					}
+				}, 300); // Adjust timeout value based on the desired debounce delay
+			}
+		}, // End of widgetGridFilters
+
 		widgetPageCart: function($scope) {
 		}, // End of widgetPageCart
 
@@ -10987,6 +12083,523 @@
 
 		changeActionTargetProductId: function(productId) {
 			actionTargetProductId = productId;
+		},
+
+		changeFinalURL: function(url) {
+			finalURL = url;
+		},
+
+		// Isotope Layout
+		isotopeLayout: function ( settings, $response = '', $altScope = '', $scope = '' ) {
+			if ( '' != $altScope ) {
+				$scope = $altScope;
+			}
+
+			var grid = $scope.find( '.wpr-grid' ),
+				item = grid.find( '.wpr-grid-item' ),
+				itemVisible = item.filter( ':visible' ),
+				layout = settings.layout,
+				defaultLayout = settings.layout,
+				mediaAlign = settings.media_align,
+				mediaWidth = settings.media_width,
+				mediaDistance = settings.media_distance,
+				columns = 3,
+				columnsMobile = 1,
+				columnsMobileExtra,
+				columnsTablet = 2,
+				columnsTabletExtra,
+				columnsDesktop = parseInt(settings.columns_desktop, 10),
+				columnsLaptop,
+				columnsWideScreen,
+				gutterHr = settings.gutter_hr,
+				gutterVr = settings.gutter_vr,
+				gutterHrMobile = settings.gutter_hr_mobile,
+				gutterVrMobile = settings.gutter_vr_mobile,
+				gutterHrMobileExtra = settings.gutter_hr_mobile_extra,
+				gutterVrMobileExtra = settings.gutter_vr_mobile_extra,
+				gutterHrTablet = settings.gutter_hr_tablet,
+				gutterVrTablet = settings.gutter_vr_tablet,
+				gutterHrTabletExtra = settings.gutter_hr_tablet_extra,
+				gutterVrTabletExtra = settings.gutter_vr_tablet_extra,
+				gutterHrWideScreen = settings.gutter_hr_widescreen,
+				gutterVrWideScreen = settings.gutter_vr_widescreen,
+				gutterHrLaptop = settings.gutter_hr_laptop,
+				gutterVrLaptop = settings.gutter_vr_laptop,
+				contWidth = grid.width() + gutterHr - 0.3,
+				// viewportWidth = $( 'body' ).prop( 'clientWidth' ),
+				viewportWidth = $(window).outerWidth(),
+				defaultLayout,
+				transDuration = 400;
+
+				if ( $response != '' ) {
+					item = $response
+				}
+
+			// Get Responsive Columns
+			var prefixClass = $scope.attr('class'),
+				prefixClass = prefixClass.split(' ');
+
+			for ( var i=0; i < prefixClass.length - 1; i++ ) {
+
+				if ( -1 !== prefixClass[i].search(/mobile\d/) ) {
+					columnsMobile = prefixClass[i].slice(-1);
+				}
+
+				if ( -1 !== prefixClass[i].search(/mobile_extra\d/) ) {
+					columnsMobileExtra = prefixClass[i].slice(-1);
+				}
+
+				if ( -1 !== prefixClass[i].search(/tablet\d/) ) {
+					columnsTablet = prefixClass[i].slice(-1);
+				}
+
+				if ( -1 !== prefixClass[i].search(/tablet_extra\d/) ) {
+					columnsTabletExtra = prefixClass[i].slice(-1);
+				}
+
+				if ( -1 !== prefixClass[i].search(/widescreen\d/) ) {
+					columnsWideScreen = prefixClass[i].slice(-1);
+				}
+
+				if ( -1 !== prefixClass[i].search(/laptop\d/) ) {
+					columnsLaptop = prefixClass[i].slice(-1);
+				}
+			}
+
+			var MobileResp = +elementorFrontend.config.responsive.breakpoints.mobile.value;
+			var MobileExtraResp = +elementorFrontend.config.responsive.breakpoints.mobile_extra.value;
+			var TabletResp = +elementorFrontend.config.responsive.breakpoints.tablet.value;
+			var TabletExtraResp = +elementorFrontend.config.responsive.breakpoints.tablet_extra.value;
+			var LaptopResp = +elementorFrontend.config.responsive.breakpoints.laptop.value;
+			var wideScreenResp = +elementorFrontend.config.responsive.breakpoints.widescreen.value;
+
+			var activeBreakpoints = elementorFrontend.config.responsive.activeBreakpoints;
+
+			// Mobile
+			if ( MobileResp >= viewportWidth && activeBreakpoints.mobile != null ) {
+				columns = columnsMobile;
+				gutterHr = gutterHrMobile;
+				gutterVr = gutterVrMobile;
+
+			// Mobile Extra
+			} else if ( MobileExtraResp >= viewportWidth && activeBreakpoints.mobile_extra != null ) {
+				columns = (columnsMobileExtra) ? columnsMobileExtra : columnsTablet;
+				gutterHr = gutterHrMobileExtra;
+				gutterVr = gutterVrMobileExtra;
+
+			// Tablet
+			} else if ( TabletResp >= viewportWidth && activeBreakpoints.tablet != null ) {
+				columns = columnsTablet;
+				gutterHr = gutterHrTablet;
+				gutterVr = gutterVrTablet;
+
+			// Tablet Extra
+			} else if ( TabletExtraResp >= viewportWidth && activeBreakpoints.tablet_extra != null ) {
+				columns = (columnsTabletExtra) ? columnsTabletExtra : columnsTablet;
+				gutterHr = gutterHrTabletExtra;
+				gutterVr = gutterVrTabletExtra;
+
+			// Laptop
+			} else if ( LaptopResp >= viewportWidth && activeBreakpoints.laptop != null ) {
+				columns = (columnsLaptop) ? columnsLaptop : columnsDesktop;
+				gutterHr = gutterHrLaptop;
+				gutterVr = gutterVrLaptop;
+
+			// Desktop
+			} else if ( wideScreenResp > viewportWidth ) {
+				columns = columnsDesktop;
+				gutterHr = settings.gutter_hr;
+				gutterVr = settings.gutter_vr;
+			}  else {
+				columns = (columnsWideScreen) ? columnsWideScreen : columnsDesktop;
+				gutterHr = gutterHrWideScreen;
+				gutterVr = gutterVrWideScreen;
+			}
+
+			// Limit Columns for Higher Screens
+			if ( columns > 8 ) {
+				columns = 8;
+			}
+
+			if ( 'string' == typeof(columns) && -1 !== columns.indexOf('pro') ) {
+				columns = 3;
+			}
+
+			contWidth = grid.width() + gutterHr - 0.3;
+
+			// Calculate Item Width
+			item.outerWidth( Math.floor( contWidth / columns - gutterHr ) );
+
+			// Set Vertical Gutter
+			item.css( 'margin-bottom', gutterVr +'px' );
+
+			// Reset Vertical Gutter for 1 Column Layout
+			if ( 1 === columns ) {
+				item.last().css( 'margin-bottom', '0' );
+			}
+
+			// add last row & make all post equal height
+			var maxTop = -1;
+			itemVisible.each(function ( index ) {
+
+				// define
+				var thisHieght = $(this).outerHeight(),
+					thisTop = parseInt( $(this).css( 'top' ) , 10 );
+
+				// determine last row
+				if ( thisTop > maxTop ) {
+					maxTop = thisTop;
+				}
+				
+			});
+
+			if ( 'fitRows' === layout ) {
+				itemVisible.each(function() {
+					if ( parseInt( $(this).css( 'top' ) ) === maxTop  ) {
+						$(this).addClass( 'rf-last-row' );
+					}
+				});
+			}
+
+			// List Layout
+			if ( 'list' === layout ) {
+				var imageHeight = item.find( '.wpr-grid-image-wrap' ).outerHeight();
+					item.find( '.wpr-grid-item-below-content' ).css( 'min-height', imageHeight +'px' );
+
+				if ( $( 'body' ).prop( 'clientWidth' ) < 480 ) {
+
+					item.find( '.wpr-grid-media-wrap' ).css({
+						'float' : 'none',
+						'width' : '100%'
+					});
+
+					item.find( '.wpr-grid-item-below-content' ).css({
+						'float' : 'none',
+						'width' : '100%',
+					});
+
+					item.find( '.wpr-grid-image-wrap' ).css( 'padding', '0' );
+
+					item.find( '.wpr-grid-item-below-content' ).css( 'min-height', '0' );
+
+					if ( 'zigzag' === mediaAlign ) {
+						item.find( '[class*="elementor-repeater-item"]' ).css( 'text-align', 'center' );
+					}
+
+				} else {
+
+					if ( 'zigzag' !== mediaAlign ) {
+
+						item.find( '.wpr-grid-media-wrap' ).css({
+							'float' : mediaAlign,
+							'width' : mediaWidth +'%'
+						});
+
+						var listGutter = 'left' === mediaAlign ? 'margin-right' : 'margin-left';
+							item.find( '.wpr-grid-media-wrap' ).css( listGutter, mediaDistance +'px' );
+
+						item.find( '.wpr-grid-item-below-content' ).css({
+							'float' : mediaAlign,
+							'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
+						});
+
+					// Zig-zag
+					} else {
+						// Even
+						item.filter(':even').find( '.wpr-grid-media-wrap' ).css({
+							'float' : 'left',
+							'width' : mediaWidth +'%'
+						});
+						item.filter(':even').find( '.wpr-grid-item-below-content' ).css({
+							'float' : 'left',
+							'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
+						});
+						item.filter(':even').find( '.wpr-grid-media-wrap' ).css( 'margin-right', mediaDistance +'px' );
+
+						// Odd
+						item.filter(':odd').find( '.wpr-grid-media-wrap' ).css({
+							'float' : 'right',
+							'width' : mediaWidth +'%'
+						});
+						item.filter(':odd').find( '.wpr-grid-item-below-content' ).css({
+							'float' : 'right',
+							'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
+						});
+						item.filter(':odd').find( '.wpr-grid-media-wrap' ).css( 'margin-left', mediaDistance +'px' );
+
+						// Fix Elements Align
+						if ( ! grid.hasClass( 'wpr-grid-list-ready' ) ) {
+							item.each( function( index ) {
+								var element = $(this).find( '[class*="elementor-repeater-item"]' );
+
+								if ( index % 2 === 0 ) {
+									element.each(function() {
+										if ( ! $(this).hasClass( 'wpr-grid-item-align-center' ) ) {
+											if ( 'none' === $(this).css( 'float' ) ) {
+												$(this).css( 'text-align', 'left' );
+											} else {
+												$(this).css( 'float', 'left' );
+											}
+
+											var inner = $(this).find( '.inner-block' );
+										}
+									});
+								} else {
+									element.each(function( index ) {
+										if ( ! $(this).hasClass( 'wpr-grid-item-align-center' ) ) {
+											if ( 'none' === $(this).css( 'float' ) ) {
+												$(this).css( 'text-align', 'right' );
+											} else {
+												$(this).css( 'float', 'right' );
+											}
+
+											var inner = $(this).find( '.inner-block' );
+
+											if ( '0px' !== inner.css( 'margin-left' ) ) {
+												inner.css( 'margin-right', inner.css( 'margin-left' ) );
+												inner.css( 'margin-left', '0' );
+											}
+
+											// First Item
+											if ( 0 === index ) {
+												if ( '0px' !== inner.css( 'margin-right' ) ) {
+													inner.css( 'margin-left', inner.css( 'margin-right' ) );
+													inner.css( 'margin-right', '0' );
+												}
+											}
+										}
+									});
+								}
+							});
+
+						}
+
+						setTimeout(function() {
+							if ( ! grid.hasClass( 'wpr-grid-list-ready' ) ) {
+								grid.addClass( 'wpr-grid-list-ready' );
+							}
+						}, 500 );
+					}
+
+				}
+			}
+
+			// Set Layout
+			defaultLayout = layout;
+			if ( 'list' === layout ) {
+				layout = 'fitRows';
+			}
+
+			// No Transition
+			if ( 'default' !== settings.filters_animation ) {
+				transDuration = 0;
+			}
+
+			// Run Isotope
+			var iGrid = grid.isotopewpr({
+				layoutMode: layout,
+				masonry: {
+					// columnWidth: contWidth / columns,
+					gutter: gutterHr
+				},
+				fitRows: {
+					// columnWidth: contWidth / columns,
+					gutter: gutterHr
+				},
+				transitionDuration: transDuration,
+				  percentPosition: true
+			});
+		},
+
+		// Media Hover Link
+		mediaHoverLink: function ($scope, iGrid) {
+			var img;
+			var thisImgSrc;
+			let secondaryImg;
+			
+			iGrid.find('.wpr-grid-media-wrap').on('mouseover', function() {
+				if ( 'yes' === $(this).find('.wpr-grid-image-wrap').attr('data-img-on-hover') ) {
+					// img = $(this).find( 'img' );
+					// thisImgSrc = img.attr('src');
+					
+					// secondaryImg = $(this).find('.wpr-grid-image-wrap').data('src-secondary');
+					
+					// if ( isValidHttpUrl(secondaryImg) ) {
+					// 	img.attr( 'src', secondaryImg );
+					// }
+					
+					if ( $(this).find('img:nth-of-type(2)').attr('src') !== undefined && $(this).find('img:nth-of-type(2)').attr('src') !== '' ) {
+						// $(this).find('img:first-of-type').fadeOut(0).addClass('wpr-hidden-img');
+						// $(this).find('img:nth-of-type(2)').fadeIn(500).removeClass('wpr-hidden-img');
+						$(this).find('img:first-of-type').addClass('wpr-hidden-img');
+						$(this).find('img:nth-of-type(2)').removeClass('wpr-hidden-img');
+					}
+				}
+			});
+
+			iGrid.find('.wpr-grid-media-wrap').on('mouseleave', function() {
+				if ( 'yes' === $(this).find('.wpr-grid-image-wrap').attr('data-img-on-hover') ) {
+					// if ( secondaryImg == img.attr('src') ) {
+					// 	img.attr('src', thisImgSrc);
+					// }
+
+					if ( $(this).find('img:nth-of-type(2)').attr('src') !== undefined && $(this).find('img:nth-of-type(2)').attr('src') !== '' ) {
+						// $(this).find('img:nth-of-type(2)').fadeOut(0).addClass('wpr-hidden-img');
+						// $(this).find('img:first-of-type').fadeIn(500).removeClass('wpr-hidden-img');
+						$(this).find('img:nth-of-type(2)').addClass('wpr-hidden-img');
+						$(this).find('img:first-of-type').removeClass('wpr-hidden-img');
+					}
+				}
+			});
+
+			if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
+				iGrid.find( '.wpr-grid-media-wrap' ).css('cursor', 'pointer');
+
+				iGrid.find( '.wpr-grid-media-wrap' ).on( 'click', function( event ) {
+
+					var targetClass = event.target.className;
+
+					if ( -1 !== targetClass.indexOf( 'inner-block' ) || -1 !== targetClass.indexOf( 'wpr-cv-inner' ) || 
+							-1 !== targetClass.indexOf( 'wpr-grid-media-hover' ) ) {
+							event.preventDefault();
+							event.stopPropagation();
+
+						var itemUrl = $(this).find( '.wpr-grid-media-hover-bg' ).attr( 'data-url' ),
+							itemUrl = itemUrl.replace('#new_tab', '');
+
+						if (itemUrl) {
+							try {
+								// Create a URL object to validate the URL
+								var url = new URL(itemUrl);
+
+								// Define a list of allowed protocols
+								var allowedProtocols = ['http:', 'https:'];
+
+								// Check if the URL's protocol is allowed
+								if (allowedProtocols.includes(url.protocol)) {
+									// Safe to use the URL
+									var safeUrl = url.href;
+
+									if ('_blank' === iGrid.find('.wpr-grid-item-title a').attr('target')) {
+										window.open(safeUrl, '_blank').focus();
+									} else {
+										window.location.href = safeUrl;
+									}
+								} else {
+									console.error('Invalid URL scheme:', url.protocol);
+								}
+							} catch (e) {
+								console.error('Invalid URL:', itemUrl);
+							}
+						}
+					}
+				});
+			}				
+		},
+
+		// Lightbox Popup
+		lightboxPopup: function ( settings, $scope, iGrid ) {
+			if ( -1 === iGrid.find( '.wpr-grid-item-lightbox' ).length ) {
+				return;
+			}
+
+			var lightbox = iGrid.find( '.wpr-grid-item-lightbox' ),
+				lightboxOverlay = lightbox.find( '.wpr-grid-lightbox-overlay' ).first();
+
+			// Set Src Attributes
+			lightbox.each(function() {
+				var source = $(this).find('.inner-block > span').attr( 'data-src' ),
+					gridItem = $(this).closest( 'article' ).not('.slick-cloned');
+
+				if ( ! iGrid.hasClass( 'wpr-media-grid' ) ) {
+					gridItem.find( '.wpr-grid-image-wrap' ).attr( 'data-src', source );
+				}
+
+				var dataSource = gridItem.find( '.wpr-grid-image-wrap' ).attr( 'data-src' );
+
+				if ( typeof dataSource !== typeof undefined && dataSource !== false ) {
+					if ( -1 === dataSource.indexOf( 'wp-content' ) ) {
+						gridItem.find( '.wpr-grid-image-wrap' ).attr( 'data-iframe', 'true' );
+					}
+				}
+			});
+
+			// Init Lightbox
+			iGrid.lightGallery( settings.lightbox );
+
+			// Fix LightGallery Thumbnails
+			iGrid.on('onAfterOpen.lg',function() {
+				if ( $('.lg-outer').find('.lg-thumb-item').length ) {
+					$('.lg-outer').find('.lg-thumb-item').each(function() {
+						var imgSrc = $(this).find('img').attr('src'),
+							newImgSrc = imgSrc,
+							extIndex = imgSrc.lastIndexOf('.'),
+							imgExt = imgSrc.slice(extIndex),
+							cropIndex = imgSrc.lastIndexOf('-'),
+							cropSize = /\d{3,}x\d{3,}/.test(imgSrc.substring(extIndex,cropIndex)) ? imgSrc.substring(extIndex,cropIndex) : false;
+						
+						if ( 42 <= imgSrc.substring(extIndex,cropIndex).length ) {
+							cropSize = '';
+						}
+
+						if ( cropSize !== '' ) {
+							if ( false !== cropSize ) {
+								newImgSrc = imgSrc.replace(cropSize, '-150x150');
+							} else {
+								newImgSrc = [imgSrc.slice(0, extIndex), '-150x150', imgSrc.slice(extIndex)].join('');
+							}
+						}
+
+						// Change SRC
+						$(this).find('img').attr('src', newImgSrc);
+					});
+				}
+			});
+
+			// Show/Hide Controls
+			iGrid.find( '.wpr-grid' ).on( 'onAferAppendSlide.lg, onAfterSlide.lg', function( event, prevIndex, index ) {
+				var lightboxControls = $( '#lg-actual-size, #lg-zoom-in, #lg-zoom-out, #lg-download' ),
+					lightboxDownload = $( '#lg-download' ).attr( 'href' );
+
+				if ( $( '#lg-download' ).length ) {
+					if ( -1 === lightboxDownload.indexOf( 'wp-content' ) ) {
+						lightboxControls.addClass( 'wpr-hidden-element' );
+					} else {
+						lightboxControls.removeClass( 'wpr-hidden-element' );
+					}
+				}
+
+				// Autoplay Button
+				if ( '' === settings.lightbox.autoplay ) {
+					$( '.lg-autoplay-button' ).css({
+							'width' : '0',
+							'height' : '0',
+							'overflow' : 'hidden'
+					});
+				}
+			});
+
+			// Overlay
+			if ( lightboxOverlay.length ) {
+				iGrid.find( '.wpr-grid-media-hover-bg' ).after( lightboxOverlay.remove() );
+
+				iGrid.find( '.wpr-grid-lightbox-overlay' ).on( 'click', function() {
+					if ( ! WprElements.editorCheck() ) {
+						$(this).closest( 'article' ).find( '.wpr-grid-image-wrap' ).trigger( 'click' );
+					} else {
+						alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
+					}
+				});
+			} else {
+				lightbox.find( '.inner-block > span' ).on( 'click', function() {
+					if ( ! WprElements.editorCheck() ) {
+						var imageWrap = $(this).closest( 'article' ).find( '.wpr-grid-image-wrap' );
+							imageWrap.trigger( 'click' );
+					} else {
+						alert( 'Lightbox is Disabled in the Editor! Please Preview this Page to see it in action.' );
+					}
+				});
+			}
 		}
 	
 	} // End WprElements
