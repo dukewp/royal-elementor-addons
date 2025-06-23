@@ -3414,6 +3414,29 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'notice_distance',
+			[
+				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-notice' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Section: Request New Feature
