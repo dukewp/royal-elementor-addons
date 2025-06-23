@@ -665,6 +665,7 @@ function wpr_reset_previous_import() {
 function import_elementor_site_settings( $kit ) {
     // Avoid Cache
     // $randomNum = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ"), 0, 7);
+    update_option('elementor_experiment-e_local_google_fonts', 'inactive');
 
     // Get Remote File
     $site_settings = @file_get_contents('https://royal-elementor-addons.com/library/templates-kit/'. $kit .'/site-settings.json');
