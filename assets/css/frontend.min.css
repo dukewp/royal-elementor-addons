@@ -17449,6 +17449,11 @@ dl.variation dd {
     height: 0;
 }
 
+.wpr-gf-visual-term {
+    display: inline-block;
+    margin: 5px;
+}
+
 .wpr-gf-visual {
     cursor: pointer;
     display: inline-block;
