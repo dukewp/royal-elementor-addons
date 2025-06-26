@@ -8702,7 +8702,6 @@ class Wpr_Grid extends Widget_Base {
 			'download' => $settings['lightbox_popup_download'],
 		];
 
-		// $layout_settings['grid_settings'] = [esc_attr( json_encode( $settings ) )];
 		if ( 'yes' === $settings['filters_experiment'] ) {
 			$layout_settings['grid_settings'] = [
 				// General Settings

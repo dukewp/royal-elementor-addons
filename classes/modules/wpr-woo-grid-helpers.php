@@ -2062,8 +2062,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public function wpr_woo_grid_filters_ajax() {
+		$start = microtime(true);
 		// Get Settings
 		$settings = $_POST['grid_settings'];
+
+		ob_start();
 
 		// Get Posts
 		$posts = new \WP_Query( $this->get_main_query_args() );
@@ -2122,8 +2125,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Loop: End
 		endif;
+
+		// Get the buffered content
+		$output = ob_get_clean();
 	
-		die();
+		// Return the output
+		$end = microtime(true);
+		$duration = round(($end - $start) * 1000, 2); // in ms
+		wp_send_json_success([
+			'output' => $output,
+			'duration' => $duration,
+			'found_posts' => $posts->found_posts
+		]);
+
+		wp_die();
 	}
 
 }
