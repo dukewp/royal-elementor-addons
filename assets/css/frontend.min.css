@@ -19157,6 +19157,7 @@ input.wpr-date-filter-end {
 }
 
 .wpr-custom-styles-yes .wpr-gf-checkbox-group .wpr-checked input[type="checkbox"]+label::before,
+.wpr-custom-styles-yes .wpr-gf-checkbox-group input[type="checkbox"]:checked+label::before,
 .wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option.wpr-checked label::before {
   content: "\2713" !important;
 }
@@ -19180,6 +19181,7 @@ input.wpr-date-filter-end {
 }
 
 .wpr-custom-styles-yes .wpr-gf-checkbox-group .wpr-checked input[type="radio"]+label::before,
+.wpr-custom-styles-yes .wpr-gf-checkbox-group input[type="radio"]:checked+label::before,
 .wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option.wpr-checked label::before {
     content: "⬤" !important;
 }
