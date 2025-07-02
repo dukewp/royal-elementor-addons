@@ -18888,12 +18888,12 @@ dl.variation dd {
   cursor: pointer;
 }
 
-.wpr-custom-styles-yes .wpr-gf-checkbox-group .wpr-checked input[type="checkbox"]+label::before,
+.wpr-custom-styles-yes .wpr-af-checkbox-group .wpr-checked input[type="checkbox"]+label::before,
 .wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option.wpr-checked label::before {
   content: "\2713" !important;
 }
 
-.wpr-custom-styles-yes .wpr-gf-checkbox-group input[type="radio"]+label::before,
+.wpr-custom-styles-yes .wpr-af-checkbox-group input[type="radio"]+label::before,
 .wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option label::before {
     content: "" !important;
     left: 0;
@@ -18911,7 +18911,7 @@ dl.variation dd {
     cursor: pointer;
 }
 
-.wpr-custom-styles-yes .wpr-gf-checkbox-group .wpr-checked input[type="radio"]+label::before,
+.wpr-custom-styles-yes .wpr-af-checkbox-group .wpr-checked input[type="radio"]+label::before,
 .wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option.wpr-checked label::before {
     content: "⬤" !important;
 }
