@@ -10204,7 +10204,7 @@
 				rangeFilter = $scope.find('.wpr-range-container'),
 				viewMoreLess = $scope.find('.wpr-view-more-less'),
 				datePickers = [],
-                actionSelector = '#' + $scope.find('.wpr-grid-filters-wrap').data('widget-selector'),
+                actionSelector = '#' + $scope.find('.wpr-advanced-filters-wrap').data('widget-selector'),
 				experimentActionCount = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ? 'wpr_get_filtered_count_products' : 'wpr_get_filtered_count_posts',
 				experimentActionContent = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ?  'wpr_woo_grid_filters_ajax' : 'wpr_grid_filters_ajax',
 				settings,
@@ -10267,7 +10267,7 @@
 						$(elem).attr('data-date-val', formattedDate);
 
 						// Check if AJAX filters are enabled and trigger accordingly
-						if ('yes' == $(elem).closest('.wpr-grid-filters-wrap').data('enable-ajax')) {
+						if ('yes' == $(elem).closest('.wpr-advanced-filters-wrap').data('enable-ajax')) {
 							ajaxFilters($(elem));
 						} else {
 							updateURL(selectedName, selectedValue, $(elem));
@@ -10303,13 +10303,13 @@
 			function initDependentSelect($scope) {
 				var mainSelect = $scope.find('.wpr-main-select-filter'),
 					dependentSelects = $scope.find('.wpr-dependent-select'),
-					noneLabel = $scope.find('.wpr-grid-filters-wrap').data('none-label') || 'None';
+					noneLabel = $scope.find('.wpr-advanced-filters-wrap').data('none-label') || 'None';
 
 
 				// Handle main select change
 				mainSelect.on('change', function() {
 					var selectedValue = $(this).val();
-					var taxonomy = $(this).closest('.wpr-grid-filters-wrap').find('.wpr-dependent-select').first().data('taxonomy');
+					var taxonomy = $(this).closest('.wpr-advanced-filters-wrap').find('.wpr-dependent-select').first().data('taxonomy');
 					var relatedTax = $(this).data('taxonomy');
 
 					// Reset and disable all dependent selects
@@ -10404,7 +10404,7 @@
 			}
 			
 			function applyButton() {
-				let widgetSelector = $('#' + $(document).find('.wpr-grid-filters-wrap').data('widget-selector'));
+				let widgetSelector = $('#' + $(document).find('.wpr-advanced-filters-wrap').data('widget-selector'));
 
 				if ( $('.wpr-gf-apply-btn').length > 0 ) {
 					$('.wpr-gf-apply-btn').on('click', function() {
@@ -10513,7 +10513,7 @@
 					// Join the base URL and updated parameters
 					var updatedUrl = baseUrl + (updatedParams.length > 0 ? '?' + updatedParams.join('&') : '');
 			
-					if ( $('.wpr-gf-active-filters').closest('.wpr-grid-filters-wrap').data('enable-ajax') == 'yes' ) {
+					if ( $('.wpr-gf-active-filters').closest('.wpr-advanced-filters-wrap').data('enable-ajax') == 'yes' ) {
 
 						let matchingVisualFilter = $('body').find('*[data-replace-value="'+ thisEl.data('value') +'"]');
 
@@ -10572,7 +10572,7 @@
 						activeFilters.prepend(activeExample);
 					}
 	
-					$('.wpr-grid-filters-wrap').each(function () {
+					$('.wpr-advanced-filters-wrap').each(function () {
 						var label = $(this).find('h4').text().trim();
 						var values = [];
 					
@@ -10710,7 +10710,7 @@
 						var selectedName = $(this).attr('name'),
                             selectedValue = $(this).val();
 
-                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                        if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
                             ajaxFilters($(this));
                         } else {
 						    updateURL(selectedName, selectedValue, $(this));
@@ -10739,7 +10739,7 @@
 						var selectedName = $(this).attr('name'),
                             selectedValue = $(this).val();
 
-                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                        if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
                             ajaxFilters($(this));
                         } else {
 						    updateURL(selectedName, selectedValue, $(this));
@@ -10749,7 +10749,7 @@
 					$scope.find('select').on('change', function() {
 						var selectedName = $(this).attr('name');
 						var selectedValue = $(this).val();
-                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                        if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
                             ajaxFilters($(this));
                         } else {
 						    updateURL(selectedName, selectedValue, $(this));
@@ -10767,8 +10767,8 @@
 							selectedValue.push($(this).val());
 						});
 		
-                        if ( 'yes' == $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
-							$(this).closest('.wpr-grid-filters-wrap').attr('data-wpr-applied', 'yes');
+                        if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
+							$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
                             ajaxFilters($(this));
                         } else {
 						    updateURL(selectedName, selectedValue, $(this));
@@ -10790,11 +10790,11 @@
 				
 				if ( $('.wpr-gf-apply-btn').length > 0 ) {
 					currentURL = finalURL;
-					dataRelation = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-relation');
-					dataFilterType = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-filter-type');
+					dataRelation = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation');
+					dataFilterType = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-filter-type');
 				} else {
-					dataRelation = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-relation');
-					dataFilterType = element.closest('.wpr-grid-filters-wrap').attr('data-wpr-filter-type');
+					dataRelation = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation');
+					dataFilterType = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-filter-type');
 				}
 
 				const url = new URL(currentURL);
@@ -10989,7 +10989,7 @@
 				}
 
 				// Replace the current URL with the updated one
-				if ( $('.wpr-gf-apply-btn').length == 0 && 'yes' !== element.closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+				if ( $('.wpr-gf-apply-btn').length == 0 && 'yes' !== element.closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
 					window.location.href = url.toString();
 				} else {
 					if ( $('.wpr-gf-apply-btn').length > 0 && $('.wpr-gf-apply-btn').data('redirect-url') != '#' ) {
@@ -11106,21 +11106,21 @@
 						}
 					});
 					
-					if ( 'yes' !== $(this).closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+					if ( 'yes' !== $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
 						// Redirect to the new URL
 						window.location.href = currentUrl.toString();
 					} else {
-						// let rangeMin = $('body').find('.wpr-grid-filters-wrap .wpr-range-container').find('input[type="number"].wpr-rf-control-min-input');
-						// let rangeMax = $('body').find('.wpr-grid-filters-wrap .wpr-range-container').find('input[type="number"].wpr-rf-control-max-input');
+						// let rangeMin = $('body').find('.wpr-advanced-filters-wrap .wpr-range-container').find('input[type="number"].wpr-rf-control-min-input');
+						// let rangeMax = $('body').find('.wpr-advanced-filters-wrap .wpr-range-container').find('input[type="number"].wpr-rf-control-max-input');
 
 						// rangeMin.val(rangeMin.attr('min')).trigger('input');
 						// rangeMax.val(rangeMax.attr('max')).trigger('input');
 
 						// // Reset all select elements to their default option (usually the first option)
-						// $('body').find('.wpr-grid-filters-wrap').find('select').prop('selectedIndex', 0).trigger('change');
+						// $('body').find('.wpr-advanced-filters-wrap').find('select').prop('selectedIndex', 0).trigger('change');
 
 						// // Uncheck only checked checkboxes and radio buttons
-						// $('body').find('.wpr-grid-filters-wrap').find('input[type="checkbox"]:checked, input[type="radio"]:checked').prop('checked', false).trigger('change');
+						// $('body').find('.wpr-advanced-filters-wrap').find('input[type="checkbox"]:checked, input[type="radio"]:checked').prop('checked', false).trigger('change');
 
 						// // Reset all date inputs to empty
 						// $('body').find('span.wpr-remove-filter').remove();
@@ -11143,7 +11143,7 @@
 				let paramsArray = [];
 				let elementsToUpdate = [];
 			
-				$('.wpr-grid-filters-wrap').each(function () {
+				$('.wpr-advanced-filters-wrap').each(function () {
 					const $wrap = $(this);
 			
 					if (
@@ -11220,7 +11220,7 @@
 			
 								const $el = $(element);
 
-								if ($el.closest('.wpr-grid-filters-wrap').attr('data-wpr-relation') == 'or') {
+								if ($el.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation') == 'or') {
 									if ( $el.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope) ) {
 										return true;
 									}
@@ -11244,14 +11244,14 @@
 
 								// Disable element if count is 0 and data-empty-action is set to disable
 								if (dataEntry.found_posts === 0) {
-									if ($el.closest('.wpr-grid-filters-wrap').attr('data-empty-action') === 'hide') {
+									if ($el.closest('.wpr-advanced-filters-wrap').attr('data-empty-action') === 'hide') {
 										if ( $el.attr('value') != 0 ) {
 											$el.hide();
 											if ($el.is(':checkbox') || $el.is(':radio')) {
 												$el.closest('.wpr-gf-input-wrap').hide();
 											}
 										}
-									} else if ($el.closest('.wpr-grid-filters-wrap').attr('data-empty-action') === 'disable') {
+									} else if ($el.closest('.wpr-advanced-filters-wrap').attr('data-empty-action') === 'disable') {
 										$el.prop('disabled', true);
 									}
 								} else {
@@ -11278,7 +11278,7 @@
 					activeFilters.removeClass('wpr-hidden-element');
 				}
 
-                $('.wpr-grid-filters-wrap').each(function() {
+                $('.wpr-advanced-filters-wrap').each(function() {
                     if ( $(this).find('input[type="checkbox"], input[type="radio"]').length > 0 ) {
                         $(this).find('input[type="checkbox"], input[type="radio"]').each(function() {
                                 let isRadioChecked = true;
@@ -11361,11 +11361,11 @@
 					renderActiveFilters('ajax');
                 });
 
-				var widgetSelector = '#' + (self.closest('.wpr-grid-filters-wrap').data('widget-selector') || self.closest('.elementor-widget-wpr-grid').attr('id')),
+				var widgetSelector = '#' + (self.closest('.wpr-advanced-filters-wrap').data('widget-selector') || self.closest('.elementor-widget-wpr-grid').attr('id')),
 					targetGrid = $(widgetSelector).find('.wpr-grid');
 
                 // If not ajax relocate
-                if ( self.closest('.wpr-grid-filters-wrap').length > 0 && 'yes' !== self.closest('.wpr-grid-filters-wrap').data('enable-ajax') ) {
+                if ( self.closest('.wpr-advanced-filters-wrap').length > 0 && 'yes' !== self.closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
                     window.location.href = finalURL;
                 } else {
                     // Settings
