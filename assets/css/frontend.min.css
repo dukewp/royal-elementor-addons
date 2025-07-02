@@ -17593,17 +17593,17 @@ input.wpr-date-filter-end {
     cursor: pointer;
 }
 
-[class^="wpr-af-wrap-"] {
+[class^="wpr-af-active-wrap-"] {
     display: inline-block;
     padding: 5px;
     border: 1px solid #333222;
 }
 
-[class^="wpr-af-wrap-"] span {
+[class^="wpr-af-active-wrap-"] span {
     display: inline-block;
 }
 
-[class^="wpr-af-wrap-"]:empty {
+[class^="wpr-af-active-wrap-"]:empty {
     display: none;
 }
 
