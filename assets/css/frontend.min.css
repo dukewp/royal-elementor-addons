@@ -17447,12 +17447,12 @@ dl.variation dd {
     opacity: 0.7 !important;
 }
 
-.wpr-afv-wrap {
+.wpr-af-visual-wrap {
     display: flex;
     flex-wrap: wrap;
 }
 
-.wpr-afv-wrap .wpr-af-input-wrap {
+.wpr-af-visual-wrap .wpr-af-input-wrap {
     opacity: 0;
     width: 0;
     height: 0;
@@ -17487,13 +17487,13 @@ img.wpr-af-visual-active {
     display: inline-block;
 }
 
-.wpr-afv-wrap img {
+.wpr-af-visual-wrap img {
     filter: opacity(0.7) grayscale(50%);
     display: block;
     height: auto;
 }
 
-.wpr-afv-wrap img.wpr-af-visual-active {
+.wpr-af-visual-wrap img.wpr-af-visual-active {
     filter: none;
 }
 
@@ -17564,7 +17564,41 @@ img.wpr-af-visual-active {
 }
 
 .wpr-range-container [id^="wpr-to-slider-"]input[type=range] {
-    transform: translateY(-50%) !important;
+    /* transform: translateY(-50%) !important; */
+}
+
+/* Base track */
+.wpr-slider-track-bg {
+	position: absolute;
+	left: 0;
+	width: 100%;
+}
+
+/* Filled (active) range */
+.wpr-slider-fill {
+	position: absolute;
+    width: 100%;
+}
+
+/* Range sliders */
+input[type=range].wpr-from-slider,
+input[type=range].wpr-to-slider {
+	position: absolute;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+/* Hide native track */
+input[type=range]::-webkit-slider-runnable-track {
+	background: transparent;
+}
+
+input[type=range]::-moz-range-track {
+	background: transparent;
 }
 
 /* View More Less */
