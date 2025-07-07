@@ -4043,7 +4043,7 @@ class Wpr_Form_Builder extends Widget_Base {
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
 							case 'step':
-								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. esc_attr( $item['field_id'] ) .' value='. $item['field_label'] .'>';
+								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. esc_attr( $item['field_id'] ) .' value='. esc_attr( $item['field_label'] ) .'>';
 								break;
 							default:
 								$field_type = $item['field_type'];
