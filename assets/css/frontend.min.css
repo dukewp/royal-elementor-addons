@@ -17439,6 +17439,10 @@ dl.variation dd {
     flex-direction: column;
 }
 
+.wpr-af-check-radio-group.wpr-advanced-filters-inner {
+    flex-wrap: wrap;
+}
+
 .wpr-af-filters-label {
     margin: 0;
 }
@@ -17604,6 +17608,7 @@ input[type=range]::-moz-range-track {
 /* View More Less */
 .wpr-view-ml-wrap {
     display: block;
+    width: 100% !important;
     text-align: center;
 }
 
