@@ -2304,7 +2304,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'menu_id' => 'menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',
-			'walker' => new \Wpr_Main_Menu_Walker(),
+			'walker' => new \Wpr_Main_Menu_Walker($settings['menu_item_highlight']),
 		];
 
 		// Add Custom Filters
@@ -2320,7 +2320,7 @@ class Wpr_Mega_Menu extends Widget_Base {
 			'menu_id' => 'mobile-menu-'. $this->get_nav_menu_index() .'-'. $this->get_id(),
 			'container' => '',
 			'fallback_cb' => '__return_empty_string',
-			'walker' => new \Wpr_Mobile_Menu_Walker(),
+			'walker' => new \Wpr_Mobile_Menu_Walker($settings['mobile_menu_highlight']),
 		];
 
 		// Retrieve Image Alt Text

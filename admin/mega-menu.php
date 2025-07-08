@@ -123,11 +123,6 @@ function render_settings_popup() {
             <div class="wpr-mm-settings-wrap" <?php echo $pro_active; ?>>
                 <h4><?php esc_html_e('General', 'wpr-addons'); ?></h4>
                 <div class="wpr-mm-setting wpr-mm-setting-switcher">
-                    <h4><?php esc_html_e('Highlight Active Item', 'wpr-addons'); ?></h4>
-                    <input type="checkbox" id="wpr_mm_highlight_active">
-                    <label for="wpr_mm_highlight_active"></label>
-                </div>
-                <div class="wpr-mm-setting wpr-mm-setting-switcher">
                     <h4><?php esc_html_e('Enable Mega Menu', 'wpr-addons'); ?></h4>
                     <input type="checkbox" id="wpr_mm_enable">
                     <label for="wpr_mm_enable"></label>
