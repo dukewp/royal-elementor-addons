@@ -89,7 +89,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 
         $item_a_class = 'wpr-menu-item wpr-pointer-item';
 
-		if ( in_array( 'current-menu-item', $item->classes ) && 'true' === $settings['wpr_mm_highlight_active'] ) {
+		if ( in_array( 'current-menu-item', $item->classes ) && (isset($settings['wpr_mm_highlight_active']) && 'true' === $settings['wpr_mm_highlight_active']) ) {
 			$item_a_class .= ' wpr-active-menu-item';
 		}
 		
@@ -99,7 +99,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 				$submenu_icon = '';
 				// Parent Item
 				if ( in_array( 'menu-item-has-children', $item->classes ) || $this->has_mega_menu( $item->ID ) ) {
-					if ( ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) && 'true' === $settings['wpr_mm_highlight_active'] ) {
+					if ( ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) && (isset($settings['wpr_mm_highlight_active']) && 'true' === $settings['wpr_mm_highlight_active']) ) {
 						$item_a_class .= ' wpr-active-menu-item';
 					}
 
@@ -115,7 +115,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 				if ( $depth > 0 ) {
 					$item_a_class = 'wpr-sub-menu-item';
 
-					if ( ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) && 'true' === $settings['wpr_mm_highlight_active'] ) {
+					if ( ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) && (isset($settings['wpr_mm_highlight_active']) && 'true' === $settings['wpr_mm_highlight_active']) ) {
 						$item_a_class .= ' wpr-active-menu-item';
 					}
 				}
