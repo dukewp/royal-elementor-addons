@@ -17457,9 +17457,7 @@ dl.variation dd {
 }
 
 .wpr-af-visual-wrap .wpr-af-input-wrap {
-    opacity: 0;
-    width: 0;
-    height: 0;
+    /* display: none; */
 }
 
 .wpr-af-visual-term {
@@ -17470,21 +17468,13 @@ dl.variation dd {
 .wpr-af-visual {
     cursor: pointer;
     display: inline-block;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; 
-    margin: 5px;
+    width: 25px;
+    height: 25px;
 }
 
 .wpr-af-visual-active,
 img.wpr-af-visual-active {
     border: 2px solid fuchsia;
-}
-
-.wpr-af-visual-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .wpr-af-visual-title {
