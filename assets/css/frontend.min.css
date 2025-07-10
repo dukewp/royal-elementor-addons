@@ -17501,8 +17501,9 @@ img.wpr-af-visual-active {
     filter: none;
 }
 
-.wpr-advanced-filters-wrap .wpr-af-input-wrap input {
+.wpr-advanced-filters-wrap .wpr-af-input-wrap {
     cursor: pointer;
+    user-select: none;
 }
 
 /* Range */
@@ -19144,6 +19145,7 @@ input.wpr-date-filter-end {
 .wpr-custom-styles-yes .wpr-af-check-radio-group input {
     opacity: 0;
     position: absolute;
+    cursor: pointer;
 }
 .wpr-custom-styles-yes .wpr-form-field-type-checkbox input,
 .wpr-custom-styles-yes .wpr-form-field-type-radio input {
@@ -19152,7 +19154,7 @@ input.wpr-date-filter-end {
     z-index: -1;
 }
 
-.wpr-custom-styles-yes .wpr-af-check-radio-group label,
+.wpr-custom-styles-yes .wpr-af-check-radio-group .wpr-af-term-name,
 .wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option label,
 .wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option label {
     display: -webkit-box !important;
@@ -19166,7 +19168,7 @@ input.wpr-date-filter-end {
             align-items: center;
 }
 
-.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="checkbox"]+label::before,
+.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="checkbox"]+.wpr-af-term-name::before,
 .wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option label::before {
   content: "" !important;
   left: 0;
@@ -19183,13 +19185,15 @@ input.wpr-date-filter-end {
   cursor: pointer;
 }
 
-.wpr-custom-styles-yes .wpr-af-check-radio-group .wpr-checked input[type="checkbox"]+label::before,
-.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="checkbox"]:checked+label::before,
+.wpr-custom-styles-yes .wpr-af-check-radio-group .wpr-checked input[type="checkbox"]+.wpr-af-term-name::before,
+.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="checkbox"]:checked+.wpr-af-term-name::before,
+.wpr-custom-styles-yes .wpr-af-check-radio-group .wpr-checked input[type="radio"]+.wpr-af-term-name::before,
+.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="radio"]:checked+.wpr-af-term-name::before,
 .wpr-custom-styles-yes .wpr-form-field-type-checkbox .wpr-form-field-option.wpr-checked label::before {
   content: "\2713" !important;
 }
 
-.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="radio"]+label::before,
+.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="radio"]+.wpr-af-term-name::before,
 .wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option label::before {
     content: "" !important;
     left: 0;
@@ -19203,14 +19207,20 @@ input.wpr-date-filter-end {
         -ms-flex-pack: center;
             justify-content: center;
     border: 1px solid black;
-    border-radius: 50%;
     cursor: pointer;
 }
 
-.wpr-custom-styles-yes .wpr-af-check-radio-group .wpr-checked input[type="radio"]+label::before,
-.wpr-custom-styles-yes .wpr-af-check-radio-group input[type="radio"]:checked+label::before,
+.wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option label::before {
+    border-radius: 50%;
+}
+
 .wpr-custom-styles-yes .wpr-form-field-type-radio .wpr-form-field-option.wpr-checked label::before {
     content: "⬤" !important;
+}
+
+.wpr-af-hide-input-yes .wpr-af-check-radio-group input,
+.wpr-af-hide-input-yes .wpr-af-check-radio-group input+.wpr-af-term-name::before {
+    display: none !important;
 }
 
 .wpr-file-type-error {
