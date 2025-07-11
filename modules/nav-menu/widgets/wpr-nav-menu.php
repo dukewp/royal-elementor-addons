@@ -1737,9 +1737,9 @@ class Wpr_Nav_Menu extends Widget_Base {
 				}
 
 				// Add Sub Menu Icon
-				$output  ='<a href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. esc_html($item->title);
+				// $output  ='<a aria-haspopup="true" aria-expanded="false" href="'. esc_url($item->url) .'" class="'. esc_attr($item_class) .'">'. esc_html($item->title);
 				// GOGA: render language switcher correctly
-				$output = '<a href="' . esc_url($item->url) . '" class="' . esc_attr($item_class) . '">'
+				$output = '<a aria-haspopup="true" aria-expanded="false" href="' . esc_url($item->url) . '" class="' . esc_attr($item_class) . '">'
 							. wp_kses($item->title, array(
 								'span' => array('class' => array()), // Allow <span> tags with class attribute
 								'a' => array( // Allow <a> tags with specified attributes
