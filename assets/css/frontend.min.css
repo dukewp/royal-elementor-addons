@@ -17466,6 +17466,10 @@ dl.variation dd {
     overflow: hidden;
 }
 
+.wpr-af-visual-wrap * {
+    cursor: pointer;
+}
+
 .wpr-af-visual-wrap {
     display: flex;
     flex-direction: row-reverse;
