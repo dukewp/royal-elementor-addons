@@ -17487,32 +17487,25 @@ dl.variation dd {
 
 /* Range */
 .wpr-range-container {
-    display: flex !important;
-    flex-direction: column !important;
+    display: flex;
+    flex-direction: column;
 }
 
 .wpr-range-container .wpr-rs-control {
-    position: relative !important;
-    margin-bottom: 10px;
+    position: relative;
 }
 
 .wpr-range-container .wpr-rf-control {
-    position: relative !important;
-    display: flex !important;
-    justify-content: space-between !important;
-    font-size: 24px !important;
-    color: #635a5a !important;
+    position: relative;
+    display: flex;
 }
 
 .wpr-range-container input[type="number"] {
-    color: #8a8383 !important;
-    font-size: 20px !important;
-    border: none !important;
 }
 
 .wpr-range-container input[type=number]::-webkit-inner-spin-button,
 .wpr-range-container input[type=number]::-webkit-outer-spin-button {
-    opacity: 1 !important;
+    -webkit-appearance: none !important;
 }
 
 .wpr-range-container input[type="range"] {
