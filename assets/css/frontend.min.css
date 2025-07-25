@@ -17601,10 +17601,11 @@ input.wpr-date-filter-end {
 }
 
 /* Grid Active Filters */
-/* .wpr-af-active-filters {
+.wpr-af-active-filters {
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
-} */
+}
 
 .wpr-af-active-filters span {
     display: block;
@@ -17624,6 +17625,7 @@ input.wpr-date-filter-end {
 [class^="wpr-af-active-wrap-"]:empty {
     display: none;
 }
+
 
 /*--------------------------------------------------------------
 == Product Filters
