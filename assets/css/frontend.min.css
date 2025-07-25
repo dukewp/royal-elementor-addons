@@ -17461,6 +17461,10 @@ dl.variation dd {
 }
 
 .wpr-af-visual-wrap {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
     cursor: pointer;
     user-select: none;
     overflow: hidden;
@@ -17468,13 +17472,6 @@ dl.variation dd {
 
 .wpr-af-visual-wrap * {
     cursor: pointer;
-}
-
-.wpr-af-visual-wrap {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    gap: 10px;
 }
 
 .wpr-af-hide-label-yes .wpr-af-visual-wrap {
