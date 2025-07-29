@@ -138,7 +138,7 @@
             }
 
 			if ( $scope.hasClass('wpr-jarallax') || $scope.hasClass('wpr-jarallax-yes') ) {
-				parallaxBackground();
+				observeParallax($scope);
 			}
 
 			if ( $scope.hasClass('wpr-parallax-yes') ) {
@@ -441,15 +441,13 @@
 					$scope.css({'position': stickType });
 
                     if ( $('.wpr-close-cart span').length && !WprElements.editorCheck() ) {
-                        $('.wpr-close-cart span').trigger('click');
+                        WprElements.closeSideBarOnReplace($scope, 200);
                     }
 			    }
 
-			    function changeAdminBarOffset() {	
+			    function changeAdminBarOffset() {
 			        if ( $('#wpadminbar').length ) {
 			            adminBarHeight = $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2);
-
-						console.log(adminBarHeight, offsetTop);
 
 			            if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position') ) ) {
 			                $scope.css('top', +adminBarHeight + offsetTop + 'px');
@@ -531,6 +529,23 @@
 						speed: $scope.find('> .wpr-jarallax').attr('speed-data-editor')
 					});									
 				}
+			}
+
+			function observeParallax($scope) {
+				const observer = new IntersectionObserver((entries, obs) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							// Call your original function once
+							parallaxBackground.call(this, $scope);
+							obs.unobserve(entry.target); // Only trigger once
+						}
+					});
+				}, {
+					rootMargin: '0px',
+					threshold: 0.1
+				});
+			
+				observer.observe($scope[0]);
 			}
 
 			function parallaxMultiLayer() {
@@ -761,12 +776,14 @@
 			// Sub Menu Animation
 			function subMenuAnimation( selector, show ) {
 				if ( show === true ) {
+					selector.prev().attr('aria-expanded', 'true');
 					if ( $scope.hasClass('wpr-sub-menu-fx-slide') ) {
 						selector.stop().slideDown();
 					} else {
 						selector.stop().fadeIn();
 					}
 				} else {
+					selector.prev().attr('aria-expanded', 'false');
 					if ( $scope.hasClass('wpr-sub-menu-fx-slide') ) {
 						selector.stop().slideUp();
 					} else {
@@ -9151,7 +9168,7 @@
 											setTimeout(function() {
 												$scope.find('.wpr-button').find('.wpr-double-bounce').addClass('wpr-loader-hidden');
 												$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
-												$scope.find('form').append('<p class="wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
+												$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
 											}, 500);
 											callback(false); // Call the callback with failure
 										} else {
@@ -9164,7 +9181,7 @@
 										setTimeout(function() {
 											$scope.find('.wpr-button').find('.wpr-double-bounce').addClass('wpr-loader-hidden');
 											$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
-											$scope.find('form').append('<p class="wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
+											$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
 										}, 500);
 										callback(false); // Call the callback with failure
 									}
@@ -9239,10 +9256,10 @@
 								return Promise.all(updateMetaPromises).then(() => {
 									if (responsesArray.includes('error')) {
 										var sanitizedErrorMessage = $('<div>').text($scope.data('settings').error_message).html();
-										$scope.find('form').append('<p class="wpr-submit-error">' + sanitizedErrorMessage + '</p>');
+										$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">' + sanitizedErrorMessage + '</p>');
 									} else {
 										$scope.find('form').append(
-											$('<p class="wpr-submit-success"></p>').text($scope.data('settings').success_message)
+											$('<p class="wpr-submit-notice wpr-submit-success"></p>').text($scope.data('settings').success_message)
 										);										
 										// $scope.find('form').append('<p class="wpr-submit-success">'+ $scope.data('settings').success_message +'</p>');
 										$scope.find('button').attr('disabled', true);
@@ -9587,11 +9604,11 @@
 							if (response.data ) {
 								if ( 'filesize' === response.data.cause ) {
 									let maxFileNotice = thisInput.data('maxfs-notice') ? thisInput.data('maxfs-notice') : response.data.message;
-									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + maxFileNotice + '</p>');
+									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + maxFileNotice + '</p>');
 								}
 
 								if ( 'filetype' == response.data.cause ) {
-									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + response.data.message + '</p>');
+									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + response.data.message + '</p>');
 								}
 							}
 
@@ -9601,11 +9618,11 @@
 						error: function(error) {
 							if ( 'filesize' === error.cause ) {
 								let maxFileNotice = thisInput.data('maxfs-notice') ? thisInput.data('maxfs-notice') : error.message;
-								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + maxFileNotice + '</p>');
+								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + maxFileNotice + '</p>');
 							}
 
 							if ( 'filetype' == error.cause ) {
-								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + error.message + '</p>');
+								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + error.message + '</p>');
 							}
 						  console.log(error);
 						  reject(error);
@@ -9713,11 +9730,11 @@
 					$stepTab.eq(currentTab).find('.wpr-form-error, .wpr-form-error-wrap').each(function() {
 						if ( !($(this).closest('.wpr-field-group').find('.wpr-submit-error').length > 0) ) {
 							if ( $(this).attr('type') == 'file' ) {
-								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-error">'+ WprConfig.file_empty +'</p>');
+								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.file_empty +'</p>');
 							} else if ( $(this).is('select') || $(this).attr('type') === 'radio' || $(this).attr('type') === 'checkbox' ) {
-								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-error">'+ WprConfig.select_empty +'</p>');
+								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.select_empty +'</p>');
 							} else {
-								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-error">'+ WprConfig.input_empty +'</p>');
+								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.input_empty +'</p>');
 							}
 						}
 					});
@@ -11249,7 +11266,20 @@
 				ALLOWED_TAGS: [],
 				ALLOWED_ATTR: [],
 			});
-		}									
+		},
+
+		closeSideBarOnReplace: function($scope = null, animationSpeed = 200) {
+			// $scope.find('.widget_shopping_cart_content').addClass('wpr-mini-cart-slide-out');
+			$scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-out');
+			$scope.find('.wpr-mini-cart-slide-out').css('animation-speed', animationSpeed);
+			$scope.find('.wpr-shopping-cart-wrap').fadeOut(animationSpeed);
+			$('body').removeClass('wpr-mini-cart-sidebar-body');
+			setTimeout(function() {
+				// $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-out');
+				$scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-out');
+				$scope.find('.wpr-mini-cart').css({"display": "none"});
+			}, animationSpeed + 100);
+		}
 	
 	} // End WprElements
 

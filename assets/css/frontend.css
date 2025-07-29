@@ -238,7 +238,7 @@ template {
 }
 
 /* TODO: Remove this when php part is done */
-.ast-separate-container .ast-article-post,
+/* .ast-separate-container .ast-article-post,
 .ast-separate-container .ast-article-single {
     padding: 0;
     border: none;
@@ -248,7 +248,7 @@ template {
 .ast-separate-container .comment-respond {
     padding: 0;
     background-color: transparent;
-}
+} */
 
 
 /*--------------------------------------------------------------
