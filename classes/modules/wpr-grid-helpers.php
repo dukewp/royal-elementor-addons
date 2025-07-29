@@ -315,11 +315,11 @@ public function get_dependent_terms() {
 				// Iterate through the POST array
 				foreach ( $wpr_url_params as $key => $value ) {
 
-					// Check if the variable name contains "wpr_gf_"
-					if (strpos($key, 'wpr_gf_') !== false) {
+					// Check if the variable name contains "wpr_af_"
+					if (strpos($key, 'wpr_af_') !== false) {
 
 						// Need to setup logic to get relation from filters separately
-						$cleanedKey = str_replace('wpr_gf_', '', $key);
+						$cleanedKey = str_replace('wpr_af_', '', $key);
 						$prev_cleaned_key = $cleanedKey;
 
 						if ( isset($wpr_url_params[$key]) ) {
@@ -407,10 +407,10 @@ public function get_dependent_terms() {
 												}
 											} else {
 												if ( isset($meta_query) ) {
-													if ( isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0]) ) {
-														$meta_relation = explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0];
-													} else if ( isset($wpr_url_params['wpr_gfr_'. $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0]) ) {
-														$meta_relation = explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0];
+													if ( isset($_POST['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_afr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $_POST['wpr_afr_'. $cleanedKey])[0];
+													} else if ( isset($wpr_url_params['wpr_afr_'. $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0];
 													} else {
 														$meta_relation = '';
 													}
@@ -434,7 +434,7 @@ public function get_dependent_terms() {
 													array_push( $meta_query, $for_meta_query );
 												} else {
 													$meta_query = [ // needs check if overrides something
-														'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0],
+														'relation' => explode(',', $_POST['wpr_afr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_afr_'. $cleanedKey])[0] : explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0],
 													];
 		
 													if (is_array($filtervalues)) {
@@ -451,10 +451,10 @@ public function get_dependent_terms() {
 												}
 											}
 										} else { // if != 'meta_field'
-											// if ( isset($_POST['wpr_gfr_'. $cleanedKey]) ) {
+											// if ( isset($_POST['wpr_afr_'. $cleanedKey]) ) {
 												$for_tax_query = [ // needs check if overrides something
-													// 'relation' => isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0] : '',
-													'relation' => isset($wpr_url_params['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_gfr_' . $cleanedKey])[0]) ? explode(',', $wpr_url_params['wpr_gfr_' . $cleanedKey])[0] : '',
+													// 'relation' => isset($_POST['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_afr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_afr_' . $cleanedKey])[0] : '',
+													'relation' => isset($wpr_url_params['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_afr_' . $cleanedKey])[0]) ? explode(',', $wpr_url_params['wpr_afr_' . $cleanedKey])[0] : '',
 												];
 											// } else {
 											// 	$for_tax_query = [];
@@ -523,10 +523,10 @@ public function get_dependent_terms() {
 			} else {
 				// Iterate through the $_GET array
 				foreach ($_GET as $key => $value) {
-					// Check if the variable name contains "wpr_gf_"
-					if (strpos($key, 'wpr_gf_') !== false) {
+					// Check if the variable name contains "wpr_af_"
+					if (strpos($key, 'wpr_af_') !== false) {
 						// Need to setup logic to get relation from filters separately
-						$cleanedKey = str_replace('wpr_gf_', '', $key);
+						$cleanedKey = str_replace('wpr_af_', '', $key);
 						$prev_cleaned_key = $cleanedKey;
 		
 						if ( isset($_GET[$key]) ) {
@@ -616,7 +616,7 @@ public function get_dependent_terms() {
 		
 		
 													$for_meta_query = [ // needs check if overrides something
-														'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
+														'relation' => explode(',', $_GET['wpr_afr_'. $cleanedKey])[0],
 													];
 				
 													foreach ($filtervalues as $filtervalue) {
@@ -634,7 +634,7 @@ public function get_dependent_terms() {
 													array_push( $args['meta_query'], $for_meta_query );
 												} else {
 													$args['meta_query'] = [ // needs check if overrides something
-														'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
+														'relation' => explode(',', $_GET['wpr_afr_'. $cleanedKey])[0],
 													];
 		
 													if (is_array($filtervalues)) {
@@ -652,7 +652,7 @@ public function get_dependent_terms() {
 											}
 										} else { // if != 'meta_field'
 											$for_tax_query = [ // needs check if overrides something
-												'relation' => explode(',', $_GET['wpr_gfr_'. $cleanedKey])[0],
+												'relation' => explode(',', $_GET['wpr_afr_'. $cleanedKey])[0],
 											];
 		
 											foreach ($filtervalues as $filtervalue) {

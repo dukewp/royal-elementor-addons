@@ -324,11 +324,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				// Iterate through the POST array
 				foreach ( $wpr_url_params as $key => $value ) {
 
-					// Check if the variable name contains "wpr_gf_"
-					if (strpos($key, 'wpr_gf_') !== false) {
+					// Check if the variable name contains "wpr_af_"
+					if (strpos($key, 'wpr_af_') !== false) {
 
 						// Need to setup logic to get relation from filters separately
-						$cleanedKey = str_replace('wpr_gf_', '', $key);
+						$cleanedKey = str_replace('wpr_af_', '', $key);
 						$prev_cleaned_key = $cleanedKey;
 
 						if ( isset($wpr_url_params[$key]) ) {
@@ -416,10 +416,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 												}
 											} else {
 												if ( isset($meta_query) ) {
-													if ( isset($wpr_url_params['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0]) ) {
-														$meta_relation = explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0];
-													} else if ( isset($wpr_url_params['wpr_gfr_'. $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0]) ) {
-														$meta_relation = explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0];
+													if ( isset($wpr_url_params['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0];
+													} else if ( isset($wpr_url_params['wpr_afr_'. $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0]) ) {
+														$meta_relation = explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0];
 													} else {
 														$meta_relation = '';
 													}
@@ -443,7 +443,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 													array_push( $meta_query, $for_meta_query );
 												} else {
 													$meta_query = [ // needs check if overrides something
-														'relation' => explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_gfr_'. $cleanedKey])[0] : explode(',', $wpr_url_params['wpr_gfr_'. $cleanedKey])[0],
+														'relation' => explode(',', $_POST['wpr_afr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_afr_'. $cleanedKey])[0] : explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0],
 													];
 		
 													if (is_array($filtervalues)) {
@@ -460,9 +460,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 												}
 											}
 										} else { // if != 'meta_field'
-											// if ( isset($_POST['wpr_gfr_'. $cleanedKey]) ) {
+											// if ( isset($_POST['wpr_afr_'. $cleanedKey]) ) {
 												$for_tax_query = [ // needs check if overrides something
-													'relation' => isset($_POST['wpr_gfr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_gfr_' . $cleanedKey])[0] : '',
+													'relation' => isset($_POST['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_afr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_afr_' . $cleanedKey])[0] : '',
 												];
 											// } else {
 											// 	$for_tax_query = [];

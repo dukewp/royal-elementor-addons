@@ -51,7 +51,7 @@
 				'wpr-product-add-to-cart.default' : WprElements.widgetProductAddToCart,
 				'wpr-product-mini-cart.default' : WprElements.widgetProductMiniCart,
 				'wpr-product-filters.default' : WprElements.widgetProductFilters,
-				'wpr-advanced-filters-pro.default' : WprElements.widgetGridFilters,
+				'wpr-advanced-filters-pro.default' : WprElements.widgetAdvancedFilters,
 				'wpr-page-cart.default' : WprElements.widgetPageCart,
 				'wpr-my-account-pro.default' : WprElements.widgetPageMyAccount,
 				'wpr-reading-progress-bar.default' : WprElements.widgetReadingProgressBar,
@@ -1218,9 +1218,6 @@
 			if ( ! iGrid.length ) {
 				return;
 			}
-
-			// Settings
-			var settings = iGrid.attr( 'data-settings' );
 			
 			if ( $scope.find(".wpr-grid-orderby form").length ) {
 				var select = $scope.find(".wpr-grid-orderby form");
@@ -10199,8 +10196,8 @@
 			}
 		}, // End of widgetProductFilters
 
-		widgetGridFilters: function($scope) {
-			var visualFilters = $scope.find('.wpr-af-visual'),
+		widgetAdvancedFilters: function($scope) {
+			var visualFilters = $scope.find('.wpr-af-visual-wrap'),
 				rangeFilter = $scope.find('.wpr-range-container'),
 				viewMoreLess = $scope.find('.wpr-view-more-less'),
 				datePickers = [],
@@ -10218,9 +10215,12 @@
 				const toSlider = $scope.find('#wpr-to-slider-' + $scope.data('id'));
 				const fromInput = $scope.find('#wpr-from-input-' + $scope.data('id'));
 				const toInput = $scope.find('#wpr-to-input-' + $scope.data('id'));
+
+				// rangeFilter.find('.wpr-slider-track-bg').css('background-color', rangeFilter.data('bg-color'));
+				// rangeFilter.find('.wpr-slider-fill').css('background-color', rangeFilter.data('range-bg-color'));
 	
 				// Controls slider bg color change
-				fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+				// fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
 	
 				// Controls slider handlers z-index
 				setToggleAccessible(toSlider, 'to');
@@ -10231,14 +10231,14 @@
 				toInput.on('input', () => controlToInput(toSlider, fromInput, toInput, toSlider));
 			}
 
-            if ( $scope.find('input[name="wpr_gf_date"]').length > 0 ) {
-                const elem = $scope.find('input[name="wpr_gf_date"]')[0];
+            if ( $scope.find('input[name="wpr_af_date"]').length > 0 ) {
+                const elem = $scope.find('input[name="wpr_af_date"]')[0];
 				datePickers.push(elem);
             }
 
-			if ( $scope.find('input[name="wpr_gf_date_range"').length > 0 ) {
-                const elem1 = $scope.find('#wpr-datepicker-1[name="wpr_gf_date_range"]')[0];
-                const elem2 = $scope.find('#wpr-datepicker-2[name="wpr_gf_date_range"]')[0];
+			if ( $scope.find('input[name="wpr_af_date_range"').length > 0 ) {
+                const elem1 = $scope.find('#wpr-datepicker-1[name="wpr_af_date_range"]')[0];
+                const elem2 = $scope.find('#wpr-datepicker-2[name="wpr_af_date_range"]')[0];
 				
 				datePickers.push(elem1);
 				datePickers.push(elem2);
@@ -10311,9 +10311,11 @@
 					var selectedValue = $(this).val();
 					var taxonomy = $(this).closest('.wpr-advanced-filters-wrap').find('.wpr-af-dependent-select').first().data('taxonomy');
 					var relatedTax = $(this).data('taxonomy');
+					noneLabel = $(this).find('option:first').text();
 
 					// Reset and disable all dependent selects
 					dependentSelects.each(function() {
+						noneLabel = $(this).find('option:first').text();
 						$(this).prop('disabled', true).empty().append('<option value="0">' + noneLabel + '</option>');
 					});
 
@@ -10339,7 +10341,6 @@
 				});
 
 				function loadDependentOptions(parentTerm, taxonomy, targetSelect, relatedTax) {
-					console.log(parentTerm, taxonomy, targetSelect);
 					$.ajax({
 						url: WprConfig.ajaxurl,
 						type: 'POST',
@@ -10368,21 +10369,22 @@
 				if ( viewMoreLess.length > 0 ) { // DOESN'T WORK IN EDITOR FOR SOME REASON - maybe localstorage ?
 					// localstorage to keep the state of the view more/less button
 					var itemsToShow = $scope.find('.wpr-view-ml-wrap').data('item-count'),
-						moreLess = $scope.find('.wpr-af-check-radio-group').find('.wpr-view-more-less'),
-						inputWraps = $scope.find('.wpr-af-check-radio-group .wpr-af-input-wrap'),
-						inputWrapsToHide = $scope.find('.wpr-af-check-radio-group .wpr-af-input-wrap:gt(' + (itemsToShow - 1) + ')'),
-						isItemSelected = $scope.find('.wpr-af-check-radio-group .wpr-af-input-wrap input:checked').length > 0;
+						moreLess = $scope.find('.wpr-view-more-less'),
+						visualFiltersEnabled = $scope.find('.wpr-af-visual-wrap').length > 0,
+						elementsToShow = visualFiltersEnabled ? $scope.find('.wpr-af-visual-wrap') : $scope.find('.wpr-af-input-wrap'),
+						elementsToHide = visualFiltersEnabled ? $scope.find('.wpr-af-visual-wrap:gt(' + (itemsToShow - 1) + ')') : $scope.find('.wpr-af-input-wrap:gt(' + (itemsToShow - 1) + ')'),
+						isItemSelected = visualFiltersEnabled ? $scope.find('.wpr-af-visual-active').length > 0 : $scope.find('.wpr-af-input-wrap input:checked').length > 0;
 					
 					// Hide items exceeding the initial limit, only if no item is selected
 					if (!isItemSelected) {
-						$scope.find('.wpr-af-check-radio-group .wpr-af-input-wrap:gt(' + (itemsToShow - 1) + ')').hide();
+						elementsToHide.hide();
 					} else {
-							moreLess.addClass('expanded');
-							moreLess.text(moreLess.data('less-text'));
+						moreLess.addClass('expanded');
+						moreLess.text(moreLess.data('less-text'));
 					}
 	
-					if ( $scope.find('.wpr-af-check-radio-group .wpr-af-input-wrap').length <= itemsToShow ) {
-							moreLess.hide();
+					if ( $scope.find('.wpr-af-input-wrap').length <= itemsToShow ) {
+						moreLess.hide();
 					}
 			
 					// Toggle visibility on "View More" click
@@ -10392,11 +10394,11 @@
 			
 						if ($(this).hasClass('expanded')) {
 							// Show all items
-							inputWraps.show();
+							elementsToShow.show();
 							$(this).text($(this).data('less-text'));
 						} else {
 							// Hide items exceeding the limit
-							inputWrapsToHide.hide();
+							elementsToHide.hide();
 							$(this).text($(this).data('more-text'));
 						}
 					}); 
@@ -10426,23 +10428,33 @@
 					visualFilters.each(function(index) {
 						$(this).on('click', function(e) {
                             e.preventDefault();
+							let $this = $(this);
+
+							// Remove all active classes
+							if ( 'or' === $scope.find('.wpr-advanced-filters-wrap').attr('data-wpr-relation') ) {
+								visualFilters.removeClass('wpr-af-visual-active');
+							}
 
 							// Find the corresponding input element by index
-							var correspondingInput = $(this).prev('.wpr-af-input-wrap').find('input'); // TODO: choose approach for colors
-                                if ( 'img' == $(this).prop('tagName') ) {
-                                    correspondingInput = $scope.find('input[value="'+ $(this).data('replace-value') +'"]');
-                                }
+							var correspondingInput = $this.find('.wpr-af-input-wrap').find('input'); // TODO: choose approach for colors
+							
+							if ( 'img' == $this.prop('tagName') ) {
+								correspondingInput = $scope.find('input[value="'+ $this.data('replace-value') +'"]');
+							}
 				
 							// Set the checked property to true
 							if ( correspondingInput.prop('checked') == true ) {
-                                $(this).removeClass('wpr-af-visual-active');
+                                $this.removeClass('wpr-af-visual-active');
 								correspondingInput.prop('checked', false);
 							} else {
                                 if  ( 'radio' == $scope.find('input').attr('type') )  {
                                     $scope.find('.wpr-af-visual').removeClass('wpr-af-visual-active');
                                 }
-                                $(this).addClass('wpr-af-visual-active');
-								correspondingInput.prop('checked', true);
+
+                                setTimeout(function() {
+									$this.addClass('wpr-af-visual-active');
+                                    correspondingInput.prop('checked', true);
+                                }, 100);
 							}
                             
                             setTimeout(function() {
@@ -10517,7 +10529,7 @@
 
 						let matchingVisualFilter = $('body').find('*[data-replace-value="'+ thisEl.data('value') +'"]');
 
-						matchingVisualFilter.removeClass('wpr-af-visual-active');
+						matchingVisualFilter.parent('.wpr-af-visual-wrap').removeClass('wpr-af-visual-active');
 
 						if ( $('body').find('*[data-date-val="'+ thisEl.data('value') +'"]').length > 0 ) {
 
@@ -10671,7 +10683,7 @@
 					
 							// Prepend container to .wpr-af-active-filters
 							if ( $('body').find('.wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id')).length == 0 && container.find('span').length > 0 ) {
-								activeFilters.prepend(container);
+								activeFilters.append(container);
 							}
 						}
 					});
@@ -10717,7 +10729,7 @@
                         }
 					});
                     
-                    $scope.on('changeDate', 'input[name="wpr_gf_date"]', function(e) { // GOGA - does it work at all ?
+                    $scope.on('changeDate', 'input[name="wpr_af_date"]', function(e) { // GOGA - does it work at all ?
                         const date = e.detail.date;
                         
                         if ( date ) {
@@ -10726,12 +10738,12 @@
                             const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
 
                             // Format the date as 'YYYY-MM-DD'
-                            var selectedName = 'wpr_gf_date',
+                            var selectedName = 'wpr_af_date',
                                 selectedValue = localDate.toISOString().split('T')[0];
                         
                             // const formattedDate = localDate.toISOString().split('T')[0];
                             
-                            ajaxFilters($scope.find('input[name="wpr_gf_date"]'));
+                            ajaxFilters($scope.find('input[name="wpr_af_date"]'));
                         }
                     });
 
@@ -10755,25 +10767,42 @@
 						    updateURL(selectedName, selectedValue, $(this));
                         }
 					});
-		
-					// $scope.on('click', '.wpr-af-range-apply-btn', function() {
-                    //     var selectedElement = $scope.find('.wpr-rf-control').find('input[type="number"]');
-					$scope.find('.wpr-range-container input[type="range"]').on('change', function() {
-						var selectedElement = $scope.find('.wpr-rf-control').find('input[type="number"]');
-						var selectedValue = [];
-						var selectedName = selectedElement.attr('name');
-		
-						selectedElement.each(function() {
-							selectedValue.push($(this).val());
+					
+					if ( $scope.find('.wpr-af-range-apply-btn').length > 0 ) {
+						$scope.on('click', '.wpr-af-range-apply-btn', function() {
+							var selectedElement = $scope.find('.wpr-rf-control').find('input[type="number"]');
+							var selectedValue = [];
+							var selectedName = selectedElement.attr('name');
+			
+							selectedElement.each(function() {
+								selectedValue.push($(this).val());
+							});
+			
+							if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
+								$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
+								ajaxFilters($(this));
+							} else {
+								updateURL(selectedName, selectedValue, $(this));
+							}
 						});
-		
-                        if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
-							$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
-                            ajaxFilters($(this));
-                        } else {
-						    updateURL(selectedName, selectedValue, $(this));
-                        }
-					});
+					} else {
+						$scope.find('.wpr-range-container input[type="range"]').on('change', function() {
+							var selectedElement = $scope.find('.wpr-rf-control').find('input[type="number"]');
+							var selectedValue = [];
+							var selectedName = selectedElement.attr('name');
+			
+							selectedElement.each(function() {
+								selectedValue.push($(this).val());
+							});
+			
+							if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
+								$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
+								ajaxFilters($(this));
+							} else {
+								updateURL(selectedName, selectedValue, $(this));
+							}
+						});
+					}
 				}
 			}
 
@@ -10800,17 +10829,17 @@
 				const url = new URL(currentURL);
 
                 if ( dataRelation && dataFilterType ) {
-                    url.searchParams.set(selectedName.replace('wpr_gf', 'wpr_gfr'), dataRelation + ',' + dataFilterType);
+                    url.searchParams.set(selectedName.replace('wpr_af', 'wpr_afr'), dataRelation + ',' + dataFilterType);
                 }
 
 				if ( element.prop('tagName') == "SELECT" ) {
 					if ( selectedValue == 0 ) {
 						url.searchParams.delete(selectedName);
-						url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 					} else {
 						url.searchParams.set(selectedName, selectedValue);
 					}
-				} else if ( element.hasClass('wpr-af-range-apply-btn') || element.hasClass('wpr-from-slider') || element.hasClass('wpr-to-slider') ) {
+				} else if ( element.hasClass('wpr-af-range-apply-btn') || element.hasClass('wpr-range-container') || element.hasClass('wpr-from-slider') || element.hasClass('wpr-to-slider') ) {
 					url.searchParams.set(selectedName, selectedValue);
 				} else if ( element.attr('type') == "text" || element.attr('type') == "date"  || element.attr('type') == "date_range" )  {
 
@@ -10829,7 +10858,7 @@
 						if ( element.hasClass('wpr-date-filter') ) {
 							if ( selectedValue == '' ) {
 								url.searchParams.delete(selectedName);
-								url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 							} else {
 								url.searchParams.set(selectedName, selectedValue);
 							}
@@ -10841,19 +10870,19 @@
 
 								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
 									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 								}
 							} else {
 								if ( selectedValue !== '' ) {
 									updatedValue = selectedValue + ',' + currentValue;
 								} else {
 									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 								}
 
 								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
 									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 								}
 							}
 						}
@@ -10864,19 +10893,19 @@
 
 								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
 									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 								}
 							} else {
 								if ( selectedValue !== '' ) {
 									updatedValue = currentValue + ',' + selectedValue;
 								} else {
 									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 								}
 
 								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
 									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 								}
 							}
 						}
@@ -10914,7 +10943,7 @@
 				} else {
 					if ( element.attr('type') == "radio" ) {
 						url.searchParams.delete(selectedName);
-						url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 					}
 					
 					if ( element.is(':checked') ) {
@@ -10973,18 +11002,18 @@
 								url.searchParams.set(selectedName, updatedValue);
 							} else {
 								url.searchParams.delete(selectedName);
-								url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+								url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 							}
 						} else {
 							// If the query parameter doesn't exist, set it with the selected value
 							url.searchParams.delete(selectedName);
-							url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+							url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 						}
 					}
 
 					if (url.searchParams.get(selectedName) == '') {
 						url.searchParams.delete(selectedName);
-						url.searchParams.delete(selectedName.replace('wpr_gf', 'wpr_gfr'));
+						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 					}
 				}
 
@@ -11001,7 +11030,8 @@
 
 			function controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
 				const [from, to] = getParsed(fromInput, toInput);
-				fillSlider(fromInput, toInput, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), controlSlider);
+				// fillSlider(fromInput, toInput, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), controlSlider);
+				fillSlider2(fromInput, toInput);
 				setToggleAccessible(fromInput, 'from');
 				if (from > to) {
 					fromSlider.val(to);
@@ -11013,7 +11043,8 @@
 			
 			function controlToInput(toSlider, fromInput, toInput, controlSlider) {
 				const [from, to] = getParsed(fromInput, toInput);
-				fillSlider(fromInput, toInput, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), controlSlider);
+				// fillSlider(fromInput, toInput, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), controlSlider);
+				fillSlider2(fromInput, toInput);
 				setToggleAccessible(toInput, 'to');
 				if (from <= to) {
 					toSlider.val(to);
@@ -11025,7 +11056,8 @@
 			
 			function controlFromSlider(fromSlider, toSlider, fromInput) {
 				const [from, to] = getParsed(fromSlider, toSlider);
-				fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+				// fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+				fillSlider2(fromSlider, toSlider);
 				setToggleAccessible(fromSlider, 'from');
 				if (from > to) {
 					fromSlider.val(to);
@@ -11037,7 +11069,8 @@
 			
 			function controlToSlider(fromSlider, toSlider, toInput) {
 				const [from, to] = getParsed(fromSlider, toSlider);
-				fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+				// fillSlider(fromSlider, toSlider, rangeFilter.data('bg-color'), rangeFilter.data('range-bg-color'), toSlider);
+				fillSlider2(fromSlider, toSlider);
 				setToggleAccessible(toSlider, 'to');
 				if (from <= to) {
 					toSlider.val(to);
@@ -11068,6 +11101,23 @@
 					${sliderColor} ${toPosition / rangeDistance * 100}%,
 					${sliderColor} 100%
 				)`);
+			}
+			function fillSlider2(fromSlider, toSlider) {
+				const min = parseFloat(toSlider.prop('min'));
+				const max = parseFloat(toSlider.prop('max'));
+				const from = Math.min(parseFloat(fromSlider.val()), parseFloat(toSlider.val()));
+				const to = Math.max(parseFloat(fromSlider.val()), parseFloat(toSlider.val()));
+			
+				const rangeDistance = max - min;
+				const fromPercent = (((from - min) / rangeDistance) * 100) > 0 ? ((from - min) / rangeDistance) * 100 : 0;
+				const toPercent = ((to - min) / rangeDistance) * 100;
+			
+				const sliderFill = $scope.find('.wpr-slider-fill');
+			
+				sliderFill.css({
+					left: `${fromPercent}%`,
+					width: `${toPercent - fromPercent}%`,
+				});
 			}
 			
 			function setToggleAccessible(currentSlider, direction = 'to') {
@@ -11124,8 +11174,8 @@
 
 						// // Reset all date inputs to empty
 						// $('body').find('span.wpr-remove-filter').remove();
-						// $('body').find('input[name="wpr_gf_date"]').val('').trigger('resetDate').trigger('change');
-						// $('body').find('input[name="wpr_gf_date_range"]').val('').trigger('resetDate').trigger('change');
+						// $('body').find('input[name="wpr_af_date"]').val('').trigger('resetDate').trigger('change');
+						// $('body').find('input[name="wpr_af_date_range"]').val('').trigger('resetDate').trigger('change');
 
 						// $('body').find('.wpr-af-visual').removeClass('wpr-af-visual-active');
 						ajaxFilters($(this));
@@ -11345,7 +11395,7 @@
 							});
 						}
 					}
-
+					
                     if ( $(this).find('.wpr-af-range-apply-btn').length > 0 && $(this).data('wpr-applied') == 'yes' ) {
                         var selectedElement = $(this).find('.wpr-rf-control').find('input[type="number"]');
                         var selectedValue = [];
@@ -11356,12 +11406,22 @@
                         });
                         
                         updateURL(selectedName, selectedValue, $(this).find('.wpr-af-range-apply-btn'), finalURL);
-                    }
+                    } else if ( $(this).find('.wpr-range-container').length > 0 && $(this).data('wpr-applied') == 'yes' ) {
+                        var selectedElement = $(this).find('.wpr-rf-control').find('input[type="number"]');
+                        var selectedValue = [];
+                        var selectedName = selectedElement.attr('name');
+
+                        selectedElement.each(function() {
+                            selectedValue.push($(this).val());
+                        });
+                        
+                        updateURL(selectedName, selectedValue, $(this).find('.wpr-range-container'), finalURL);
+					}
 
 					renderActiveFilters('ajax');
                 });
 
-				var widgetSelector = '#' + (self.closest('.wpr-advanced-filters-wrap').data('widget-selector') || self.closest('.elementor-widget-wpr-grid').attr('id')),
+				var widgetSelector = '#' + (self.closest('.wpr-advanced-filters-wrap').data('widget-selector') || self.closest('.elementor-widget-wpr-grid').attr('id') || self.closest('.elementor-widget-wpr-woo-grid').attr('id')),
 					targetGrid = $(widgetSelector).find('.wpr-grid');
 
                 // If not ajax relocate
@@ -11414,7 +11474,6 @@
 
 				setTimeout(function() {
 					if ( !cache ) {
-						console.log('no cache');
 						$('body').find('.wpr-filters-loader-wrap').remove();
 					}
 			
@@ -11606,8 +11665,6 @@
 								// localStorage.setItem(cacheKey, JSON.stringify(cacheData));
 								updateGrid(response, false, start, targetGrid, settings, widgetSelector);
 
-								console.log(response.data.found_posts);
-
 								if ( response.data.found_posts > 0 ) {
 									if ( 'load-more' === settings.pagination_type ) {
 										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeOut( 1000 );
@@ -11623,7 +11680,7 @@
 					}
 				}, 300); // Adjust timeout value based on the desired debounce delay
 			}
-		}, // End of widgetGridFilters
+		}, // End of widgetAdvancedFilters
 
 		widgetPageCart: function($scope) {
 		}, // End of widgetPageCart
