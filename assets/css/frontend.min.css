@@ -17451,6 +17451,10 @@ dl.variation dd {
     opacity: 0.7 !important;
 }
 
+.wpr-af-input-wrap {
+    cursor: pointer;
+}
+
 .wpr-af-visual-group {
     display: flex;
     flex-wrap: wrap;
