@@ -10431,9 +10431,9 @@
 							let $this = $(this);
 
 							// Remove all active classes
-							if ( 'or' === $scope.find('.wpr-advanced-filters-wrap').attr('data-wpr-relation') ) {
-								visualFilters.removeClass('wpr-af-visual-active');
-							}
+							// if ( 'or' === $scope.find('.wpr-advanced-filters-wrap').attr('data-wpr-relation') ) {
+								// visualFilters.removeClass('wpr-af-visual-active');
+							// }
 
 							// Find the corresponding input element by index
 							var correspondingInput = $this.find('.wpr-af-input-wrap').find('input'); // TODO: choose approach for colors
@@ -11667,7 +11667,7 @@
 
 								if ( response.data.found_posts > 0 ) {
 									if ( 'load-more' === settings.pagination_type ) {
-										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeOut( 1000 );
+										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).hide();
 										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn( 1000 );
 										$(widgetSelector).find( '.wpr-grid-pagination' ).delay( 2000 ).fadeIn( 1000 );
 									}

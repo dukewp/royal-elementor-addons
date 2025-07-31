@@ -823,7 +823,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	// Render Post Excerpt
-	public function render_product_excerpt( $settings, $class ) {
+	public  static function render_product_excerpt( $settings, $class ) {
 		if ( '' === get_the_excerpt() ) {
 			return;
 		}
