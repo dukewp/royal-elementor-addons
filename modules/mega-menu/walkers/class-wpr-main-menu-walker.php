@@ -96,6 +96,10 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 		if ( in_array( 'current-menu-item', $item->classes ) && ('yes' === $this->menu_item_highlight) ) {
 			$item_a_class .= ' wpr-active-menu-item';
 		}
+
+		if ( in_array( 'current-menu-item', $item->classes ) && ('yes' === $this->menu_item_highlight) ) {
+			$item_li_class .= ' wpr-active-menu-item';
+		}
 		
 		$output .= $indent .'<li'. $id . $item_li_class . $custom_width_attr . $id_attr .'>';
 
