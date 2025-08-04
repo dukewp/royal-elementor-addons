@@ -381,6 +381,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 										'day' => $day,
 									]);
 								}
+							} else if ( 'rating' == $cleanedKey ) {
+								$meta_query[] = [ 
+									'key'     => '_wc_average_rating',
+									'value'   => $wpr_url_params[$key],
+									'compare' => '=',
+									'type'    => 'NUMERIC',
+								];
 							} else {
 								if ( $wpr_url_params[$key] != '0' ) {
 									// Get category from URL
