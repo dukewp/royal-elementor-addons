@@ -10757,6 +10757,17 @@
 						    updateURL(selectedName, selectedValue, $(this));
                         }
 					});
+
+					$scope.find('input.wpr-rating-filter').on('change', function() {
+						var selectedName = $(this).attr('name');
+						var selectedValue = $(this).val();
+
+						if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
+							ajaxFilters($(this));
+						} else {
+							updateURL(selectedName, selectedValue, $(this));
+						}
+					});
 		
 					$scope.find('select').on('change', function() {
 						var selectedName = $(this).attr('name');
@@ -10803,228 +10814,6 @@
 							}
 						});
 					}
-				}
-			}
-
-			function updateURL(selectedName, selectedValue, element, ajaxFilterURL = '') {
-				
-				var currentURL = window.location.href,
-					dataRelation = '',
-					dataFilterType = '';
-
-
-				if ( '' != ajaxFilterURL ) {
-					currentURL = ajaxFilterURL;
-				}
-				
-				if ( $('.wpr-af-apply-btn').length > 0 ) {
-					currentURL = finalURL;
-					dataRelation = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation');
-					dataFilterType = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-filter-type');
-				} else {
-					dataRelation = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation');
-					dataFilterType = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-filter-type');
-				}
-
-				const url = new URL(currentURL);
-
-                if ( dataRelation && dataFilterType ) {
-                    url.searchParams.set(selectedName.replace('wpr_af', 'wpr_afr'), dataRelation + ',' + dataFilterType);
-                }
-
-				if ( element.prop('tagName') == "SELECT" ) {
-					if ( selectedValue == 0 ) {
-						url.searchParams.delete(selectedName);
-						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-					} else {
-						url.searchParams.set(selectedName, selectedValue);
-					}
-				} else if ( element.hasClass('wpr-af-range-apply-btn') || element.hasClass('wpr-range-container') || element.hasClass('wpr-from-slider') || element.hasClass('wpr-to-slider') ) {
-					url.searchParams.set(selectedName, selectedValue);
-				} else if ( element.attr('type') == "text" || element.attr('type') == "date"  || element.attr('type') == "date_range" )  {
-
-					if (url.searchParams.has(selectedName)) {
-
-						var currentValue = '';
-
-						// Get the current value of the query parameter
-						if ( url.searchParams.get(selectedName) !== null ) {
-							currentValue = url.searchParams.get(selectedName);
-						}
-
-						// Combine the current value and the new selected value
-						var updatedValue = selectedValue;
-
-						if ( element.hasClass('wpr-date-filter') ) {
-							if ( selectedValue == '' ) {
-								url.searchParams.delete(selectedName);
-								url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-							} else {
-								url.searchParams.set(selectedName, selectedValue);
-							}
-						}
-
-						if ( element.hasClass('wpr-date-filter-start') ) {
-							if ( currentValue.indexOf(',') !== -1 ) {
-								updatedValue = selectedValue + ',' + currentValue.split(',')[1];
-
-								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
-									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-								}
-							} else {
-								if ( selectedValue !== '' ) {
-									updatedValue = selectedValue + ',' + currentValue;
-								} else {
-									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-								}
-
-								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
-									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-								}
-							}
-						}
-
-						if ( element.hasClass('wpr-date-filter-end') ) {
-							if ( currentValue.indexOf(',') !== -1 ) {
-								updatedValue = currentValue.split(',')[0] + ',' + selectedValue;
-
-								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
-									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-								}
-							} else {
-								if ( selectedValue !== '' ) {
-									updatedValue = currentValue + ',' + selectedValue;
-								} else {
-									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-								}
-
-								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
-									url.searchParams.delete(selectedName);
-									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-								}
-							}
-						}
-
-						if ( updatedValue.includes(',') ) {
-							updatedValue = updatedValue.split(',');
-							updatedValue = [...new Set(updatedValue)];
-							
-							// updatedValue = updatedValue.filter(function(value) {
-							// 	return value !== "";
-							// });
-							
-							updatedValue = updatedValue.join(',');
-						}
-						
-						if (updatedValue !== '') {
-							// Set the query parameter with the updated value
-							url.searchParams.set(selectedName, updatedValue);
-						}
-					} else {
-						if ( element.hasClass('wpr-date-filter') ) {
-							url.searchParams.set(selectedName, selectedValue);
-						}
-
-						// If the query parameter doesn't exist, set it with the selected value
-						if ( element.hasClass('wpr-date-filter-start') ) {
-							url.searchParams.set(selectedName, selectedValue + ',' + '');
-						}
-
-						if ( element.hasClass('wpr-date-filter-end') ) {
-							url.searchParams.set(selectedName, ',' + '' + selectedValue);
-						}
-					}
-
-				} else {
-					if ( element.attr('type') == "radio" ) {
-						url.searchParams.delete(selectedName);
-						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-					}
-					
-					if ( element.is(':checked') ) {
-						if ( url.searchParams.has(selectedName) ) {
-							// Get the current value of the query parameter
-							const currentValue = url.searchParams.get(selectedName);
-					
-							// Combine the current value and the new selected value
-							var updatedValue = selectedValue;
-							updatedValue = currentValue + ',' + selectedValue;
-
-							if ( $.inArray(selectedValue, currentValue.split(',')) !== -1 ||  currentValue == selectedValue ) {
-								return;
-							}
-
-							if ( updatedValue.includes(',') ) {
-								updatedValue = updatedValue.split(',');
-								updatedValue = [...new Set(updatedValue)];
-								updatedValue = updatedValue.filter(function(value) {
-									return value !== "";
-								});
-								
-								updatedValue = updatedValue.join(',');
-							}
-
-							// Set the query parameter with the updated value
-							url.searchParams.set(selectedName, updatedValue);
-						} else {
-							// If the query parameter doesn't exist, set it with the selected value
-							url.searchParams.set(selectedName, selectedValue);
-						}
-					} else {
-						if (url.searchParams.has(selectedName)) {
-
-							// Get the current value of the query parameter
-
-							const currentValue = url.searchParams.get(selectedName);
-
-							if ( currentValue.includes(',') || currentValue !== false ) {
-								const currentValueArray = currentValue.split(',');
-
-								// Remove duplicates using Set
-								const uniqueArray = [...new Set(currentValueArray)];
-		
-								// Omit the selectedValue from the array if it exists
-								const indexToRemove = uniqueArray.indexOf(selectedValue);
-
-								if (indexToRemove !== -1) {
-									uniqueArray.splice(indexToRemove, 1);
-								}
-								
-								// Join the updated array back into a string using a comma (',') as the separator
-								var updatedValue = uniqueArray.join(',');
-					
-								// Set the query parameter with the updated value
-								url.searchParams.set(selectedName, updatedValue);
-							} else {
-								url.searchParams.delete(selectedName);
-								url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-							}
-						} else {
-							// If the query parameter doesn't exist, set it with the selected value
-							url.searchParams.delete(selectedName);
-							url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-						}
-					}
-
-					if (url.searchParams.get(selectedName) == '') {
-						url.searchParams.delete(selectedName);
-						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-					}
-				}
-
-				// Replace the current URL with the updated one
-				if ( $('.wpr-af-apply-btn').length == 0 && 'yes' !== element.closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
-					window.location.href = url.toString();
-				} else {
-					if ( $('.wpr-af-apply-btn').length > 0 && $('.wpr-af-apply-btn').data('redirect-url') != '#' ) {
-						url.pathname = $('.wpr-af-apply-btn').data('redirect-url');
-					}
-					WprElements.changeFinalURL(url.toString());
 				}
 			}
 
@@ -11366,6 +11155,14 @@
                         });	
                     }
 
+                    if ( $(this).find('input.wpr-rating-filter').length > 0 ) {
+						var selectedName = $(this).find('input.wpr-rating-filter').attr('name');
+						var selectedValue = $(this).find('input.wpr-rating-filter').val();
+
+						// updateURL(selectedName, selectedValue, $(this), finalURL);
+						updateURL(selectedName, selectedValue, $(this).find('input.wpr-rating-filter'), finalURL);
+                    }
+
                     if ( $(this).find('select').length == 1 ) {
                         var selectedName = $(this).find('select').attr('name');
                         var selectedValue = $(this).find('select').val();
@@ -11469,6 +11266,241 @@
 					debounceAjaxCall(debounceTimer, paramsObj, targetGrid, settings, widgetSelector, triggerElement);
                 }
             }
+
+			function updateURL(selectedName, selectedValue, element, ajaxFilterURL = '') {
+				
+				var currentURL = window.location.href,
+					dataRelation = '',
+					dataFilterType = '';
+
+
+				if ( '' != ajaxFilterURL ) {
+					currentURL = ajaxFilterURL;
+				}
+				
+				if ( $('.wpr-af-apply-btn').length > 0 ) {
+					currentURL = finalURL;
+					dataRelation = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation');
+					dataFilterType = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-filter-type');
+				} else {
+					dataRelation = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation');
+					dataFilterType = element.closest('.wpr-advanced-filters-wrap').attr('data-wpr-filter-type');
+				}
+
+				const url = new URL(currentURL);
+
+                if ( dataRelation && dataFilterType ) {
+                    url.searchParams.set(selectedName.replace('wpr_af', 'wpr_afr'), dataRelation + ',' + dataFilterType);
+                }
+
+				if ( element.prop('tagName') == "SELECT" ) {
+					if ( selectedValue == 0 ) {
+						url.searchParams.delete(selectedName);
+						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+					} else {
+						url.searchParams.set(selectedName, selectedValue);
+					}
+				} else if ( element.hasClass('wpr-af-range-apply-btn') || element.hasClass('wpr-range-container') || element.hasClass('wpr-from-slider') || element.hasClass('wpr-to-slider') ) {
+					url.searchParams.set(selectedName, selectedValue);
+				} else if ( element.attr('type') == "text" || element.attr('type') == "date"  || element.attr('type') == "date_range" )  {
+
+					if (url.searchParams.has(selectedName)) {
+
+						var currentValue = '';
+
+						// Get the current value of the query parameter
+						if ( url.searchParams.get(selectedName) !== null ) {
+							currentValue = url.searchParams.get(selectedName);
+						}
+
+						// Combine the current value and the new selected value
+						var updatedValue = selectedValue;
+
+						if ( element.hasClass('wpr-date-filter') ) {
+							if ( selectedValue == '' ) {
+								url.searchParams.delete(selectedName);
+								url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+							} else {
+								url.searchParams.set(selectedName, selectedValue);
+							}
+						}
+
+						if ( element.hasClass('wpr-date-filter-start') ) {
+							if ( currentValue.indexOf(',') !== -1 ) {
+								updatedValue = selectedValue + ',' + currentValue.split(',')[1];
+
+								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+								}
+							} else {
+								if ( selectedValue !== '' ) {
+									updatedValue = selectedValue + ',' + currentValue;
+								} else {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+								}
+
+								if ( selectedValue == '' && currentValue.split(',')[1] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+								}
+							}
+						}
+
+						if ( element.hasClass('wpr-date-filter-end') ) {
+							if ( currentValue.indexOf(',') !== -1 ) {
+								updatedValue = currentValue.split(',')[0] + ',' + selectedValue;
+
+								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+								}
+							} else {
+								if ( selectedValue !== '' ) {
+									updatedValue = currentValue + ',' + selectedValue;
+								} else {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+								}
+
+								if ( selectedValue == '' && currentValue.split(',')[0] == '' ) {
+									url.searchParams.delete(selectedName);
+									url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+								}
+							}
+						}
+
+						if ( updatedValue.includes(',') ) {
+							updatedValue = updatedValue.split(',');
+							updatedValue = [...new Set(updatedValue)];
+							
+							// updatedValue = updatedValue.filter(function(value) {
+							// 	return value !== "";
+							// });
+							
+							updatedValue = updatedValue.join(',');
+						}
+						
+						if (updatedValue !== '') {
+							// Set the query parameter with the updated value
+							url.searchParams.set(selectedName, updatedValue);
+						}
+					} else {
+						if ( element.hasClass('wpr-date-filter') ) {
+							url.searchParams.set(selectedName, selectedValue);
+						}
+
+						// If the query parameter doesn't exist, set it with the selected value
+						if ( element.hasClass('wpr-date-filter-start') ) {
+							url.searchParams.set(selectedName, selectedValue + ',' + '');
+						}
+
+						if ( element.hasClass('wpr-date-filter-end') ) {
+							url.searchParams.set(selectedName, ',' + '' + selectedValue);
+						}
+					}
+
+				} else {
+					if ( element.attr('type') == "radio" ) {
+						url.searchParams.delete(selectedName);
+						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+					}
+					
+					if ( element.is(':checked') ) {
+						if ( url.searchParams.has(selectedName) ) {
+							// Get the current value of the query parameter
+							const currentValue = url.searchParams.get(selectedName);
+					
+							// Combine the current value and the new selected value
+							var updatedValue = selectedValue;
+							updatedValue = currentValue + ',' + selectedValue;
+
+							if ( $.inArray(selectedValue, currentValue.split(',')) !== -1 ||  currentValue == selectedValue ) {
+								return;
+							}
+
+							if ( updatedValue.includes(',') ) {
+								updatedValue = updatedValue.split(',');
+								updatedValue = [...new Set(updatedValue)];
+								updatedValue = updatedValue.filter(function(value) {
+									return value !== "";
+								});
+								
+								updatedValue = updatedValue.join(',');
+							}
+
+							// Set the query parameter with the updated value
+							url.searchParams.set(selectedName, updatedValue);
+						} else {
+							// If the query parameter doesn't exist, set it with the selected value
+							url.searchParams.set(selectedName, selectedValue);
+						}
+					} else {
+						if (url.searchParams.has(selectedName)) {
+
+							// Get the current value of the query parameter
+
+							const currentValue = url.searchParams.get(selectedName);
+
+							if ( currentValue.includes(',') || currentValue !== false ) {
+								const currentValueArray = currentValue.split(',');
+
+								// Remove duplicates using Set
+								const uniqueArray = [...new Set(currentValueArray)];
+		
+								// Omit the selectedValue from the array if it exists
+								const indexToRemove = uniqueArray.indexOf(selectedValue);
+
+								if (indexToRemove !== -1) {
+									uniqueArray.splice(indexToRemove, 1);
+								}
+								
+								// Join the updated array back into a string using a comma (',') as the separator
+								var updatedValue = uniqueArray.join(',');
+					
+								// Set the query parameter with the updated value
+								url.searchParams.set(selectedName, updatedValue);
+							} else {
+								url.searchParams.delete(selectedName);
+								url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+							}
+						} else {
+							// If the query parameter doesn't exist, set it with the selected value
+							url.searchParams.delete(selectedName);
+							url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+						}
+					}
+
+					if (url.searchParams.get(selectedName) == '') {
+						url.searchParams.delete(selectedName);
+						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+					}
+				}
+
+				if ( element.hasClass('wpr-rating-filter') || element.find('.wpr-rating-filter').length > 0 ) {
+					console.log(selectedName, selectedValue);
+					if ( selectedValue == 0 ) {
+						url.searchParams.delete(selectedName);
+						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
+					} else {
+						url.searchParams.set(selectedName, selectedValue);
+					}
+				}
+
+				// Replace the current URL with the updated one
+				if ( $('.wpr-af-apply-btn').length == 0 && 'yes' !== element.closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
+					window.location.href = url.toString();
+				} else {
+					if ( $('.wpr-af-apply-btn').length > 0 && $('.wpr-af-apply-btn').data('redirect-url') != '#' ) {
+						url.pathname = $('.wpr-af-apply-btn').data('redirect-url');
+					}
+					console.log('works final url');
+					WprElements.changeFinalURL(url.toString());
+				}
+
+				console.log(finalURL);
+			}
 
 			function updateGrid(data, cache, startvar, targetGrid, settings, widgetSelector) {
 
