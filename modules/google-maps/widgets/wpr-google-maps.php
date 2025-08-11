@@ -153,6 +153,8 @@ class Wpr_Google_Maps extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-google-map' => 'height: {{SIZE}}px;',
 				],
+				'frontend_available' => true,
+				'render_type' => 'template',
 				'separator' => 'before'
 			]
 		);
@@ -171,6 +173,8 @@ class Wpr_Google_Maps extends Widget_Base {
 						'max' => 20,
 					],
 				],
+				'frontend_available' => true,
+				'render_type' => 'template',
 			]
 		);
 
@@ -681,9 +685,33 @@ class Wpr_Google_Maps extends Widget_Base {
 		$attributes  = ' data-settings="'. esc_attr($map_settings) .'"';
 		$attributes .= ' data-locations="'. esc_attr($map_locations) .'"';
 		$attributes .= ' data-controls="'. esc_attr($map_controls) .'"';
+		
+		if ( '' == get_option('wpr_google_map_api_key') ) {
+			$latitude  = $google_map_locations[0]['gm_latitude'] ?? '';
+			$longitude = $google_map_locations[0]['gm_longtitude'] ?? '';
+			$zoom = !empty($settings['gm_zoom_depth']['size']) ? intval($settings['gm_zoom_depth']['size']) : 14;
 	
-		// Output the sanitized HTML container
-		echo '<div class="wpr-google-map" '. $attributes .'></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ($latitude && $longitude) {
+				$map_src = "https://www.google.com/maps?q={$latitude},{$longitude}&z={$zoom}&output=embed";
+			} else {
+				$map_src = "https://www.google.com/maps?q=" . rawurlencode($gm_location_title) . "&z={$zoom}&output=embed";
+			}
+
+			echo '<div class="wpr-google-map">';
+			echo '<iframe 
+					src="' . esc_url($map_src) . '" 
+					width="100%"
+					height="'. $settings['gm_height']['size'] .'"
+					style="border:0;" 
+					allowfullscreen="" 
+					loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade">
+				  </iframe>';
+			echo '</div>';
+		} else {
+			// Output the sanitized HTML container
+			echo '<div class="wpr-google-map" '. $attributes .'></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 	
 		// Additional admin notice for missing API key
 		if (current_user_can('manage_options') && '' == get_option('wpr_google_map_api_key')) { 
