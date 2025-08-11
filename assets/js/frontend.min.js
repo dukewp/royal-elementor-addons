@@ -11222,29 +11222,39 @@
 		},
 
 		sanitizeURL: function(dirtyURL) {
-			// Add DOMPurify hook to block dangerous protocols
-			DOMPurify.addHook('uponSanitizeAttribute', function(node, data) {
-				const val = data.attrValue.trim().toLowerCase();
-				if (data.attrName === 'src' &&
-					(val.startsWith('javascript:') || val.startsWith('data:') || val.startsWith('vbscript:'))
-				) {
-					data.attrValue = '';
-				}
-			});
-		
-			// Step 1: Sanitize with DOMPurify
-			const cleanURL = DOMPurify.sanitize(dirtyURL);
-		
-			// Step 2: Allow video formats from trusted domains (add your own if needed)
-			const allowedVideoPattern = /^(https?:)?\/\/[^\s]+?\.(mp4|webm|ogg)(\?.*)?$/i;
-		
-			// Step 3: Also allow YouTube/Vimeo/embed services
-			const allowedPlatforms = /^(https?:)?\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com|yourdomain\.com)\//i;
-		
-			const isValid = allowedVideoPattern.test(cleanURL) || allowedPlatforms.test(cleanURL);
-		
-			return isValid && cleanURL !== '' ? cleanURL : null;
+			if (!dirtyURL || typeof dirtyURL !== 'string') return null;
+			
+			// Sanitize the raw string (strip tags, attrs)
+			const cleaned = DOMPurify.sanitize(dirtyURL, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }).trim();
+			const lower = cleaned.toLowerCase();
+			
+			// Block dangerous schemes
+			if (/^(javascript|data|vbscript):/.test(lower)) return null;
+			
+			// Parse URL (supports protocol-relative with base)
+			let url;
+			try {
+				url = new URL(cleaned, window.location.origin);
+			} catch {
+				return null;
+			}
+			
+			// Only http/https
+			if (!/^https?:$/.test(url.protocol)) return null;
+			
+			// Whitelist domains (allow subdomains)
+			const allowedDomains = ['youtube.com', 'youtu.be', 'vimeo.com', 'yourdomain.com'];
+			const host = url.hostname.toLowerCase();
+			const hostAllowed = allowedDomains.some(d => host === d || host.endsWith('.' + d));
+			
+			// Also allow direct video files anywhere
+			const isDirectVideo = /\.(mp4|webm|ogg)(?:$|\?)/i.test(url.pathname);
+			
+			if (!hostAllowed && !isDirectVideo) return null;
+			
+			return url.toString();
 		},
+		  
 		
 		sanitizeDataAttr: function(value) {
 			const raw = String(value || '').trim();
