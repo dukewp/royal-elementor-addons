@@ -17487,29 +17487,29 @@ dl.variation dd {
 }
 
 /* Range */
-.wpr-range-container {
+.wpr-af-range-container {
     display: flex;
     flex-direction: column;
 }
 
-.wpr-range-container .wpr-rs-control {
+.wpr-af-range-container .wpr-af-rs-control {
     position: relative;
 }
 
-.wpr-range-container .wpr-rf-control {
+.wpr-af-range-container .wpr-af-rf-control {
     position: relative;
     display: flex;
 }
 
-.wpr-range-container input[type="number"] {
+.wpr-af-range-container input[type="number"] {
 }
 
-.wpr-range-container input[type=number]::-webkit-inner-spin-button,
-.wpr-range-container input[type=number]::-webkit-outer-spin-button {
+.wpr-af-range-container input[type=number]::-webkit-inner-spin-button,
+.wpr-af-range-container input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none !important;
 }
 
-.wpr-range-container input[type="range"] {
+.wpr-af-range-container input[type="range"] {
     -webkit-appearance: none !important;
     appearance: none !important;
     height: 12px;
@@ -17519,7 +17519,7 @@ dl.variation dd {
     pointer-events: none !important;
 }
 
-.wpr-range-container input[type=range]::-webkit-slider-thumb {
+.wpr-af-range-container input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none !important;
     pointer-events: all !important;
     width: 19px;
@@ -17528,7 +17528,7 @@ dl.variation dd {
     cursor: pointer !important;
 }
 
-.wpr-range-container input[type=range]::-moz-range-thumb {
+.wpr-af-range-container input[type=range]::-moz-range-thumb {
     pointer-events: all !important;
     width: 19px;
     height: 19px;
@@ -17536,31 +17536,31 @@ dl.variation dd {
     cursor: pointer !important;
 }
 
-.wpr-range-container [id^="wpr-from-slider-"]input[type=range] {
+.wpr-af-range-container [id^="wpr-af-from-slider-"]input[type=range] {
     height: 0 !important;
     z-index: 1 !important;
 }
 
-.wpr-range-container [id^="wpr-to-slider-"]input[type=range] {
+.wpr-af-range-container [id^="wpr-af-to-slider-"]input[type=range] {
     /* transform: translateY(-50%) !important; */
 }
 
 /* Base track */
-.wpr-slider-track-bg {
+.wpr-af-slider-track-bg {
 	position: absolute;
 	left: 0;
 	width: 100%;
 }
 
 /* Filled (active) range */
-.wpr-slider-fill {
+.wpr-af-slider-fill {
 	position: absolute;
     width: 100%;
 }
 
 /* Range sliders */
-input[type=range].wpr-from-slider,
-input[type=range].wpr-to-slider {
+input[type=range].wpr-af-from-slider,
+input[type=range].wpr-af-to-slider {
 	position: absolute;
 	width: 100%;
 	margin: 0;
