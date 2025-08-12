@@ -17492,6 +17492,14 @@ dl.variation dd {
     flex-direction: column;
 }
 
+.wpr-af-apply-btn-wrap {
+    display: flex;
+}
+
+.wpr-af-apply-btn-stretch .wpr-af-apply-btn-wrap button {
+    width: 100%;
+}
+
 .wpr-af-range-container .wpr-af-rs-control {
     position: relative;
 }
