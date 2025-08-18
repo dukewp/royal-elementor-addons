@@ -17638,6 +17638,13 @@ input.wpr-date-filter-end {
     display: none;
 }
 
+.wpr-af-rating-filter input {
+    display: none;
+}
+
+.wpr-af-rating-filter .wpr-woo-rating {
+    cursor: pointer;
+}
 
 /*--------------------------------------------------------------
 == Product Filters
