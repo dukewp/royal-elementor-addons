@@ -388,6 +388,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 									'compare' => '=',
 									'type'    => 'NUMERIC',
 								];
+							} else if ( 'price' == $cleanedKey ) {
+								    $price_range = explode( '-', $wpr_url_params[$key] );
+
+									if ( count( $price_range ) === 2 ) {
+										$min_price = floatval( $price_range[0] );
+										$max_price = floatval( $price_range[1] );
+
+										$meta_query[] = [
+											'key'     => '_price',
+											'value'   => [ $min_price, $max_price ],
+											'compare' => 'BETWEEN',
+											'type'    => 'NUMERIC',
+										];
+									}
 							} else {
 								if ( $wpr_url_params[$key] != '0' ) {
 									// Get category from URL
