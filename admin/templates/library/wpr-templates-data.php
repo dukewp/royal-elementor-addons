@@ -194,6 +194,19 @@ class WPR_Templates_Data {
 					'label' => 'new',
 					'priority' => 30,
 				],
+				'v2' => [
+					'name' => 'Online Courses V2',
+					'pages' => 'home,about,courses,courses-v2,courses-with-filters,course-details,faq,blog,single-blog,contact,cart',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'online course learning tutorials education coaching academy skills knowledge certification workshop remote student instructor online lessons learning',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'label' => 'new',
+					'priority' => 5,
+				],
 			],
 			'personal-coach' => [
 				'v1' => [
