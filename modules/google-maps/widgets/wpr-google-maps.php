@@ -77,6 +77,20 @@ class Wpr_Google_Maps extends Widget_Base {
 		}
 
 		$this->add_control(
+			'gm_integration',
+			[
+				'label' => esc_html__( 'Map Integration', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'api_key' => esc_html__( 'API Key', 'wpr-addons' ),
+					'without_api_key' => esc_html__( 'Without API Key', 'wpr-addons' )
+				],
+				'default' => 'api_key',
+				'render_type' => 'template',
+			]
+		);
+
+		$this->add_control(
 			'gm_type',
 			[
 				'label' => esc_html__( 'Select Map Type', 'wpr-addons' ),
@@ -686,7 +700,7 @@ class Wpr_Google_Maps extends Widget_Base {
 		$attributes .= ' data-locations="'. esc_attr($map_locations) .'"';
 		$attributes .= ' data-controls="'. esc_attr($map_controls) .'"';
 		
-		if ( '' == get_option('wpr_google_map_api_key') ) {
+		if ( '' == get_option('wpr_google_map_api_key') && 'without_api_key' === $settings['gm_integration'] ) {
 			$latitude  = $google_map_locations[0]['gm_latitude'] ?? '';
 			$longitude = $google_map_locations[0]['gm_longtitude'] ?? '';
 			$zoom = !empty($settings['gm_zoom_depth']['size']) ? intval($settings['gm_zoom_depth']['size']) : 14;
@@ -697,7 +711,7 @@ class Wpr_Google_Maps extends Widget_Base {
 				$map_src = "https://www.google.com/maps?q=" . rawurlencode($gm_location_title) . "&z={$zoom}&output=embed";
 			}
 
-			echo '<div class="wpr-google-map">';
+			echo '<div class="wpr-google-map" data-integration-type ="'. esc_attr($settings['gm_integration']) .'">';
 			echo '<iframe 
 					src="' . esc_url($map_src) . '" 
 					width="100%"
@@ -714,7 +728,7 @@ class Wpr_Google_Maps extends Widget_Base {
 		}
 	
 		// Additional admin notice for missing API key
-		if (current_user_can('manage_options') && '' == get_option('wpr_google_map_api_key')) { 
+		if (current_user_can('manage_options') && 'api_key' === $settings['gm_integration'] && '' == get_option('wpr_google_map_api_key')) { 
 			echo '<p class="wpr-api-key-missing">Please go to plugin <a href='. esc_url(admin_url( 'admin.php?page=wpr-addons&tab=wpr_tab_settings' )) .' target="_blank">Settings</a> and Insert Google Map API Key in order to make Google Maps work</p>'; 
 		}
 	}	
