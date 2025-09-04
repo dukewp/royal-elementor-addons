@@ -2041,6 +2041,8 @@
 					var source = $(this).find('.inner-block > span').attr( 'data-src' ),
 						gridItem = $(this).closest( 'article' ).not('.slick-cloned');
 
+					gridItem.find('img').attr('alt', DOMPurify.sanitize(gridItem.find('img').attr('alt')) );
+
 					if ( ! iGrid.hasClass( 'wpr-media-grid' ) ) {
 						gridItem.find( '.wpr-grid-image-wrap' ).attr( 'data-src', source );
 					}
@@ -4004,8 +4006,13 @@
 		}, // End widgetCountDown
 
 		widgetGoogleMaps: function( $scope ) {
-			var googleMap = $scope.find( '.wpr-google-map' ),
-				settings = googleMap.data( 'settings' ),
+			var googleMap = $scope.find( '.wpr-google-map' );
+
+			if ( googleMap.data('integration-type') && 'without_api_key' === googleMap.data('integration-type') ) {
+				return;
+			}
+
+			var settings = googleMap.data( 'settings' ),
 				controls = googleMap.data( 'controls' ),
 				locations = googleMap.data( 'locations' ),
 				gMarkers = [],
@@ -7714,6 +7721,8 @@
                     var source = $(this).find('.inner-block > span').attr( 'data-src' ),
                         instaFeedItem = $(this).closest( '.wpr-insta-feed-content-wrap' );
 
+						instaFeedItem.find('img').attr('alt', DOMPurify.sanitize(instaFeedItem.find('img').attr('alt')) );
+
                         instaFeedItem.find( '.wpr-insta-feed-image-wrap' ).attr( 'data-src', source );
 
                     var dataSource = instaFeedItem.find( '.wpr-insta-feed-image-wrap' ).attr( 'data-src' );
@@ -10649,7 +10658,9 @@
                                 $scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-in');
                                 $scope.find('.wpr-mini-cart-slide-in').css('animation-speed', animationSpeed);
                                 $('body').addClass('wpr-mini-cart-sidebar-body');
-                            }
+                            } else if ( $scope.hasClass('wpr-mini-cart-dropdown') ) {
+								$scope.find('.wpr-shopping-cart-wrap').css('display', 'block');
+							}
                             setTimeout(function() {
                                 // $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-in');
                                 $scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-in');
