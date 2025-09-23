@@ -10753,6 +10753,12 @@
                         }
 					});
 
+					$scope.find('.wpr-woo-rating').on('click', function() {
+						let rating = $(this).find('.wpr-rating-icon-full').length;
+
+						$scope.find('input.wpr-rating-filter').val(rating).trigger('change');
+					});
+
 					$scope.find('input.wpr-rating-filter').on('change', function() {
 						var selectedName = $(this).attr('name');
 						var selectedValue = $(this).val();
@@ -11113,23 +11119,12 @@
                         });	
                     }
 
-                    if ( $(this).find('input[type="text"]').length > 0 ) {
-                        $(this).find('input[type="text"]').each(function() {
-                                var selectedName = $(this).attr('name');
-                                var selectedValue = $(this).val();
+					$(this).find('input[type="text"], input[type="date"]').each(function() {
+						var selectedName = $(this).attr('name');
+						var selectedValue = $(this).val();
 
-                                updateURL(selectedName, selectedValue, $(this), finalURL);
-                        });	
-                    }
-
-                    if ( $(this).find('input[type="date"]').length > 0 ) {
-                        $(this).find('input[type="date"]').each(function() {
-                                var selectedName = $(this).attr('name');
-                                var selectedValue = $(this).val();
-
-                                updateURL(selectedName, selectedValue, $(this), finalURL);
-                        });	
-                    }
+						updateURL(selectedName, selectedValue, $(this), finalURL);
+					});
 
                     if ( $(this).find('input.wpr-rating-filter').length > 0 ) {
 						var selectedName = $(this).find('input.wpr-rating-filter').attr('name');
