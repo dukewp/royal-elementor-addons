@@ -17624,10 +17624,14 @@ input.wpr-date-filter-end {
     cursor: pointer;
 }
 
+.wpr-af-active-filters .wpr-remove-filter span {
+    font-size: larger;
+    line-height: 1;
+    margin-left: 5px;
+}
+
 [class^="wpr-af-active-wrap-"] {
-    display: inline-block;
-    padding: 5px;
-    border: 1px solid #333222;
+    display: inline-flex;
 }
 
 [class^="wpr-af-active-wrap-"] span {
@@ -17636,6 +17640,10 @@ input.wpr-date-filter-end {
 
 [class^="wpr-af-active-wrap-"]:empty {
     display: none;
+}
+
+.wpr-af-active-filters .wpr-af-remove-btn {
+    background-color: transparent;
 }
 
 .wpr-af-rating-filter input {
