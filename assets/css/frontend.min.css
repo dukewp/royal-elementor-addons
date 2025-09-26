@@ -17625,7 +17625,7 @@ input.wpr-date-filter-end {
 }
 
 .wpr-af-active-filters .wpr-remove-filter span {
-    font-size: larger;
+    vertical-align: middle;
     line-height: 1;
     margin-left: 5px;
 }
