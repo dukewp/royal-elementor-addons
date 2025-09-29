@@ -17486,6 +17486,10 @@ dl.variation dd {
     margin-left: 3px;
 }
 
+.wpr-af-visual-wrap .wpr-af-input-wrap {
+    width: 100%;
+}
+
 /* Range */
 .wpr-af-range-container {
     display: flex;
@@ -17509,7 +17513,8 @@ dl.variation dd {
     display: flex;
 }
 
-.wpr-af-range-container input[type="number"] {
+.wpr-af-range-container[show-inputs='no'] .wpr-af-rf-control {
+    display: none;
 }
 
 .wpr-af-range-container input[type=number]::-webkit-inner-spin-button,
