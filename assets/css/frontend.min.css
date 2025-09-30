@@ -17455,6 +17455,17 @@ dl.variation dd {
     cursor: pointer;
 }
 
+.wpr-af-input-wrap.wpr-af-child {
+    margin-left: 16px !important;
+}
+.wpr-af-input-wrap.wpr-af-g-child {
+    margin-left: 32px !important;
+}
+
+.wpr-af-input-wrap.wpr-af-g-grand-child {
+    margin-left: 48px !important;
+}
+
 .wpr-af-visual-group {
     display: flex;
     flex-wrap: wrap;
