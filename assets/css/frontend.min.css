@@ -17456,14 +17456,14 @@ dl.variation dd {
 }
 
 .wpr-af-input-wrap.wpr-af-child {
-    padding-left: 16px !important;
+    margin-left: 16px !important;
 }
 .wpr-af-input-wrap.wpr-af-g-child {
-    padding-left: 32px !important;
+    margin-left: 32px !important;
 }
 
 .wpr-af-input-wrap.wpr-af-g-grand-child {
-    padding-left: 48px !important;
+    margin-left: 48px !important;
 }
 
 .wpr-af-visual-group {
