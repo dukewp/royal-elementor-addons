@@ -483,7 +483,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 										} else { // if != 'meta_field'
 											// if ( isset($_POST['wpr_afr_'. $cleanedKey]) ) {
 												$for_tax_query = [ // needs check if overrides something
-													'relation' => isset($_POST['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_afr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_afr_' . $cleanedKey])[0] : '',
+													// 'relation' => isset($_POST['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_afr_' . $cleanedKey])[0]) ? explode(',', $_POST['wpr_afr_' . $cleanedKey])[0] : '',
+													'relation' => isset($wpr_url_params['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_afr_' . $cleanedKey])[0]) ? explode(',', $wpr_url_params['wpr_afr_' . $cleanedKey])[0] : '',
 												];
 											// } else {
 											// 	$for_tax_query = [];
