@@ -17485,6 +17485,10 @@ dl.variation dd {
     overflow: hidden;
 }
 
+.wpr-af-visual-wrap.wpr-af-visual-color-wrap .wpr-af-visual {
+    flex-shrink: 0;
+}
+
 .wpr-af-visual-wrap * {
     cursor: pointer;
 }
