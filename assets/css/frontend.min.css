@@ -17674,6 +17674,13 @@ input.wpr-date-filter-end {
     cursor: pointer;
 }
 
+/* TMP style for demo rating */
+.wpr-af-rating-filter li > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 /*--------------------------------------------------------------
 == Product Filters
 --------------------------------------------------------------*/
