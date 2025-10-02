@@ -1332,6 +1332,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             else :
                                 WPR_Woo_Grid_Helpers::render_rating_icon( 'wpr-rating-icon-0', $settings['element_rating_unmarked_style'] );
                             endif;
+
                         }
                     } else {
                         for ( $i = 1; $i <= 5; $i++ ) {
@@ -1343,6 +1344,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             } else {
                                 echo '<i class="wpr-rating-icon-empty">'. esc_html($rating_icon) .'</i>';
                             }
+							
                         }
                     }
 				}
