@@ -382,11 +382,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 									]);
 								}
 							} else if ( 'rating' == $cleanedKey ) {
-								$meta_query[] = [ 
+								$selected = (int) $wpr_url_params[$key]; // 1..5
+
+								$lower = $selected - 0.5;
+								$upper = ($selected === 5) ? 5.0 : $selected + 0.5 - 0.00001; // avoid grabbing next bucket
+
+								$meta_query[] = [
 									'key'     => '_wc_average_rating',
-									'value'   => $wpr_url_params[$key],
-									'compare' => '=',
-									'type'    => 'NUMERIC',
+									'value'   => [ $lower, $upper ],
+									'compare' => 'BETWEEN',
+									'type'    => 'DECIMAL', // or 'NUMERIC' works too
 								];
 							} else if ( 'price' == $cleanedKey ) {
 								    $price_range = explode( '-', $wpr_url_params[$key] );
