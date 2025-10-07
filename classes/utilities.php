@@ -72,7 +72,7 @@ class Utilities {
 			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', ''],
 			'Image Scroll' => ['image-scroll', 'https://royal-elementor-addons.com/elementor-image-scroll-widget/', '', ''],
 			'Date' => ['date', 'https://royal-elementor-addons.com/elementor-date-widget/', '', ''],
-			'Video Playlist' => ['video-playlist', 'https://royal-elementor-addons.com/elementor-video-playlist-widget/', '', ''],
+			// 'Video Playlist' => ['video-playlist', 'https://royal-elementor-addons.com/elementor-video-playlist-widget/', '', ''],
 		];
 	}
 
@@ -375,6 +375,29 @@ class Utilities {
 				$template = $id;
 			} elseif ( in_array( $page, $conditions)  && !in_array( $page .'/'. $post_id, $conditions) ) {
 				$template = $id;
+			} elseif ( array_filter($conditions, function($condition) use ($page) { return strpos($condition, $page) !== false; }) ) {
+				// Handles Taxonomy Conditions for Single Post/Product (check CPT)
+				$has_additional_slash = array_filter($conditions, function($condition) use ($page) {
+					$page_position = strpos($condition, $page . '/');
+					return $page_position !== false && strpos($condition, '/', $page_position + strlen($page) + 1) !== false;
+				});
+
+				if ($has_additional_slash) {
+					// Extract the taxonomy name and term ID from the condition
+					foreach ($conditions as $condition) {
+						$parts = explode('/', $condition);
+						if (count($parts) >= 3) {
+							$taxonomy_name = $parts[2];
+							$term_id = $parts[3];
+
+							// Check if the $post_id has the term of the specified taxonomy
+							if (has_term($term_id, $taxonomy_name, $post_id)) {
+								$template = $id;
+								break;
+							}
+						}
+					}
+				}
 			}
 
 			if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
@@ -489,7 +512,9 @@ class Utilities {
 	*/
 	public static function render_elementor_template( $slug ) {
 		$template_id = Utilities::get_template_id( $slug );
-		$get_elementor_content = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template_id, false );
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true) || get_post_meta($template_id, '_elementor_template_type', true);
+		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
+		$get_elementor_content = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template_id, $has_css);
 
 		if ( '' === $get_elementor_content ) {
 			return;
@@ -1241,7 +1266,7 @@ class Utilities {
 	public static function validate_html_tags_wl( $setting, $default, $tags_whitelist ) {
 		$value = $setting;
 
-		if ( ! in_array($value, $tags_whitelist) ) {
+		if ( ! in_array(strtolower($value), $tags_whitelist) ) {
 			$value = $default;
 		}
 

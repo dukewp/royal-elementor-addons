@@ -142,7 +142,7 @@
             }
 
 			if ( $scope.hasClass('wpr-jarallax') || $scope.hasClass('wpr-jarallax-yes') ) {
-				parallaxBackground();
+				observeParallax($scope);
 			}
 
 			if ( $scope.hasClass('wpr-parallax-yes') ) {
@@ -150,7 +150,9 @@
 			}
 
 			if ( $scope.hasClass('wpr-sticky-section-yes') ) {
-				stickySection();
+				$(document).ready(function() {
+					stickySection();
+				});
 			}
 
 			function stickySection() {
@@ -163,7 +165,7 @@
 				    stickySectionExists = $scope.hasClass('wpr-sticky-section-yes') || $scope.find('.wpr-sticky-section-yes-editor') ? true : false,
 				    positionStyle,
                     adminBarHeight,
-					stickyEffectsOffset = 0,
+					stickyEffectsOffset = $(window).scrollTop(),
 					stickyHideDistance = 0,
 					$window = $(window),
 					prevScrollPos = $window.scrollTop(),
@@ -176,7 +178,8 @@
 					distanceFromTop = $scope.offset().top,
 					windowHeight = $(window).height(),
 					elementHeight = $scope.outerHeight(true),
-					distanceFromBottom = $(document).height() - (distanceFromTop + elementHeight);
+					distanceFromBottom = $(document).height() - (distanceFromTop + elementHeight),
+					offsetTop;
 
 
 					if ( $scope.data('settings') && $scope.data('settings').sticky_animation ) {
@@ -186,12 +189,6 @@
 					}
 
 					var stickyAnimDuration = $scope.attr('data-wpr-animation-duration') ? $scope.attr('data-wpr-animation-duration') + 's' : 500 + 's';
-
-					// if ( WprElements.editorCheck() ) { // needs different approach
-					// 	if ( $scope.next('section').length > 0 && ($scope.next('section').offset().top < ($scope.offset().top + $scope.height())) ) {
-					// 		$scope.next('section').css('margin-top', $scope.offset().top + $scope.height() + 'px');
-					// 	}
-					// }
 
 				if ( $scope.closest('div[data-elementor-type="wp-post"]').length > 0 ) {
 					stickyHeaderFooter = $scope.closest('div[data-elementor-type="wp-post"]');
@@ -211,10 +208,10 @@
 			    }
 
                 if ( 'top' === positionLocation && 'auto' === $scope.css('top') ) {
-                    var offsetTop = 0;
-                    $scope.css('top', 0);
+                    var offsetTop = $scope.data('wpr-position-offset');
+                    $scope.css('top', offsetTop);
                 } else {
-                    var offsetTop = +$scope.css('top').slice(0, -2);
+                    var offsetTop = $scope.data('wpr-position-offset');
                 }
 
 			    if ( 0 == availableDevices.length ) {
@@ -230,21 +227,61 @@
 			    changePositionType();
 			    changeAdminBarOffset();
 
-			    $(window).smartresize(function() { 
+			    $(window).smartresize(function() {
+					recalculateVariables();
+			    });
+
+				// Debounce function
+				function debounce(func, wait) {
+					let timeout;
+					return function(...args) {
+						const context = this;
+						clearTimeout(timeout);
+						timeout = setTimeout(() => func.apply(context, args), wait);
+					};
+				}// Adjust the debounce delay as needed
+
+				// Create a MutationObserver instance
+				if ( !WprElements.editorCheck() ) {
+					if ( 'yes' !== $scope.data('wpr-replace-header') && 'yes' !== $scope.data('wpr-sticky-hide') ) {
+						// Function to be called when mutations are observed
+						const handleMutations = debounce(function(mutationsList) {
+							for (let mutation of mutationsList) {
+								if (mutation.type === 'childList') {
+									// Recalculate variables when new content is added
+									$(window).trigger('scroll');
+									recalculateVariables();
+								}
+							}
+						}, 100); 
+	
+						const observer = new MutationObserver(handleMutations);
+	
+						// Start observing the target node for configured mutations
+						observer.observe(document.body, { childList: true, subtree: true });
+					}
+				}
+
+				$(window).scroll(function() {
+					if ($scope && $scope.css('position') === 'relative') {
+						recalculateVariables();
+					}
+				});
+			    
+			    if (!stickySectionExists) {
+			        positionStyle = 'relative';
+			    }
+
+				function recalculateVariables() {
 					distanceFromTop = $scope.offset().top;
 					windowHeight = $(window).height(),
 					elementHeight = $scope.outerHeight(true),
 					distanceFromBottom = $(document).height() - (distanceFromTop + elementHeight);
 					
 			        viewportWidth = $('body').prop('clientWidth') + 17;
-					if ( $(window).scrollTop() <= stickyEffectsOffset ) {
-						changePositionType();
-					}
-			    });
-			    
-			    if (!stickySectionExists) {
-			        positionStyle = 'relative';
-			    }
+					
+					changePositionType();
+				}
 
 			    function changePositionType() {
 			        if ( !$scope.hasClass('wpr-sticky-section-yes') && !$scope.find('.wpr-sticky-section-yes-editor') ) {
@@ -362,11 +399,10 @@
 									}
 								}
 							}
-							
-							// else if ( scrollPos <= stickyHideDistance ) {
-							// 	// At or above the top
-							// 	$scope.removeClass('wpr-sticky-hide');
-							// }	
+
+							if ( 0 === $(window).scrollTop() && 'sticky' === positionType ) {
+								$scope.css('position', 'relative');
+							}
 						}
 
 						// Clear any previous timeout
@@ -377,16 +413,9 @@
 						  prevScrollPos = scrollPos;
 						}, 10);
 					}
-
-					// const debouncedHandleScroll = _.debounce(handleScroll, 50);
 					
 					if ( 'sticky' == positionStyle ) {
-						// $(window).scroll(debouncedHandleScroll);
 						$(window).scroll(handleScroll);
-						
-						// $(window).scroll(function() {
-						// 	debounceScroll(handleScroll, 50);
-						// });
 					} else if ( 'fixed' == positionStyle ) {
 						applyPosition();
 						$(window).scroll(handleScroll);
@@ -396,13 +425,6 @@
                         if ( 0 != $scope.next().length ) {
                             $scope.next().get(0).style.setProperty('--wpr-animation-duration', stickyAnimDuration);
                         }
-					}
-					
-					function debounceScroll(method, delay) {
-						clearTimeout(method._tId);
-						method._tId= setTimeout(function(){
-							method();
-						}, delay);
 					}
 
 					let scrollEndTimeout;
@@ -422,13 +444,14 @@
 					
 					$scope.css({'position': stickType });
 
-					$('.wpr-close-cart span').trigger('click');
+                    if ( $('.wpr-close-cart span').length && !WprElements.editorCheck() ) {
+                        WprElements.closeSideBarOnReplace($scope, 200);
+                    }
 			    }
 
-			    function changeAdminBarOffset() {	
+			    function changeAdminBarOffset() {
 			        if ( $('#wpadminbar').length ) {
 			            adminBarHeight = $('#wpadminbar').css('height').slice(0, $('#wpadminbar').css('height').length - 2);
-			            // if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position')  || 'sticky' == $scope.css('position') ) ) {
 
 			            if ( 'top'  ===  positionLocation && ( 'fixed' == $scope.css('position') ) ) {
 			                $scope.css('top', +adminBarHeight + offsetTop + 'px');
@@ -440,7 +463,7 @@
 
 			function particlesEffect() {
 				var elementType = $scope.data('element_type'),
-					sectionID = $scope.data('id'),
+					sectionID = encodeURIComponent($scope.data('id')),
 					particlesJSON = ! WprElements.editorCheck() ? $scope.attr('data-wpr-particles') : $scope.find('.wpr-particle-wrapper').attr('data-wpr-particles-editor');
 
 				if ( ('section' === elementType || 'container' === elementType) && undefined !== particlesJSON ) {
@@ -510,6 +533,23 @@
 						speed: $scope.find('> .wpr-jarallax').attr('speed-data-editor')
 					});									
 				}
+			}
+
+			function observeParallax($scope) {
+				const observer = new IntersectionObserver((entries, obs) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							// Call your original function once
+							parallaxBackground.call(this, $scope);
+							obs.unobserve(entry.target); // Only trigger once
+						}
+					});
+				}, {
+					rootMargin: '0px',
+					threshold: 0.1
+				});
+			
+				observer.observe($scope[0]);
 			}
 
 			function parallaxMultiLayer() {
@@ -740,12 +780,14 @@
 			// Sub Menu Animation
 			function subMenuAnimation( selector, show ) {
 				if ( show === true ) {
+					selector.prev().attr('aria-expanded', 'true');
 					if ( $scope.hasClass('wpr-sub-menu-fx-slide') ) {
 						selector.stop().slideDown();
 					} else {
 						selector.stop().fadeIn();
 					}
 				} else {
+					selector.prev().attr('aria-expanded', 'false');
 					if ( $scope.hasClass('wpr-sub-menu-fx-slide') ) {
 						selector.stop().slideUp();
 					} else {
@@ -1035,6 +1077,10 @@
 							var elWidgetGap = elContainer.find('.elementor-element.e-con').css('padding'),
 								elWidgetGap = parseInt(elWidgetGap, 10);
 						}
+						
+						if ( elContainer.length === 0 ) {
+							return;
+						}
 
 						var elContainerWidth = elContainer.outerWidth() - (elWidgetGap * 2),
 							offsetLeft = -($scope.offset().left - elContainer.offset().left) + elWidgetGap;
@@ -1235,23 +1281,17 @@
 
 				if ($scope.find('.woocommerce-result-count').length) {
 					var resultCountText = $scope.find('.woocommerce-result-count').text();
-
-					var scopeId = $scope.data('id'); // Get the unique scope ID
-					var storageKey = 'wpr-cached-items-length-' + scopeId;
-					
-					// Try to get cached value from localStorage
-					var cachedLength = localStorage.getItem(storageKey);
-					
-					// If no cached value exists or if we're in editor mode, calculate and store it
-					if (!cachedLength || WprElements.editorCheck()) {
-						cachedLength = $scope.find('.wpr-grid-item').length;
-						localStorage.setItem(storageKey, cachedLength);
-					}
 					
 					var itemsPerPage = settings.query_posts_per_page ? 
-						settings.query_posts_per_page : 
-						parseInt(cachedLength);
-				
+						+settings.query_posts_per_page : 
+						+WprConfig.woo_shop_ppp;
+
+					if (WprConfig.is_product_category) {
+						itemsPerPage = +WprConfig.woo_shop_cat_ppp;
+					} else if (WprConfig.is_product_tag) {
+						itemsPerPage = +WprConfig.woo_shop_tag_ppp;
+					}
+					
 					// Ensure itemsPerPage is correctly parsed and is a valid number
 					if (isNaN(itemsPerPage) || itemsPerPage <= 0) {
 						return; // Exit if itemsPerPage is not valid
@@ -1263,10 +1303,6 @@
 					
 					if (currentPageElement.length) {
 						currentPage = parseInt(currentPageElement.text().trim()) || 1;
-					}
-					
-					if (currentPageElement == 1 && cachedLength !=  $scope.find('.wpr-grid-item').length) {
-						cachedLength = $scope.find('.wpr-grid-item').length;
 					}
 				
 					// Find the total number of items from the '.woocommerce-result-count' text
@@ -1933,7 +1969,7 @@
 
 					$.ajax({
 						type: 'POST',
-						url: current.attr( 'data-ajax' ),
+						url: $('<div>').text(current.attr('data-ajax')).html(),
 						data: {
 							action : 'wpr_likes_init',
 							post_id : current.attr( 'data-post-id' ),
@@ -1944,13 +1980,13 @@
 						},	
 						success: function( response ) {
 							// Get Icon
-							var iconClass = current.attr( 'data-icon' );
+							var iconClass = $('<div>').text( current.attr('data-icon') ).html();
 
 							// Get Count
 							var countHTML = response.count;
 
 							if ( '' === countHTML.replace(/<\/?[^>]+(>|$)/g, "") ) {
-								countHTML = '<span class="wpr-post-like-count">'+ current.attr( 'data-text' ) +'</span>';
+								countHTML = '<span class="wpr-post-like-count">' + $('<div>').text( current.attr('data-text') ).html() + '</span>';
 
 								if ( ! current.hasClass( 'wpr-likes-zero' ) ) {
 									current.addClass( 'wpr-likes-zero' );
@@ -2665,6 +2701,7 @@
                                         }, 500);
 										
 										WprElements.mediaHoverLink($scope, iGrid);
+										lazyLoadObserver();
 										// iGrid.removeClass('wpr-zero-opacity');
 										initialItems = 0;
 									}, 800);
@@ -2794,6 +2831,7 @@
 									postSharing();
 			
 									lazyLoadObserver();
+
 									// Maybe there is some other way
 									window.dispatchEvent(new Event('resize'));
 									window.dispatchEvent(new Event('scroll'));
@@ -3014,7 +3052,7 @@
 
 					$.ajax({
 						type: 'POST',
-						url: current.attr( 'data-ajax' ),
+						url: $('<div>').text(current.attr('data-ajax')).html(),
 						data: {
 							action : 'wpr_likes_init',
 							post_id : current.attr( 'data-post-id' ),
@@ -3025,13 +3063,13 @@
 						},	
 						success: function( response ) {
 							// Get Icon
-							var iconClass = current.attr( 'data-icon' );
+							var iconClass = $('<div>').text( current.attr('data-icon') ).html();
 
 							// Get Count
 							var countHTML = response.count;
 
 							if ( '' === countHTML.replace(/<\/?[^>]+(>|$)/g, "") ) {
-								countHTML = '<span class="wpr-post-like-count">'+ current.attr( 'data-text' ) +'</span>';
+								countHTML = '<span class="wpr-post-like-count">' + $('<div>').text( current.attr('data-text') ).html() + '</span>';
 
 								if ( ! current.hasClass( 'wpr-likes-zero' ) ) {
 									current.addClass( 'wpr-likes-zero' );
@@ -3442,7 +3480,7 @@
 					if ( dataActions.hasOwnProperty( 'message' ) ) {
 						if ( ! $scope.children( '.elementor-widget-container' ).children( '.wpr-countdown-message' ).length && ! $scope.children( '.wpr-countdown-message' ).length ) {
 							// Sanitize message to prevent XSS
-							var sanitizedMessage = sanitizeHTMLContent(dataActions['message']);
+							var sanitizedMessage = WprElements.sanitizeHTMLContent(dataActions['message']);
 							countDownWrap.after( '<div class="wpr-countdown-message">'+ sanitizedMessage +'</div>' );
 						}
 					}
@@ -3468,47 +3506,16 @@
 				
 			}
 
-			// Add this helper function to sanitize HTML content
-			function sanitizeHTMLContent(html) {
-				// Create a temporary DOM element
-				var tempDiv = document.createElement('div');
-				tempDiv.innerHTML = html;
-				
-				// Remove all script tags
-				var scripts = tempDiv.getElementsByTagName('script');
-				while(scripts.length > 0) {
-					scripts[0].parentNode.removeChild(scripts[0]);
-				}
-				
-				// Find all elements to remove potential malicious attributes
-				var allElements = tempDiv.getElementsByTagName('*');
-				for (var i = 0; i < allElements.length; i++) {
-					// Remove event handler attributes
-					var attrs = allElements[i].attributes;
-					for (var j = attrs.length - 1; j >= 0; j--) {
-						var attrName = attrs[j].name;
-						// Remove all on* event handlers
-						if (attrName.substring(0, 2) === 'on') {
-							allElements[i].removeAttribute(attrName);
-						}
-						// Remove javascript: URLs
-						if (attrName === 'href' || attrName === 'src') {
-							var value = attrs[j].value;
-							if (value.toLowerCase().indexOf('javascript:') === 0) {
-								allElements[i].removeAttribute(attrName);
-							}
-						}
-					}
-				}
-				
-				return tempDiv.innerHTML;
-			}
-
 		}, // End widgetCountDown
 
 		widgetGoogleMaps: function( $scope ) {
-			var googleMap = $scope.find( '.wpr-google-map' ),
-				settings = googleMap.data( 'settings' ),
+			var googleMap = $scope.find( '.wpr-google-map' );
+
+			if ( googleMap.data('integration-type') && 'without_api_key' === googleMap.data('integration-type') ) {
+				return;
+			}
+
+			var settings = googleMap.data( 'settings' ),
 				controls = googleMap.data( 'controls' ),
 				locations = googleMap.data( 'locations' ),
 				gMarkers = [],
@@ -3568,6 +3575,12 @@
 			// Center Map
 			if ( locations.length > 1 ) {
 				map.fitBounds(bounds);
+				// Add listener to override zoom with user-defined zoom_depth after bounds are set
+				google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+					if (settings.zoom_depth) {
+						map.setZoom(parseInt(settings.zoom_depth));
+					}
+				});
 			} else {
 				map.setCenter( bounds.getCenter() );
 			}
@@ -4076,8 +4089,8 @@
 			function autoplayVideo() {
 				$advancedSlider.find('.slick-current').each(function() {
 
-					var videoSrc = $(this).find('.wpr-slider-item').attr('data-video-src'),
-					videoAutoplay = $(this).find('.wpr-slider-item').attr('data-video-autoplay');
+					var videoSrc = WprElements.sanitizeURL($(this).find('.wpr-slider-item').attr('data-video-src')) || '',
+						videoAutoplay = $(this).find('.wpr-slider-item').attr('data-video-autoplay');
 					
 					if ( $(this).find( '.wpr-slider-video' ).length !== 1 && videoAutoplay === 'yes' ) {
 						if ( videoSrc.includes('vimeo') || videoSrc.includes('youtube') ) {
@@ -4089,9 +4102,9 @@
 							}
 							sliderVideoSize();
 						} else {
-							var videoMute = $(this).find('.wpr-slider-item').attr('data-video-mute');
-							var videoControls = $(this).find('.wpr-slider-item').attr('data-video-controls');
-							var videoLoop = $(this).find('.wpr-slider-item').attr('data-video-loop');
+							var videoMute = WprElements.sanitizeDataAttr($(this).find('.wpr-slider-item').attr('data-video-mute'));
+							var videoControls = WprElements.sanitizeDataAttr($(this).find('.wpr-slider-item').attr('data-video-controls'));
+							var videoLoop = WprElements.sanitizeDataAttr($(this).find('.wpr-slider-item').attr('data-video-loop'));
 
 							$(this).find('.wpr-cv-inner').prepend('<div class="wpr-slider-video wpr-custom-video"><video autoplay '+ videoLoop + ' ' + videoMute + ' ' + videoControls + ' ' +  'src="'+ videoSrc +'" width="100%" height="100%"></video></div>');
 							
@@ -4126,7 +4139,7 @@
 
 			$advancedSlider.on( 'click', '.wpr-slider-video-btn', function() {
 				var currentSlide = $(this).closest('.slick-slide'),
-					videoSrc = currentSlide.find('.wpr-slider-item').attr('data-video-src'),
+					videoSrc = WprElements.sanitizeURL(currentSlide.find('.wpr-slider-item').attr('data-video-src')) || '',
 					videoButton = $(this),
 					allowFullScreen = '';
 					
@@ -4142,9 +4155,9 @@
 				} else if ( videoSrc.includes('vimeo') ) {
 					allowFullScreen = 'allowfullscreen';
 				} else {
-					var videoMute = currentSlide.find('.wpr-slider-item').attr('data-video-mute');
-					var videoControls = currentSlide.find('.wpr-slider-item').attr('data-video-controls');
-					var videoLoop = currentSlide.find('.wpr-slider-item').attr('data-video-loop');
+					var videoMute = WprElements.sanitizeDataAttr(currentSlide.find('.wpr-slider-item').attr('data-video-mute'));
+					var videoControls = WprElements.sanitizeDataAttr(currentSlide.find('.wpr-slider-item').attr('data-video-controls'));
+					var videoLoop = WprElements.sanitizeDataAttr(currentSlide.find('.wpr-slider-item').attr('data-video-loop'));
 					
 					if ( currentSlide.find( '.wpr-slider-video' ).length !== 1 ) {
 						currentSlide.find('.wpr-cv-container').prepend('<div class="wpr-slider-video wpr-custom-video"><video '+ videoLoop + ' ' + videoMute + ' ' + videoControls + ' ' + 'src="'+ videoSrc +'" width="100%" height="100%"></video></div>');
@@ -7203,6 +7216,8 @@
                     var source = $(this).find('.inner-block > span').attr( 'data-src' ),
                         instaFeedItem = $(this).closest( '.wpr-insta-feed-content-wrap' );
 
+						instaFeedItem.find('img').attr('alt', DOMPurify.sanitize(instaFeedItem.find('img').attr('alt')) );
+
                         instaFeedItem.find( '.wpr-insta-feed-image-wrap' ).attr( 'data-src', source );
 
                     var dataSource = instaFeedItem.find( '.wpr-insta-feed-image-wrap' ).attr( 'data-src' );
@@ -8655,7 +8670,7 @@
 											setTimeout(function() {
 												$scope.find('.wpr-button').find('.wpr-double-bounce').addClass('wpr-loader-hidden');
 												$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
-												$scope.find('form').append('<p class="wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
+												$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
 											}, 500);
 											callback(false); // Call the callback with failure
 										} else {
@@ -8668,7 +8683,7 @@
 										setTimeout(function() {
 											$scope.find('.wpr-button').find('.wpr-double-bounce').addClass('wpr-loader-hidden');
 											$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
-											$scope.find('form').append('<p class="wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
+											$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
 										}, 500);
 										callback(false); // Call the callback with failure
 									}
@@ -8743,10 +8758,10 @@
 								return Promise.all(updateMetaPromises).then(() => {
 									if (responsesArray.includes('error')) {
 										var sanitizedErrorMessage = $('<div>').text($scope.data('settings').error_message).html();
-										$scope.find('form').append('<p class="wpr-submit-error">' + sanitizedErrorMessage + '</p>');
+										$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">' + sanitizedErrorMessage + '</p>');
 									} else {
 										$scope.find('form').append(
-											$('<p class="wpr-submit-success"></p>').text($scope.data('settings').success_message)
+											$('<p class="wpr-submit-notice wpr-submit-success"></p>').text($scope.data('settings').success_message)
 										);										
 										// $scope.find('form').append('<p class="wpr-submit-success">'+ $scope.data('settings').success_message +'</p>');
 										$scope.find('button').attr('disabled', true);
@@ -9091,11 +9106,11 @@
 							if (response.data ) {
 								if ( 'filesize' === response.data.cause ) {
 									let maxFileNotice = thisInput.data('maxfs-notice') ? thisInput.data('maxfs-notice') : response.data.message;
-									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + maxFileNotice + '</p>');
+									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + maxFileNotice + '</p>');
 								}
 
 								if ( 'filetype' == response.data.cause ) {
-									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + response.data.message + '</p>');
+									thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + response.data.message + '</p>');
 								}
 							}
 
@@ -9105,11 +9120,11 @@
 						error: function(error) {
 							if ( 'filesize' === error.cause ) {
 								let maxFileNotice = thisInput.data('maxfs-notice') ? thisInput.data('maxfs-notice') : error.message;
-								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + maxFileNotice + '</p>');
+								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + maxFileNotice + '</p>');
 							}
 
 							if ( 'filetype' == error.cause ) {
-								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-error">' + error.message + '</p>');
+								thisInput.closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">' + error.message + '</p>');
 							}
 						  console.log(error);
 						  reject(error);
@@ -9217,11 +9232,11 @@
 					$stepTab.eq(currentTab).find('.wpr-form-error, .wpr-form-error-wrap').each(function() {
 						if ( !($(this).closest('.wpr-field-group').find('.wpr-submit-error').length > 0) ) {
 							if ( $(this).attr('type') == 'file' ) {
-								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-error">'+ WprConfig.file_empty +'</p>');
+								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.file_empty +'</p>');
 							} else if ( $(this).is('select') || $(this).attr('type') === 'radio' || $(this).attr('type') === 'checkbox' ) {
-								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-error">'+ WprConfig.select_empty +'</p>');
+								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.select_empty +'</p>');
 							} else {
-								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-error">'+ WprConfig.input_empty +'</p>');
+								$(this).closest('.wpr-field-group').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.input_empty +'</p>');
 							}
 						}
 					});
@@ -9567,6 +9582,11 @@
 				plusIconChild = !$scope.find('.wpr-add-to-cart-icons-wrap').length ? 'last-child' : 'first-child',
 				minusIconChild = !$scope.find('.wpr-add-to-cart-icons-wrap').length ? 'first-child' : 'last-child';
 
+                if ( qtyWrapper.length === 0 ) {
+                    plusIconChild = 'last-child';
+                    minusIconChild = 'first-child';
+                }
+
 			if ( WprElements.editorCheck() && $scope.find('select').length > 0 ) {
 				$scope.find('select').on('change', function() {
 					$scope.find('.reset_variations').css('visibility', 'visible');
@@ -9604,24 +9624,38 @@
 			}
 		
 			// plus
-			qtyInput.on('click', 'i:'+plusIconChild, function() {
-				if ( parseInt(jQuery(this).prev('.quantity').find('input.qty').val(), 10) < qtyInputInStock && qtyLayout == 'both' ) {
-					jQuery(this).prev('.quantity').find('input.qty').val( parseInt(jQuery(this).prev('.quantity').find('input.qty').val(), 10) + 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
-				} else if ( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) < qtyInputInStock && qtyLayout !== 'both' && qtyLayout !== 'default' ) {
-					jQuery(this).parent().siblings('.quantity').find('input.qty').val( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) + 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
+			// Ensure event handlers are not attached multiple times
+			$scope.off('click', 'i:' + plusIconChild).on('click', 'i:' + plusIconChild, function() {
+				var $qtyInput = jQuery(this).prev('.quantity').find('input.qty');
+                if ($qtyInput.length === 0) {
+                    $qtyInput = jQuery(this).closest('.wpr-quantity-wrapper').find('.quantity').find('input.qty');
+                }
+                
+				var currentVal = parseInt($qtyInput.val(), 10);
+
+				if (currentVal < qtyInputInStock && qtyLayout == 'both') {
+					$qtyInput.val(currentVal + 1);
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
+				} else if (currentVal < qtyInputInStock && qtyLayout !== 'both' && qtyLayout !== 'default') {
+					$qtyInput.val(currentVal + 1);
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
 				}
 			});
 			
-			// minus
-			qtyInput.on('click', 'i:'+minusIconChild, function() {
-				if ( parseInt(jQuery(this).next('.quantity').find('input.qty').val(), 10) > 0 && qtyLayout == 'both' ) {
-					jQuery(this).next('.quantity').find('input.qty').val( parseInt(jQuery(this).next('.quantity').find('input.qty').val(), 10) - 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
-				} else if ( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) > 0 && qtyLayout !== 'both' && qtyLayout !== 'default' ) {
-					jQuery(this).parent().siblings('.quantity').find('input.qty').val( parseInt(jQuery(this).parent().siblings('.quantity').find('input.qty').val(), 10) - 1);
-					jQuery('input[name="update_cart"]').removeAttr('disabled');
+			$scope.off('click', 'i:' + minusIconChild).on('click', 'i:' + minusIconChild, function() {
+				var $qtyInput = jQuery(this).next('.quantity').find('input.qty');
+                if ($qtyInput.length === 0) {
+                    $qtyInput = jQuery(this).closest('.wpr-quantity-wrapper').find('.quantity').find('input.qty');
+                }
+                
+				var currentVal = parseInt($qtyInput.val(), 10);
+
+				if (currentVal > 0 && qtyLayout == 'both') {
+					$qtyInput.val(currentVal - 1);
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
+				} else if (currentVal > 0 && qtyLayout !== 'both' && qtyLayout !== 'default') {
+					$qtyInput.val(currentVal - 1);
+					$scope.find('input[name="update_cart"]').removeAttr('disabled');
 				}
 			});
 		
@@ -10126,7 +10160,9 @@
                                 $scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-in');
                                 $scope.find('.wpr-mini-cart-slide-in').css('animation-speed', animationSpeed);
                                 $('body').addClass('wpr-mini-cart-sidebar-body');
-                            }
+                            } else if ( $scope.hasClass('wpr-mini-cart-dropdown') ) {
+								$scope.find('.wpr-shopping-cart-wrap').css('display', 'block');
+							}
                             setTimeout(function() {
                                 // $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-in');
                                 $scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-in');
@@ -10198,13 +10234,12 @@
 
 		widgetAdvancedFilters: function($scope) {
 			var visualFilters = $scope.find('.wpr-af-visual-wrap'),
-				rangeFilter = $scope.find('.wpr-af-range-container'),
 				viewMoreLess = $scope.find('.wpr-view-more-less'),
-				datePickers = [],
                 actionSelector = '#' + $scope.find('.wpr-advanced-filters-wrap').data('widget-selector'),
 				experimentActionCount = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ? 'wpr_get_filtered_count_products' : 'wpr_get_filtered_count_posts',
 				experimentActionContent = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ?  'wpr_woo_grid_filters_ajax' : 'wpr_grid_filters_ajax',
 				settings,
+				datePickers = [],
 				isDebounceAjaxCallRunning = false,
 				pagesLoadedExperiment = 0,
 				pageCount = 0;
@@ -10221,8 +10256,41 @@
 				
 				fromSlider.on('input', () => controlFromSlider(fromSlider, toSlider, fromInput));
 				toSlider.on('input', () => controlToSlider(fromSlider, toSlider, toInput));
-				fromInput.on('input', () => controlFromInput(fromSlider, fromInput, toInput, toSlider));
-				toInput.on('input', () => controlToInput(toSlider, fromInput, toInput, toSlider));
+				fromInput.on('change', () => controlFromInput(fromSlider, fromInput, toInput, toSlider));
+				toInput.on('change', () => controlToInput(toSlider, fromInput, toInput, toSlider));
+
+				// Enhanced input handlers with debouncing for smooth typing
+				// fromInput.on('change', function() {
+				// 	clearTimeout($(this).data('debounceTimer'));
+				// 	$(this).data('debounceTimer', setTimeout(() => {
+				// 		controlFromInput(fromSlider, fromInput, toInput, toSlider);
+				// 	}, 300));
+				// }).on('blur', () => {
+				// 	clearTimeout(fromInput.data('debounceTimer'));
+				// 	controlFromInput(fromSlider, fromInput, toInput, toSlider);
+				// }).on('keydown', function(e) {
+				// 	if (e.key === 'Enter') {
+				// 		clearTimeout($(this).data('debounceTimer'));
+				// 		controlFromInput(fromSlider, fromInput, toInput, toSlider);
+				// 		$(this).blur();
+				// 	}
+				// });
+
+				// toInput.on('change', function() {
+				// 	clearTimeout($(this).data('debounceTimer'));
+				// 	$(this).data('debounceTimer', setTimeout(() => {
+				// 		controlToInput(toSlider, fromInput, toInput, toSlider);
+				// 	}, 300));
+				// }).on('blur', () => {
+				// 	clearTimeout(toInput.data('debounceTimer'));
+				// 	controlToInput(toSlider, fromInput, toInput, toSlider);
+				// }).on('keydown', function(e) {
+				// 	if (e.key === 'Enter') {
+				// 		clearTimeout($(this).data('debounceTimer'));
+				// 		controlToInput(toSlider, fromInput, toInput, toSlider);
+				// 		$(this).blur();
+				// 	}
+				// });
 			}
 
             if ( $scope.find('input[name="wpr_af_date"]').length > 0 ) {
@@ -10388,11 +10456,11 @@
 			
 						if ($(this).hasClass('expanded')) {
 							// Show all items
-							elementsToShow.show();
+							elementsToShow.fadeIn();
 							$(this).text($(this).data('less-text'));
 						} else {
 							// Hide items exceeding the limit
-							elementsToHide.hide();
+							elementsToHide.fadeOut();
 							$(this).text($(this).data('more-text'));
 						}
 					}); 
@@ -10423,6 +10491,10 @@
 						$(this).on('click', function(e) {
                             e.preventDefault();
 							let $this = $(this);
+
+							if ( $this.find('input').prop('disabled') ) {
+								return true;
+							}
 
 							// Remove all active classes
 							// if ( 'or' === $scope.find('.wpr-advanced-filters-wrap').attr('data-wpr-relation') ) {
@@ -10461,6 +10533,10 @@
 			}
 
 			function updateActiveFilters() {
+				if ( WprElements.editorCheck() ) {
+					return;
+				}
+
 				$scope.on('click', '.wpr-af-active-filters span.wpr-remove-filter', function () {
 					var thisEl = $(this),
 						dataValue = thisEl.data('value').toString(),
@@ -10574,13 +10650,14 @@
 
 				if ( activeFilters ) {
 					if ( WprElements.editorCheck() && $scope.find('.wpr-af-active-filters').length > 0 ) {
-						let activeExample = '<div class="wpr-af-active-wrap-99999999" data-wpr-af-type="checkbox"><span class="wpr-remove-filter" data-value="99999" class="custom-cursor-on-hover">Tags: Tasty(7) <span>&times;</span></span></div>';
-						activeFilters.prepend(activeExample);
+						let activeExample = '<div class="wpr-af-active-wrap-99999999" data-wpr-af-type="checkbox"><span class="wpr-remove-filter" data-value="99999" class="custom-cursor-on-hover">Tags: Tasty(7)<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span></span></div>';
+						activeFilters.append(activeExample);
 					}
 	
 					$('.wpr-advanced-filters-wrap').each(function () {
-						var label = $(this).find('h4').text().trim();
-						var values = [];
+						var thisWrap = $(this),
+							label = $(this).find('h4').text().trim(),
+							values = [];
 					
 						// Checkboxes and Radios
 						$(this).find('input[type="checkbox"]:checked, input[type="radio"]:checked').each(function () {
@@ -10607,24 +10684,24 @@
 							}).get();
 							values.push({ label: label, value: rangeValues.join(' - '), realVal: rangeValues});
 						}
-					
-						// Select
-						var selectValue = $(this).find('select').val();
 	
-						if ( selectValue ) {
-							$(this).find('select option:selected').each(function () {
-								values.push({ label: label, value: $(this).text().trim(), realVal: $(this).val() });
-							});
-	
-							if ( selectValue == 0 ) {
+						$(this).find('select').each(function () {
+							var selectLabel = $(this).closest('.wpr-af-select-wrap').find('h4').text().trim(),
+								selectValue = $(this).find('option:selected').text().trim(),
+								selectRealVal = $(this).find('option:selected').val();
+
+							values.push({ label: selectLabel, value: selectValue, realVal: selectRealVal });
+
+							if ( selectRealVal == '' || selectRealVal == '0' ) {
+								$('body').find('span[data-value="'+ selectRealVal +'"]').remove();
 								$('body').find('.wpr-af-active-wrap-' + $(this).closest('.elementor-element').data('id')).remove();
 							}
-						}
+						});
 					
 						// If there are values, render results
 						if ( values.length > 0 ) {
 							var container = $('<div class="wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id') +'" data-wpr-af-type="'+ $(this).data('wpr-filter-type') +'">'),
-								replaceFilters = ['select', 'radio', 'date','range']
+								replaceFilters = ['select', 'radio', 'date','range'];
 	
 							if ( $('body').find('.wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id')).length > 0 ) {
 								container = $('body').find('.wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id'));
@@ -10633,18 +10710,22 @@
 								// Append value span
 								var thisLabel = item.label ? item.label : 'No Label';
 	
-								if ( item.value != 'None' && item.value != '' ) {
+								if ( item.value != 'None' && item.value != '' && item.realVal != '0' ) {
 									if (true) {
 										if ( $('[data-value="' + item.realVal + '"]').length == 0 ) {
 
 											var itemElement = $('<span class="wpr-remove-filter" data-value="' + item.realVal + '">').text(thisLabel + ': ' + item.value);
 											// Add remove icon in a separate span
-											var removeIcon = $('<span>&times;</span>');
+											var removeIcon = $('<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>');
 
 											itemElement.append(removeIcon);
 				
-											if (replaceFilters.includes(container.attr('data-wpr-af-type'))) {
-												container.html(itemElement);
+											if ( replaceFilters.includes(container.attr('data-wpr-af-type')) ) {
+												if ( thisWrap.find('select').length <= 1   ) {
+													container.html(itemElement);
+												} else {
+													container.append(itemElement);
+												}
 											} else if ( 'date_range' == container.attr('data-wpr-af-type') ) {
 												let dateElementClass = $('*[data-date-val='+ item.realVal +']').attr('class');
 
@@ -10686,7 +10767,6 @@
 			}
 
 			function onFilterChange() {
-
                 $scope.find('input, select, textarea').on('change', function() {
                     var $this = $(this);
                     if ('checkbox' == $this.attr('type')) {
@@ -10698,14 +10778,11 @@
                             $option.addClass('wpr-checked');
                         }
                     } else if ('radio' == $this.attr('type')) {
-                        // Find all radio buttons in the same group
-                        var name = $this.attr('name');
-                        var $group = $('input[type="radio"][name="' + name + '"]');
-                
-                        // Remove 'wpr-checked' from all options in the group
+                        var name = $this.attr('name'),
+							$group = $('input[type="radio"][name="' + name + '"]');
+
                         $group.closest('.wpr-af-input-wrap').removeClass('wpr-checked');
-                
-                        // Add 'wpr-checked' to the selected option
+
                         if ($this.is(':checked')) {
                             $this.closest('.wpr-af-input-wrap').addClass('wpr-checked');
                         }
@@ -10754,9 +10831,10 @@
 					});
 
 					$scope.find('.wpr-woo-rating').on('click', function() {
-						let rating = $(this).find('.wpr-rating-icon-full').length;
+						let rating = +$(this).data('rating');
 
-						$scope.find('input.wpr-rating-filter').val(rating).trigger('change');
+						$(this).toggleClass('wpr-active-product-filter');
+						$(this).find('input.wpr-rating-filter').val(rating).trigger('change');
 					});
 
 					$scope.find('input.wpr-rating-filter').on('change', function() {
@@ -10798,7 +10876,7 @@
 							}
 						});
 					} else {
-						$scope.find('.wpr-af-range-container input[type="range"]').on('change', function() {
+						$scope.find('.wpr-af-range-container').find('input[type="range"], input[type="number"]').on('change', function() {
 							var selectedElement = $scope.find('.wpr-af-rf-control').find('input[type="number"]');
 							var selectedValue = [];
 							var selectedName = selectedElement.attr('name');
@@ -10828,17 +10906,32 @@
 				} else {
 					fromSlider.val(from);
 				}
+
+				if ( from < +fromInput.attr('min') ) {
+					fromInput.val(+fromInput.attr('min'));
+					fromSlider.val(+fromInput.attr('min'));
+				}
 			}
 			
 			function controlToInput(toSlider, fromInput, toInput, controlSlider) {
 				const [from, to] = getParsed(fromInput, toInput);
 				fillSlider(fromInput, toInput);
 				setToggleAccessible(toInput, 'to');
+
 				if (from <= to) {
-					toSlider.val(to);
-					toInput.val(to);
+					if ( to > +toInput.attr('max') ) {
+						toSlider.val(+toInput.attr('max'));
+						toInput.val(+toInput.attr('max'));
+					} else {
+						toSlider.val(to);
+						toInput.val(to);
+					}
 				} else {
-					toInput.val(from);
+					if ( to > +toInput.attr('max') ) {
+						toInput.val(+toInput.attr('max'));
+					} else {
+						toInput.val(from);
+					}
 				}
 			}
 			
@@ -10849,8 +10942,10 @@
 				if (from > to) {
 					fromSlider.val(to);
 					fromInput.val(to);
+					$scope.find('.wpr-af-rs-value-min').text(to);
 				} else {
 					fromInput.val(from);
+					$scope.find('.wpr-af-rs-value-min').text(from);
 				}
 			}
 			
@@ -10861,9 +10956,11 @@
 				if (from <= to) {
 					toSlider.val(to);
 					toInput.val(to);
+					$scope.find('.wpr-af-rs-value-max').text(to);
 				} else {
 					toInput.val(from);
 					toSlider.val(from);
+					$scope.find('.wpr-af-rs-value-max').text(from);
 				}
 			}
 			
@@ -10881,9 +10978,13 @@
 			
 				const rangeDistance = max - min;
 				const fromPercent = (((from - min) / rangeDistance) * 100) > 0 ? ((from - min) / rangeDistance) * 100 : 0;
-				const toPercent = ((to - min) / rangeDistance) * 100;
+				let toPercent = ((to - min) / rangeDistance) * 100;
 			
 				const sliderFill = $scope.find('.wpr-af-slider-fill');
+
+				if ( toPercent > 100 ) {
+					toPercent = 100;
+				}
 			
 				sliderFill.css({
 					left: `${fromPercent}%`,
@@ -10931,25 +11032,34 @@
 						// Redirect to the new URL
 						window.location.href = currentUrl.toString();
 					} else {
-						// let rangeMin = $('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').find('input[type="number"].wpr-af-rf-control-min-input');
-						// let rangeMax = $('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').find('input[type="number"].wpr-af-rf-control-max-input');
+						// Reset range inputs to their min/max values
+						let rangeMin = $('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').find('input[type="number"].wpr-af-rf-control-min-input');
+						let rangeMax = $('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').find('input[type="number"].wpr-af-rf-control-max-input');
 
-						// rangeMin.val(rangeMin.attr('min')).trigger('input');
-						// rangeMax.val(rangeMax.attr('max')).trigger('input');
+						rangeMin.val(rangeMin.attr('min')).trigger('input');
+						rangeMax.val(rangeMax.attr('max')).trigger('input');
 
-						// // Reset all select elements to their default option (usually the first option)
-						// $('body').find('.wpr-advanced-filters-wrap').find('select').prop('selectedIndex', 0).trigger('change');
+						// Reset all select elements to their default option (usually the first option)
+						$('body').find('.wpr-advanced-filters-wrap').find('select').prop('selectedIndex', 0).trigger('change');
 
-						// // Uncheck only checked checkboxes and radio buttons
-						// $('body').find('.wpr-advanced-filters-wrap').find('input[type="checkbox"]:checked, input[type="radio"]:checked').prop('checked', false).trigger('change');
+						// Uncheck only checked checkboxes and radio buttons
+						$('body').find('.wpr-advanced-filters-wrap').find('input[type="checkbox"]:checked, input[type="radio"]:checked').prop('checked', false).trigger('change');
 
-						// // Reset all date inputs to empty
-						// $('body').find('input[name="wpr_af_date"]').val('').trigger('resetDate').trigger('change');
-						// $('body').find('input[name="wpr_af_date_range"]').val('').trigger('resetDate').trigger('change');
+						// Reset all date inputs to empty
+						$('body').find('input[name="wpr_af_date"]').val('').trigger('resetDate').trigger('change');
+						$('body').find('input[name="wpr_af_date_range"]').val('').trigger('resetDate').trigger('change');
 
+						// Reset text inputs
+						$('body').find('.wpr-advanced-filters-wrap input[type="text"]').val('').trigger('change');
+
+						// Reset rating filters
+						$('body').find('.wpr-advanced-filters-wrap input.wpr-rating-filter').val('').trigger('change');
+
+						// Remove visual states
 						$('body').find('.wpr-af-visual-wrap').removeClass('wpr-af-visual-active');
+						$('body').find('.wpr-af-input-wrap').removeClass('wpr-checked');
 
-						ajaxFilters($(this));
+						// ajaxFilters($(this));
 					}
 				
 					// Optionally, add logic to reset or remove filters as needed
@@ -10967,24 +11077,18 @@
 				$('.wpr-advanced-filters-wrap').each(function () {
 					const $wrap = $(this);
 			
-					if (
-						$wrap.attr('data-show-count') === 'yes' &&
-						$wrap.attr('data-change-counter') !== 'never'
-					) {
-						if (
-							$wrap.attr('data-change-counter') === 'other_filters' &&
-							$wrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope)
-						) {
+					if ( $wrap.attr('data-show-count') === 'yes' && $wrap.attr('data-change-counter') !== 'never') {
+						if ( $wrap.attr('data-change-counter') === 'other_filters' && $wrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope) ) {
 							return true; // skip this wrap
 						}
 			
-						const $inputs = $wrap.find('input[type="checkbox"], input[type="radio"], option');
+						const $inputs = $wrap.find('input[type="checkbox"], input[type="radio"], option, li.wpr-woo-rating');
 			
 						$inputs.each(function () {
 							const $input = $(this);
 							const isOption = $input.prop('tagName') === 'OPTION';
 							const selectedName = isOption ? $input.closest('select').attr('name') : $input.attr('name');
-							const selectedValue = $input.val();
+							const selectedValue = $input.val() || $input.data('rating');
 			
 							if (!selectedName || selectedValue === '') return;
 			
@@ -11047,7 +11151,9 @@
 									}
 								}
 
-								if ($el.prop('tagName') === 'OPTION') {
+								if ( $el.hasClass('wpr-woo-rating') ) {
+									$el.find('.wpr-af-count').text(countText);
+								} else if ($el.prop('tagName') === 'OPTION') {
 									if ( $el.attr('value') != 0 ) {
 										const cleanText = $el.text().replace(/\(\d+\)/, '');
 										$el.text(cleanText + countText);
@@ -11070,6 +11176,9 @@
 											$el.hide();
 											if ($el.is(':checkbox') || $el.is(':radio')) {
 												$el.closest('.wpr-af-input-wrap').hide();
+												if ( $el.closest('.wpr-af-visual-wrap') ) {
+													$el.closest('.wpr-af-visual-wrap').hide();
+												}
 											}
 										}
 									} else if ($el.closest('.wpr-advanced-filters-wrap').attr('data-empty-action') === 'disable') {
@@ -11080,6 +11189,7 @@
 									$el.show();
 									if ($el.is(':checkbox') || $el.is(':radio')) {
 										$el.closest('.wpr-af-input-wrap').show();
+										$el.closest('.wpr-af-visual-wrap').show();
 									}
 								}
 							});
@@ -11100,22 +11210,22 @@
 				}
 
                 $('.wpr-advanced-filters-wrap').each(function() {
-                    if ( $(this).find('input[type="checkbox"], input[type="radio"]').length > 0 ) {
-                        $(this).find('input[type="checkbox"], input[type="radio"]').each(function() {
-                                let isRadioChecked = true;
+                    if ( $(this).find('input[type="checkbox"], input[type="radio"], input.wpr-rating-filter').length > 0 ) {
+                        $(this).find('input[type="checkbox"], input[type="radio"], input.wpr-rating-filter').each(function() {
+							let isRadioChecked = true;
 
-                                if ( $(this).attr('type') == 'radio' && (!$(this).is(':checked')) && $(this).val() != self.val() ) {
-                                    isRadioChecked = false;
-                                } else {
-                                    isRadioChecked = true;
-                                }
-                                
-                                if ( isRadioChecked	) {
-                                    var selectedName = $(this).attr('name');
-                                    var selectedValue = $(this).val();
+							if ( $(this).attr('type') == 'radio' && (!$(this).is(':checked')) && $(this).val() != self.val() ) {
+								isRadioChecked = false;
+							} else {
+								isRadioChecked = true;
+							}
+							
+							if ( isRadioChecked || $(this).hasClass('wpr-rating-filter')) {
+								var selectedName = $(this).attr('name');
+								var selectedValue = $(this).val();
 
-                                    updateURL(selectedName, selectedValue, $(this), finalURL);
-                                }
+								updateURL(selectedName, selectedValue, $(this), finalURL);
+							}
                         });	
                     }
 
@@ -11125,14 +11235,6 @@
 
 						updateURL(selectedName, selectedValue, $(this), finalURL);
 					});
-
-                    if ( $(this).find('input.wpr-rating-filter').length > 0 ) {
-						var selectedName = $(this).find('input.wpr-rating-filter').attr('name');
-						var selectedValue = $(this).find('input.wpr-rating-filter').val();
-
-						// updateURL(selectedName, selectedValue, $(this), finalURL);
-						updateURL(selectedName, selectedValue, $(this).find('input.wpr-rating-filter'), finalURL);
-                    }
 
                     if ( $(this).find('select').length == 1 ) {
                         var selectedName = $(this).find('select').attr('name');
@@ -11271,7 +11373,7 @@
 					} else {
 						url.searchParams.set(selectedName, selectedValue);
 					}
-				} else if ( element.hasClass('wpr-af-range-apply-btn') || element.hasClass('wpr-af-range-container') || element.hasClass('wpr-af-from-slider') || element.hasClass('wpr-af-to-slider') ) {
+				} else if ( element.hasClass('wpr-af-range-apply-btn') || element.hasClass('wpr-af-range-container') || element.hasClass('wpr-af-from-slider') || element.hasClass('wpr-af-to-slider') || element.hasClass('wpr-af-rf-control-min-input') || element.hasClass('wpr-af-rf-control-max-input') ) {
 					url.searchParams.set(selectedName, selectedValue);
 				} else if ( element.attr('type') == "text" || element.attr('type') == "date"  || element.attr('type') == "date_range" )  {
 
@@ -11378,7 +11480,7 @@
 						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 					}
 					
-					if ( element.is(':checked') ) {
+					if ( element.is(':checked') || (element.hasClass('wpr-rating-filter') && element.closest('.wpr-active-product-filter').length > 0) ) {
 						if ( url.searchParams.has(selectedName) ) {
 							// Get the current value of the query parameter
 							const currentValue = url.searchParams.get(selectedName);
@@ -11409,9 +11511,7 @@
 						}
 					} else {
 						if (url.searchParams.has(selectedName)) {
-
 							// Get the current value of the query parameter
-
 							const currentValue = url.searchParams.get(selectedName);
 
 							if ( currentValue.includes(',') || currentValue !== false ) {
@@ -11449,16 +11549,6 @@
 					}
 				}
 
-				if ( element.hasClass('wpr-rating-filter') || element.find('.wpr-rating-filter').length > 0 ) {
-					console.log(selectedName, selectedValue);
-					if ( selectedValue == 0 ) {
-						url.searchParams.delete(selectedName);
-						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
-					} else {
-						url.searchParams.set(selectedName, selectedValue);
-					}
-				}
-
 				// Replace the current URL with the updated one
 				if ( $('.wpr-af-apply-btn').length == 0 && 'yes' !== element.closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
 					window.location.href = url.toString();
@@ -11466,11 +11556,10 @@
 					if ( $('.wpr-af-apply-btn').length > 0 && $('.wpr-af-apply-btn').data('redirect-url') != '#' ) {
 						url.pathname = $('.wpr-af-apply-btn').data('redirect-url');
 					}
-					console.log('works final url');
-					WprElements.changeFinalURL(url.toString());
-				}
 
-				console.log(finalURL);
+					WprElements.changeFinalURL(url.toString());
+					console.log(finalURL);
+				}
 			}
 
 			function updateGrid(data, cache, startvar, targetGrid, settings, widgetSelector) {
@@ -12660,10 +12749,121 @@
 					}
 				});
 			}
-		}
-	
-	} // End WprElements
+		},
 
+		// Add this helper function to sanitize HTML content
+		sanitizeHTMLContent: function(html) {
+			// Create a temporary DOM element
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = html;
+			
+			// Remove all script tags
+			var scripts = tempDiv.getElementsByTagName('script');
+			while(scripts.length > 0) {
+				scripts[0].parentNode.removeChild(scripts[0]);
+			}
+
+			// Remove all iframe tags
+			var iframes = tempDiv.getElementsByTagName('iframe');
+			while(iframes.length > 0) {
+				iframes[0].parentNode.removeChild(iframes[0]);
+			}
+			
+			// Find all elements to remove potential malicious attributes
+			var allElements = tempDiv.getElementsByTagName('*');
+			for (var i = 0; i < allElements.length; i++) {
+				// Remove event handler attributes
+				var attrs = allElements[i].attributes;
+				for (var j = attrs.length - 1; j >= 0; j--) {
+					var attrName = attrs[j].name;
+					// Remove all on* event handlers
+					if (attrName.substring(0, 2) === 'on') {
+						allElements[i].removeAttribute(attrName);
+					}
+					// Remove javascript: URLs
+					if (attrName === 'href' || attrName === 'src') {
+						var value = attrs[j].value;
+						if (value.toLowerCase().indexOf('javascript:') === 0) {
+							allElements[i].removeAttribute(attrName);
+						}
+					}
+				}
+			}
+			
+			return tempDiv.innerHTML;
+		},
+
+		sanitizeURL: function(dirtyURL) {
+			if (!dirtyURL || typeof dirtyURL !== 'string') return null;
+			
+			// Sanitize the raw string (strip tags, attrs)
+			const cleaned = DOMPurify.sanitize(dirtyURL, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }).trim();
+			const lower = cleaned.toLowerCase();
+			
+			// Block dangerous schemes
+			if (/^(javascript|data|vbscript):/.test(lower)) return null;
+			
+			// Parse URL (supports protocol-relative with base)
+			let url;
+			try {
+				url = new URL(cleaned, window.location.origin);
+			} catch {
+				return null;
+			}
+			
+			// Only http/https
+			if (!/^https?:$/.test(url.protocol)) return null;
+			
+			// Whitelist domains (allow subdomains)
+			const allowedDomains = ['youtube.com', 'youtu.be', 'vimeo.com', 'yourdomain.com'];
+			const host = url.hostname.toLowerCase();
+			const hostAllowed = allowedDomains.some(d => host === d || host.endsWith('.' + d));
+			
+			// Also allow direct video files anywhere
+			const isDirectVideo = /\.(mp4|webm|ogg)(?:$|\?)/i.test(url.pathname);
+			
+			if (!hostAllowed && !isDirectVideo) return null;
+			
+			return url.toString();
+		},
+		  
+		
+		sanitizeDataAttr: function(value) {
+			const raw = String(value || '').trim();
+		
+			// If value contains anything suspicious, block it
+			const blacklisted = [
+				'onerror', 'onclick', 'onload', 'script', '<', '>', '=', 'javascript:', 'data:', 'vbscript:', '&', '%3C', '%3E'
+			];
+		
+			for (const keyword of blacklisted) {
+				if (raw.toLowerCase().includes(keyword)) {
+					return null;
+				}
+			}
+		
+			// Fallback DOMPurify to clean even benign input
+			return DOMPurify.sanitize(raw, {
+				SAFE_FOR_TEMPLATES: true,
+				ALLOWED_TAGS: [],
+				ALLOWED_ATTR: [],
+			});
+		},
+
+		closeSideBarOnReplace: function($scope = null, animationSpeed = 200) {
+			// $scope.find('.widget_shopping_cart_content').addClass('wpr-mini-cart-slide-out');
+			$scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-out');
+			$scope.find('.wpr-mini-cart-slide-out').css('animation-speed', animationSpeed);
+			$scope.find('.wpr-shopping-cart-wrap').fadeOut(animationSpeed);
+			$('body').removeClass('wpr-mini-cart-sidebar-body');
+			setTimeout(function() {
+				// $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-out');
+				$scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-out');
+				$scope.find('.wpr-mini-cart').css({"display": "none"});
+			}, animationSpeed + 100);
+		}
+	} // End WprElements
+	
 	$( window ).on( 'elementor/frontend/init', WprElements.init );
 
 }( jQuery, window.elementorFrontend ) );

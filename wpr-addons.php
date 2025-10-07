@@ -4,11 +4,11 @@
  * Description: The only plugin you need for Elementor page builder.
  * Plugin URI: https://royal-elementor-addons.com/
  * Author: WP Royal
- * Version: 1.7.1017
+ * Version: 1.7.1031
  * License: GPLv3
  * Author URI: https://royal-elementor-addons.com/
- * Elementor tested up to: 3.28.3
- * Elementor Pro tested up to: 3.28.3
+ * Elementor tested up to: 3.30.3
+ * Elementor Pro tested up to: 3.30.1
  *
  * Text Domain: wpr-addons
 */
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-define( 'WPR_ADDONS_VERSION', '1.7.1017' );
+define( 'WPR_ADDONS_VERSION', '1.7.1031' );
 
 define( 'WPR_ADDONS__FILE__', __FILE__ );
 define( 'WPR_ADDONS_PLUGIN_BASE', plugin_basename( WPR_ADDONS__FILE__ ) );
@@ -30,6 +30,7 @@ define( 'WPR_ADDONS_MODULES_URL', WPR_ADDONS_URL . 'modules/' );
 /**
  * Feemius Integration
  */
+
 if ( function_exists( 'wpr_fs' ) ) {
     wpr_fs()->set_basename( false, __FILE__ );
 } else {
@@ -217,23 +218,13 @@ function royal_elementor_addons_activation_time() {//TODO: Try to locate this in
 	if ( false === get_option( 'royal_elementor_addons_activation_time_for_sale' ) ) {
 		add_option( 'royal_elementor_addons_activation_time_for_sale', absint(intval(strtotime('now'))) );
 	}
-	
-	if ( get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-		delete_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
-	}
 }
 
 register_activation_hook( __FILE__, 'royal_elementor_addons_activation_time' );
 
-// Delete Plugin Update Notice
+// Plugin Deactivation
 function royal_elementor_addons_deactivate() {
-	if ( get_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-		delete_option('wpr_plugin_update_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
-	}
 
-	if ( get_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']) ) {
-		delete_option('wpr_pro_features_dismiss_notice_' . get_plugin_data(WPR_ADDONS__FILE__)['Version']);
-	}
 }
 
 // hook already exists with template kits notice

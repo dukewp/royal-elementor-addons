@@ -1,6 +1,10 @@
 <?php
 
 class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
+	public function __construct( $menu_item_highlight ) {
+		$this->menu_item_highlight = $menu_item_highlight;
+	}
+
 	public function start_lvl( &$output, $depth = 0, $args = array() ) {
 		if ( 'mega-content' === $this->get_menu_item_type() ) {
 			return;
@@ -89,8 +93,12 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 
         $item_a_class = 'wpr-menu-item wpr-pointer-item';
 
-		if ( in_array( 'current-menu-item', $item->classes ) ) {
+		if ( in_array( 'current-menu-item', $item->classes ) && ('yes' === $this->menu_item_highlight) ) {
 			$item_a_class .= ' wpr-active-menu-item';
+		}
+
+		if ( in_array( 'current-menu-item', $item->classes ) && ('yes' === $this->menu_item_highlight) ) {
+			$item_li_class .= ' wpr-active-menu-item';
 		}
 		
 		$output .= $indent .'<li'. $id . $item_li_class . $custom_width_attr . $id_attr .'>';
@@ -99,7 +107,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 				$submenu_icon = '';
 				// Parent Item
 				if ( in_array( 'menu-item-has-children', $item->classes ) || $this->has_mega_menu( $item->ID ) ) {
-					if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
+					if ( ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) && ('yes' === $this->menu_item_highlight) ) {
 						$item_a_class .= ' wpr-active-menu-item';
 					}
 
@@ -115,7 +123,7 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 				if ( $depth > 0 ) {
 					$item_a_class = 'wpr-sub-menu-item';
 
-					if ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) {
+					if ( ( in_array( 'current-menu-item', $item->classes ) || in_array( 'current-menu-ancestor', $item->classes ) ) && ('yes' === $this->menu_item_highlight) ) {
 						$item_a_class .= ' wpr-active-menu-item';
 					}
 				}
@@ -185,7 +193,11 @@ class Wpr_Main_Menu_Walker extends \Walker_Nav_Menu {
 			if ( $this->has_mega_menu($item->ID) ) {
 				$elementor = \Elementor\Plugin::instance();
 				$mega_id = get_post_meta( $item->ID, 'wpr-mega-menu-item', true);
-				$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+				
+				$type = get_post_meta(get_the_ID(), '_wpr_template_type', true) || get_post_meta($mega_id, '_elementor_template_type', true);
+				$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
+				
+				$content = $elementor->frontend->get_builder_content_for_display($mega_id, $has_css);
 				$output .= '<div class="wpr-sub-mega-menu">'. $content .'</div>';
 			}
 

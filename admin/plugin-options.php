@@ -56,6 +56,7 @@ function is_plugin_installed($file) {
 function wpr_register_addons_settings() {
     // Optimizers
     register_setting ('wpr-settings', 'wpr_hide_banners');
+    register_setting ('wpr-settings', 'wpr_hide_head_foot_on_maintenenace');
 
     // WooCommerce
     register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
@@ -74,6 +75,7 @@ function wpr_register_addons_settings() {
 
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
+    register_setting( 'wpr-settings', 'wpr_google_map_language' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_secret_key' );
@@ -456,7 +458,16 @@ function wpr_addons_settings_page() {
                 </div>
                 <input type="checkbox" name="wpr_hide_banners" id="wpr_hide_banners" <?php echo checked( get_option('wpr_hide_banners'), 'on', false ); ?>>
                 <label for="wpr_hide_banners"></label>
-            </div> 
+            </div>
+
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4>Hide Header & Footer</h4>
+                    <span>Disable Header & Footer on Elementor Maintenance/Coming Soon Mode</span>
+                </div>
+                <input type="checkbox" name="wpr_hide_head_foot_on_maintenenace" id="wpr_hide_head_foot_on_maintenenace" <?php echo checked( get_option('wpr_hide_head_foot_on_maintenenace', 'on'), 'on', true ); ?>>
+                <label for="wpr_hide_head_foot_on_maintenenace"></label>
+            </div>
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-optimizers">
@@ -737,6 +748,23 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="text" name="wpr_google_map_api_key" id="wpr_google_map_api_key" value="<?php echo esc_attr(get_option('wpr_google_map_api_key')); ?>">
+
+                <h4>
+                    <span><?php esc_html_e( 'Google Map Language', 'wpr-addons' ); ?></span>
+                </h4>
+
+                <select name="wpr_google_map_language" id="wpr_google_map_language">
+                    <option value=""><?php esc_html_e('Default', 'wpr-addons'); ?></option>
+                    <option value="en" <?php selected(get_option('wpr_google_map_language'), 'en'); ?>><?php esc_html_e('English', 'wpr-addons'); ?></option>
+                    <option value="es" <?php selected(get_option('wpr_google_map_language'), 'es'); ?>><?php esc_html_e('Spanish', 'wpr-addons'); ?></option>
+                    <option value="fr" <?php selected(get_option('wpr_google_map_language'), 'fr'); ?>><?php esc_html_e('French', 'wpr-addons'); ?></option>
+                    <option value="de" <?php selected(get_option('wpr_google_map_language'), 'de'); ?>><?php esc_html_e('German', 'wpr-addons'); ?></option>
+                    <option value="zh" <?php selected(get_option('wpr_google_map_language'), 'zh'); ?>><?php esc_html_e('Chinese', 'wpr-addons'); ?></option>
+                    <option value="ja" <?php selected(get_option('wpr_google_map_language'), 'ja'); ?>><?php esc_html_e('Japanese', 'wpr-addons'); ?></option>
+                    <option value="ko" <?php selected(get_option('wpr_google_map_language'), 'ko'); ?>><?php esc_html_e('Korean', 'wpr-addons'); ?></option>
+                    <option value="hi" <?php selected(get_option('wpr_google_map_language'), 'hi'); ?>><?php esc_html_e('Hindi', 'wpr-addons'); ?></option>
+                    <option value="ar" <?php selected(get_option('wpr_google_map_language'), 'ar'); ?>><?php esc_html_e('Arabic', 'wpr-addons'); ?></option>
+                </select>
             </div>
 
             <div class="wpr-setting">
@@ -1641,6 +1669,8 @@ function wpr_addons_add_upgrade_menu() {
     } else if ( wpr_fs()->is_plan( 'pro' ) ) {
         $label = 'Upgrade to Expert';
     }
+
+    $label = isset($label) ? $label : __('Upgrade', 'wpr-addons');
 
     add_submenu_page( 'wpr-addons', $label, $label, 'manage_options', 'wpr-upgrade', 'wpr_addons_upgrade_page', 999 );
 }

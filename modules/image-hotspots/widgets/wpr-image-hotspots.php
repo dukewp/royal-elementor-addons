@@ -302,6 +302,25 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			]
 		);
 
+		$repeater->add_responsive_control(
+			'tooltip_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}} .wpr-hotspot-tooltip' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$repeater->end_controls_tab();
 
 		$repeater->end_controls_tabs();
@@ -589,6 +608,37 @@ class Wpr_Image_Hotspots extends Widget_Base {
 			'Show Tooltips on Click or Hover',
 			'Advanced Tooltip Positioning',
 		] );
+
+
+		// Section: Image ---------
+		$this->start_controls_section(
+			'section_style_img',
+			[
+				'label' => esc_html__( 'Image Hotspots', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_responsive_control(
+			'img_border_radius',
+			[
+				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'top' => 0,
+					'right' => 0,
+					'bottom' => 0,
+					'left' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-image-hotspots' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-hotspot-image>img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				]
+			]
+		);
+
+		$this->end_controls_section(); // End Controls Section
 		
 		// Section: Hotspots ---------
 		$this->start_controls_section(

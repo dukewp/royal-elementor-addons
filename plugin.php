@@ -250,7 +250,10 @@ class Plugin {
 	public function mega_menu_ajax_loading() {
 		$elementor = \Elementor\Plugin::instance();
 		$mega_id = get_post_meta( $_GET['item_id'], 'wpr-mega-menu-item', true);
-		$content = $elementor->frontend->get_builder_content_for_display($mega_id);
+		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true) || get_post_meta($mega_id, '_elementor_template_type', true);
+		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
+		
+		$content = $elementor->frontend->get_builder_content_for_display($mega_id, $has_css);
 
 		wp_send_json( $content );
 	}
@@ -369,15 +372,15 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-    // Load FontAwesome - TODO: Check if necessary (maybe elementor is already loading this)
-    wp_enqueue_style(
+    	// Load FontAwesome - TODO: Check if necessary (maybe elementor is already loading this)
+    	wp_enqueue_style(
 			'font-awesome-5-all',
 			ELEMENTOR_ASSETS_URL . 'lib/font-awesome/css/all'. $this->script_suffix() .'.css',
 			false,
 			Plugin::instance()->get_version()
 		);
 
-    if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
+    	if ( \Elementor\Plugin::$instance->preview->is_preview_mode() ) {
 			wp_enqueue_style(
 				'wpr-addons-library-frontend-css',
 				WPR_ADDONS_URL . 'assets/css/admin/library-frontend'. $this->script_suffix() .'.css',
@@ -546,12 +549,21 @@ class Plugin {
 
 	public function enqueue_scripts() {
 
+		// Register DOMPurify
+		wp_enqueue_script(
+			'dompurify',
+			WPR_ADDONS_URL . 'assets/js/lib/dompurify/dompurify.min.js',
+			['jquery', 'elementor-frontend'],
+			'3.0.6',
+		);
+
 		wp_enqueue_script(
 			'wpr-addons-js',
 			WPR_ADDONS_URL . 'assets/js/frontend'. $this->script_suffix() .'.js',
 			[
 				'jquery',
-				'elementor-frontend'
+				'elementor-frontend',
+				'dompurify'
 			],
 			Plugin::instance()->get_version(),
 			true
@@ -589,6 +601,11 @@ class Plugin {
 				'select_empty' => esc_html__('Nothing selected', 'wpr-addons'),
 				'file_empty' => esc_html__('Please upload a file', 'wpr-addons'),
 				'recaptcha_error' => esc_html__('Recaptcha Error', 'wpr-addons'),
+				'woo_shop_ppp' => get_option('wpr_woo_shop_ppp', 9),
+				'woo_shop_cat_ppp' => get_option('wpr_woo_shop_cat_ppp', 9),
+				'woo_shop_tag_ppp' => get_option('wpr_woo_shop_tag_ppp', 9),
+				'is_product_category' => function_exists('is_product_category') ? is_product_category() : false,
+				'is_product_tag' => function_exists('is_product_tag') ? is_product_tag() : false,
 				// 'token' => $custom_token
 			]
 		);
@@ -669,7 +686,7 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-google-maps',
-			'https://maps.googleapis.com/maps/api/js?key='. esc_attr(get_option('wpr_google_map_api_key')),
+			'https://maps.googleapis.com/maps/api/js?key='. esc_attr(get_option('wpr_google_map_api_key')) . '&language='. esc_attr(get_option('wpr_google_map_language')),
 			[],
 			'',
 			true

@@ -3414,6 +3414,29 @@ class Wpr_Form_Builder extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'notice_distance',
+			[
+				'label' => esc_html__( 'Top Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 25,
+					],
+				],				
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-submit-notice' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before'
+			]
+		);
+
 		$this->end_controls_section();
 
 		// Section: Request New Feature
@@ -3905,7 +3928,8 @@ class Wpr_Form_Builder extends Widget_Base {
 					$this->form_fields_render_attributes( $item_index, $instance, $item );
 
 					$print_label = ! in_array( $item['field_type'], [ 'hidden', 'html', 'step' ], true );
-
+					$field_id = sanitize_key( $item['field_id'] );
+					$field_label = sanitize_text_field( $item['field_label'] );
 					
 					if ( 'step' === $item['field_type'] )  {
                         if ( isset($item['previous_button_text']) ) {
@@ -4020,7 +4044,7 @@ class Wpr_Form_Builder extends Widget_Base {
 								echo '<input size="1 "'. $this->get_render_attribute_string( 'input' . $item_index ) .'>';
 								break;
 							case 'step':
-								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. esc_attr( $item['field_id'] ) .' value='. $item['field_label'] .'>';
+								echo '<input type="hidden" class="wpr-step-input" id=form-field-'. esc_attr( $field_id ) .' value='. esc_attr( $field_label ) .'>';
 								break;
 							default:
 								$field_type = $item['field_type'];

@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-img {
+#wpbody img {
   display: block;
   max-width: 100%;
   width: 100%;
@@ -706,7 +706,7 @@ span.wpr-woo-builder-label {
 }
 
 .wpr-templates-kit-not-found img {
-  width: 180px;
+  width: 180px !important;
 }
 
 .wpr-templates-kit-not-found h1 {
