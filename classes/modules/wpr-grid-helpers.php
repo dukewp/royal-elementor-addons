@@ -445,8 +445,6 @@ public function get_dependent_terms() {
 																'compare' => '=',
 															];
 														}
-													} else {
-		
 													}
 												}
 											}

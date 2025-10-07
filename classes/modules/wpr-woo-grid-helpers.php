@@ -382,17 +382,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 									]);
 								}
 							} else if ( 'rating' == $cleanedKey ) {
-								$selected = (int) $wpr_url_params[$key]; // 1..5
+								$selected_ratings = explode( ',', $wpr_url_params[$key] );
 
-								$lower = $selected - 0.5;
-								$upper = ($selected === 5) ? 5.0 : $selected + 0.5 - 0.00001; // avoid grabbing next bucket
+								$rating_meta_query = ['relation' => 'OR'];
 
-								$meta_query[] = [
-									'key'     => '_wc_average_rating',
-									'value'   => [ $lower, $upper ],
-									'compare' => 'BETWEEN',
-									'type'    => 'DECIMAL', // or 'NUMERIC' works too
-								];
+								foreach ( $selected_ratings as $rating ) {
+									$rating = (int) $rating;
+									$lower = $rating - 0.5;
+									$upper = ($rating === 5) ? 5.0 : $rating + 0.5 - 0.00001;
+
+									$rating_meta_query[] = [
+										'key'     => '_wc_average_rating',
+										'value'   => [ $lower, $upper ],
+										'compare' => 'BETWEEN',
+										'type'    => 'DECIMAL',
+									];
+								}
+
+								$meta_query[] = $rating_meta_query;
 							} else if ( 'price' == $cleanedKey ) {
 								    $price_range = explode( '-', $wpr_url_params[$key] );
 
@@ -480,8 +487,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 																'compare' => '=',
 															];
 														}
-													} else {
-		
 													}
 												}
 											}
