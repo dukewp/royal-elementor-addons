@@ -17662,7 +17662,7 @@ input.wpr-date-filter-end {
     display: none;
 }
 
-.wpr-af-active-filters .wpr-af-remove-btn {
+.wpr-af-active-filters .wpr-af-reset-btn {
     background-color: transparent;
 }
 
