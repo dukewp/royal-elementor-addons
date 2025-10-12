@@ -320,6 +320,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			$wpr_url_params = isset($params) && !empty($params) ? $params : (isset($_POST['wpr_url_params']) ? $_POST['wpr_url_params'] : []);
 
+			if ( empty($wpr_url_params) && isset($_GET) && !empty($_GET) ) {
+				$wpr_url_params = $_GET;
+			}
+
 			if ( isset($wpr_url_params) && !empty($wpr_url_params) ) {
 				// Iterate through the POST array
 				foreach ( $wpr_url_params as $key => $value ) {
