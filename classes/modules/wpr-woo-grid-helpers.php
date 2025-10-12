@@ -327,10 +327,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( isset($wpr_url_params) && !empty($wpr_url_params) ) {
 				// Iterate through the POST array
 				foreach ( $wpr_url_params as $key => $value ) {
-
 					// Check if the variable name contains "wpr_af_"
 					if (strpos($key, 'wpr_af_') !== false) {
-
 						// Need to setup logic to get relation from filters separately
 						$cleanedKey = str_replace('wpr_af_', '', $key);
 						$prev_cleaned_key = $cleanedKey;
@@ -404,8 +402,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 								}
 
 								$meta_query[] = $rating_meta_query;
-							} else if ( 'price' == $cleanedKey ) {
-								    $price_range = explode( '-', $wpr_url_params[$key] );
+							} else if ( 'price' == $cleanedKey || '_price' == $cleanedKey ) {
+									// Price range can be separated by '-' or ','
+									if (strpos($wpr_url_params[$key], '-') !== false) {
+										$price_range = explode('-', $wpr_url_params[$key]);
+									} elseif (strpos($wpr_url_params[$key], ',') !== false) {
+										$price_range = explode(',', $wpr_url_params[$key]);
+									}
 
 									if ( count( $price_range ) === 2 ) {
 										$min_price = floatval( $price_range[0] );
