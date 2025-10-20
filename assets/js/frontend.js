@@ -11013,7 +11013,7 @@
 			}
 
 			function removeFilters() {
-				$scope.on('click', '.wpr-af-remove-btn', function() {
+				$scope.on('click', '.wpr-af-reset-btn', function() {
 					// Create a new URL object from the current URL
 					var currentUrl = new URL(window.location.href);
 				
@@ -11332,7 +11332,7 @@
 					// Loading
 					$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).hide();
 					
-					if ( triggerElement.hasClass('wpr-af-remove-btn') ) {
+					if ( triggerElement.hasClass('wpr-af-reset-btn') ) {
 						paramsObj = {};
 					}
 
