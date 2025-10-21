@@ -161,7 +161,6 @@ class Wpr_Particles {
 					'particle-source' => $settings['which_particle'],
 				] );
 			} else {
-				var_dump($settings['particles_color']);
 				$element->add_render_attribute( '_wrapper', [
 					'data-wpr-particles' => $settings[$settings['which_particle']],
 					'particle-source' => $settings['which_particle'],
