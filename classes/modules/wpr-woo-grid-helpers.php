@@ -62,8 +62,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$settings[ 'query_offset' ] = 0;
 		}
 		
-		$query_posts_per_page = $settings['query_posts_per_page'];
-		if ( empty($query_posts_per_page) ) {
+		if ( 'current' !== $settings['query_selection'] ) {
+			$query_posts_per_page = $settings['query_posts_per_page'];
+		}
+
+		if (!isset($query_posts_per_page) || empty($query_posts_per_page) ) {
 			$query_posts_per_page = -1;
 		}
 		
