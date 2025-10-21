@@ -101,14 +101,14 @@ class Plugin {
 
 		// Twitter
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-load-more-tweets.php';
+		
+		// Meta Keys
+		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
 
 		// Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-posts.php';
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-grid-helpers.php';
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-woo-grid-helpers.php';
-		
-		// Meta Keys
-		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
 
 		// Media Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-media.php';
