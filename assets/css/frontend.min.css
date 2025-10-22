@@ -1034,6 +1034,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-nav-menu-bp-always .wpr-mobile-nav-menu-container {
     display: block;
+    pointer-events: auto;
 }
 
 @media screen and ( max-width: 1024px) {
