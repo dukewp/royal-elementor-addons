@@ -67,8 +67,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     // Main Query Args
 	public function get_main_query_args() {
 		$settings = $_POST['grid_settings'];
-		$taxonomy = $_POST['wpr_taxonomy'];
-    	$term = $_POST['wpr_filter'];
 		$tax_query = [];
 
 		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
@@ -330,17 +328,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( isset( $_GET['psearch'] ) ) {
 			$args['s'] = $_GET['psearch'];
 		}
-    
-        if ( $term != '*' ) {
-			if ( 'tag' === $taxonomy ) {
-				$taxonomy = 'product_' . $_POST['wpr_taxonomy'];
-			}
-            array_push( $tax_query, [
-                'taxonomy' => $taxonomy,
-                'field' => 'slug',
-                'terms' => $term
-            ] );
-        }
 
 		if ( isset($_POST['wpr_offset']) ) {
 			$args['offset'] = $_POST['wpr_offset'];
@@ -1091,6 +1078,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 			echo '</div>';
 		echo '</div>';
 	}
+
+	public function render_rating_icon( $class, $unmarked_style ) {
+        ?>
+
+        <span class="wpr-rating-icon <?php echo esc_attr($class); ?>">
+            <span class="wpr-rating-marked">
+                <?php \Elementor\Icons_Manager::render_icon( [ 'value' => 'fas fa-star', 'library' => 'fa-solid' ], [ 'aria-hidden' => 'true' ] ); ?>
+            </span>
+
+            <span class="wpr-rating-unmarked">
+                <?php 
+                    if ( 'outline' === $unmarked_style ) {
+                        \Elementor\Icons_Manager::render_icon( [ 'value' => 'far fa-star', 'library' => 'fa-regular' ], [ 'aria-hidden' => 'true' ] );
+                    } else {
+                        \Elementor\Icons_Manager::render_icon( [ 'value' => 'fas fa-star', 'library' => 'fa-solid' ], [ 'aria-hidden' => 'true' ] );
+                    }
+                 ?>
+            </span>
+        </span>
+
+        <?php
+    }
 
 	// Render Add To Cart
 	public function render_product_add_to_cart( $settings, $class ) {

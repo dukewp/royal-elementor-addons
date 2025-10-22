@@ -664,6 +664,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		// Grid Query
 		} else {
+            $settings = $_POST['grid_settings'];
+            $taxonomy = $_POST['wpr_taxonomy'];
+            $term = $_POST['wpr_filter'];
+
 			if ( isset($_GET['wpr_select_product_cat']) ) {
 				if ( $_GET['wpr_select_product_cat'] != '0' ) {
 					// Get category from URL
@@ -699,6 +703,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 				}
 			}
+    
+            if ( $term != '*' ) {
+                if ( 'tag' === $taxonomy ) {
+                    $taxonomy = 'product_' . $_POST['wpr_taxonomy'];
+                }
+                array_push( $tax_query, [
+                    'taxonomy' => $taxonomy,
+                    'field' => 'slug',
+                    'terms' => $term
+                ] );
+            }
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
