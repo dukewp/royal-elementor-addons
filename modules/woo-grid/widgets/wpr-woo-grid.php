@@ -865,9 +865,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_select', ['pro-ms'] );
 
 		$this->add_control(
-			'filters_experiment',
+			'advanced_filters',
 			[
-				'label' => esc_html__( 'Filters Experiment', 'wpr-addons' ),
+				'label' => esc_html__( 'Enable Advanced Filters', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
 				'return_value' => 'yes',
@@ -1141,51 +1141,51 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		// $this->add_control(
-		// 	'filters_experiment',
-		// 	[
-		// 		'label' => esc_html__( 'Filters & Load More Experiment', 'wpr-addons' ),
-		// 		'type' => Controls_Manager::SWITCHER,
-		// 		'default' => 'no',
-		// 		'return_value' => 'yes',
-		// 		'render_type' => 'template',
-		// 		'conditions' => [
-		// 			'relation' => 'and',
-		// 			'terms' => [
-		// 				[
-		// 					'name' => 'layout_filters',
-		// 					'operator' => '!=',
-		// 					'value' => '',
-		// 				],
-		// 				[
-		// 					'relation' => 'or',
-		// 					'terms' => [
-		// 						[
-		// 							'relation' => 'and',
-		// 							'terms' => [	
-		// 								[
-		// 									'name' => 'layout_pagination',
-		// 									'operator' => '!=',
-		// 									'value' => '',
-		// 								],
-		// 								[
-		// 									'name' => 'pagination_type',
-		// 									'operator' => 'in',
-		// 									'value' => ['load-more', 'infinite'],
-		// 								],
-		// 							]
-		// 						],
-		// 						[	
-		// 							'name' => 'layout_pagination',
-		// 							'operator' => '==',
-		// 							'value' => '',
-		// 						]
-		// 					],
-		// 				],
-		// 			]
-		// 		]
-		// 	]
-		// );
+		$this->add_control(
+			'filters_experiment',
+			[
+				'label' => esc_html__( 'Filters & Load More Experiment', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'render_type' => 'template',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'layout_filters',
+							'operator' => '!=',
+							'value' => '',
+						],
+						[
+							'relation' => 'or',
+							'terms' => [
+								[
+									'relation' => 'and',
+									'terms' => [	
+										[
+											'name' => 'layout_pagination',
+											'operator' => '!=',
+											'value' => '',
+										],
+										[
+											'name' => 'pagination_type',
+											'operator' => 'in',
+											'value' => ['load-more', 'infinite'],
+										],
+									]
+								],
+								[	
+									'name' => 'layout_pagination',
+									'operator' => '==',
+									'value' => '',
+								]
+							],
+						],
+					]
+				]
+			]
+		);
 
 		$this->add_control_open_links_in_new_tab();
 
@@ -9036,7 +9036,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'download' => $settings['lightbox_popup_download'],
 		];
 
-		if ( 'yes' === $settings['filters_experiment'] ) {
+		if ( 'yes' === $settings['filters_experiment'] || 'yes' === $settings['advanced_filters'] ) {
 			$layout_settings['grid_settings'] = [
 				// General Settings
 				'layout_select' => isset($settings['layout_select']) ? $settings['layout_select'] : null,
@@ -9135,6 +9135,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_render_attribute( 'grid-settings', [
 			'data-settings' => wp_json_encode( $layout_settings ),
+			'data-advanced-filters' => ( 'yes' === $settings['advanced_filters'] ) ? 'yes' : 'no'
 		] );
 	}
 
