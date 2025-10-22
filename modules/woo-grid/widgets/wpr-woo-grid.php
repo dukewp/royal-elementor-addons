@@ -816,6 +816,18 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
+			'advanced_filters',
+			[
+				'label' => esc_html__( 'Enable Advanced Filters', 'wpr-addons' ),
+				'description' => esc_html__( 'Turn on Only with Advanced Filters widget.', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'render_type' => 'template'
+			]
+		);
+
+		$this->add_control(
 			'current_query_notice',
 			[
 				'type' => Controls_Manager::RAW_HTML,
@@ -863,17 +875,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'layout_select', ['pro-ms'] );
-
-		$this->add_control(
-			'advanced_filters',
-			[
-				'label' => esc_html__( 'Enable Advanced Filters', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'no',
-				'return_value' => 'yes',
-				'render_type' => 'template'
-			]
-		);
 
 		$this->add_control(
 			'stick_last_element_to_bottom',
@@ -1137,52 +1138,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'render_type' => 'template',
 				'condition' => [
 					'layout_select!' => 'slider',
-				]
-			]
-		);
-
-		$this->add_control(
-			'filters_experiment',
-			[
-				'label' => esc_html__( 'Filters & Load More Experiment', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'no',
-				'return_value' => 'yes',
-				'render_type' => 'template',
-				'conditions' => [
-					'relation' => 'and',
-					'terms' => [
-						[
-							'name' => 'layout_filters',
-							'operator' => '!=',
-							'value' => '',
-						],
-						[
-							'relation' => 'or',
-							'terms' => [
-								[
-									'relation' => 'and',
-									'terms' => [	
-										[
-											'name' => 'layout_pagination',
-											'operator' => '!=',
-											'value' => '',
-										],
-										[
-											'name' => 'pagination_type',
-											'operator' => 'in',
-											'value' => ['load-more', 'infinite'],
-										],
-									]
-								],
-								[	
-									'name' => 'layout_pagination',
-									'operator' => '==',
-									'value' => '',
-								]
-							],
-						],
-					]
 				]
 			]
 		);
@@ -2981,6 +2936,52 @@ class Wpr_Woo_Grid extends Widget_Base {
 		);
 
 		$this->add_control_filters_deeplinking();
+
+		$this->add_control(
+			'filters_experiment',
+			[
+				'label' => esc_html__( 'Enable AJAX Loading', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'no',
+				'return_value' => 'yes',
+				'render_type' => 'template',
+				'conditions' => [
+					'relation' => 'and',
+					'terms' => [
+						[
+							'name' => 'layout_filters',
+							'operator' => '!=',
+							'value' => '',
+						],
+						[
+							'relation' => 'or',
+							'terms' => [
+								[
+									'relation' => 'and',
+									'terms' => [	
+										[
+											'name' => 'layout_pagination',
+											'operator' => '!=',
+											'value' => '',
+										],
+										[
+											'name' => 'pagination_type',
+											'operator' => 'in',
+											'value' => ['load-more', 'infinite'],
+										],
+									]
+								],
+								[	
+									'name' => 'layout_pagination',
+									'operator' => '==',
+									'value' => '',
+								]
+							],
+						],
+					]
+				]
+			]
+		);
 
 		$this->add_control(
 			'filters_all',
