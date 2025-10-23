@@ -5470,7 +5470,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 										$this->render_title($settings, $content, $repeater_title_link);
 									}
 
-									echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'. wp_kses_post($content['repeater_description']) .'</div>' : '';
+									if ( 'yes' === $settings['description_overlay'] ) {
+										$this->render_description($settings, $content);
+									}
 
 								echo ($settings['show_overlay'] === 'yes' && !empty($this->image)) || ($settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']))  ? '</div>' : '';
 
@@ -5483,7 +5485,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 									$this->render_title($settings, $content, $repeater_title_link);
 								}
 
-								echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. wp_kses_post($content['repeater_description']) .'</div>' : '';
+								if ( 'yes' !== $settings['description_overlay'] ) {
+									$this->render_description($settings, $content);
+								}
 
 								echo '</div>'; //remove
 
@@ -5572,8 +5576,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 										echo '</div>';
 		
 									}
-									
-									echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'. esc_html__(wp_trim_words(get_the_content(), $settings['excerpt_count'])) .'</div>' : '';
+
+									if ( 'yes' === $settings['description_overlay'] ) {
+										$this->render_description($settings);
+									}
 									
 									echo 'yes' === $this->show_readmore && 'yes' === $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html__($settings['read_more_text']) .'</a></div>' : '';
 
@@ -5593,7 +5599,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 										echo '</div>';
 									}
 
-									echo !empty(get_the_content()) && 'yes' === $settings['show_description']  && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. esc_html__(wp_trim_words(get_the_content(), $settings['excerpt_count'])) .'</div>' : '';
+									if ( 'yes' !== $settings['description_overlay'] ) {
+										$this->render_description($settings);
+									}
 
 									echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html__($settings['read_more_text']) .'</a></div>' : '';
 
@@ -5672,7 +5680,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 											$this->render_title($settings, $content, $repeater_title_link);
 										}
 
-										echo !empty($this->timeline_description) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div '. $this->get_render_attribute_string( $this->description_key ) .'>'. wp_kses_post($this->timeline_description) .'</div>' : '';
+										if ( 'yes' === $settings['description_overlay'] ) {
+											$this->render_description($settings, $content);
+										}
 
 									echo 'yes' === $settings['show_overlay'] && !empty($this->image) || $settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']) ? '</div>' : '';
 								
@@ -5684,7 +5694,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 										$this->render_title($settings, $content, $repeater_title_link);
 									}
 
-									echo !empty($this->timeline_description ) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ?'<div '. $this->get_render_attribute_string( $this->description_key ) .'>'. wp_kses_post($this->timeline_description) .'</div>' : ''; 
+									if ( 'yes' !== $settings['description_overlay'] ) {
+										$this->render_description($settings, $content);
+									}
 
 									echo !empty( $content['repeater_youtube_video_url'] ) && $settings['content_layout'] !== 'image-top' ? '<div class="wpr-timeline-iframe-wrapper">  '. $this->youtube_url($content) .' </div>' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -5748,8 +5760,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 								echo '</div>';
 
 							}
-	
-							echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'. esc_html__(wp_trim_words(get_the_content(), $settings['excerpt_count'])) .'</div>' : '';
+
+							if ( 'yes' === $settings['description_overlay'] ) {
+								$this->render_description($settings);
+							}
 							
 							echo 'yes' === $this->show_readmore && 'yes' === $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html__($settings['read_more_text']) .'</a></div>' : '';
 	
@@ -5771,8 +5785,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 								echo '</div>';
 
 							}
-		
-							echo !empty(get_the_content()) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. esc_html__(wp_trim_words(get_the_content(), $settings['excerpt_count'])) .'</div>' : '';
+
+							if ( 'yes' !== $settings['description_overlay'] ) {
+								$this->render_description($settings);
+							}
 		
 							echo 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay'] ? '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html__($settings['read_more_text']) .'</a></div>' : '';
 
@@ -5883,6 +5899,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				} else {
 					echo '<div class="wpr-title-wrap"><'. esc_attr($settings['title_tag']) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</'. esc_attr($settings['title_tag']) .'></div>';
 				}
+			}
+		}
+	}
+
+	public function render_description( $settings, $content = [] ) {
+		if ( 'dynamic' === $settings['timeline_content'] ) {							
+			echo !empty(get_the_content()) && 'yes' === $settings['show_description'] ? '<div class="wpr-description">'. esc_html__(wp_trim_words(get_the_content(), $settings['excerpt_count'])) .'</div>' : '';
+		} else {
+			if ( 'horizontal' === $settings['timeline_layout'] || 'horizontal-bottom' === $settings['timeline_layout'] ) {
+				echo !empty($this->timeline_description) && 'yes' === $settings['show_description'] ? '<div '. $this->get_render_attribute_string( $this->description_key ) .'>'. wp_kses_post($this->timeline_description) .'</div>' : '';
+			} else {
+				echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] ? '<div class="wpr-description">'. wp_kses_post($content['repeater_description']) .'</div>' : '';
 			}
 		}
 	}
