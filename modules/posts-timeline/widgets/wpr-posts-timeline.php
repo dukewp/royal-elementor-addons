@@ -1767,6 +1767,29 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		);
 
 		$this->add_control(
+			'title_tag',
+			[
+				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'h3',
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+					'h6' => 'H6',
+					'div' => 'div',
+					'span' => 'span',
+					'p' => 'p',
+				],
+				'condition' => [
+					'show_title' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
 			'title_overlay',
 			[
 				'label' => esc_html__( 'Title Over Image', 'wpr-addons' ),
