@@ -5454,9 +5454,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 					echo '<div class="wpr-timeline-entry-inner">';
 
-						echo '<div class="wpr-main-line-icon wpr-icon">';
-							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
-						echo '</div>';
+						$this->render_main_line_icon($settings, $content);
 
 						echo '<div class="wpr-story-info-vertical wpr-data-wrap '. esc_attr($background_class) .'"  data-aos="'. esc_attr($this->animation) .'" data-aos-left="'. esc_attr($this->animation_loadmore_left) .'" data-aos-right="'. esc_attr($this->animation_loadmore_right) .'" data-animation-offset="'. esc_attr($settings['animation_offset']) .'" data-animation-duration="'. esc_attr($settings['aos_animation_duration']) .'">';
 
@@ -5479,6 +5477,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo ($settings['content_layout'] === 'image-top' && !empty($content['repeater_youtube_video_url'])) || ($settings['content_layout'] === 'image-top' && !empty($this->image)) || $settings['show_overlay'] === 'yes' ? '</div>' : '';
 
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ?'<div class="wpr-timeline-content-wrapper">' : '';
+
 								echo  '<div class="wpr-content-wrapper">'; //remove
 
 								if ( 'yes' !== $settings['title_overlay'] ) {
@@ -5555,9 +5554,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 						echo '<div class="wpr-timeline-entry-inner">';
 
-							echo '<div class="wpr-main-line-icon wpr-icon">';
-							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
-							echo '</div>';
+							$this->render_main_line_icon($settings);
+
 							echo '<div class="wpr-story-info-vertical wpr-data-wrap animated '. esc_attr($background_class) .'" data-aos="'. esc_attr($this->animation) .'" data-aos-left="'. esc_attr($this->animation_loadmore_left) .'" data-aos-right="'. esc_attr($this->animation_loadmore_right) .'" data-animation-offset="'. esc_attr($settings['animation_offset']) .'" data-animation-duration="'. esc_attr($settings['aos_animation_duration']) .'">';
 
 							echo 'image-top' === $settings['content_layout'] && !empty($this->src) || 'yes' === $settings['show_overlay']  && !empty($this->src) ? '<div class="wpr-animation-wrap wpr-timeline-media"><img class="wpr-thumbnail-image" src="'. esc_url($this->src) .'">' : '';
@@ -5667,9 +5665,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 								echo !empty($this->story_date_label) || !empty($this->story_extra_label) ? '</div>' : '';
 							}
 
-							echo '<div class="wpr-main-line-icon wpr-icon">';
-							\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
-							echo'</div>'; 
+							$this->render_main_line_icon($settings, $content);
+
 							echo '<div class="wpr-story-info '. esc_attr($this->background_class) .'">';
 
 								echo !empty($this->image) && 'image-top' === $settings['content_layout'] || !empty($content['repeater_youtube_video_url']) && 'image-top' === $settings['content_layout'] ? '<div class="wpr-animation-wrap wpr-timeline-media">' : '';
@@ -5816,9 +5813,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo '</div>';
 						}
 
-						echo '<div class="wpr-main-line-icon wpr-icon">';
-							\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
-						echo'</div>'; 
+						$this->render_main_line_icon($settings);
+
 					echo '</div>';
 				}
 	
@@ -5927,6 +5923,18 @@ class Wpr_Posts_Timeline extends Widget_Base {
 		if ( 'yes' === $this->show_readmore ) {
 			echo '<div class="wpr-read-more-wrap"><a class="wpr-read-more-button" href="'. esc_url(get_the_permalink()) .'">'. esc_html__($settings['read_more_text']) .'</a></div>';
 		}
+	}
+
+	public function render_main_line_icon( $settings, $content = [] ) {
+		echo '<div class="wpr-main-line-icon wpr-icon">';
+
+		if ( 'dynamic' === $settings['timeline_content'] ) {
+			\Elementor\Icons_Manager::render_icon( $settings['posts_icon'], [ 'aria-hidden' => 'true' ] );
+		} else {
+			\Elementor\Icons_Manager::render_icon( $content['repeater_story_icon'], [ 'aria-hidden' => 'true' ] );
+		}
+
+		echo '</div>';
 	}
 
 	protected function render() {
