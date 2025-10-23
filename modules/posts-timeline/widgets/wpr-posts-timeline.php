@@ -1771,7 +1771,7 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			[
 				'label' => esc_html__( 'Title HTML Tag', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'h3',
+				'default' => 'span',
 				'options' => [
 					'h1' => 'H1',
 					'h2' => 'H2',
@@ -5466,12 +5466,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 								echo ($settings['show_overlay'] === 'yes' && !empty($this->image)) || ($settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url'])) ? '<div class="wpr-timeline-story-overlay '. esc_attr($this->animation_class) .'">' : '';
 
-
-									if ( '' !== $repeater_title_link ) {
-										echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</a></p>' : '';
-									} else {
-										echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap"><span class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</span></p>' : '';
+									if ( 'yes' === $settings['title_overlay'] ) {
+										$this->render_title($settings, $content, $repeater_title_link);
 									}
+
 									echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' === $settings['description_overlay'] ? '<div class="wpr-description">'. wp_kses_post($content['repeater_description']) .'</div>' : '';
 
 								echo ($settings['show_overlay'] === 'yes' && !empty($this->image)) || ($settings['show_overlay'] === 'yes' && !empty($content['repeater_youtube_video_url']))  ? '</div>' : '';
@@ -5481,10 +5479,8 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] && !empty($content['repeater_story_title'])  || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] && !empty($content['repeater_description']) ?'<div class="wpr-timeline-content-wrapper">' : '';
 								echo  '<div class="wpr-content-wrapper">'; //remove
 
-								if ( '' !== $repeater_title_link ) {
-									echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</a></p>' : '';
-								} else {
-									echo !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><span class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</span></p>' : '';
+								if ( 'yes' !== $settings['title_overlay'] ) {
+									$this->render_title($settings, $content, $repeater_title_link);
 								}
 
 								echo !empty($content['repeater_description']) && 'yes' === $settings['show_description'] && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. wp_kses_post($content['repeater_description']) .'</div>' : '';
@@ -5565,7 +5561,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 							
 								echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '<div class="wpr-timeline-story-overlay '. esc_attr($this->animation_class) .'">' : '';
 
-									echo  'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a class="wpr-title" href="'. esc_url(get_the_permalink()) .'">'. esc_html__(get_the_title()) .'</a></p>' : '';
+									if ( 'yes' === $settings['title_overlay'] ) {
+										$this->render_title($settings);
+									}
 
 									if ( 'yes' === $settings['show_date'] && 'yes' === $settings['date_overlay'] ) {
 
@@ -5585,15 +5583,14 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 							echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] || 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] || 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay']  ? '<div class="wpr-timeline-content-wrapper">' : '';
 
-									echo  'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a class="wpr-title"  href="'. esc_url(get_the_permalink()) .'">'. esc_html__(get_the_title()) .'</a></p>' : '';
-
+									if ( 'yes' !== $settings['title_overlay'] ) {
+										$this->render_title($settings);
+									}
 
 									if ( 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] ) {
-
 										echo '<div class="wpr-inner-date-label">';
 										$this->date_and_extra_label($settings, 'date_source', 'date_field_key');
 										echo '</div>';
-		
 									}
 
 									echo !empty(get_the_content()) && 'yes' === $settings['show_description']  && 'yes' !== $settings['description_overlay'] ? '<div class="wpr-description">'. esc_html__(wp_trim_words(get_the_content(), $settings['excerpt_count'])) .'</div>' : '';
@@ -5744,8 +5741,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						echo ($settings['content_layout'] === 'image-top' && !empty($this->src)) ? '<img class="wpr-thumbnail-image" src="'. esc_url($this->src) .'">' : '';
 	
 						echo ($settings['show_overlay'] === 'yes' && !empty(get_the_post_thumbnail_url())) ? '<div class="wpr-timeline-story-overlay '. esc_attr($this->animation_class) .'">' : '';
-	
-							echo 'yes' === $settings['show_title'] && 'yes' === $settings['title_overlay'] ? '<p class="wpr-title-wrap" ><a class="wpr-title" href="'. esc_url(get_the_permalink()) .'">'. esc_html__(get_the_title()) .'</a></p>' : '';
+
+							if ( 'yes' === $settings['title_overlay'] ) {
+								$this->render_title($settings);
+							}
 
 							if ( 'yes' === $settings['show_date'] && 'yes' === $settings['date_overlay'] ) {
 
@@ -5763,7 +5762,10 @@ class Wpr_Posts_Timeline extends Widget_Base {
 						echo ($settings['content_layout'] === 'image-top' && !empty($this->src)) || ($settings['show_overlay'] === 'yes' && !empty($this->src)) ? '</div>' : '';
 						
 						echo 'yes' !== $settings['title_overlay'] && 'yes' === $settings['show_title'] || 'yes' !== $settings['description_overlay'] && 'yes' === $settings['show_description'] || 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] || 'yes' === $this->show_readmore && 'yes' !== $settings['readmore_overlay']  ? '<div class="wpr-timeline-content-wrapper">' : '';
-							echo 'yes' === $settings['show_title'] && 'yes' !== $settings['title_overlay'] ? '<p class="wpr-title-wrap"><a class="wpr-title" href="'. esc_url(get_the_permalink()) .'">'. esc_html__(get_the_title()) .'</a></p>' : '';
+
+							if ( 'yes' !== $settings['title_overlay'] ) {
+								$this->render_title($settings);
+							}
 
 							if ( 'yes' === $settings['show_date'] && 'yes' !== $settings['date_overlay'] ) {
 
@@ -5848,6 +5850,24 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			}
 		} else {
 			echo esc_html__( get_the_date( $settings['date_format'] ) );
+		}
+	}
+
+	public function render_title( $settings, $content = [], $repeater_title_link = '' ) {
+		if ( $settings['timeline_content'] === 'dynamic' ) {
+			if ( 'yes' === $settings['show_title'] ) {
+				echo '<div class="wpr-title-wrap"><a class="wpr-title" href="'. esc_url(get_the_permalink()) .'">'. esc_html__(get_the_title()) .'</a></div>';
+			}
+		} else {
+			if ( '' !== $repeater_title_link ) {
+				if ( !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] ) {
+					echo '<div class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</a></div>';
+				}
+			} else {
+				if ( !empty($content['repeater_story_title']) && 'yes' === $settings['show_title'] ) {
+					echo '<div class="wpr-title-wrap"><'. esc_attr($settings['title_tag']) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</'. esc_attr($settings['title_tag']) .'></div>';
+				}
+			}
 		}
 	}
 
