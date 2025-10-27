@@ -909,6 +909,7 @@ div[class*="wpr-main-menu-align-"] .wpr-nav-menu-vertical .wpr-nav-menu>li>.wpr-
 .wpr-mobile-nav-menu:not(.wpr-mobile-mega-menu),
 .wpr-mobile-nav-menu-container {
     display: none;
+    pointer-events: none;
 }
 
 .wpr-mobile-nav-menu:not(.wpr-mobile-mega-menu) {
@@ -1098,6 +1099,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     }
     .wpr-nav-menu-bp-tablet .wpr-mobile-nav-menu-container {
         display: block;
+        pointer-events: auto;
     }
 }
 
@@ -6006,6 +6008,7 @@ i[class*="wpr-rating-icon-"] {
 .wpr-ba-image-container {
     position: relative;
     overflow: hidden;
+    border-radius: inherit;
 }
 
 .wpr-ba-image-container * {
@@ -17483,6 +17486,17 @@ dl.variation dd {
     cursor: pointer;
 }
 
+.wpr-af-input-wrap.wpr-af-child {
+    margin-left: 16px !important;
+}
+.wpr-af-input-wrap.wpr-af-g-child {
+    margin-left: 32px !important;
+}
+
+.wpr-af-input-wrap.wpr-af-g-grand-child {
+    margin-left: 48px !important;
+}
+
 .wpr-af-visual-group {
     display: flex;
     flex-wrap: wrap;
@@ -17502,6 +17516,10 @@ dl.variation dd {
     overflow: hidden;
 }
 
+.wpr-af-visual-wrap.wpr-af-visual-color-wrap .wpr-af-visual {
+    flex-shrink: 0;
+}
+
 .wpr-af-visual-wrap * {
     cursor: pointer;
 }
@@ -17514,10 +17532,22 @@ dl.variation dd {
     margin-left: 3px;
 }
 
+.wpr-af-visual-wrap .wpr-af-input-wrap {
+    width: 100%;
+}
+
 /* Range */
 .wpr-af-range-container {
     display: flex;
     flex-direction: column;
+}
+
+.wpr-af-apply-btn-wrap {
+    display: flex;
+}
+
+.wpr-af-apply-btn-stretch .wpr-af-apply-btn-wrap button {
+    width: 100%;
 }
 
 .wpr-af-range-container .wpr-af-rs-control {
@@ -17529,7 +17559,8 @@ dl.variation dd {
     display: flex;
 }
 
-.wpr-af-range-container input[type="number"] {
+.wpr-af-range-container[show-inputs='no'] .wpr-af-rf-control {
+    display: none;
 }
 
 .wpr-af-range-container input[type=number]::-webkit-inner-spin-button,
@@ -17644,10 +17675,14 @@ input.wpr-date-filter-end {
     cursor: pointer;
 }
 
+.wpr-af-active-filters .wpr-remove-filter span {
+    vertical-align: middle;
+    line-height: 1;
+    margin-left: 5px;
+}
+
 [class^="wpr-af-active-wrap-"] {
-    display: inline-block;
-    padding: 5px;
-    border: 1px solid #333222;
+    display: inline-flex;
 }
 
 [class^="wpr-af-active-wrap-"] span {
@@ -17658,6 +17693,24 @@ input.wpr-date-filter-end {
     display: none;
 }
 
+.wpr-af-active-filters .wpr-af-reset-btn {
+    background-color: transparent;
+}
+
+.wpr-af-rating-filter input {
+    display: none;
+}
+
+.wpr-af-rating-filter .wpr-woo-rating {
+    cursor: pointer;
+}
+
+/* TMP style for demo rating */
+.wpr-af-rating-filter li > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
 /*--------------------------------------------------------------
 == Product Filters

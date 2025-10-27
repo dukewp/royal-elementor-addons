@@ -1358,7 +1358,9 @@
 				
 				if ( settings.grid_settings ) {
 					var pagesLoadedExperiment = 0;
-					// loadMoreExperiment();
+					if ( $('body').find('.wpr-advanced-filters-wrap').length == 0 ) {
+						loadMoreExperiment();
+					}
 					filtersExperiment();
 				}
 
@@ -10235,9 +10237,10 @@
 		widgetAdvancedFilters: function($scope) {
 			var visualFilters = $scope.find('.wpr-af-visual-wrap'),
 				viewMoreLess = $scope.find('.wpr-view-more-less'),
-                actionSelector = '#' + $scope.find('.wpr-advanced-filters-wrap').data('widget-selector'),
-				experimentActionCount = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ? 'wpr_get_filtered_count_products' : 'wpr_get_filtered_count_posts',
-				experimentActionContent = $(actionSelector).hasClass('elementor-widget-wpr-woo-grid') ?  'wpr_woo_grid_filters_ajax' : 'wpr_grid_filters_ajax',
+				actionSelector = $('body').find('.wpr-grid[data-advanced-filters="yes"]').first(),
+				isWooGrid = actionSelector.length && actionSelector.closest('.elementor-widget-wpr-woo-grid').length > 0,
+				experimentActionCount = isWooGrid ? 'wpr_get_filtered_count_products' : 'wpr_get_filtered_count_posts',
+				experimentActionContent = isWooGrid ? 'wpr_woo_grid_filters_ajax' : 'wpr_grid_filters_ajax',
 				settings,
 				datePickers = [],
 				isDebounceAjaxCallRunning = false,
@@ -10253,44 +10256,16 @@
 	
 				// Controls slider handlers z-index
 				setToggleAccessible(toSlider, 'to');
+				fillSlider(fromInput, toInput);
 				
 				fromSlider.on('input', () => controlFromSlider(fromSlider, toSlider, fromInput));
 				toSlider.on('input', () => controlToSlider(fromSlider, toSlider, toInput));
-				fromInput.on('change', () => controlFromInput(fromSlider, fromInput, toInput, toSlider));
-				toInput.on('change', () => controlToInput(toSlider, fromInput, toInput, toSlider));
+				fromInput.on('change', () => controlFromInput(fromSlider, fromInput, toInput));
+				toInput.on('change', () => controlToInput(toSlider, fromInput, toInput)); 
 
-				// Enhanced input handlers with debouncing for smooth typing
-				// fromInput.on('change', function() {
-				// 	clearTimeout($(this).data('debounceTimer'));
-				// 	$(this).data('debounceTimer', setTimeout(() => {
-				// 		controlFromInput(fromSlider, fromInput, toInput, toSlider);
-				// 	}, 300));
-				// }).on('blur', () => {
-				// 	clearTimeout(fromInput.data('debounceTimer'));
-				// 	controlFromInput(fromSlider, fromInput, toInput, toSlider);
-				// }).on('keydown', function(e) {
-				// 	if (e.key === 'Enter') {
-				// 		clearTimeout($(this).data('debounceTimer'));
-				// 		controlFromInput(fromSlider, fromInput, toInput, toSlider);
-				// 		$(this).blur();
-				// 	}
-				// });
-
-				// toInput.on('change', function() {
-				// 	clearTimeout($(this).data('debounceTimer'));
-				// 	$(this).data('debounceTimer', setTimeout(() => {
-				// 		controlToInput(toSlider, fromInput, toInput, toSlider);
-				// 	}, 300));
-				// }).on('blur', () => {
-				// 	clearTimeout(toInput.data('debounceTimer'));
-				// 	controlToInput(toSlider, fromInput, toInput, toSlider);
-				// }).on('keydown', function(e) {
-				// 	if (e.key === 'Enter') {
-				// 		clearTimeout($(this).data('debounceTimer'));
-				// 		controlToInput(toSlider, fromInput, toInput, toSlider);
-				// 		$(this).blur();
-				// 	}
-				// });
+				$scope.find('input').on('input', (e) => {
+					$scope.find('.wpr-af-range-container').data('active', 'yes');
+				});
 			}
 
             if ( $scope.find('input[name="wpr_af_date"]').length > 0 ) {
@@ -10354,9 +10329,9 @@
 
 			updateActiveFilters();
 
-			removeFilters();
+			resetFilters();
 
-			applyButton();
+			applyAllFilters();
 
 			viewMoreLessFunc();
 
@@ -10366,7 +10341,6 @@
 				var mainSelect = $scope.find('.wpr-af-main-select'),
 					dependentSelects = $scope.find('.wpr-af-dependent-select'),
 					noneLabel = $scope.find('.wpr-advanced-filters-wrap').data('none-label') || 'None';
-
 
 				// Handle main select change
 				mainSelect.on('change', function() {
@@ -10414,7 +10388,6 @@
 							related_taxonomy: relatedTax
 						},
 						success: function(response) {
-							console.log(response);
 							if (response.success && response.data.length) {
 								var options = '<option value="">' + targetSelect.find('option:first').text() + '</option>';
 								response.data.forEach(function(term) {
@@ -10467,8 +10440,8 @@
 				}
 			}
 			
-			function applyButton() {
-				let widgetSelector = $('#' + $(document).find('.wpr-advanced-filters-wrap').data('widget-selector'));
+			function applyAllFilters() {
+				let widgetSelector = $('body').find('.wpr-grid[data-advanced-filters="yes"]').first().closest('[class*="elementor-widget-wpr-"]');
 
 				if ( $('.wpr-af-apply-btn').length > 0 ) {
 					$('.wpr-af-apply-btn').on('click', function() {
@@ -10540,15 +10513,12 @@
 				$scope.on('click', '.wpr-af-active-filters span.wpr-remove-filter', function () {
 					var thisEl = $(this),
 						dataValue = thisEl.data('value').toString(),
-						currentUrl = window.location.href;
-
-					// Split the URL into base URL and query string
-					var urlParts = currentUrl.split('?'),
+						dataType = thisEl.parent().data('wpr-af-type'),
+						currentUrl = window.location.href,
+						urlParts = currentUrl.split('?'),
 						baseUrl = urlParts[0],
-						queryString = urlParts[1] || '';
-			
-					// Split the query string into individual parameters
-					var params = queryString.split('&');
+						queryString = urlParts[1] || '',
+						params = queryString.split('&');
 			
 					// Update parameters based on dataValue
 					var updatedParams = params.map(function (param) {
@@ -10608,27 +10578,51 @@
 							ajaxFilters($('body').find('*[data-date-val="'+ thisEl.data('value') +'"]'));
 
 						} else {
-
-							if ( $('body').find('*[value="'+ thisEl.data('value') +'"]').prop('tagName') == 'OPTION' ) {
-								$('body').find('*[value="'+ thisEl.data('value') +'"]').closest('select').prop('selectedIndex', 0).trigger('change');	
+							if ( $('body').find('[data-wpr-filter-type='+ dataType +']').find('*[value="'+ thisEl.data('value') +'"]').prop('tagName') == 'OPTION' ) {
+								$('body').find('*[value="'+ thisEl.data('value') +'"]').closest('select').prop('selectedIndex', 0).trigger('change');
 							} else {
-								$('body').find('*[value="'+ thisEl.data('value') +'"]').prop('checked', false).trigger('change');
+								if (dataType != 'rating') { // Maybe other types as well need proper handling
+									$('body').find('[data-wpr-filter-type='+ dataType +']').find('*[value="'+ thisEl.data('value') +'"]').prop('checked', false).trigger('change');
+								}
 							}
 
-							var values = thisEl.data('value').toString();
+							var values = thisEl.data('value').toString(),
+								rangeCheckMin = $('[data-id="' + $(this).data('rf-id') + '"]').find('.wpr-af-rf-control-min-input'),
+								rangeCheckMax = $('[data-id="' + $(this).data('rf-id') + '"]').find('.wpr-af-rf-control-max-input');
+							
+							if (values && values.includes(',') && rangeCheckMin.filter((_, el) => values.split(',')[0] == $(el).val()).length > 0) {
+								let [minValue, maxValue] = values.split(','),
+									rangeMin = rangeCheckMin.filter((_, el) => minValue == $(el).val()),
+									rangeMax = rangeCheckMax.filter((_, el) => maxValue == $(el).val()),
+									outerContainer = rangeMin.closest('.wpr-advanced-filters-wrap'),
+									rangeContainer = outerContainer.find('.wpr-af-range-container'),
+									fromSlider = rangeContainer.find('.wpr-af-from-slider'),
+									toSlider = rangeContainer.find('.wpr-af-to-slider'),
+									fromSliderText = rangeContainer.find('.wpr-af-rs-value-min'),
+									toSliderText = rangeContainer.find('.wpr-af-rs-value-max');
 
-							if (values && values.includes(',') && $('.wpr-af-rf-control-min-input').filter((_, el) => values.split(',')[0] == $(el).val()).length > 0) {
-								let [minValue, maxValue] = values.split(',');
-								let rangeMin = $('.wpr-af-rf-control-min-input').filter((_, el) => minValue == $(el).val());
-								let rangeMax = $('.wpr-af-rf-control-max-input').filter((_, el) => maxValue == $(el).val());
+								fromSlider.val(rangeMin.attr('min'));
+								toSlider.val(rangeMax.attr('max'));
+								fromSliderText.text(rangeMin.attr('min'));
+								toSliderText.text(rangeMax.attr('max'));
 		
 								rangeMin.val(rangeMin.attr('min')).trigger('input');
 								rangeMax.val(rangeMax.attr('max')).trigger('input');
 
-								// TODO: check when not needed
-								rangeMax.closest('.wpr-af-range-container').find('input.wpr-af-from-slider').trigger('change');
+								rangeContainer.find('input.wpr-af-from-slider').trigger('change');
+
+								if ( outerContainer.find('.wpr-af-range-apply-btn').length > 0 ) {
+									outerContainer.find('.wpr-af-range-apply-btn').trigger('click');
+								}
+
+								fillSlider(rangeMin, rangeMax);
 							} else {
-								ajaxFilters($('body').find('*[value="'+ thisEl.data('value') +'"]'));
+								if ( dataType == 'rating') {
+									$('body').find('[data-wpr-filter-type='+ dataType +']').find('.wpr-woo-rating-' + thisEl.data('value')).removeClass('wpr-active-product-filter');	
+									$('body').find('[data-wpr-filter-type='+ dataType +']').find('.wpr-woo-rating-' + thisEl.data('value')).find('input').trigger('change');
+								} else if ( dataType != 'select') {
+									ajaxFilters($('body').find('[data-wpr-filter-type='+ dataType +']').find('*[value="'+ thisEl.data('value') +'"]'));
+								}
 							}
 
 						}
@@ -10656,36 +10650,52 @@
 	
 					$('.wpr-advanced-filters-wrap').each(function () {
 						var thisWrap = $(this),
-							label = $(this).find('h4').text().trim(),
+							label = thisWrap.find('h4').text().trim(),
+							ratingActive = '',
+							ratingInactive = '',
+							uniqueID = thisWrap.closest('.elementor-element').data('id'),
+							firstSelectNoValue = !thisWrap.find('select').first().val() || thisWrap.find('select').first().val() == '0',
 							values = [];
+
+						if ( thisWrap.find('.wpr-af-range-container').data('active') == 'no' ) {
+							return;
+						}
 					
 						// Checkboxes and Radios
-						$(this).find('input[type="checkbox"]:checked, input[type="radio"]:checked').each(function () {
+						thisWrap.find('input[type="checkbox"]:checked, input[type="radio"]:checked, .wpr-active-product-filter input.wpr-rating-filter').each(function () {
 							var checkboxLabel = $(this).parent('label').text().trim();
+
+							if ( $(this).hasClass('wpr-rating-filter') ) {
+								checkboxLabel = $(this).val() + '/5';
+							}
+
 							values.push({ label: label, value: checkboxLabel, realVal: $(this).val() });
 						});
-	
-						$(this).find('input[type="checkbox"]:not(:checked), input[type="radio"]:not(:checked)').each(function () {
-							$('body').find('span[data-value="'+ $(this).val() +'"]').remove();
+						
+						//, .wpr-woo-rating:not(.wpr-active-product-filter) input.wpr-rating-filter
+						thisWrap.find('input[type="checkbox"]:not(:checked), input[type="radio"]:not(:checked), .wpr-woo-rating:not(.wpr-active-product-filter) input.wpr-rating-filter').each(function () {
+							if ( $('body').find('span[data-value="'+ $(this).val() +'"]').parent().attr('data-wpr-af-type') == thisWrap.data('wpr-filter-type') ) {
+								$('body').find('span[data-value="'+ $(this).val() +'"]').remove();
+							}
 						});
 	
-						$(this).find('input[type="date"]').each(function() {
+						thisWrap.find('input[type="date"]').each(function() {
 							values.push({ label: label, value: $(this).val(), realVal: $(this).val() });
 						});
 	
-						$(this).find('input[type="text"]').each(function() {
+						thisWrap.find('input[type="text"]').each(function() {
 							values.push({ label: label, value: $(this).val(), realVal: $(this).val() });
 						});
 					
 						// Range Filter
-						if ($(this).find('.wpr-af-rf-control').length > 0) {
+						if (thisWrap.find('.wpr-af-rf-control').length > 0) {
 							var rangeValues = $(this).find('.wpr-af-rf-control input[type="number"]').map(function () {
 								return $(this).val();
 							}).get();
 							values.push({ label: label, value: rangeValues.join(' - '), realVal: rangeValues});
 						}
 	
-						$(this).find('select').each(function () {
+						thisWrap.find('select').each(function () {
 							var selectLabel = $(this).closest('.wpr-af-select-wrap').find('h4').text().trim(),
 								selectValue = $(this).find('option:selected').text().trim(),
 								selectRealVal = $(this).find('option:selected').val();
@@ -10694,72 +10704,101 @@
 
 							if ( selectRealVal == '' || selectRealVal == '0' ) {
 								$('body').find('span[data-value="'+ selectRealVal +'"]').remove();
-								$('body').find('.wpr-af-active-wrap-' + $(this).closest('.elementor-element').data('id')).remove();
+								$('body').find('.wpr-af-active-wrap-' + uniqueID).remove();
 							}
 						});
 					
 						// If there are values, render results
 						if ( values.length > 0 ) {
-							var container = $('<div class="wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id') +'" data-wpr-af-type="'+ $(this).data('wpr-filter-type') +'">'),
+							var container = $('<div class="wpr-af-active-wrap-'+ uniqueID +'" data-wpr-af-type="'+ $(this).data('wpr-filter-type') +'">'),
 								replaceFilters = ['select', 'radio', 'date','range'];
 	
-							if ( $('body').find('.wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id')).length > 0 ) {
-								container = $('body').find('.wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id'));
+							if ( $('body').find('.wpr-af-active-wrap-'+ uniqueID ).length > 0 ) {
+								container = $('body').find('.wpr-af-active-wrap-'+ uniqueID);
 							}
+
 							values.forEach(function (item) {
 								// Append value span
 								var thisLabel = item.label ? item.label : 'No Label';
 	
-								if ( item.value != 'None' && item.value != '' && item.realVal != '0' ) {
-									if (true) {
-										if ( $('[data-value="' + item.realVal + '"]').length == 0 ) {
+								if ( item.value != 'None' && item.value != '' && item.realVal != '0' && item.realVal != '' ) {
+									if ( container.find('[data-value="' + item.realVal + '"]').length == 0 ) {
+										var itemElement = $('<span class="wpr-remove-filter" data-rf-id="'+ uniqueID +'" data-value="' + item.realVal + '">').text(thisLabel + ': ' + item.value);
 
-											var itemElement = $('<span class="wpr-remove-filter" data-value="' + item.realVal + '">').text(thisLabel + ': ' + item.value);
-											// Add remove icon in a separate span
-											var removeIcon = $('<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>');
+										// Add remove icon in a separate span
+										var removeIcon = $('<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>');
 
-											itemElement.append(removeIcon);
-				
-											if ( replaceFilters.includes(container.attr('data-wpr-af-type')) ) {
-												if ( thisWrap.find('select').length <= 1   ) {
-													container.html(itemElement);
+										itemElement.append(removeIcon);
+			
+										if ( replaceFilters.includes(container.attr('data-wpr-af-type')) ) {
+											if ( thisWrap.find('select').length <= 1   ) {
+												container.html(itemElement);
+											} else {
+												if (thisWrap.find('select').length > 1) {
+													if (!thisWrap.find('select').first().val()) {
+														container.empty();
+													} else {
+														// Find the select containing the option with value == item.realVal
+														const selectWithOption = thisWrap.find('select').filter(function() {
+															return $(this).find('option[value="' + item.realVal + '"]').length > 0;
+														});
+														if (selectWithOption.length > 0) {
+															itemElement.attr('data-rf-type', selectWithOption.data('taxonomy'));
+														}
+
+														if (selectWithOption.is(thisWrap.find('select').first())) {
+															container.html(itemElement);
+														} else {
+															const existingItem = container.find('[data-rf-type="' + itemElement.attr('data-rf-type') + '"]');
+															if (existingItem.length > 0) {
+																existingItem.replaceWith(itemElement);
+															} else {
+																container.append(itemElement);
+															}
+														}
+													}
 												} else {
 													container.append(itemElement);
 												}
-											} else if ( 'date_range' == container.attr('data-wpr-af-type') ) {
-												let dateElementClass = $('*[data-date-val='+ item.realVal +']').attr('class');
+											}
+										} else if ( 'date_range' == container.attr('data-wpr-af-type') ) {
+											let dateElementClass = $('*[data-date-val='+ item.realVal +']').attr('class');
 
+											if ( 'wpr-date-filter-start' == dateElementClass ) {
+												itemElement = $('<span class="wpr-remove-filter '+ dateElementClass +'" data-value="' + item.realVal + '">').text(thisLabel + ': ' + item.value);
+											} else {
+												itemElement = $('<span class="wpr-remove-filter '+ dateElementClass +'" data-value="' + item.realVal + '">').text(item.value);
+											}
+
+											if ( container.find('.' + dateElementClass) ) {
+												container.find('.' + dateElementClass).remove();
 												if ( 'wpr-date-filter-start' == dateElementClass ) {
-													itemElement = $('<span class="wpr-remove-filter '+ dateElementClass +'" data-value="' + item.realVal + '">').text(thisLabel + ': ' + item.value);
-												} else {
-													itemElement = $('<span class="wpr-remove-filter '+ dateElementClass +'" data-value="' + item.realVal + '">').text(item.value);
-												}
-
-												if ( container.find('.' + dateElementClass) ) {
-													container.find('.' + dateElementClass).remove();
-													if ( 'wpr-date-filter-start' == dateElementClass ) {
-														container.prepend(itemElement);
-													} else {
-														container.append(itemElement);
-													}
+													container.prepend(itemElement);
 												} else {
 													container.append(itemElement);
 												}
 											} else {
 												container.append(itemElement);
 											}
-
+										} else {
+											container.append(itemElement);
 										}
+
 									}
 								} else {
 									$('span[data-value="'+ item.realVal +'"]').remove();
+
 								}
 							});
 					
 							// Prepend container to .wpr-af-active-filters
-							if ( $('body').find('.wpr-af-active-wrap-'+ $(this).closest('.elementor-element').data('id')).length == 0 && container.find('span').length > 0 ) {
+							if ( $('body').find('.wpr-af-active-wrap-'+ uniqueID).length == 0 && container.find('span').length > 0 ) {
 								activeFilters.append(container);
 							}
+						}
+						
+						if ( thisWrap.find('select').length > 1 && firstSelectNoValue ) {
+							container.empty();
 						}
 					});
 					
@@ -10772,6 +10811,7 @@
                     if ('checkbox' == $this.attr('type')) {
                         var $option = $this.closest('.wpr-af-input-wrap');
                         if ($option.hasClass('wpr-checked')) {
+							$this.prop('checked', false);
                             $option.removeClass('wpr-checked');
 							$option.closest('.wpr-af-visual-wrap').removeClass('wpr-af-visual-active');
                         } else {
@@ -10788,6 +10828,18 @@
                         }
                     }
                 });
+
+				$scope.find('.wpr-woo-rating').on('click', function() {
+					let rating = +$(this).data('rating');
+
+					$(this).toggleClass('wpr-active-product-filter');
+
+					if ( $('.wpr-af-apply-btn').length == 0 ) {
+						$(this).find('input.wpr-rating-filter').val(rating).trigger('change');
+					} else {
+						$(this).find('input.wpr-rating-filter').val(rating);
+					}
+				});
 
 				if ( $('.wpr-af-apply-btn').length == 0 ) {
 					$scope.find('input[type="checkbox"], input[type="radio"]').on('change', function() {
@@ -10828,13 +10880,6 @@
                         } else {
 						    updateURL(selectedName, selectedValue, $(this));
                         }
-					});
-
-					$scope.find('.wpr-woo-rating').on('click', function() {
-						let rating = +$(this).data('rating');
-
-						$(this).toggleClass('wpr-active-product-filter');
-						$(this).find('input.wpr-rating-filter').val(rating).trigger('change');
 					});
 
 					$scope.find('input.wpr-rating-filter').on('change', function() {
@@ -10896,41 +10941,42 @@
 				}
 			}
 
-			function controlFromInput(fromSlider, fromInput, toInput, controlSlider) {
+			function controlFromInput(fromSlider, fromInput, toInput) {
 				const [from, to] = getParsed(fromInput, toInput);
 				fillSlider(fromInput, toInput);
 				setToggleAccessible(fromInput, 'from');
 				if (from > to) {
-					fromSlider.val(to);
-					fromInput.val(to);
+					fromSlider.val(to).attr('value', to);
+					fromInput.val(to).attr('value', to);
 				} else {
-					fromSlider.val(from);
+					fromSlider.val(from).attr('value', from);
+					fromInput.val(from).attr('value', from);
 				}
 
 				if ( from < +fromInput.attr('min') ) {
-					fromInput.val(+fromInput.attr('min'));
-					fromSlider.val(+fromInput.attr('min'));
+					fromInput.val(+fromInput.attr('min')).attr('value', +fromInput.attr('min'));
+					fromSlider.val(+fromInput.attr('min')).attr('value', +fromInput.attr('min'));
 				}
 			}
 			
-			function controlToInput(toSlider, fromInput, toInput, controlSlider) {
+			function controlToInput(toSlider, fromInput, toInput) {
 				const [from, to] = getParsed(fromInput, toInput);
 				fillSlider(fromInput, toInput);
 				setToggleAccessible(toInput, 'to');
 
 				if (from <= to) {
 					if ( to > +toInput.attr('max') ) {
-						toSlider.val(+toInput.attr('max'));
-						toInput.val(+toInput.attr('max'));
+						toSlider.val(+toInput.attr('max')).attr('value', +toInput.attr('max'));
+						toInput.val(+toInput.attr('max')).attr('value', +toInput.attr('max'));
 					} else {
-						toSlider.val(to);
-						toInput.val(to);
+						toSlider.val(to).attr('value', to);
+						toInput.val(to).attr('value', to);
 					}
 				} else {
 					if ( to > +toInput.attr('max') ) {
-						toInput.val(+toInput.attr('max'));
+						toInput.val(+toInput.attr('max')).attr('value', +toInput.attr('max'));
 					} else {
-						toInput.val(from);
+						toInput.val(from).attr('value', from);
 					}
 				}
 			}
@@ -10940,11 +10986,12 @@
 				fillSlider(fromSlider, toSlider);
 				setToggleAccessible(fromSlider, 'from');
 				if (from > to) {
-					fromSlider.val(to);
-					fromInput.val(to);
+					fromSlider.val(to).attr('value', to);
+					fromInput.val(to).attr('value', to);
 					$scope.find('.wpr-af-rs-value-min').text(to);
 				} else {
-					fromInput.val(from);
+					fromSlider.val(from).attr('value', from);
+					fromInput.val(from).attr('value', from);
 					$scope.find('.wpr-af-rs-value-min').text(from);
 				}
 			}
@@ -10954,12 +11001,12 @@
 				fillSlider(fromSlider, toSlider);
 				setToggleAccessible(toSlider, 'to');
 				if (from <= to) {
-					toSlider.val(to);
-					toInput.val(to);
+					toSlider.val(to).attr('value', to);
+					toInput.val(to).attr('value', to);
 					$scope.find('.wpr-af-rs-value-max').text(to);
 				} else {
-					toInput.val(from);
-					toSlider.val(from);
+					toInput.val(from).attr('value', from);
+					toSlider.val(from).attr('value', from);
 					$scope.find('.wpr-af-rs-value-max').text(from);
 				}
 			}
@@ -10980,7 +11027,7 @@
 				const fromPercent = (((from - min) / rangeDistance) * 100) > 0 ? ((from - min) / rangeDistance) * 100 : 0;
 				let toPercent = ((to - min) / rangeDistance) * 100;
 			
-				const sliderFill = $scope.find('.wpr-af-slider-fill');
+				const sliderFill = fromSlider.closest('.wpr-advanced-filters-wrap').find('.wpr-af-slider-fill');
 
 				if ( toPercent > 100 ) {
 					toPercent = 100;
@@ -11012,7 +11059,11 @@
 				}
 			}
 
-			function removeFilters() {
+			function resetFilters() {
+				if ( WprElements.editorCheck() ) {
+					return;
+				}
+				
 				$scope.on('click', '.wpr-af-reset-btn', function() {
 					// Create a new URL object from the current URL
 					var currentUrl = new URL(window.location.href);
@@ -11033,36 +11084,51 @@
 						window.location.href = currentUrl.toString();
 					} else {
 						// Reset range inputs to their min/max values
-						let rangeMin = $('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').find('input[type="number"].wpr-af-rf-control-min-input');
-						let rangeMax = $('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').find('input[type="number"].wpr-af-rf-control-max-input');
+						$('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').each(function() {
+							let rangeMin = $(this).find('input[type="number"].wpr-af-rf-control-min-input'),
+								rangeMax = $(this).find('input[type="number"].wpr-af-rf-control-max-input'),
+								thisFromSlider = $(this).find('input[type="range"].wpr-af-from-slider'),
+								thisToSlider = $(this).find('input[type="range"].wpr-af-to-slider'),
+								thisFromSliderText = $(this).find('.wpr-af-rs-value-min'),
+								thisToSliderText = $(this).find('.wpr-af-rs-value-max');
+							
+							$(this).data('active', 'no');
+								
+							rangeMin.val(rangeMin.attr('min')).attr('value', rangeMin.attr('min'));
+							rangeMax.val(rangeMax.attr('max')).attr('value', rangeMax.attr('max'));
 
-						rangeMin.val(rangeMin.attr('min')).trigger('input');
-						rangeMax.val(rangeMax.attr('max')).trigger('input');
+							fillSlider(rangeMin, rangeMax);
+
+							thisFromSlider.val(rangeMin.attr('min')).attr('value', rangeMin.attr('min'));
+							thisToSlider.val(rangeMax.attr('max')).attr('value', rangeMax.attr('max'));
+							thisFromSliderText.text(rangeMin.attr('min'));
+							thisToSliderText.text(rangeMax.attr('max'));
+						});
 
 						// Reset all select elements to their default option (usually the first option)
-						$('body').find('.wpr-advanced-filters-wrap').find('select').prop('selectedIndex', 0).trigger('change');
+						$('body').find('.wpr-advanced-filters-wrap').find('select').prop('selectedIndex', 0);
 
 						// Uncheck only checked checkboxes and radio buttons
-						$('body').find('.wpr-advanced-filters-wrap').find('input[type="checkbox"]:checked, input[type="radio"]:checked').prop('checked', false).trigger('change');
+						$('body').find('.wpr-advanced-filters-wrap').find('input[type="checkbox"]:checked, input[type="radio"]:checked').prop('checked', false);
 
 						// Reset all date inputs to empty
-						$('body').find('input[name="wpr_af_date"]').val('').trigger('resetDate').trigger('change');
-						$('body').find('input[name="wpr_af_date_range"]').val('').trigger('resetDate').trigger('change');
+						$('body').find('input[name="wpr_af_date"]').val('').trigger('resetDate');
+						$('body').find('input[name="wpr_af_date_range"]').val('').trigger('resetDate');
 
 						// Reset text inputs
-						$('body').find('.wpr-advanced-filters-wrap input[type="text"]').val('').trigger('change');
+						$('body').find('.wpr-advanced-filters-wrap input[type="text"]').val('');
 
 						// Reset rating filters
-						$('body').find('.wpr-advanced-filters-wrap input.wpr-rating-filter').val('').trigger('change');
+						$('body').find('.wpr-advanced-filters-wrap input.wpr-rating-filter').val('');
+						$('body').find('.wpr-advanced-filters-wrap .wpr-woo-rating').removeClass('wpr-active-product-filter');
 
 						// Remove visual states
 						$('body').find('.wpr-af-visual-wrap').removeClass('wpr-af-visual-active');
 						$('body').find('.wpr-af-input-wrap').removeClass('wpr-checked');
 
-						// ajaxFilters($(this));
+						$(this).closest('.wpr-af-active-filters').find('div').remove();
+						ajaxFilters($(this));
 					}
-				
-					// Optionally, add logic to reset or remove filters as needed
 				});													
 			}
 
@@ -11162,10 +11228,21 @@
 									$el.closest('.wpr-af-input-wrap').find('.wpr-af-count').text(countText);
 			
 									// Also update active filters area if it exists
-									let $filterTag = $('.wpr-af-active-filters').find(`span[data-value="${value}"]`);
-									if ($filterTag.length > 0) {
-										let baseText = $filterTag.text().replace(/\(\d+\)/, '');
-										$filterTag.text(baseText + countText);
+									let $filterTag = $('.wpr-af-active-filters').find(`span[data-value="${value}"]`),
+										removeIcon = '<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>';
+
+									if (
+										$filterTag.length > 0 &&
+										$filterTag.parent().attr('data-wpr-af-type') === $el.closest('.wpr-advanced-filters-wrap').data('wpr-filter-type')
+									) {
+										// Only update the filterTag that matches the data-rf-id of the current filter element
+										const elDataId = $el.closest('[data-id]').data('id');
+										$filterTag.each(function () {
+											if ($(this).attr('data-rf-id') == elDataId) {
+												let baseText = $(this).text().replace(/\(\d+\)/, '');
+												$(this).html(baseText + countText + removeIcon);
+											}
+										});
 									}
 								}
 
@@ -11192,6 +11269,13 @@
 										$el.closest('.wpr-af-visual-wrap').show();
 									}
 								}
+
+								const $wrap = $el.closest('.wpr-advanced-filters-wrap');
+								if ( $wrap.find('.wpr-advanced-filters-inner').children(':visible').length === 0 ) {
+									$wrap.find('.wpr-af-filters-label').hide();
+								} else {
+									$wrap.find('.wpr-af-filters-label').show();
+								}
 							});
 						}, 800);
 					},
@@ -11201,7 +11285,7 @@
 				});
 			}
 
-            function ajaxFilters(self) {
+            function ajaxFilters(self = '') {
 				var triggerElement = self,
 				activeFilters = $('.wpr-af-active-filters');
 
@@ -11242,7 +11326,7 @@
 
                         updateURL(selectedName, selectedValue, $(this).find('select'), finalURL);
                     } else if ( $(this).find('select').length > 1 ) {
-						if ( self.hasClass('wpr-af-main-select') ) {			
+						if ( triggerElement && triggerElement.hasClass('wpr-af-main-select') ) {			
 							$(this).find('select').each(function() {
 								if ( $(this).hasClass('wpr-af-main-select') ) {
 									var selectedName = $(this).attr('name');
@@ -11276,7 +11360,7 @@
                         });
                         
                         updateURL(selectedName, selectedValue, $(this).find('.wpr-af-range-apply-btn'), finalURL);
-                    } else if ( $(this).find('.wpr-af-range-container').length > 0 && $(this).data('wpr-applied') == 'yes' ) {
+                    } else if ( $(this).find('.wpr-af-range-container').length > 0 && ($(this).data('wpr-applied') == 'yes' || self.hasClass('wpr-af-apply-btn')) ) {
                         var selectedElement = $(this).find('.wpr-af-rf-control').find('input[type="number"]');
                         var selectedValue = [];
                         var selectedName = selectedElement.attr('name');
@@ -11291,8 +11375,8 @@
 					renderActiveFilters('ajax');
                 });
 
-				var widgetSelector = '#' + (self.closest('.wpr-advanced-filters-wrap').data('widget-selector') || self.closest('.elementor-widget-wpr-grid').attr('id') || self.closest('.elementor-widget-wpr-woo-grid').attr('id')),
-					targetGrid = $(widgetSelector).find('.wpr-grid');
+				var widgetSelector = $('body').find('.wpr-grid[data-advanced-filters="yes"]').first().closest('[class*="elementor-widget-wpr-"]'),
+					targetGrid =$('body').find('.wpr-grid[data-advanced-filters="yes"]').first();
 
                 // If not ajax relocate
                 if ( self.closest('.wpr-advanced-filters-wrap').length > 0 && 'yes' !== self.closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
@@ -11319,18 +11403,10 @@
                         paramsObj[key] = value;
                     });
 
-					if (targetGrid.data('isotopewpr')) {
-						// targetGrid.isotopewpr('remove', targetGrid.children());
-						// targetGrid.isotopewpr('destroy');
-						if ( $('body').find('.wpr-filters-loader-wrap').length == 0 ) {
-							// targetGrid.append(loader);
-						}
-					}
-
 					let debounceTimer;
 
 					// Loading
-					$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).hide();
+					widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).hide();
 					
 					if ( triggerElement.hasClass('wpr-af-reset-btn') ) {
 						paramsObj = {};
@@ -11376,7 +11452,6 @@
 				} else if ( element.hasClass('wpr-af-range-apply-btn') || element.hasClass('wpr-af-range-container') || element.hasClass('wpr-af-from-slider') || element.hasClass('wpr-af-to-slider') || element.hasClass('wpr-af-rf-control-min-input') || element.hasClass('wpr-af-rf-control-max-input') ) {
 					url.searchParams.set(selectedName, selectedValue);
 				} else if ( element.attr('type') == "text" || element.attr('type') == "date"  || element.attr('type') == "date_range" )  {
-
 					if (url.searchParams.has(selectedName)) {
 
 						var currentValue = '';
@@ -11479,7 +11554,7 @@
 						url.searchParams.delete(selectedName);
 						url.searchParams.delete(selectedName.replace('wpr_af', 'wpr_afr'));
 					}
-					
+
 					if ( element.is(':checked') || (element.hasClass('wpr-rating-filter') && element.closest('.wpr-active-product-filter').length > 0) ) {
 						if ( url.searchParams.has(selectedName) ) {
 							// Get the current value of the query parameter
@@ -11558,13 +11633,11 @@
 					}
 
 					WprElements.changeFinalURL(url.toString());
-					console.log(finalURL);
 				}
 			}
 
 			function updateGrid(data, cache, startvar, targetGrid, settings, widgetSelector) {
-
-				setTimeout(function() {
+					setTimeout(function() {
 					if ( !cache ) {
 						$('body').find('.wpr-filters-loader-wrap').remove();
 					}
@@ -11585,7 +11658,7 @@
 						// Append new items
 						targetGrid.append(newItems);
 						targetGrid.isotopewpr('appended', newItems).isotopewpr('layout');
-						WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+						WprElements.isotopeLayout(settings, '', widgetSelector, true, $scope);
 						WprElements.mediaHoverLink($scope, targetGrid);
 
 						if ( targetGrid.data('lightGallery') ) {
@@ -11593,20 +11666,20 @@
 						}
 
 						setTimeout(function() {
-							WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+							WprElements.isotopeLayout(settings, '', widgetSelector, true, $scope);
 							WprElements.lightboxPopup( settings, $scope, targetGrid );
 							updateResultsCount(settings);
 
-							if ( data.data.found_posts > 0 && !(data.data.found_posts <= $(widgetSelector).find('.wpr-grid-item').length) ) {
+							if ( data.data.found_posts > 0 && !(data.data.found_posts <= widgetSelector.find('.wpr-grid-item').length) ) {
 								if ( 'load-more' === settings.pagination_type ) {
-									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn();
+									widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn();
 								}
 							} else {
-								$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).hide();
-								$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
-								$(widgetSelector).find( '.wpr-grid-pagination' ).delay( 2000 ).fadeOut( 1000 );
+								widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).hide();
+								widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+								widgetSelector.find( '.wpr-grid-pagination' ).delay( 2000 ).fadeOut( 1000 );
 								setTimeout(function() {
-									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+									widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
 								}, 500 );
 							}
 						}, 500);
@@ -11650,9 +11723,10 @@
 					}
 
 					if ( triggerElement.hasClass('wpr-load-more-btn') ) {
-						$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
+						widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
 
 						settings.grid_settings.query_offset = +settings.grid_settings.query_offset + targetGrid.find('.wpr-grid-item').length;
+						console.log(settings.grid_settings.query_offset, +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length);
 						$.ajax({
 							type: 'POST',
 							url: WprConfig.ajaxurl,
@@ -11679,11 +11753,11 @@
 								// isotopeFilters( settings ); // GOGA - if not images loaded
 	
 								items.imagesLoaded().progress( function( instance, image ) {
-									WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+									WprElements.isotopeLayout(settings, '', widgetSelector, true, $scope);
 		
 									// Fix Layout
 									setTimeout(function() {
-										WprElements.isotopeLayout(settings, '', $(widgetSelector), true, $scope);
+										WprElements.isotopeLayout(settings, '', widgetSelector, true, $scope);
 										// isotopeFilters( settings );
 									}, 100 );
 						
@@ -11692,17 +11766,17 @@
 									}, 500 );
 								});
 								
-								if ( response.data.found_posts > 0 && response.data.found_posts > $(widgetSelector).find('.wpr-grid-item').length ) {
+								if ( response.data.found_posts > 0 && response.data.found_posts > widgetSelector.find('.wpr-grid-item').length ) {
 									if ( 'load-more' === settings.pagination_type ) {
-										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
-										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn();
+										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn();
 									}
 								} else {
-									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
-									$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
-									$(widgetSelector).find( '.wpr-grid-pagination' ).delay( 2000 ).fadeOut( 1000 );
+									widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+									widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+									widgetSelector.find( '.wpr-grid-pagination' ).delay( 2000 ).fadeOut( 1000 );
 									setTimeout(function() {
-										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
 									}, 500 );
 								}
 		
@@ -11713,7 +11787,7 @@
 								// }, 300 );
 		
 								// Init Lightbox
-								WprElements.lightboxPopup( settings, $(widgetSelector), targetGrid );
+								WprElements.lightboxPopup( settings, widgetSelector, targetGrid );
 		
 								// Fix Lightbox
 								targetGrid.data( 'lightGallery' ).destroy( true );
@@ -11731,6 +11805,13 @@
 								window.dispatchEvent(new Event('resize'));
 								window.dispatchEvent(new Event('scroll'));
 								$(window).trigger('scroll');
+
+								if ( widgetSelector.find('.woocommerce-result-count').length ) {
+									var resultCount = widgetSelector.find('.woocommerce-result-count').text(),
+										updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( widgetSelector.find('.wpr-grid-item').length ) );
+
+									widgetSelector.find('.woocommerce-result-count').text(updatedResultCount);
+								}
 							},
 							error: function(error) {
 								console.log(error);
@@ -11759,9 +11840,9 @@
 
 								if ( response.data.found_posts > 0 ) {
 									if ( 'load-more' === settings.pagination_type ) {
-										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).hide();
-										$(widgetSelector).find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn( 1000 );
-										$(widgetSelector).find( '.wpr-grid-pagination' ).delay( 2000 ).fadeIn( 1000 );
+										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).hide();
+										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).fadeIn( 1000 );
+										widgetSelector.find( '.wpr-grid-pagination' ).delay( 2000 ).fadeIn( 1000 );
 									}
 								}
 							},
