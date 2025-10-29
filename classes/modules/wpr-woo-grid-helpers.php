@@ -30,8 +30,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	// Get Max Pages
 	public static function get_max_num_pages( $settings ) {
-		$query = new \WP_Query( WPR_Woo_Grid_Helpers::get_main_query_args($settings, []) );
-		$max_num_pages = intval( ceil( $query->max_num_pages ) );
+		if ( isset($_POST['wpr_url_params']) ) {
+			$query = new \WP_Query( WPR_Woo_Grid_Helpers::get_main_query_args($settings, []) );
+			$max_num_pages = intval( ceil( $query->max_num_pages ) );
+		} else if ( isset($_POST['grid_settings']) ) {
+			$query = new \WP_Query( WPR_Woo_Grid_Helpers::get_main_query_args($settings, []) );
+			$max_num_pages = intval( ceil( $query->max_num_pages ) );
+			
+			$adjustedTotalPosts = max(0, $query->found_posts - $query->query_vars['offset']); // Ensuring it doesn't go below 0
+			$numberOfPages = ceil($adjustedTotalPosts / $query->query_vars['posts_per_page']);
+
+			wp_send_json_success([
+				'page_count' => $numberOfPages,
+				'max_num_pages' => $max_num_pages,
+				'query_found' => $query->found_posts,
+				'query_offset' => $query->query_vars['offset'],
+				'query_num' => $query->query_vars['posts_per_page']
+			]);
+		} else {
+			$query = new \WP_Query( WPR_Woo_Grid_Helpers::get_main_query_args($settings, []) );
+			$max_num_pages = intval( ceil( $query->max_num_pages ) );
+		}
 
 		// Reset
 		wp_reset_postdata();
@@ -310,6 +329,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( isset($_POST['wpr_offset']) ) {
 			$args['offset'] = $_POST['wpr_offset'];
 		}
+
+		if ( isset($_POST['wpr_taxonomy']) ) {
+			return $args;
+		}
+
 		if ( !isset($args['tax_query']) ) {
 			$args['tax_query'] = [];
 		}
@@ -664,10 +688,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		// Grid Query
 		} else {
-            // $settings = $_POST['grid_settings'];
-            // $taxonomy = $_POST['wpr_taxonomy'];
-            // $term = $_POST['wpr_filter'];
-
 			if ( isset($_GET['wpr_select_product_cat']) ) {
 				if ( $_GET['wpr_select_product_cat'] != '0' ) {
 					// Get category from URL
@@ -703,17 +723,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 				}
 			}
-    
-            // if ( $term != '*' ) {
-            //     if ( 'tag' === $taxonomy ) {
-            //         $taxonomy = 'product_' . $_POST['wpr_taxonomy'];
-            //     }
-            //     array_push( $tax_query, [
-            //         'taxonomy' => $taxonomy,
-            //         'field' => 'slug',
-            //         'terms' => $term
-            //     ] );
-            // }
+
+			if ( isset($_POST['wpr_taxonomy']) ) {
+				$settings = $_POST['grid_settings'];
+				$taxonomy = $_POST['wpr_taxonomy'];
+				$term = $_POST['wpr_filter'];
+
+				if ( $term != '*' ) {
+				    if ( 'tag' === $taxonomy ) {
+				        $taxonomy = 'product_' . $_POST['wpr_taxonomy'];
+				    }
+				    array_push( $tax_query, [
+				        'taxonomy' => $taxonomy,
+				        'field' => 'slug',
+				        'terms' => $term
+				    ] );
+				}
+			}
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
@@ -2210,24 +2236,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 
 	public function wpr_get_filtered_count_products() {
-		$results = [];
+		$nonce = $_POST['nonce'];
 
-		// Loop through each set of parameters
-		foreach ($_POST['wpr_url_params'] as $params) {
-			$query_args = WPR_Woo_Grid_Helpers::get_main_query_args($_POST['grid_settings'], $params);
-			$query = new \WP_Query($query_args);
-	
-			// Add the count of found posts to the results array
-			$results[] = [
-				'found_posts' => $query->found_posts,
-				'params' => $params
-			];
-	
+		if (!isset($nonce) || !wp_verify_nonce($nonce, 'wpr-addons-js')) {
+			wp_send_json_error(array(
+				'message' => esc_html__('Security check failed.', 'wpr-addons'),
+			));
+		}
+		
+		if ( isset($_POST['wpr_url_params']) ) {
+			$results = [];
+
+			// Loop through each set of parameters
+			foreach ($_POST['wpr_url_params'] as $params) {
+				$query_args = WPR_Woo_Grid_Helpers::get_main_query_args($_POST['grid_settings'], $params);
+				$query = new \WP_Query($query_args);
+		
+				// Add the count of found posts to the results array
+				$results[] = [
+					'found_posts' => $query->found_posts,
+					'params' => $params
+				];
+		
+				wp_reset_postdata();
+			}
+
+			// Send the array of results
+			wp_send_json_success($results);
+		} else {
+			$settings = $_POST['grid_settings'];
+			$page_count = $this->get_max_num_pages( $settings );
+
 			wp_reset_postdata();
+		
+			wp_send_json_success([
+				'page_count' => $page_count,
+			]);
 		}
 
-		// Send the array of results
-		wp_send_json_success($results);
 		wp_die();
 	}
 
