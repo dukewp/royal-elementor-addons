@@ -108,14 +108,45 @@ public function get_dependent_terms() {
 
 	// Get Max Pages
 	public static function get_max_num_pages( $settings ) {
-		$query = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings, []) );
-		$max_num_pages = intval( ceil( $query->max_num_pages ) );
+		if ( isset($_POST['wpr_url_params']) ) {	
+			$query = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings, []) );
+			$max_num_pages = intval( ceil( $query->max_num_pages ) );
 
-		// Reset
-		wp_reset_postdata();
+			// Reset
+			wp_reset_postdata();
 
-		// $max_num_pages
-		return $max_num_pages;
+			// $max_num_pages
+			return $max_num_pages;
+		} else if ( isset($_POST['grid_settings']) ) {
+			$query = new \WP_Query(WPR_Grid_Helpers::get_main_query_args($settings, []) );
+			$max_num_pages = intval( ceil( $query->max_num_pages ) );
+			
+			$adjustedTotalPosts = max(0, $query->found_posts - $query->query_vars['offset']); // Ensuring it doesn't go below 0
+			$numberOfPages = ceil($adjustedTotalPosts / $query->query_vars['posts_per_page']);
+
+			wp_send_json_success([
+				'page_count' => $numberOfPages,
+				'max_num_pages' => $max_num_pages,
+				'query_found' => $query->found_posts,
+				'query_offset' => $query->query_vars['offset'],
+				'query_num' => $query->query_vars['posts_per_page']
+			]);
+
+			// Reset
+			wp_reset_postdata();
+
+			// $max_num_pages
+			return $max_num_pages;
+		} else {
+			$query = new \WP_Query( WPR_Grid_Helpers::get_main_query_args($settings, []) );
+			$max_num_pages = intval( ceil( $query->max_num_pages ) );
+
+			// Reset
+			wp_reset_postdata();
+
+			// $max_num_pages
+			return $max_num_pages;
+		}
 	}
 
 	// Main Query Args
@@ -302,6 +333,34 @@ public function get_dependent_terms() {
 			$args['tax_query'] = [];
 		}
 
+		if ( isset($_POST['wpr_taxonomy'] ) ) {
+			$settings = $_POST['grid_settings'];
+			$taxonomy = $_POST['wpr_taxonomy'];
+			$term = $_POST['wpr_filter'];
+			$tax_query = [];
+
+			if ( $term != '*' ) {
+				if ( 'tag' === $taxonomy ) {
+					$taxonomy = 'post_' . $_POST['wpr_taxonomy'];
+				}
+				array_push( $tax_query, [
+					'taxonomy' => $taxonomy,
+					'field' => 'slug',
+					'terms' => $term
+				] );
+			}
+
+			if ( !empty($tax_query) ) {
+				$args['tax_query'] = $tax_query;
+			}
+
+			if ( isset($_POST['wpr_offset']) ) {
+				$args['offset'] = $_POST['wpr_offset'];
+			}
+
+			return $args;
+		}
+
 		if ( isset($args['tax_query']) ) {
 
 			$tax_query = ['relation' => 'AND'];
@@ -421,7 +480,6 @@ public function get_dependent_terms() {
 				
 													foreach ($filtervalues as $filtervalue) {
 														$filtervalue = sanitize_text_field($filtervalue);
-														
 													
 														array_push($for_meta_query, [
 															[
@@ -610,9 +668,7 @@ public function get_dependent_terms() {
 													];
 												}
 											} else {
-												if (isset($args['meta_query'])) { 
-		
-		
+												if (isset($args['meta_query'])) {
 													$for_meta_query = [ // needs check if overrides something
 														'relation' => explode(',', $_GET['wpr_afr_'. $cleanedKey])[0],
 													];
@@ -620,7 +676,6 @@ public function get_dependent_terms() {
 													foreach ($filtervalues as $filtervalue) {
 														$filtervalue = sanitize_text_field($filtervalue);
 														
-													
 														array_push($for_meta_query, [
 															[
 																'key'     => $cleanedKey,
@@ -744,6 +799,22 @@ public function get_dependent_terms() {
 	public static function get_tax_query_args($settings) {
 		$settings = $settings;
 		$tax_query = [];
+
+		if ( isset($_POST['wpr_taxonomy']) ) {	
+			$taxonomy = $_POST['wpr_taxonomy'];
+			$term = $_POST['wpr_filter'];
+		
+			if ( $term != '*' ) {
+				if ( 'tag' === $taxonomy ) {
+					$taxonomy = 'post_' . $_POST['wpr_taxonomy'];
+				}
+				array_push( $tax_query, [
+					'taxonomy' => $taxonomy,
+					'field' => 'slug',
+					'terms' => $term
+				] );
+			}
+		}
 
 		if ( 'related' === $settings[ 'query_source' ] ) {
 			$tax_query = [
@@ -1939,27 +2010,53 @@ public function get_dependent_terms() {
 	}
 
 	public function wpr_get_filtered_count_posts() {
-		$results = [];
-	
-		// Loop through each set of parameters
-		foreach ($_POST['wpr_url_params'] as $params) {
-			$query_args = WPR_Grid_Helpers::get_main_query_args($_POST['grid_settings'], $params);
-			$query = new \WP_Query($query_args);
-	
-			// Add the count of found posts to the results array
-			$results[] = [
-				'found_posts' => $query->found_posts
-			];
-	
-			wp_reset_postdata();
+		$nonce = $_POST['nonce'];
+
+		if (!isset($nonce) || !wp_verify_nonce($nonce, 'wpr-addons-js')) {
+			wp_send_json_error(array(
+				'message' => esc_html__('Security check failed.', 'wpr-addons'),
+			));
 		}
-	
-		// Send the array of results
-		wp_send_json_success($results);
+
+		if ( isset($_POST['wpr_url_params']) ) {
+			$results = [];
+		
+			// Loop through each set of parameters
+			foreach ($_POST['wpr_url_params'] as $params) {
+				$query_args = WPR_Grid_Helpers::get_main_query_args($_POST['grid_settings'], $params);
+				$query = new \WP_Query($query_args);
+		
+				// Add the count of found posts to the results array
+				$results[] = [
+					'found_posts' => $query->found_posts
+				];
+		
+				wp_reset_postdata();
+			}
+		
+			// Send the array of results
+			wp_send_json_success($results);
+		} else if ( isset($_POST['grid_settings']) ) {
+			$settings = $_POST['grid_settings'];
+			$page_count =  WPR_Grid_Helpers::get_max_num_pages( $settings );
+		
+			wp_send_json_success([
+				'page_count' => $page_count,
+			]);
+		}
+		
 		wp_die();
 	}
 
 	public function wpr_grid_filters_ajax() {
+		$nonce = $_POST['nonce'];
+
+		if (!isset($nonce) || !wp_verify_nonce($nonce, 'wpr-addons-js')) {
+			wp_send_json_error(array(
+				'message' => esc_html__('Security check failed.', 'wpr-addons'),
+			));
+		}
+
 		$start = microtime(true);
 		// Get Settings
 		$settings = $_POST['grid_settings'];
