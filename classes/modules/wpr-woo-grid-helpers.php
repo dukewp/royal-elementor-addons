@@ -228,6 +228,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$args['orderby']  = 'rand';
 		} elseif ( 'date' === $settings['query_orderby'] ) {
 			$args['orderby']  = 'date';
+			$args['order'] = $settings['order_direction'];
 		} else {
 			$args['orderby']  = 'menu_order';
 			$args['order']  = $settings['order_direction'];
