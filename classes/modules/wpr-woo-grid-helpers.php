@@ -2034,7 +2034,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public static function render_grid_pagination( $settings ) {
 		// Return if Disabled
 		if ( 'yes' !== $settings['layout_pagination'] || 1 === WPR_Woo_Grid_Helpers::get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
-			return;
+			if ( 'yes' !== $settings['advanced_filters'] ) {
+				return;
+			}
 		}
 		
 		if ( (isset(WPR_Woo_Grid_Helpers::$my_upsells) && (count(WPR_Woo_Grid_Helpers::$my_upsells) <= $settings['query_posts_per_page'])) || (isset(WPR_Woo_Grid_Helpers::$crossell_ids) && (count(WPR_Woo_Grid_Helpers::$crossell_ids) <= $settings['query_posts_per_page'])) ) {
@@ -2345,7 +2347,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( 'dynamic' === $settings['query_selection'] ) {
 				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
 			}
-			
+
 		endif;
 
 		// Get the buffered content
