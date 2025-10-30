@@ -2340,6 +2340,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		wp_reset_postdata();
 
 		// Loop: End
+		else :
+
+			if ( 'dynamic' === $settings['query_selection'] ) {
+				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
+			}
+			
 		endif;
 
 		// Get the buffered content
