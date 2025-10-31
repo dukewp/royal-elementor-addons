@@ -9078,8 +9078,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'query_offset' => isset($settings['query_offset']) ? $settings['query_offset'] : null,
 				'query_randomize' => isset($settings['query_randomize']) ? $settings['query_randomize'] : null,
 				'query_orderby' => isset($settings['query_orderby']) ? $settings['query_orderby'] : null,
-				'order_posts' => isset($settings['order_posts']) ? $settings['order_posts'] : null,
-				'order_posts_by_acf' => isset($settings['order_posts_by_acf']) ? $settings['order_posts_by_acf'] : null,
 				'order_direction' => isset($settings['order_direction']) ? $settings['order_direction'] : null,
 				'query_exclude_no_images' => isset($settings['query_exclude_no_images']) ? $settings['query_exclude_no_images'] : null,
 				'query_selection' => isset($settings['query_selection']) ? $settings['query_selection'] : null,
