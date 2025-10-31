@@ -61,6 +61,7 @@ class Wpr_Grid extends Widget_Base {
 	}
 
 	public $post_types;
+	public $current_post_type;
 
 	public function add_option_query_source() {
 		$this->post_types = [];
@@ -8624,6 +8625,9 @@ class Wpr_Grid extends Widget_Base {
 			$stick_last_element_to_bottom = 'no';
 		}
 
+		global $wp_query;
+		$this->current_post_type = $wp_query->query_vars['post_type'] ?? 'post';
+
 		$gutter_hr_widescreen = isset($settings['layout_gutter_hr_widescreen']['size']) ? $settings['layout_gutter_hr_widescreen']['size'] : $settings['layout_gutter_hr']['size'];
 		$gutter_hr_desktop = $settings['layout_gutter_hr']['size'];
 		$gutter_hr_laptop = isset($settings['layout_gutter_hr_laptop']['size']) ? $settings['layout_gutter_hr_laptop']['size'] : $gutter_hr_desktop;
@@ -8739,6 +8743,7 @@ class Wpr_Grid extends Widget_Base {
 
 				// Query Settings
 				'query_source' => isset($settings['query_source']) ? $settings['query_source'] : null,
+				'current_query_source' => $this->current_post_type,
 				'query_author' => isset($settings['query_author']) ? $settings['query_author'] : null,
 				'query_posts_per_page' => isset($settings['query_posts_per_page']) ? $settings['query_posts_per_page'] : null,
 				'query_offset' => isset($settings['query_offset']) ? $settings['query_offset'] : null,

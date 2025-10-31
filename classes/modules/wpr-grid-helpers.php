@@ -261,6 +261,10 @@ public function get_dependent_terms() {
 				$posts_per_page = intval(get_option('posts_per_page'));
 			}
 
+			if ( isset($settings['current_query_source']) ) {
+				$args['post_type'] = $settings['current_query_source'];
+			}
+
 			$args['orderby'] = $query_order_by;
 
 			$args['offset'] = ( $paged - 1 ) * $posts_per_page + intval($settings[ 'query_offset' ]);
