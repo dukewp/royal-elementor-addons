@@ -290,30 +290,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		// Sorting
-		if ( isset( $_GET['orderby'] ) ) {
-			if ( 'popularity' === $_GET['orderby'] ) {
+		if ( isset( $_GET['orderby'] ) || ( isset($_POST['orderby']) && !empty($_POST['orderby']) ) ) {
+			$orderby_value = isset( $_GET['orderby'] ) ? $_GET['orderby'] : $_POST['orderby'];
+
+			if ( 'popularity' === $orderby_value ) {
 				$args['meta_key'] = 'total_sales';
 				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'rating' === $_GET['orderby'] ) {
+			} elseif ( 'rating' === $orderby_value ) {
 				$args['meta_key'] = '_wc_average_rating';
 				$args['order'] = $settings['order_direction'];
 				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'price' === $_GET['orderby'] ) {
+			} elseif ( 'price' === $orderby_value ) {
 				$args['meta_key'] = '_price';
 				$args['order'] = 'ASC';
 				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'price-desc' === $_GET['orderby'] ) {
+			} elseif ( 'price-desc' === $orderby_value ) {
 				$args['meta_key'] = '_price';
 				$args['order'] = 'DESC';
 				$args['orderby']  = 'meta_value_num';
-			} elseif ( 'random' === $_GET['orderby'] ) {
+			} elseif ( 'random' === $orderby_value ) {
 				$args['orderby']  = 'rand';
-			} elseif ( 'date' === $_GET['orderby'] ) {
+			} elseif ( 'date' === $orderby_value ) {
 				$args['orderby']  = 'date';
-			} else if ( 'title' === $_GET['orderby'] ){
+			} else if ( 'title' === $orderby_value ){
 				$args['orderby']  = 'title';
 				$args['order'] = 'ASC';
-			} else if ( 'title-desc' === $_GET['orderby'] ) {
+			} else if ( 'title-desc' === $orderby_value ) {
 				$args['orderby']  = 'title';
 				$args['order'] = 'DESC';
 			} else {
