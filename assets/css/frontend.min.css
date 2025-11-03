@@ -535,6 +535,15 @@ button.lg-icon {
     display: none !important;
 }
 
+.wpr-hidden-item {
+    display: none !important;
+    max-height: 0;
+    overflow: hidden;
+    transition: display 0.3s ease, max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .wpr-zero-opacity {
     opacity: 0 !important;
 }
