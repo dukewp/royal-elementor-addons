@@ -553,7 +553,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										$key_type = WPR_Woo_Grid_Helpers::identify_key_type($cleanedKey);
 										$filtervalues = sanitize_text_field($wpr_url_params[$key]);
 		
-										if ( $key_type == 'meta_field' ) {
+										if ( $key_type == 'meta_field'  || $key_type == 'custom_field' ) {
 											if ( isset($meta_query) ) {
 												array_push($meta_query, [
 													[

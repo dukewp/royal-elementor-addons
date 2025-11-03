@@ -374,6 +374,10 @@ public function get_dependent_terms() {
 
 			$wpr_url_params = isset($params) && !empty($params) ? $params : (isset($_POST['wpr_url_params']) ? $_POST['wpr_url_params'] : []);
 
+			if ( empty($wpr_url_params) && isset($_GET) && !empty($_GET) ) {
+				$wpr_url_params = $_GET;
+			}
+
 			if ( isset($wpr_url_params) && !empty($wpr_url_params) ) {
 				// Iterate through the POST array
 				foreach ( $wpr_url_params as $key => $value ) {
@@ -536,7 +540,7 @@ public function get_dependent_terms() {
 										$key_type = WPR_Grid_Helpers::identify_key_type($cleanedKey);
 										$filtervalues = sanitize_text_field($wpr_url_params[$key]);
 		
-										if ( $key_type == 'meta_field' ) {
+										if ( $key_type == 'meta_field' || $key_type == 'custom_field' ) {
 											if ( isset($meta_query) ) {
 												array_push($meta_query, [
 													[
@@ -579,194 +583,6 @@ public function get_dependent_terms() {
 
 				if ( !empty($meta_query) )  {
 					$args['meta_query'] = $meta_query;
-				}
-			} else {
-				// Iterate through the $_GET array
-				foreach ($_GET as $key => $value) {
-					// Check if the variable name contains "wpr_af_"
-					if (strpos($key, 'wpr_af_') !== false) {
-						// Need to setup logic to get relation from filters separately
-						$cleanedKey = str_replace('wpr_af_', '', $key);
-						$prev_cleaned_key = $cleanedKey;
-		
-						if ( isset($_GET[$key]) ) {
-							if ( $cleanedKey == 'date_range' ) {
-								$date = $_GET[$key];
-								
-								$args['date_query'] = [];
-		
-								if ( str_contains($date, ',') ) {
-									$date = explode(',', $date);
-		
-									if (false) {
-										$args['date_query'] = ['relation' => 'or'];
-		
-										list($year1, $month1, $day1) = explode("-", $date[0]);
-										list($year2, $month2, $day2) = explode("-", $date[1]);
-		
-										array_push( $args['date_query'], [
-											'year' => $year1,
-											'month' => $month1,
-											'day' => $day1,
-										] );
-		
-										array_push( $args['date_query'], [
-											'year' => $year2,
-											'month' => $month2,
-											'day' => $day2,
-										] );
-		
-									} else {
-										array_push( $args['date_query'], [
-											'after'     => $date[0],
-											'before'    => $date[1],
-											'inclusive' => true
-										] );
-									}
-								} 
-							} elseif ( $cleanedKey == 'date' ) {
-								$date = $_GET[$key];
-								
-								$args['date_query'] = [];
-		
-								if ( explode("-", $date) ) {
-									list($year, $month, $day) = explode("-", $date);
-		
-									array_push( $args['date_query'], [
-										'year' => $year,
-										'month' => $month,
-										'day' => $day,
-									]);
-								}
-							} else {
-								if ( $_GET[$key] != '0' ) {
-									// Get category from URL
-									if (str_contains($_GET[$key], ',')) {
-			
-										// Example usage
-										$key_type = WPR_Grid_Helpers::identify_key_type($cleanedKey);
-										$filtervalues = explode(',', $_GET[$key]);
-		
-										if ($key_type == 'meta_field') {
-											if ( is_numeric($filtervalues[0]) ) {
-												$minValue = min(array_values($filtervalues));
-												$maxValue = max(array_values($filtervalues));
-												
-												if (isset($args['meta_query'])) {
-													array_push($args['meta_query'], [
-														[
-															'key'     => $cleanedKey,
-															'value'   => [$minValue, $maxValue],
-															'type'    => 'NUMERIC',
-															'compare' => 'BETWEEN',
-														],
-													]);
-												} else {
-													$args['meta_query'] = [
-														[
-															'key'     => $cleanedKey,
-															'value'   => [$minValue, $maxValue],
-															'type'    => 'NUMERIC',
-															'compare' => 'BETWEEN',
-														],
-													];
-												}
-											} else {
-												if (isset($args['meta_query'])) {
-													$for_meta_query = [ // needs check if overrides something
-														'relation' => explode(',', $_GET['wpr_afr_'. $cleanedKey])[0],
-													];
-				
-													foreach ($filtervalues as $filtervalue) {
-														$filtervalue = sanitize_text_field($filtervalue);
-														
-														array_push($for_meta_query, [
-															[
-																'key'     => $cleanedKey,
-																'value'   => $filtervalue
-															],
-														]);
-													}
-				
-													array_push( $args['meta_query'], $for_meta_query );
-												} else {
-													$args['meta_query'] = [ // needs check if overrides something
-														'relation' => explode(',', $_GET['wpr_afr_'. $cleanedKey])[0],
-													];
-		
-													if (is_array($filtervalues)) {
-														foreach ($filtervalues as $filtervalue) {
-															$args['meta_query'][] = [
-																'key'     => $cleanedKey,
-																'value'   => $filtervalue,
-																'compare' => '=',
-															];
-														}
-													} else {
-		
-													}
-												}
-											}
-										} else { // if != 'meta_field'
-											$for_tax_query = [ // needs check if overrides something
-												'relation' => explode(',', $_GET['wpr_afr_'. $cleanedKey])[0],
-											];
-		
-											foreach ($filtervalues as $filtervalue) {
-												$filtervalue = sanitize_text_field($filtervalue);
-												
-												array_push( $for_tax_query, [
-													'taxonomy' => $cleanedKey,
-													'field' => 'id',
-													'terms' => $filtervalue
-												] );
-											}
-		
-											array_push( $tax_query, $for_tax_query );
-										}
-									} else { // not str_contains($_GET[$key], ',')
-										$key_type = WPR_Grid_Helpers::identify_key_type($cleanedKey);
-										$filtervalues = sanitize_text_field($_GET[$key]);
-		
-										if ( $key_type == 'meta_field' ) {
-											if (isset($args['meta_query'])) {
-												array_push($args['meta_query'], [
-													[
-														'key'     => $cleanedKey,
-														'value'   => [$filtervalues],
-														// 'type'    => 'NUMERIC',
-														// 'compare' => 'BETWEEN',
-													],
-												]);
-											} else {
-												$args['meta_query'] = [
-													[
-														'key'     => $cleanedKey,
-														'value'   => [$filtervalues],
-														// 'type'    => 'NUMERIC',
-														// 'compare' => 'BETWEEN',
-													],
-												];
-											}
-										} else {
-											if (isset($_GET[$key])) {
-						
-												array_push( $tax_query, [
-													'taxonomy' => $cleanedKey,
-													'field' => 'id',
-													'terms' => $filtervalues
-												] );
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-		
-				if ( !empty($tax_query) ) {
-					$args['tax_query'] = $tax_query;
 				}
 			}
 		}
