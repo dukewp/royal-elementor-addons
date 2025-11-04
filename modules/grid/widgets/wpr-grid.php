@@ -8626,7 +8626,7 @@ class Wpr_Grid extends Widget_Base {
 		}
 
 		global $wp_query;
-		$this->current_post_type = $wp_query->query_vars['post_type'] ?? 'post';
+		$this->current_post_type = $wp_query->query_vars['post_type'] ?? $settings['query_source'];
 
 		$gutter_hr_widescreen = isset($settings['layout_gutter_hr_widescreen']['size']) ? $settings['layout_gutter_hr_widescreen']['size'] : $settings['layout_gutter_hr']['size'];
 		$gutter_hr_desktop = $settings['layout_gutter_hr']['size'];
