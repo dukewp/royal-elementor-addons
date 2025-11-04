@@ -2036,10 +2036,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Render Grid Pagination
 	public static function render_grid_pagination( $settings ) {
 		// Return if Disabled
-		if ( 'yes' !== $settings['layout_pagination'] || 1 === WPR_Woo_Grid_Helpers::get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
-			if ( 'yes' !== $settings['advanced_filters'] ) {
-				return;
-			}
+		if ( 'yes' !== $settings['layout_pagination'] || 'slider' === $settings['layout_select'] ) {
+			return;
+		}
+
+		if ( 'yes' !== $settings['advanced_filters'] && 1 === WPR_Woo_Grid_Helpers::get_max_num_pages( $settings ) ) {
+			return;
 		}
 		
 		if ( (isset(WPR_Woo_Grid_Helpers::$my_upsells) && (count(WPR_Woo_Grid_Helpers::$my_upsells) <= $settings['query_posts_per_page'])) || (isset(WPR_Woo_Grid_Helpers::$crossell_ids) && (count(WPR_Woo_Grid_Helpers::$crossell_ids) <= $settings['query_posts_per_page'])) ) {
@@ -2054,7 +2056,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
-		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-'. esc_attr($settings['pagination_type']) .'">';
+		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-'. esc_attr($settings['pagination_type']) .'" data-pages="'. esc_attr($pages) .'">';
 
 		// Default
 		if ( 'default' === $settings['pagination_type'] ) {

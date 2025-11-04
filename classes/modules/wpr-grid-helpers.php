@@ -263,6 +263,10 @@ public function get_dependent_terms() {
 
 			if ( isset($settings['current_query_source']) ) {
 				$args['post_type'] = $settings['current_query_source'];
+				if ( $args['post_type'] != 'post' ) {
+					$posts_per_page = intval(get_option('wpr_cpt_ppp_'. $args['post_type']), 10);
+					$args['posts_per_page'] = $posts_per_page;
+				}
 			}
 
 			$args['orderby'] = $query_order_by;
@@ -1628,7 +1632,11 @@ public function get_dependent_terms() {
 	// Render Grid Pagination
 	public static function render_grid_pagination( $settings ) {
 		// Return if Disabled
-		if ( 'yes' !== $settings['layout_pagination'] || 1 === WPR_Grid_Helpers::get_max_num_pages( $settings ) || 'slider' === $settings['layout_select'] ) {
+		if ( 'yes' !== $settings['layout_pagination'] || 'slider' === $settings['layout_select'] ) {
+			return;
+		}
+
+		if ( 'yes' !== $settings['advanced_filters'] && 1 === WPR_Grid_Helpers::get_max_num_pages( $settings ) ) {
 			return;
 		}
 
@@ -1648,7 +1656,7 @@ public function get_dependent_terms() {
 			$settings['pagination_type'] = 'pro-is' == $settings['pagination_type'] ? 'default' : $settings['pagination_type'];
 		}
 
-		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-'. esc_attr($settings['pagination_type']) .'">';
+		echo '<div class="wpr-grid-pagination elementor-clearfix wpr-grid-pagination-'. esc_attr($settings['pagination_type']) .'" data-pages="'. esc_attr($pages) .'">';
 
 		// Default
 		if ( 'default' === $settings['pagination_type'] ) {
