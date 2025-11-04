@@ -9346,6 +9346,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 				// Grid Wrap
 				echo '</section>';
+
+				// Pagination
+				WPR_Woo_Grid_Helpers::render_grid_pagination( $settings );
 			} else {
 				if ('upsell' !== $settings['query_selection'] && 'cross-sell' !== $settings['query_selection']) {
 					echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
