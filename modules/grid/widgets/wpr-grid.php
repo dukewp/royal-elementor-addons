@@ -8967,9 +8967,25 @@ class Wpr_Grid extends Widget_Base {
 		// No Posts Found
 		else:
 
+		// Grid Settings
+		if ( 'slider' !== $settings['layout_select'] ) {
+			$this->add_grid_settings( $settings );
+			$render_attribute = $this->get_render_attribute_string( 'grid-settings' );
+
+		// Slider Settings
+		} else {
+			$this->add_slider_settings( $settings );
+			$render_attribute = $this->get_render_attribute_string( 'slider-settings' );
+		}
+
+		echo '<section class="wpr-grid elementor-clearfix" '. $render_attribute .'>';
+
 			if ( 'dynamic' === $settings['query_selection'] ) {
 				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
 			}
+
+		// Grid Wrap
+		echo '</section>';
 
 		// Loop: End
 		endif;
