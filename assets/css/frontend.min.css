@@ -17733,6 +17733,22 @@ input.wpr-date-filter-end {
         flex-wrap: wrap;
 }
 
+.wpr-active-alignment-left .wpr-af-active-filters,
+.wpr-active-alignment-center .wpr-af-active-filters,
+.wpr-active-alignment-right .wpr-af-active-filters {
+    display: inline-flex;
+}
+
+.wpr-active-alignment-justify .wpr-remove-filter {
+    display: inline-flex;
+}
+
+.wpr-active-alignment-justify .wpr-remove-filter span {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+}
+
 .wpr-product-active-filters {
     padding: 0;
     margin: 0;
