@@ -44,6 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'page_count' => $numberOfPages,
 				'max_num_pages' => $max_num_pages,
 				'query_found' => $query->found_posts,
+				'post_count' => $query->post_count,
 				'query_offset' => $query->query_vars['offset'],
 				'query_num' => $query->query_vars['posts_per_page']
 			]);
@@ -2364,7 +2365,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		wp_send_json_success([
 			'output' => $output,
 			'duration' => $duration,
-			'found_posts' => $posts->found_posts
+			'found_posts' => $posts->found_posts,
+			'post_count' => $posts->post_count
 		]);
 
 		wp_die();
