@@ -462,7 +462,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										$filtervalues = explode(',', $wpr_url_params[$key]);
 
 										if ( ('meta_field' == $key_type || 'custom_field' == $key_type) ) {
-											if ( is_numeric($filtervalues[0]) && $wpr_url_params['wpr_aft_' . $cleanedKey] == 'range' ) {
+											if ( is_numeric($filtervalues[0]) && isset($wpr_url_params['wpr_aft_' . $cleanedKey]) && $wpr_url_params['wpr_aft_' . $cleanedKey] == 'range' ) {
 												$minValue = min(array_values($filtervalues));
 												$maxValue = max(array_values($filtervalues));
 												
