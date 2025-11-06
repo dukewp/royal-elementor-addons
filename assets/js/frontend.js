@@ -1279,8 +1279,8 @@
 			if ( typeof settings !== typeof undefined && settings !== false ) {
 				settings = JSON.parse( iGrid.attr( 'data-settings' ) );
 
-				if ($scope.find('.woocommerce-result-count').length) {
-					var resultCountText = $scope.find('.woocommerce-result-count').text();
+				if ($scope.find('.wpr-woocommerce-result-count').length) {
+					var resultCountText = $scope.find('.wpr-woocommerce-result-count').text();
 					
 					var itemsPerPage = settings.query_posts_per_page ? 
 						+settings.query_posts_per_page : 
@@ -1305,7 +1305,7 @@
 						currentPage = parseInt(currentPageElement.text().trim()) || 1;
 					}
 				
-					// Find the total number of items from the '.woocommerce-result-count' text
+					// Find the total number of items from the '.wpr-woocommerce-result-count' text
 					var totalItemsMatch = resultCountText.match(/(\d+)(?!.*\d+)/);
 					var totalItems = totalItemsMatch ? parseInt(totalItemsMatch[1].trim()) : itemsPerPage;
 				
@@ -1320,7 +1320,7 @@
 				
 					// Replace the count text with the correct range
 					resultCountText = resultCountText.replace(/\d+\u2013\d+/, startItem + '\u2013' + endItem);
-					$scope.find('.woocommerce-result-count').text(resultCountText);
+					$scope.find('.wpr-woocommerce-result-count').text(resultCountText);
 				}
 
 				// Init Functions
@@ -1485,10 +1485,10 @@
 							// get posts from response
 							var items = $( response ).find( scopeClass ).find( '.wpr-grid-item' );
 
-							if ( $scope.find('.woocommerce-result-count').length ) {
-								var resultCount = $scope.find('.woocommerce-result-count').text();
+							if ( $scope.find('.wpr-woocommerce-result-count').length ) {
+								var resultCount = $scope.find('.wpr-woocommerce-result-count').text();
 								var updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( $scope.find('.wpr-grid-item').length + items.length ) );
-								$scope.find('.woocommerce-result-count').text(updatedResultCount);
+								$scope.find('.wpr-woocommerce-result-count').text(updatedResultCount);
 							}
 							
 							iGrid.infiniteScroll( 'appendItems', items );
@@ -11806,11 +11806,11 @@
 								window.dispatchEvent(new Event('scroll'));
 								$(window).trigger('scroll');
 
-								if ( widgetSelector.find('.woocommerce-result-count').length ) {
-									var resultCount = widgetSelector.find('.woocommerce-result-count').text(),
+								if ( widgetSelector.find('.wpr-woocommerce-result-count').length ) {
+									var resultCount = widgetSelector.find('.wpr-woocommerce-result-count').text(),
 										updatedResultCount = resultCount.replace( /\d\u2013\d+/, '1\u2013' + ( widgetSelector.find('.wpr-grid-item').length ) );
 
-									widgetSelector.find('.woocommerce-result-count').text(updatedResultCount);
+									widgetSelector.find('.wpr-woocommerce-result-count').text(updatedResultCount);
 								}
 							},
 							error: function(error) {
