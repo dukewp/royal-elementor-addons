@@ -460,9 +460,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 										// Example usage
 										$key_type = WPR_Woo_Grid_Helpers::identify_key_type($cleanedKey);
 										$filtervalues = explode(',', $wpr_url_params[$key]);
-		
-										if ( 'meta_field' == $key_type ) {
-											if ( is_numeric($filtervalues[0]) && $wpr_url_params['type'] == 'range' ) {
+
+										if ( 'meta_field' == $key_type || 'custom_field' == $key_type ) {
+											if ( is_numeric($filtervalues[0]) ) {
 												$minValue = min(array_values($filtervalues));
 												$maxValue = max(array_values($filtervalues));
 												
