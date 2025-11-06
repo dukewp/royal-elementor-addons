@@ -453,7 +453,7 @@ public function get_dependent_terms() {
 										$filtervalues = explode(',', $wpr_url_params[$key]);
 		
 										if ( 'meta_field' == $key_type ) {
-											if ( is_numeric($filtervalues[0]) ) {
+											if ( is_numeric($filtervalues[0]) && $wpr_url_params['type'] == 'range'  ) {
 												$minValue = min(array_values($filtervalues));
 												$maxValue = max(array_values($filtervalues));
 												

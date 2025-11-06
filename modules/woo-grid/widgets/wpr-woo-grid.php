@@ -9329,12 +9329,12 @@ class Wpr_Woo_Grid extends Widget_Base {
 			if ( 'yes' === $settings['advanced_filters'] ) {
 				// Grid Settings
 				if ( 'slider' !== $settings['layout_select'] ) {
-					$this->add_grid_settings( $settings );
+					$this->add_grid_settings( $settings, $settings_new );
 					$render_attribute = $this->get_render_attribute_string( 'grid-settings' );
 
 				// Slider Settings
 				} else {
-					$this->add_slider_settings( $settings );
+					$this->add_slider_settings( $settings, $settings_new );
 					$render_attribute = $this->get_render_attribute_string( 'slider-settings' );
 				}
 
