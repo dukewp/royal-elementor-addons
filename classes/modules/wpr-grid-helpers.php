@@ -128,6 +128,7 @@ public function get_dependent_terms() {
 				'page_count' => $numberOfPages,
 				'max_num_pages' => $max_num_pages,
 				'query_found' => $query->found_posts,
+				'post_count' => $query->post_count,
 				'query_offset' => $query->query_vars['offset'],
 				'query_num' => $query->query_vars['posts_per_page']
 			]);
@@ -447,7 +448,7 @@ public function get_dependent_terms() {
 								if ( $wpr_url_params[$key] != '0' ) {
 									// Get category from URL
 									if ( str_contains($wpr_url_params[$key], ',') ) {
-			
+
 										// Example usage
 										$key_type = WPR_Grid_Helpers::identify_key_type($cleanedKey);
 										$filtervalues = explode(',', $wpr_url_params[$key]);
@@ -1856,7 +1857,8 @@ public function get_dependent_terms() {
 		
 				// Add the count of found posts to the results array
 				$results[] = [
-					'found_posts' => $query->found_posts
+					'found_posts' => $query->found_posts,
+					'post_count' => $query->post_count,
 				];
 		
 				wp_reset_postdata();
@@ -1984,7 +1986,8 @@ public function get_dependent_terms() {
 		wp_send_json_success([
 			'output' => $output,
 			'duration' => $duration,
-			'found_posts' => $posts->found_posts
+			'found_posts' => $posts->found_posts,
+			'post_count' => $posts->post_count,
 		]);
 
 		wp_die();

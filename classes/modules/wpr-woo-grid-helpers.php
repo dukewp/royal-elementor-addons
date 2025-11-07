@@ -2263,6 +2263,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				// Add the count of found posts to the results array
 				$results[] = [
 					'found_posts' => $query->found_posts,
+					'post_count' => $query->post_count,
 					'params' => $params
 				];
 		
