@@ -9114,6 +9114,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'tax1_custom_color_field_bg' => isset($settings['tax1_custom_color_field_bg']) ? $settings['tax1_custom_color_field_bg'] : null,
 				'layout_pagination' => isset($settings['layout_pagination']) ? $settings['layout_pagination'] : null,
 				'check_ajax_filter' => 'yes',
+				'popup_notification_animation' => isset($settings['popup_notification_animation']) ? $settings['popup_notification_animation'] : null,
+				'popup_notification_fade_out_in' => isset($settings['popup_notification_fade_out_in']) ? $settings['popup_notification_fade_out_in'] : null,
+				'popup_notification_animation_duration' => isset($settings['popup_notification_animation_duration']) ? $settings['popup_notification_animation_duration'] : null,
 				
 				// Taxonomies
 				// Dynamically add taxonomy settings
