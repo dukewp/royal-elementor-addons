@@ -535,6 +535,15 @@ button.lg-icon {
     display: none !important;
 }
 
+.wpr-hidden-item {
+    display: none !important;
+    max-height: 0;
+    overflow: hidden;
+    transition: display 0.3s ease, max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .wpr-zero-opacity {
     opacity: 0 !important;
 }
@@ -1100,7 +1109,6 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
     }
     .wpr-nav-menu-bp-tablet .wpr-mobile-nav-menu-container {
         display: block;
-        pointer-events: auto;
     }
 
     .wpr-mobile-nav-menu-container {
@@ -17727,6 +17735,22 @@ input.wpr-date-filter-end {
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
+}
+
+.wpr-active-alignment-left .wpr-af-active-filters,
+.wpr-active-alignment-center .wpr-af-active-filters,
+.wpr-active-alignment-right .wpr-af-active-filters {
+    display: inline-flex;
+}
+
+.wpr-active-alignment-justify .wpr-remove-filter {
+    display: inline-flex;
+}
+
+.wpr-active-alignment-justify .wpr-remove-filter span {
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
 }
 
 .wpr-product-active-filters {
