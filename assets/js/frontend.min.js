@@ -1284,49 +1284,47 @@
 			if ( typeof settings !== typeof undefined && settings !== false ) {
 				settings = JSON.parse( iGrid.attr( 'data-settings' ) );
 
-				if ($scope.find('.woocommerce-result-count').length) {
-					var resultCountText = $scope.find('.woocommerce-result-count').text();
-					
-					var itemsPerPage = settings.query_posts_per_page ? 
-						+settings.query_posts_per_page : 
-						+WprConfig.woo_shop_ppp;
+				$(window).on('load', function() {
+					setTimeout(function() {
+						if ($scope.find('.woocommerce-result-count').length) {
+							var resultCountText = $scope.find('.woocommerce-result-count').text();
+							
+							var itemsPerPage = settings.query_posts_per_page ? 
+								+settings.query_posts_per_page : 
+								+WprConfig.woo_shop_ppp;
 
-					if (WprConfig.is_product_category) {
-						itemsPerPage = +WprConfig.woo_shop_cat_ppp;
-					} else if (WprConfig.is_product_tag) {
-						itemsPerPage = +WprConfig.woo_shop_tag_ppp;
-					}
-					
-					// Ensure itemsPerPage is correctly parsed and is a valid number
-					if (isNaN(itemsPerPage) || itemsPerPage <= 0) {
-						return; // Exit if itemsPerPage is not valid
-					}
-				
-					// Find current page number from the '.wpr-grid-current-page' element
-					var currentPage = 1; // default to 1 if no page detected
-					var currentPageElement = $scope.find('.wpr-grid-current-page');
-					
-					if (currentPageElement.length) {
-						currentPage = parseInt(currentPageElement.text().trim()) || 1;
-					}
-				
-					// Find the total number of items from the '.woocommerce-result-count' text
-					var totalItemsMatch = resultCountText.match(/(\d+)(?!.*\d+)/);
-					var totalItems = totalItemsMatch ? parseInt(totalItemsMatch[1].trim()) : itemsPerPage;
-				
-					// Ensure totalItems is correctly parsed and is a valid number
-					if (isNaN(totalItems) || totalItems <= 0) {
-						return; // Exit if totalItems is not valid
-					}
-				
-					// Calculate the start and end item numbers
-					var startItem = (currentPage - 1) * itemsPerPage + 1;
-					var endItem = Math.min(startItem + itemsPerPage - 1, totalItems);
-				
-					// Replace the count text with the correct range
-					resultCountText = resultCountText.replace(/\d+\u2013\d+/, startItem + '\u2013' + endItem);
-					$scope.find('.woocommerce-result-count').text(resultCountText);
-				}
+							if (WprConfig.is_product_category) {
+								itemsPerPage = +WprConfig.woo_shop_cat_ppp;
+							} else if (WprConfig.is_product_tag) {
+								itemsPerPage = +WprConfig.woo_shop_tag_ppp;
+							}
+							
+							if (isNaN(itemsPerPage) || itemsPerPage <= 0) {
+								return;
+							}
+						
+							var currentPage = 1;
+							var currentPageElement = $scope.find('.wpr-grid-current-page');
+							
+							if (currentPageElement.length) {
+								currentPage = parseInt(currentPageElement.text().trim()) || 1;
+							}
+						
+							var totalItemsMatch = resultCountText.match(/(\d+)(?!.*\d+)/);
+							var totalItems = totalItemsMatch ? parseInt(totalItemsMatch[1].trim()) : itemsPerPage;
+						
+							if (isNaN(totalItems) || totalItems <= 0) {
+								return;
+							}
+						
+							var startItem = (currentPage - 1) * itemsPerPage + 1;
+							var endItem = Math.min(startItem + itemsPerPage - 1, totalItems);
+						
+							resultCountText = resultCountText.replace(/\d+\u2013\d+/, startItem + '\u2013' + endItem);
+							$scope.find('.woocommerce-result-count').text(resultCountText);
+						}
+					}, 200);
+				});
 
 				// Init Functions
 				WprElements.isotopeLayout( settings, '', '', $scope );
