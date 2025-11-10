@@ -3257,7 +3257,7 @@ i[class*="wpr-rating-icon-"] {
 }
 
 .wpr-grid-sorting .wpr-shop-page-title,
-.wpr-grid-sorting .wpr-woocommerce-result-count,
+.wpr-grid-sorting .woocommerce-result-count,
 .wpr-grid-sorting .woocommerce-ordering {
     margin: 0 !important;
 }
@@ -3955,7 +3955,7 @@ i[class*="wpr-rating-icon-"] {
             justify-content: space-between;
 }
 
-.wpr-products-result-count .wpr-woocommerce-result-count {
+.wpr-products-result-count .woocommerce-result-count {
     margin: 0;
 }
 
