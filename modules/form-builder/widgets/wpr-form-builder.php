@@ -3625,6 +3625,10 @@ class Wpr_Form_Builder extends Widget_Base {
 	}	
 	
 	protected function form_fields_render_attributes( $i, $instance, $item ) {
+		if ( 'upload' === $item['field_type'] ) {
+			update_option( 'wpr_form_upload_field_in_use_' . $this->get_attribute_id( $item ), true );
+		}
+
 		$this->add_render_attribute(
 			[
 				'field-group' . $i => [
