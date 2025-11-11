@@ -287,6 +287,8 @@ function wpr_addons_settings_page() {
         $modules = Utilities::get_registered_modules();
         $premium_modules = [
 			'Breadcrumbs' => ['breadcrumbs-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-breadcrumbs-widgets-upgrade-pro#purchasepro', '', 'pro'],
+			'Category Grid' => ['category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-catgrid-widgets-upgrade-pro#purchasepro', '', 'expert'],
+			'Advanced Filters' => ['advanced-filters-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-advancedfilters-widgets-upgrade-pro#purchasepro', '', 'expert'],
         ];
 
         foreach ( array_merge($modules, $premium_modules) as $title => $data ) {
@@ -434,7 +436,6 @@ function wpr_addons_settings_page() {
         <?php submit_button( '', 'wpr-options-button' ); ?>
 
         <div class="wpr-settings-group wpr-settings-navigation">
-            <a href="#filters-tab">Filters</a> /
             <a href="#general-tab">General</a> / 
             <a href="#optimizers-tab">Optimizers</a> / 
             <a href="#woocommerce-tab">WooCommerce</a> / 
