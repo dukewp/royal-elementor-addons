@@ -315,6 +315,14 @@ function wpr_addons_settings_page() {
                 $url = '';
             }
 
+            if ( 'category-grid-pro' == $data[0] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' )) ) {
+                $url = '';
+            }
+
+            if ( 'advanced-filters-pro' == $data[0] && (defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->is_plan( 'expert' )) ) {
+                $url = 'https://demosites.royal-elementor-addons.com/fashion-v2/shop-fashion-v2/';
+            }
+
             echo '<div class="wpr-element '. esc_attr($class) .'">';
                 echo '<div class="wpr-element-info">';
                     echo '<h3>'. esc_html($title) .'</h3>';
@@ -390,7 +398,7 @@ function wpr_addons_settings_page() {
 
             if ( 'pro' === $data[3] && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) ) {
                 $class = 'wpr-pro-element';
-            } elseif ( 'expert' === $data[3] && !wpr_fs()->is_plan( 'expert' ) ) {
+            } elseif ( 'expert' === $data[3] && (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' )) ) {
                 $class = 'wpr-expert-element';
             }
 
