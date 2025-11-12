@@ -1116,6 +1116,10 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
 
 .wpr-nav-menu-bp-always .wpr-mobile-nav-menu-container {
     display: block;
+}
+
+.wpr-nav-menu-bp-always .wpr-mobile-nav-menu:not(.wpr-mobile-mega-menu),
+.wpr-nav-menu-bp-always .wpr-mobile-nav-menu-container {
     pointer-events: auto;
 }
 
@@ -1127,6 +1131,7 @@ div[class*="wpr-sub-icon-"] .wpr-mobile-nav-menu .menu-item-has-children>a:after
         display: block;
     }
 
+    .wpr-mobile-nav-menu:not(.wpr-mobile-mega-menu),
     .wpr-mobile-nav-menu-container {
         pointer-events: auto;
     }
