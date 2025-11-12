@@ -2155,19 +2155,17 @@
 
 				// Hide Empty Filters
 				if ( 'yes' === settings.filters_hide_empty ) {
-					if ( !settings.grid_settings ) {
-						$scope.find( '.wpr-grid-filters span' ).each(function() {
-							var searchClass = $(this).attr( 'data-filter' );
+					$scope.find( '.wpr-grid-filters span' ).each(function() {
+						var searchClass = $(this).attr( 'data-filter' );
 
-							if ( '*' !== searchClass ) {
-								if ( 0 === iGrid.find(searchClass).length ) {
-									$(this).parent( 'li' ).addClass( 'wpr-hidden-element' );
-								} else {
-									$(this).parent( 'li' ).removeClass( 'wpr-hidden-element' );
-								}
+						if ( '*' !== searchClass ) {
+							if ( 0 === iGrid.find(searchClass).length ) {
+								$(this).parent( 'li' ).addClass( 'wpr-hidden-element' );
+							} else {
+								$(this).parent( 'li' ).removeClass( 'wpr-hidden-element' );
 							}
-						});
-					}
+						}
+					});
 				}
 
 				// Set a Default Filter
@@ -2621,8 +2619,6 @@
 					event.stopPropagation();
 					event.stopImmediatePropagation();
 
-					// iGrid.isotopewpr('destroy');
-					// $scope.find('.wpr-grid').html(loader);
 					iGrid.isotopewpr('remove', iGrid.children('.wpr-grid-item'));
 					if ( iGrid.find('.wpr-grid-loader-wrap').length < 1 ) {
 						iGrid.append(loader);

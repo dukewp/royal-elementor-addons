@@ -9040,6 +9040,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 		if ( 'yes' === $settings['filters_experiment'] || 'yes' === $settings['advanced_filters'] ) {
 			$layout_settings['grid_settings'] = [
 				// General Settings
+				'filters_experiment' => isset($settings['filters_experiment']) ? $settings['filters_experiment'] : null,
+				'advanced_filters' => isset($settings['advanced_filters']) ? $settings['advanced_filters'] : null,
 				'layout_select' => isset($settings['layout_select']) ? $settings['layout_select'] : null,
 				'layout_animation' => isset($settings['layout_animation']) ? $settings['layout_animation'] : null,
 				'layout_animation_duration' => isset($settings['layout_animation_duration']) ? $settings['layout_animation_duration'] : null,
