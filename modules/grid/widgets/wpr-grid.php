@@ -8791,7 +8791,7 @@ class Wpr_Grid extends Widget_Base {
 				
 				// Taxonomies
 				// Dynamically add taxonomy settings
-				] + array_reduce(array_keys($this->post_taxonomies ?? []), function($carry, $slug) use ($settings) {
+				] + array_reduce(array_keys($this->get_available_taxonomies() ?? []), function($carry, $slug) use ($settings) {
 					$carry['query_taxonomy_'. $slug] = isset($settings['query_taxonomy_'. $slug]) ? $settings['query_taxonomy_'. $slug] : null;
 					return $carry;
 				}, []) + array_reduce(array_keys($this->post_types ?? []), function($carry, $slug) use ($settings) {
