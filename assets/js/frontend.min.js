@@ -10374,6 +10374,21 @@
 					var nextSelect = $(this).closest('.wpr-af-select-wrap').nextAll('.wpr-af-select-wrap').first().find('.wpr-af-dependent-select');
 					var relatedTax = $(this).data('taxonomy');
 
+					// Log data-taxonomy from all previous selects (not just the first)
+					const prevSelects = $(this)
+						.closest('.wpr-af-select-wrap')
+						.prevAll('.wpr-af-select-wrap')
+						.find('select');
+
+					const taxonomies = prevSelects
+						.map(function() { return $(this).data('taxonomy'); })
+						.get();
+
+					// Add current relatedTax before logging
+					taxonomies.unshift(relatedTax);
+
+					console.log(taxonomies); // array of all taxonomies including relatedTax
+
 					// Reset and disable all following selects
 					$(this).nextAll('.wpr-af-dependent-select').each(function() {
 						$(this).prop('disabled', true).empty().append('<option value="0">' + noneLabel + '</option>');
@@ -10396,6 +10411,7 @@
 							related_taxonomy: relatedTax
 						},
 						success: function(response) {
+							console.log(response);
 							if (response.success && response.data.length) {
 								var options = '<option value="">' + targetSelect.find('option:first').text() + '</option>';
 								response.data.forEach(function(term) {
