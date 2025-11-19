@@ -14,23 +14,7 @@ class WPR_Templates_Data {
 		$is_woo_active = is_plugin_active('woocommerce/woocommerce.php') ? 'true' : 'false';
 
 		return [
-			'filters-demo' => [
-				'v1' => [
-					'name' => 'Filters Demo',
-					'pages' => 'home,',
-					'plugins' => '{}',
-					'tags' => 'filters demo',
-					'theme-builder' => true,
-					'woo-builder' => true,
-					'off-canvas' => true,
-					'price' => $is_pro_active ? 'free' : 'pro',
-					'expert' => $is_expert ? 'free' : 'expert',
-					'custom-types' => ['transport' => 'transport', 'tr-body' => 'tr_body', 'tr-make' => 'tr_make', 'tr-model' => 'tr_model', 'tr-type' => 'tr_type'],
-					'label' => 'new',
-					'priority' => 5,
-				],
-			],
-			'book-shop' => [
+			'news-magazine-x' => [ //TODO: News Magazine X Theme Banner (remove later)
 				'v1' => [
 					'name' => 'News Magazine X Theme',
 					'pages' => '',
@@ -1275,6 +1259,7 @@ class WPR_Templates_Data {
 					'off-canvas' => false,
 					'price' => $is_pro_active ? 'free' : 'pro',
 					'expert' => $is_expert ? 'free' : 'expert',
+					'custom-types' => ['product' => 'product', 'model' => 'model'],
 					'label' => 'new',
 					'priority' => 4,
 				],
@@ -1877,7 +1862,7 @@ class WPR_Templates_Data {
 					'off-canvas' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
 					'expert' => $is_expert ? 'free' : 'expert',
-					'custom-types' => ['wpr-directory' => 'wpr_directory'],
+					'custom-types' => ['wpr-directory' => 'wpr_directory', 'wpr-property-feat' => 'wpr_property_feat', 'wpr-property-type' => 'wpr_property_type'],
 					'label' => 'New',
 					'priority' => 270,
 				],
