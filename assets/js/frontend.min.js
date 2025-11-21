@@ -2662,8 +2662,11 @@
 										const end2 = performance.now();
 										console.log(`AJAX call took ${end2 - start2} ms`);
 
-										var newItems = $(response.data.output);
-										if ( !newItems ) {
+										var newItems;
+
+										if ( response.data && response.data.output ) {
+											newItems = $(response.data.output);
+										} else {
 											newItems = $(response);
 										}
 										
@@ -2777,8 +2780,13 @@
 								},
 								success: function( response ) {
 									pagesLoadedExperiment++;
+									var items;
 									// iGrid.css('opacity', 0);
-									var items = $(response.data.output);	
+									if ( response.data && response.data.output ) {
+										items = $(response.data.output);
+									} else {
+										items = $(response);
+									}
 		
 									// $data.each(function() {
 									// 	$(this).addClass('wpr-grid-hidden-item');

@@ -84,10 +84,10 @@ public function get_dependent_terms() {
 		$options[] = [
 			'id' => $term->term_id,
 			'name' => $term->name,
-			'posts' => $posts,
-			'related_tax' => $related_taxonomy,
-			'related_term' => $related_term->slug,
-			'taxonomy' => $taxonomy,
+			// 'posts' => $posts,
+			// 'related_tax' => $related_taxonomy,
+			// 'related_term' => $related_term->slug,
+			// 'taxonomy' => $taxonomy,
 		];
 	}
 
