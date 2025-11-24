@@ -9313,7 +9313,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 		echo '</section>';
 
 		if ( 'slider' === $settings['layout_select'] ) {
-			if ( $posts->found_posts > (int) $settings['layout_slider_amount'] &&  (int) $settings['layout_slider_amount'] < $settings['query_posts_per_page'] ) {
+			if ( $posts->found_posts > (int) $settings['layout_slider_amount'] &&  ( (int) $settings['layout_slider_amount'] < $settings['query_posts_per_page'] || empty($settings['query_posts_per_page']) ) ) {
 				// Slider Navigation
 				echo '<div class="wpr-grid-slider-arrow-container">';
 					echo '<div class="wpr-grid-slider-prev-arrow wpr-grid-slider-arrow" id="wpr-grid-slider-prev-'. esc_attr($this->get_id()) .'">'. Utilities::get_wpr_icon( $settings['layout_slider_nav_icon'], '' ) .'</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
