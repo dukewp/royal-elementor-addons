@@ -1980,7 +1980,7 @@ public function get_dependent_terms() {
 		// Loop: End
 		else :
 
-			if ( 'dynamic' === $settings['query_selection'] ) {
+			if ( 'dynamic' === $settings['query_selection'] || 'current' === $settings['query_selection'] ) {
 				echo '<h2>'. esc_html($settings['query_not_found_text']) .'</h2>';
 			}
 			
