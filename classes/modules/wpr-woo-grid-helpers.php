@@ -325,6 +325,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		}
 
+		if ( "menu_order title" == $args['orderby'] ) {
+			$args['orderby'] = 'menu_order';
+			$args['order'] = $settings['order_direction'];
+		}
+
 		// Search
 		if ( isset( $_GET['psearch'] ) ) {
 			$args['s'] = $_GET['psearch'];
@@ -751,6 +756,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				        'terms' => $term
 				    ] );
 				}
+			}
+
+			if ( isset($settings['current_query_source']) && !empty($settings['current_query_source']) ) {
+				array_push( $tax_query, [
+					'taxonomy' => $settings['current_query_tax'],
+					'field' => 'slug',
+					'terms' => $settings['current_query_source']
+				] );
 			}
 		}
 
