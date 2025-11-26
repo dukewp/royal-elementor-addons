@@ -730,13 +730,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 					] );
 				}
 			} else {
-				foreach ( get_object_taxonomies( 'product' ) as $tax ) {
-					if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
-						array_push( $tax_query, [
-							'taxonomy' => $tax,
-							'field' => 'id',
-							'terms' => $settings[ 'query_taxonomy_'. $tax ]
-						] );
+				if ( 'current' != $settings['query_selection'] ) {
+					foreach ( get_object_taxonomies( 'product' ) as $tax ) {
+						if ( ! empty($settings[ 'query_taxonomy_'. $tax ]) ) {
+							array_push( $tax_query, [
+								'taxonomy' => $tax,
+								'field' => 'id',
+								'terms' => $settings[ 'query_taxonomy_'. $tax ]
+							] );
+						}
 					}
 				}
 			}
