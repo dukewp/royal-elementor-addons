@@ -2221,7 +2221,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     display: -ms-flexbox;
     display: flex;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: normal;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
