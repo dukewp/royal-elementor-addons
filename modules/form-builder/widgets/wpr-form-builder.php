@@ -584,6 +584,7 @@ class Wpr_Form_Builder extends Widget_Base {
 			'alt_label',
 			[
 				'label' => esc_html__( 'Alternative Label', 'wpr-addons' ),
+				'description' => esc_html__( 'This Label will be used in Submit Actions instead of the Main Label.', 'wpr-addons' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => '',
 				'dynamic' => [
