@@ -865,13 +865,13 @@ public function get_dependent_terms() {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				if ( 'word_count' === $settings['element_trim_text_by']) {
-				$show_dots = $settings['element_show_dots'] === 'yes' ? '...' : '';
-				echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'], $show_dots )) .'</p>';
+				if ( 'word_count' === $settings['element_trim_text_by'] ) {
+					$show_dots = $settings['element_show_dots'] === 'yes' ? '...' : '';
+					echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'], $show_dots )) .'</p>';
 				} else {
-				// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
-				// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';	
-				echo '<p>' . esc_html($trimmed_excerpt) . '...' . '</p>';
+					// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
+					// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';	
+					echo '<p>' . esc_html($trimmed_excerpt) . '...' . '</p>';
 				}
 			echo '</div>';
 		echo '</div>';
