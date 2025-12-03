@@ -772,7 +772,11 @@ public function get_dependent_terms() {
 			$src2 = '';
 		}
 
-		$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
+		if ( !empty( get_post_meta( $id, '_wp_attachment_image_alt', true ) ) ) {
+			$alt = get_post_meta( $id, '_wp_attachment_image_alt', true );
+		} else {
+			$alt = '' === wp_get_attachment_caption( $id ) ? get_the_title() : wp_get_attachment_caption( $id );
+		}
 
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. esc_attr( $settings['secondary_img_on_hover'] ) .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
@@ -867,7 +871,8 @@ public function get_dependent_terms() {
 			echo '<div class="inner-block">';
 				if ( 'word_count' === $settings['element_trim_text_by'] ) {
 					$show_dots = $settings['element_show_dots'] === 'yes' ? '...' : '';
-					echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'], $show_dots )) .'</p>';
+					$the_excerpt = str_replace('Edit Template', '', get_the_excerpt());
+					echo '<p>'. esc_html(wp_trim_words( $the_excerpt, $settings['element_word_count'], $show_dots )) .'</p>';
 				} else {
 					// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
 					// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';	
