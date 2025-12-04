@@ -1323,6 +1323,9 @@
 						
 							resultCountText = resultCountText.replace(/\d+\u2013\d+/, startItem + '\u2013' + endItem);
 							$scope.find('.woocommerce-result-count').text(resultCountText);
+							setTimeout(function() {
+								$scope.find('.woocommerce-result-count').text(resultCountText);
+							}, 800);
 						}
 					}, 200);
 				});
@@ -2640,7 +2643,7 @@
 							var pageCount = response.data.page_count;
 							var foundPosts = response.data.query_found;
 							const end = performance.now();
-							console.log(`AJAX call took ${end - start} ms`);
+							// console.log(`AJAX call took ${end - start} ms`);
 
 							const start2 = performance.now();
 							currentRequest = $.ajax({
@@ -2660,7 +2663,7 @@
 										// $scope.find('.wpr-grid').html($(response));
 										// WprElements.isotopeLayout( settings, '', '', $scope );
 										const end2 = performance.now();
-										console.log(`AJAX call took ${end2 - start2} ms`);
+										// console.log(`AJAX call took ${end2 - start2} ms`);
 
 										var newItems;
 
@@ -9008,7 +9011,11 @@
 
 					var label = '';
 					if ( $(this).prev('label') ) {
-						label = $(this).prev('label').text().trim();
+						if ( $(this).prev('label').data('alt-label') ) {
+							label = $(this).prev('label').data('alt-label').trim();
+						} else {
+							label = $(this).prev('label').text().trim();
+						}
 					} else {
 						label = '';
 					}
@@ -9037,6 +9044,10 @@
 							}
 
 							var inputLabel = $(this).find('.wpr-form-field-label').text().trim();
+
+							if ( $(this).find('.wpr-form-field-label').data('alt-label') ) {
+								inputLabel = $(this).find('.wpr-form-field-label').data('alt-label').trim();
+							}
 
 							if (checkedField.length > 0) {
 								formContent[$(this).find('.wpr-form-field-option').data('key').replace('-', '_')] = [type, valuesArray, inputLabel];
@@ -10770,7 +10781,8 @@
 
 							values.forEach(function (item) {
 								// Append value span
-								var thisLabel = item.label ? item.label : 'No Label';
+								let thisLabel = item.label ? item.label : 'No Label';
+									item.value = item.value.replace(/\(\d+\)$/, '').trim();
 	
 								if ( item.value != 'None' && item.value != '' && item.realVal != '0' && item.realVal != '' ) {
 									if ( container.find('[data-value="' + item.realVal + '"]').length == 0 ) {
@@ -10838,10 +10850,9 @@
 									}
 								} else {
 									$('span[data-value="'+ item.realVal +'"]').remove();
-
 								}
 							});
-					
+
 							// Prepend container to .wpr-af-active-filters
 							if ( $('body').find('.wpr-af-active-wrap-'+ uniqueID).length == 0 && container.find('span').length > 0 ) {
 								activeFilters.append(container);
@@ -11202,7 +11213,8 @@
 						$('body').find('.wpr-af-visual-wrap').removeClass('wpr-af-visual-active');
 						$('body').find('.wpr-af-input-wrap').removeClass('wpr-checked');
 
-						$(this).closest('.wpr-af-active-filters').find('div').remove();
+						$('body').find('.wpr-af-active-filters').find('div').remove();
+
 						ajaxFilters($(this));
 
 						$(this).addClass('wpr-hidden-element');
@@ -11306,23 +11318,23 @@
 								} else {
 									$el.closest('.wpr-af-input-wrap').find('.wpr-af-count').text(countText);
 			
-									// Also update active filters area if it exists
-									let $filterTag = $('.wpr-af-active-filters').find(`span[data-value="${value}"]`),
-										removeIcon = '<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>';
+									// // Also update active filters area if it exists
+									// let $filterTag = $('.wpr-af-active-filters').find(`span[data-value="${value}"]`),
+									// 	removeIcon = '<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>';
 
-									if (
-										$filterTag.length > 0 &&
-										$filterTag.parent().attr('data-wpr-af-type') === $el.closest('.wpr-advanced-filters-wrap').data('wpr-filter-type')
-									) {
-										// Only update the filterTag that matches the data-rf-id of the current filter element
-										const elDataId = $el.closest('[data-id]').data('id');
-										$filterTag.each(function () {
-											if ($(this).attr('data-rf-id') == elDataId) {
-												let baseText = $(this).text().replace(/\(\d+\)/, '');
-												$(this).html(baseText + countText + removeIcon);
-											}
-										});
-									}
+									// if (
+									// 	$filterTag.length > 0 &&
+									// 	$filterTag.parent().attr('data-wpr-af-type') === $el.closest('.wpr-advanced-filters-wrap').data('wpr-filter-type')
+									// ) {
+									// 	// Only update the filterTag that matches the data-rf-id of the current filter element
+									// 	const elDataId = $el.closest('[data-id]').data('id');
+									// 	$filterTag.each(function () {
+									// 		if ($(this).attr('data-rf-id') == elDataId) {
+									// 			let baseText = $(this).text().replace(/\(\d+\)/, '');
+									// 			$(this).html(baseText + countText + removeIcon);
+									// 		}
+									// 	});
+									// }
 								}
 
 								// Disable element if count is 0 and data-empty-action is set to disable
@@ -11792,7 +11804,7 @@
 						}, 500);
 					});
 					const end = performance.now();
-					console.log(`AJAX call took ${end - startvar} ms`);
+					// console.log(`AJAX call took ${end - startvar} ms`);
 				}, 500);
 			}
 
