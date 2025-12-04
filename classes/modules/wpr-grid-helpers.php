@@ -28,71 +28,90 @@ if ( ! defined( 'ABSPATH' ) ) {
 		add_action('wp_ajax_nopriv_wpr_get_dependent_terms', [$this, 'get_dependent_terms']);
     }
 
-public function get_dependent_terms() {
-	// check_ajax_referer('wpr_addons_elementor', 'nonce');
+	public function get_dependent_terms() {
+		// check_ajax_referer('wpr_addons_elementor', 'nonce');
 
-	if ( empty($_POST['taxonomy']) || empty($_POST['parent_term']) ) {
-		wp_send_json_error('Missing data');
-	}
-
-	$taxonomy    = sanitize_text_field($_POST['taxonomy']);
-	$parent_raw  = sanitize_text_field($_POST['parent_term']);
-
-	// Determine if parent_term is ID or slug
-	if ( is_numeric($parent_raw) ) {
-		$related_term = get_term(intval($parent_raw));
-	} else {
-		// Optional: detect the related taxonomy (requires an extra POST param or default)
-		$related_taxonomy = sanitize_text_field($_POST['related_taxonomy'] ?? '');
-		if ( empty($related_taxonomy) ) {
-			wp_send_json_error('Missing related taxonomy for slug');
+		if ( empty($_POST['taxonomy']) || empty($_POST['parent_term']) ) {
+			wp_send_json_error('Missing data');
 		}
-		$related_term = get_term_by('slug', $parent_raw, $related_taxonomy);
+
+		$taxonomy    = sanitize_text_field($_POST['taxonomy']);
+		$parent_raw  = sanitize_text_field($_POST['parent_term']);
+
+		// Determine if parent_term is ID or slug
+		if ( is_numeric($parent_raw) ) {
+			$related_term = get_term(intval($parent_raw));
+		} else {
+			// Optional: detect the related taxonomy (requires an extra POST param or default)
+			$related_taxonomy = sanitize_text_field($_POST['related_taxonomy'] ?? '');
+			if ( empty($related_taxonomy) ) {
+				wp_send_json_error('Missing related taxonomy for slug');
+			}
+			$related_term = get_term_by('slug', $parent_raw, $related_taxonomy);
+		}
+
+		if ( ! $related_term || is_wp_error($related_term) ) {
+			wp_send_json_error('Invalid parent term');
+		}
+
+		$related_taxonomy = $related_term->taxonomy;
+		$tax_array = [];
+
+		if ( isset($_POST['tax_array']) ) {
+			$related_taxonomies = $_POST['tax_array'];
+			$related_terms = $_POST['parent_terms'];
+
+			// Add relation AND
+			$tax_array['relation'] = 'AND';
+
+			foreach ( $related_taxonomies as $index => $tax ) {
+				if ( isset($related_terms[$index]) && $related_terms[$index] !== '' ) {
+					$tax_array[] = [
+						'taxonomy' => sanitize_text_field($tax),
+						'field'    => 'term_id',
+						'terms'    => intval($related_terms[$index]),
+					];
+				}
+			}
+		} else {
+			$tax_array[] = [
+					'taxonomy' => $related_taxonomy,
+					'field'    => 'term_id',
+					'terms'    => $related_term->term_id,
+			];
+		}
+
+		// Get all posts with the related term
+		$posts = get_posts([
+			'post_type'      => 'any',
+			'posts_per_page' => -1,
+			'tax_query'      => $tax_array,
+			'fields' => 'ids',
+		]);
+
+		if ( empty($posts) ) {
+			wp_send_json_success([]);
+		}
+
+		// Get all terms from the target taxonomy used in these posts
+		$terms = wp_get_object_terms($posts, $taxonomy, [
+			'hide_empty' => true,
+		]);
+
+		$options = [];
+		foreach ( $terms as $term ) {
+			$options[] = [
+				'id' => $term->term_id,
+				'name' => $term->name,
+				// 'posts' => $posts,
+				// 'related_tax' => $related_taxonomy,
+				// 'related_term' => $related_term->slug,
+				// 'taxonomy' => $taxonomy,
+			];
+		}
+
+		wp_send_json_success($options);
 	}
-
-	if ( ! $related_term || is_wp_error($related_term) ) {
-		wp_send_json_error('Invalid parent term');
-	}
-
-	$related_taxonomy = $related_term->taxonomy;
-
-	// Get all posts with the related term
-	$posts = get_posts([
-		'post_type'      => 'any',
-		'posts_per_page' => -1,
-		'tax_query'      => [
-			[
-				'taxonomy' => $related_taxonomy,
-				'field'    => 'term_id',
-				'terms'    => $related_term->term_id,
-			]
-		],
-		'fields' => 'ids',
-	]);
-
-	if ( empty($posts) ) {
-		wp_send_json_success([]);
-	}
-
-	// Get all terms from the target taxonomy used in these posts
-	$terms = wp_get_object_terms($posts, $taxonomy, [
-		'hide_empty' => true,
-	]);
-
-	$options = [];
-	foreach ( $terms as $term ) {
-		$options[] = [
-			'id' => $term->term_id,
-			'name' => $term->name,
-			// 'posts' => $posts,
-			// 'related_tax' => $related_taxonomy,
-			// 'related_term' => $related_term->slug,
-			// 'taxonomy' => $taxonomy,
-		];
-	}
-
-	wp_send_json_success($options);
-}
     
 	// Get Taxonomies Related to Post Type
 	public static function get_related_taxonomies() {
