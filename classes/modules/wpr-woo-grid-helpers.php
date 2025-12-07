@@ -286,6 +286,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$args['posts_per_page'] = $posts_per_page;
 			if (!empty($settings['query_randomize'])) {
 				$args['orderby'] = $settings['query_randomize'];
+			} else {
+				$args['orderby'] = get_query_var('orderby') ? get_query_var('orderby') : $settings['current_query_orderby'];
+				$args['order'] = get_query_var('order') ? get_query_var('order') : $settings['current_query_order'];
 			}
 			$args['post_type'] = 'product'; // GOGA: needs check
 		}
@@ -323,11 +326,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$args['order'] = $settings['order_direction'];
 				$args['orderby']  = 'menu_order';
 			}
-		}
-
-		if ( "menu_order title" == $args['orderby'] ) {
-			$args['orderby'] = 'menu_order';
-			$args['order'] = $settings['order_direction'];
 		}
 
 		// Search

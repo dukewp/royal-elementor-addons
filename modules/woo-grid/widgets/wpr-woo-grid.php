@@ -9077,6 +9077,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'query_source' => 'product',
 				'current_query_tax' => isset(get_queried_object()->taxonomy) ? get_queried_object()->taxonomy : '',
 				'current_query_source' => isset(get_queried_object()->taxonomy) ? get_queried_object()->slug : '',
+				'current_query_order' => get_query_var('order') ? get_query_var('order') : 'ASC',
+				'current_query_orderby' => get_query_var('orderby') ? get_query_var('orderby') : 'menu_order title',
 				'query_author' => isset($settings['query_author']) ? $settings['query_author'] : null,
 				'query_posts_per_page' => isset($settings['query_posts_per_page']) ? $settings['query_posts_per_page'] : null,
 				'query_offset' => isset($settings['query_offset']) ? $settings['query_offset'] : null,
