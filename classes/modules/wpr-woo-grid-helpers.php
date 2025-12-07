@@ -288,7 +288,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$args['orderby'] = $settings['query_randomize'];
 			} else {
 				$args['orderby'] = get_query_var('orderby') ? get_query_var('orderby') : $settings['current_query_orderby'];
-				$args['order'] = get_query_var('order') ? get_query_var('order') : $settings['current_query_order'];
+				$args['order'] = $settings['order_direction'] ? $settings['order_direction'] : $settings['current_query_order'];
 			}
 			$args['post_type'] = 'product'; // GOGA: needs check
 		}
