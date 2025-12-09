@@ -4481,6 +4481,7 @@
 							action: 'wpr_data_fetch',
 							nonce: WprConfig.nonce,
 							wpr_keyword: $scope.find('.wpr-search-form-input').val(),
+							wpr_meta_query: $scope.find('.wpr-search-form-input').attr('meta-query'),
 							wpr_query_type: $scope.find('.wpr-search-form-input').attr('wpr-query-type'),
 							wpr_option_post_type: optionPostType ? $scope.find('.wpr-category-select').find('option:selected').data('post-type') : '',
 							wpr_taxonomy_type: wprTaxonomyType,
@@ -10403,10 +10404,13 @@
 						.map(function() { return $(this).data('taxonomy'); })
 						.get();
 
+					const parentTerms = prevSelects
+						.map(function() { return $(this).val(); })
+						.get();
+
 					// Add current relatedTax before logging
 					taxonomies.unshift(relatedTax);
-
-					console.log(taxonomies); // array of all taxonomies including relatedTax
+					parentTerms.unshift(selectedValue);
 
 					// Reset and disable all following selects
 					$(this).nextAll('.wpr-af-dependent-select').each(function() {
@@ -10414,21 +10418,31 @@
 					});
 
 					if (selectedValue && nextSelect.length) {
-						loadDependentOptions(selectedValue, nextSelect.data('taxonomy'), nextSelect, relatedTax);
+						loadDependentOptions(selectedValue, nextSelect.data('taxonomy'), nextSelect, relatedTax, taxonomies, parentTerms);
 					}
 				});
 
-				function loadDependentOptions(parentTerm, taxonomy, targetSelect, relatedTax) {
-					$.ajax({
-						url: WprConfig.ajaxurl,
-						type: 'POST',
-						data: {
+				function loadDependentOptions(parentTerm, taxonomy, targetSelect, relatedTax, taxArray = [], parentTerms = []) {
+
+					let dependentData = {
 							action: 'wpr_get_dependent_terms',
 							nonce: WprConfig.nonce,
 							taxonomy: taxonomy,
 							parent_term: parentTerm,
-							related_taxonomy: relatedTax
-						},
+							related_taxonomy: relatedTax,
+					}
+
+					if ( taxArray.length > 1) {
+						// dependentData['tax_array'] = JSON.stringify(taxArray);
+						// dependentData['parent_terms'] = JSON.stringify(parentTerms);
+						dependentData['tax_array'] = taxArray;
+						dependentData['parent_terms'] = parentTerms;
+					}
+
+					$.ajax({
+						url: WprConfig.ajaxurl,
+						type: 'POST',
+						data: dependentData,
 						success: function(response) {
 							console.log(response);
 							if (response.success && response.data.length) {
