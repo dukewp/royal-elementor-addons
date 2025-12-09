@@ -324,7 +324,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$args['order'] = 'DESC';
 			} else {
 				$args['order'] = $settings['order_direction'];
-				$args['orderby']  = 'menu_order';
+				if ( 'current' === $settings[ 'query_selection' ] ) {
+					$args['orderby']  = 'menu_order title';
+				} else {
+					$args['orderby']  = 'menu_order';
+				}
 			}
 		}
 

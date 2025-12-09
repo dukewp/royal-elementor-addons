@@ -604,6 +604,19 @@ class WPR_Templates_Data {
 					'label' => 'new',
 					'priority' => 3,
 				],
+				'v5' => [
+					'name' => 'Fashion 5 - Shop',
+					'pages' => 'home,man,kids,shop,shop-v2,shop-grid-catalog-mode,shop-grid-list-mode,single-product,store-finder,cart,compare,wishlist,blog,single-blog,about,faq,contact-v1,contact-v2,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore store ecommerce product ecommerce shop online boutique clothes eshopping fashion designer market reseller digital purchases e commerce',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'label' => 'new',
+					'priority' => 3,
+				],
 			],
 			'wooshop' => [
 				'v1' => [
