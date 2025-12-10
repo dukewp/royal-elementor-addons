@@ -327,7 +327,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				if ( 'current' === $settings[ 'query_selection' ] ) {
 					$args['orderby']  = 'menu_order title';
 				} else {
-					$args['orderby']  = 'menu_order';
+					$args['orderby']  = $settings['query_orderby'];
 				}
 			}
 		}
