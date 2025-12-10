@@ -745,6 +745,29 @@ class Wpr_Before_After extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'labels_margin',
+			[
+				'label' => esc_html__( 'Margin', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 0,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-ba-label > div' => 'margin: {{SIZE}}{{UNIT}};',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->end_controls_section();
 
 	}
