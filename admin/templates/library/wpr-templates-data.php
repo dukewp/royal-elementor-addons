@@ -682,6 +682,7 @@ class WPR_Templates_Data {
 					'off-canvas' => true,
 					'price' => $is_pro_active ? 'free' : 'pro',
 					'expert' => $is_expert ? 'free' : 'expert',
+					'custom-types' => ['product' => 'product', 'model' => 'models', 'year' => 'years'],
 					'label' => 'new',
 					'priority' => 4,
 				],
