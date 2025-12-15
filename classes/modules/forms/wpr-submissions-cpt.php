@@ -38,8 +38,19 @@ if ( ! defined( 'ABSPATH' ) ) {
         ];
         
         $post_id = wp_insert_post( $new );
+
         foreach ($_POST['form_content'] as $key => $value ) {
             update_post_meta($post_id, $key, [$value[0], $value[1], $value[2]]);
+
+            // $type  = sanitize_key( $value[0] );
+            // $label = $this->wpr_sanitize_form_field( $type, $value[1] );
+            // $input = sanitize_text_field( $type, $value[2] );
+
+            // update_post_meta(
+            //     $post_id,
+            //     sanitize_key( $key ),
+            //     [ $type, $label, $input ]
+            // );
         }
 
         $sanitized_form_name = sanitize_text_field($_POST['form_name']);
@@ -113,7 +124,50 @@ if ( ! defined( 'ABSPATH' ) ) {
                 update_post_meta($post_id, $safe_key, $safe_value);
             }
         }
-    }    
+    }
+    
+    public function wpr_sanitize_form_field( $type, $value ) {
+        // if ( is_array( $value ) ) {
+        //     return array_map( function( $item ) use ( $type ) {
+        //         return $this->wpr_sanitize_form_field( $type, $item );
+        //     }, $value );
+        // }
+
+        switch ( $type ) {
+
+            case 'email':
+                return sanitize_email( $value );
+
+            case 'url':
+                return esc_url_raw( $value );
+
+            case 'number':
+                return is_numeric( $value ) ? $value + 0 : '';
+
+            case 'tel':
+                return preg_replace( '/[^0-9+\-\s\(\)]/', '', $value );
+
+            case 'textarea':
+                return sanitize_textarea_field( $value );
+
+            case 'radio':
+            case 'select':
+            case 'checkbox':
+                return $value;
+
+            case 'html':
+                return wp_kses_post( $value ); // VERY IMPORTANT
+
+            case 'hidden':
+            case 'password':
+            case 'text':
+            case 'date':
+            case 'time':
+            default:
+                return sanitize_text_field( $value );
+        }
+    }
+
  }
 
  new WPR_Form_Builder_Submissions();
