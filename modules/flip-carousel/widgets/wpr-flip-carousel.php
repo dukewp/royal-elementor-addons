@@ -361,6 +361,19 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'separator' => 'before'
 			]
 		);
+		
+		$this->add_control(
+			'enable_subcaption',
+			[
+				'label' => __( 'Show subcaption', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default' => '',
+				'condition' => [
+					'enable_figcaption' => 'yes'
+				]
+			]
+		);
 
 		$this->add_control(
 			'flipcaption_position',
@@ -375,17 +388,6 @@ class Wpr_Flip_Carousel extends Widget_Base {
 				'condition' => [
 					'enable_figcaption' => 'yes'
 				]
-			]
-		);
-		
-		$this->add_control(
-			'enable_subcaption',
-			[
-				'label' => __( 'Show subcaption', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default' => '',
-				'separator' => 'before'
 			]
 		);
 
