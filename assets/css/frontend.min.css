@@ -18047,6 +18047,19 @@ input.wpr-date-filter-end {
           transform: rotate(0);
 }
 
+.wpr-toggle-icon svg {
+    display: block;
+}
+
+.wpr-advanced-accordion h1,
+.wpr-advanced-accordion h2,
+.wpr-advanced-accordion h3,
+.wpr-advanced-accordion h4,
+.wpr-advanced-accordion h5,
+.wpr-advanced-accordion h6 {
+    margin: 0;
+}
+
 .wpr-advanced-accordion .wpr-acc-panel {
   display: none;
   overflow: hidden;
