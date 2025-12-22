@@ -1516,7 +1516,12 @@ class Wpr_Promo_Box extends Widget_Base {
 		}
 
 		$content_btn_element = 'div';
-		$content_link = $settings_new['content_link']['url'];
+		
+		if ( $settings_new['content_link'] ) {
+			$content_link = $settings_new['content_link']['url'];
+		} else {
+			$content_link = $settings['content_link']['url'];
+		}
 
 		if ( '' !== $content_link ) {
 
