@@ -4854,7 +4854,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				</div>
 	
 					<span class="wpr-twitter-follow-btn-wrap">
-						<a class="wpr-twitter-follow-btn" rel="nofollow" href="https://twitter.com/intent/follow?name=<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>" target="_blank">
+						<a class="wpr-twitter-follow-btn" rel="nofollow" href="https://twitter.com/intent/follow?screen_name=<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>" target="_blank">
 							Follow
 						</a>
 					</span>
