@@ -455,10 +455,10 @@ class Plugin {
 			
 			// Plugin Sale Notice
 			require WPR_ADDONS_PATH . 'admin/notices/plugin-sale-notice.php';
-			
-			// Rating Notice 
-			require WPR_ADDONS_PATH . 'admin/notices/rating-notice.php';
 		}
+			
+		// Rating Notice 
+		require WPR_ADDONS_PATH . 'admin/notices/rating-notice.php';
 
 		// if ( defined('REST_REQUEST') && REST_REQUEST ) {
 		// 	return;
