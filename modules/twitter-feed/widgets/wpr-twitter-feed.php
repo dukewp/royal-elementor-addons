@@ -444,11 +444,6 @@ class Wpr_Twitter_Feed extends Widget_Base {
 	}
 
 	public function render_post_likes($settings, $class, $item) {
-
-// echo '<pre>';
-// print_r( $item );
-// echo '</pre>';
-
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">'; 
 
@@ -506,23 +501,29 @@ class Wpr_Twitter_Feed extends Widget_Base {
 	}
 
 	public function render_post_media($settings, $class, $item) {
+
+// echo '<pre>';
+// print_r( $item );
+// echo '</pre>';
 		
 		if ( isset($item['extendedEntities']) && null !== $item['extendedEntities'] ) {
 			if ( isset($item['extendedEntities']['media'] ) && !empty( $item['extendedEntities']['media'] ) ) {
 				$media = $item['extendedEntities']['media'];
 			}
-			//  else if ( isset( $item['retweeted_status']['entities']['media'] ) ) {
-				// 	$media = $item['retweeted_status']['entities']['media'];
-				// } else if ( isset( $item['quoted_status']['entities']['media'] ) ) {
-					// 	$media = $item['quoted_status']['entities']['media'];
-					// } 
+			// Altered logic for Retweets
+			else if ( isset($item['retweeted_tweet']['extendedEntities']['media']) ) {
+				$media = $item['retweeted_tweet']['extendedEntities']['media'];
+			} 
+			// Altered logic for Quoted Tweets
+			else if ( isset($item['quoted_tweet']['extendedEntities']['media']) ) {
+				$media = $item['quoted_tweet']['extendedEntities']['media'];
+			}
 			else {
 				$media = [];
 			}
 		}
 
 		if ( !empty($media) ) {
-			var_dump('works here');
 			echo '<div class="'. esc_attr($class) .'">';
 				echo '<div class="inner-block">'; 
 					// && $media[0]['type'] == 'photo'
