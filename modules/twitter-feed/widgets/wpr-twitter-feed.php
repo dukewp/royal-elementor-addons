@@ -754,7 +754,8 @@ class Wpr_Twitter_Feed extends Widget_Base {
 					'active' => true,
 				],
                 'label_block' => false,
-                'default' => 'new1_182d1cd1c7da4b7581db47b07cacac5e',
+                'default' => '',
+				'description' => '<a href="https://twitterapi.io/" target="_blank">Get API Key.</a>Create Account, Go to Dashboard and grab the <b>API Key.</b>',
             ]
         );
 
