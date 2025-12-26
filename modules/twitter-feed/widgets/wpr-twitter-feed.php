@@ -4735,7 +4735,10 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			}
 		}
 
-		$cover_picture = $items_array[0]['data']['tweets'][0]['author']['coverPicture'];
+		$cover_picture = '';
+		if ( isset($items_array[0]) ) {
+			$cover_picture = $items_array[0]['data']['tweets'][0]['author']['coverPicture'];
+		}
 
         $header_banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         $header_banner = $cover_picture ? $cover_picture : $header_banner_placeholder;
@@ -4844,9 +4847,9 @@ class Wpr_Twitter_Feed extends Widget_Base {
 							<p class="wpr-tf-header-user-name"><?php echo $items_array[0]['data']['tweets'][0]['author']['name'] ?></p>
 							<p class="wpr-tf-header-user-acc-name"><a href="<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>" target="_blank"><?php echo '@'. $items_array[0]['data']['tweets'][0]['author']['userName'] ?></a></p>
 						</div>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0]['data']['tweets'][0]['author']['statusesCount']) ?></span><span><?php esc_html__(' Tweets', 'wpr-addons') ?></span></a></span>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0]['data']['tweets'][0]['author']['following']) ?></span><span><?php esc_html__(' Following', 'wpr-addons') ?></span></a></span>
-						<span class=""><a href='https://twitter.com/<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0]['data']['tweets'][0]['author']['fastFollowersCount']) ?></span><span><?php esc_html__(' Followers', 'wpr-addons') ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>' target="_blank"><span><?php echo $this->format_numbers($items_array[0]['data']['tweets'][0]['author']['statusesCount']) ?></span><span><?php echo esc_html__(' Tweets', 'wpr-addons'); ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>/following' target="_blank"><span><?php echo $this->format_numbers($items_array[0]['data']['tweets'][0]['author']['following']) ?></span><span><?php echo esc_html__(' Following', 'wpr-addons'); ?></span></a></span>
+						<span class=""><a href='https://twitter.com/<?php echo $items_array[0]['data']['tweets'][0]['author']['userName'] ?>/followers' target="_blank"><span><?php echo $this->format_numbers($items_array[0]['data']['tweets'][0]['author']['fastFollowersCount']) ?></span><span><?php echo esc_html__(' Followers', 'wpr-addons'); ?></span></a></span>
 					</div>
 				</div>
 	
