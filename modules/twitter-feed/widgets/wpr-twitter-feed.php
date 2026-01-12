@@ -1005,6 +1005,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 				'separator' => 'before',
 				'condition' => [
 					'layout_select!' => 'carousel',
+					'test' => 'yes',
 				]
 			]
 		);

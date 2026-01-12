@@ -374,6 +374,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 15,
+					'unit' => 'px'
 				],
 				'range' => [
 					'px' => [
@@ -395,6 +396,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 0,
+					'unit' => 'px'
 				],
 				'range' => [
 					'px' => [
