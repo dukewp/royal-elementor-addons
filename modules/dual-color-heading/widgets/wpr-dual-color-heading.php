@@ -579,7 +579,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 			[
 				'label' => esc_html__( 'Type', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
-				'default' => 'long',
+				'default' => 'default',
 				'options' => [
 					'default' => esc_html__( 'Default', 'wpr-addons' ),
 					'long' => esc_html__( 'Long', 'wpr-addons' ),
