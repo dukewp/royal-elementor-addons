@@ -280,6 +280,10 @@ function wpr_activate_required_plugins() {
             if ( !is_plugin_active( 'media-library-assistant/index.php' ) ) {
                 activate_plugin( 'media-library-assistant/index.php' );
             }
+        } elseif ( 'royal-backup-reset' == $_POST['plugin'] ) {
+            if ( !is_plugin_active( 'royal-backup-reset/royal-backup-reset.php' ) ) {
+                activate_plugin( 'royal-backup-reset/royal-backup-reset.php' );
+            }
         }
     }
 }
@@ -1008,6 +1012,7 @@ function real_mime_types( $defaults, $file, $filename, $mimes ) {
 }
 
 function real_mimes( $defaults, $filename ) {
+
     if ( strpos( $filename, 'main' ) !== false ) {
         $defaults['ext']  = 'xml';
         $defaults['type'] = 'text/xml';
