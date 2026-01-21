@@ -3731,7 +3731,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						<?php $this->render_form_icon($instance); ?>
 					<?php endif; ?>
 					<?php if ( ! empty( $instance['button_text'] ) ) : ?>
-						<span><?php echo $this->print_unescaped_setting( 'button_text' ); ?></span>
+						<span><?php echo esc_html( $instance['button_text'] ); ?></span>
 					<?php endif; ?>
 					<?php if ( !empty( $instance['selected_button_icon'] ) && 'right' === $instance['button_icon_align'] ) : ?>
 						<?php $this->render_form_icon($instance); ?>
