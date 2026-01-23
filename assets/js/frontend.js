@@ -8916,7 +8916,6 @@
 				}
 
 				function createPost() {
-		
 					var data = {
 						action: 'wpr_form_builder_submissions',
 						nonce: WprConfig.nonce,
