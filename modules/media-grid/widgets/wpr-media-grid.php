@@ -6660,7 +6660,10 @@ class Wpr_Media_Grid extends Widget_Base {
 				$attachments_count = count($attachments);
 			}
 
-			for ( $i = 0; $i < $attachments_count; $i++ ) { 
+			for ( $i = 0; $i < $attachments_count; $i++ ) {
+				if ( !isset( $settings['query_manual_attachment'][$i]['id'] ) ) {
+					continue;
+				}
 				array_push( $post_ids, $settings['query_manual_attachment'][$i]['id'] );
 			}
 
