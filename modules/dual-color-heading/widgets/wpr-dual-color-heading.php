@@ -50,6 +50,20 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
     		return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
     }
+	public function add_control_text_shadow_type() {
+		$this->add_control(
+			'text_shadow_type',
+			[
+				'label' => esc_html__( 'Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'wpr-addons' ),
+					'lng-pro' => esc_html__( 'Long (Pro)', 'wpr-addons' ),
+				],
+			]
+		);
+	}
 
 	protected function register_controls() {
 
@@ -573,19 +587,8 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'separator' => 'before',
 			]
 		);
-
-		$this->add_control(
-			'text_shadow_type',
-			[
-				'label' => esc_html__( 'Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => [
-					'default' => esc_html__( 'Default', 'wpr-addons' ),
-					'long' => esc_html__( 'Long', 'wpr-addons' ),
-				],
-			]
-		);
+		
+		$this->add_control_text_shadow_type();
 
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),

@@ -8545,10 +8545,53 @@
 
 			var fileUrl = {};
 
+			// reCAPTCHA v3 script
 			if ( $('body').find('.wpr-form-field-type-recaptcha-v3').length > 0 ) {
 					var script = document.createElement('script');
 					script.src = 'https://www.google.com/recaptcha/api.js?render='+ $scope.find('#g-recaptcha-response').data('site-key') +'';
 					document.body.appendChild(script);
+			}
+
+			// reCAPTCHA v2 (checkbox) script and render
+			if ( $('body').find('.wpr-form-field-type-recaptcha-v2').length > 0 ) {
+				var renderV2Containers = function() {
+					var $containers = (typeof $scope !== 'undefined') ? $scope.find('.wpr-recaptcha-v2-container') : $('.wpr-recaptcha-v2-container');
+					$containers.each(function() {
+						var $container = $(this);
+						if ( $container.attr('id') && !$container.data('recaptcha-rendered') ) {
+							var widgetId = grecaptcha.render( $container.attr('id'), {
+								'sitekey': $container.data('sitekey'),
+								'size': $container.data('size') || 'normal',
+								'theme': $container.data('theme') || 'light'
+							});
+							$container.data('widget-id', widgetId);
+							$container.data('recaptcha-rendered', true);
+						}
+					});
+				};
+				if ( typeof grecaptcha !== 'undefined' ) {
+					renderV2Containers();
+				} else {
+					if ( !window.wprRecaptchaV2Onload ) {
+						window.wprRecaptchaV2Onload = function() {
+							$( '.wpr-recaptcha-v2-container' ).each(function() {
+								var $c = $(this);
+								if ( $c.attr('id') && !$c.data('recaptcha-rendered') ) {
+									var w = grecaptcha.render( $c.attr('id'), {
+										'sitekey': $c.data('sitekey'),
+										'size': $c.data('size') || 'normal',
+										'theme': $c.data('theme') || 'light'
+									});
+									$c.data('widget-id', w);
+									$c.data('recaptcha-rendered', true);
+								}
+							});
+						};
+						var scriptV2 = document.createElement('script');
+						scriptV2.src = 'https://www.google.com/recaptcha/api.js?onload=wprRecaptchaV2Onload&render=explicit';
+						document.body.appendChild(scriptV2);
+					}
+				}
 			}
 
 			var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -8671,19 +8714,65 @@
 				} 
 				
 				function processRecaptcha(callback) {
-					if ($scope.find('#g-recaptcha-response').length > 0) {
+					var $v2Container = $scope.find('.wpr-form-field-type-recaptcha-v2 .wpr-recaptcha-v2-container');
+					var hasV2 = $v2Container.length > 0;
+					var hasV3 = $scope.find('#g-recaptcha-response').length > 0 && $scope.find('#g-recaptcha-response').attr('data-site-key');
+
+					if ( hasV2 ) {
+						var widgetId = $v2Container.data('widget-id');
+						var token = ( typeof grecaptcha !== 'undefined' && widgetId !== undefined ) ? grecaptcha.getResponse(widgetId) : '';
+						if ( !token || token === '' ) {
+							setTimeout(function() {
+								$scope.find('.wpr-button').find('.wpr-double-bounce').addClass('wpr-loader-hidden');
+								$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
+								$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ (WprConfig.recaptcha_error || 'Please complete the captcha.') +'</p>');
+							}, 100);
+							callback(false);
+							return;
+						}
+						$.ajax({
+							type: 'POST',
+							url: WprConfig.ajaxurl,
+							data: {
+								action: 'wpr_verify_recaptcha',
+								'g-recaptcha-response': token,
+								recaptcha_version: 'v2'
+							},
+							success: function(response) {
+								if ( !response.success ) {
+									setTimeout(function() {
+										$scope.find('.wpr-button').find('.wpr-double-bounce').addClass('wpr-loader-hidden');
+										$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
+										$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
+									}, 500);
+									callback(false);
+								} else {
+									callback(true);
+								}
+							},
+							error: function() {
+								setTimeout(function() {
+									$scope.find('.wpr-button').find('.wpr-double-bounce').addClass('wpr-loader-hidden');
+									$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
+									$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
+								}, 500);
+								callback(false);
+							}
+						});
+						return;
+					}
+
+					if ( hasV3 ) {
 						grecaptcha.ready(function() {
 							grecaptcha.execute(WprConfig.site_key, {action: 'submit'}).then(function(token) {
-								// Set the token value to the hidden input field
 								$scope.find('#g-recaptcha-response').val(token);
-	
-								// Perform the AJAX call after the token is set
 								$.ajax({
 									type: 'POST',
 									url: WprConfig.ajaxurl,
 									data: {
 										action: 'wpr_verify_recaptcha',
-										'g-recaptcha-response': token
+										'g-recaptcha-response': token,
+										recaptcha_version: 'v3'
 									},
 									success: function(response) {
 										if( !response.success ) {
@@ -8692,9 +8781,9 @@
 												$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
 												$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
 											}, 500);
-											callback(false); // Call the callback with failure
+											callback(false);
 										} else {
-											callback(true); // Call the callback with success
+											callback(true);
 										}
 									},
 									error: function(error) {
@@ -8704,14 +8793,15 @@
 											$scope.find('.wpr-button>span').removeClass('wpr-loader-hidden');
 											$scope.find('form').append('<p class="wpr-submit-notice wpr-submit-error">'+ WprConfig.recaptcha_error +'</p>');
 										}, 500);
-										callback(false); // Call the callback with failure
+										callback(false);
 									}
 								});
 							});
 						});
-					} else {
-						callback(true); // Call the callback if there's no reCAPTCHA
+						return;
 					}
+
+					callback(true);
 				}
 
 				// Call the processRecaptcha function and pass a callback that submits the form on success

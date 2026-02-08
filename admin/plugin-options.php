@@ -80,6 +80,8 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_secret_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_score' );
+    register_setting( 'wpr-settings', 'wpr_recaptcha_v2_site_key' );
+    register_setting( 'wpr-settings', 'wpr_recaptcha_v2_secret_key' );
 
     // Lightbox
     register_setting( 'wpr-settings', 'wpr_lb_bg_color' );
@@ -815,6 +817,26 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="number" name="wpr_recaptcha_v3_score" id="wpr_recaptcha_v3_score" placeholder="0.5" step="0.1" min="0" max="1" value="<?php echo esc_attr(get_option('wpr_recaptcha_v3_score')); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'reCAPTCHA v2 (Checkbox) Site Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://www.google.com/recaptcha/admin" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA keys?', 'wpr-addons' ); ?></a>
+                    <p class="wpr-settings-group-description"><?php esc_html_e( 'Use reCAPTCHA v2 checkbox in Form Builder. Create a "reCAPTCHA v2" type key in Google reCAPTCHA admin.', 'wpr-addons' ); ?></p>
+                </h4>
+
+                <input type="text" name="wpr_recaptcha_v2_site_key" id="wpr_recaptcha_v2_site_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v2_site_key')); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'reCAPTCHA v2 Secret Key', 'wpr-addons' ); ?></span>
+                    <br>
+                </h4>
+
+                <input type="text" name="wpr_recaptcha_v2_secret_key" id="wpr_recaptcha_v2_secret_key" value="<?php echo esc_attr(get_option('wpr_recaptcha_v2_secret_key')); ?>">
             </div>
             
         </div>

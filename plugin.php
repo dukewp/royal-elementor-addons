@@ -598,6 +598,7 @@ class Plugin {
 				'wishlistPageURL' => get_permalink(get_option('wpr_wishlist_page')),
 				'chooseQuantityText' => esc_html__('Please select the required number of items.', 'wpr-addons'),
 				'site_key' => get_option('wpr_recaptcha_v3_site_key'),
+				'site_key_v2' => get_option('wpr_recaptcha_v2_site_key'),
 				'is_admin' => current_user_can('manage_options'),
 				'input_empty' => esc_html__('Please fill out this field', 'wpr-addons'),
 				'select_empty' => esc_html__('Nothing selected', 'wpr-addons'),

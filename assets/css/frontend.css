@@ -19547,6 +19547,14 @@ input.wpr-date-filter-end {
     display: none;
 }
 
+.wpr-form-field-type-recaptcha-v2 .wpr-recaptcha-v2-wrap {
+    min-height: 1px;
+}
+
+.wpr-form-field-type-recaptcha-v2 .wpr-recaptcha-v2-container {
+    display: inline-block;
+}
+
 .wpr-form-field-type-recaptcha-v3 {
     display: none;
 }
