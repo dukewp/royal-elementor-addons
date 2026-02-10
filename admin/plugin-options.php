@@ -130,6 +130,17 @@ function wpr_register_addons_settings() {
         register_setting( 'wpr-elements-settings', 'wpr-element-'. $slug, [ 'default' => 'on' ] );
     }
 
+    // Pro widgets that appear in Elements tab (so their toggles are saved)
+    if ( defined( 'WPR_ADDONS_PRO_VERSION' ) && wpr_fs()->can_use_premium_code() ) {
+        $pro_element_slugs = [ 'breadcrumbs-pro' ];
+        if ( wpr_fs()->is_plan( 'expert' ) ) {
+            $pro_element_slugs = array_merge( $pro_element_slugs, [ 'category-grid-pro', 'advanced-filters-pro' ] );
+        }
+        foreach ( $pro_element_slugs as $slug ) {
+            register_setting( 'wpr-elements-settings', 'wpr-element-' . $slug, [ 'default' => 'on' ] );
+        }
+    }
+
     // Theme Builder
     foreach ( Utilities::get_theme_builder_modules() as $title => $data ) {
         $slug = $data[0];
