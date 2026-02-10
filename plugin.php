@@ -609,6 +609,7 @@ class Plugin {
 				'woo_shop_tag_ppp' => get_option('wpr_woo_shop_tag_ppp', 9),
 				'is_product_category' => function_exists('is_product_category') ? is_product_category() : false,
 				'is_product_tag' => function_exists('is_product_tag') ? is_product_tag() : false,
+				'sticky_section' => get_option('wpr-sticky-section', 'on'),
 				// 'token' => $custom_token
 			]
 		);
