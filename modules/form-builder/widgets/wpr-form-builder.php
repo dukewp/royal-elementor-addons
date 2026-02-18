@@ -3754,7 +3754,7 @@ class Wpr_Form_Builder extends Widget_Base {
 						<?php $this->render_form_icon($instance); ?>
 					<?php endif; ?>
 					<?php if ( ! empty( $instance['button_text'] ) ) : ?>
-						<span><?php echo esc_html( $instance['button_text'] ); ?></span>
+						<span><?php echo esc_html__( $instance['button_text'] ); ?></span>
 					<?php endif; ?>
 					<?php if ( !empty( $instance['selected_button_icon'] ) && 'right' === $instance['button_icon_align'] ) : ?>
 						<?php $this->render_form_icon($instance); ?>
@@ -3981,8 +3981,8 @@ class Wpr_Form_Builder extends Widget_Base {
 							echo '<div class="wpr-step-tab wpr-step-tab-hidden">';
 						} else {
 								echo '<div class="wpr-stp-btns-wrap">';
-									echo '<button type="button" class="wpr-step-prev">'. $item['previous_button_text'] .'</button>';
-									echo '<button type="button" class="wpr-step-next">'. $item['next_button_text'] .'</button>';
+									echo '<button type="button" class="wpr-step-prev">'. esc_html__( $item['previous_button_text'] ) .'</button>';
+									echo '<button type="button" class="wpr-step-next">'. esc_html__( $item['next_button_text'] ) .'</button>';
 								echo '</div>';
 							echo '</div>';
 							echo '<div class="wpr-step-tab wpr-step-tab-hidden">';
