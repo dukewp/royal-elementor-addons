@@ -10382,6 +10382,21 @@
 				toSlider.on('input', () => controlToSlider(fromSlider, toSlider, toInput));
 				fromInput.on('change', () => controlFromInput(fromSlider, fromInput, toInput));
 				toInput.on('change', () => controlToInput(toSlider, fromInput, toInput));
+				// Format displayed value on blur when using delimiters (e.g. user types "1234" -> "1,234.00")
+				fromInput.on('blur', function() {
+					var rangeContainer = $(this).closest('.wpr-af-range-container');
+					if (rangeContainer.data('format-numbers') === 'yes') {
+						var n = parseRangeInputVal($(this).val());
+						if (!isNaN(n)) setRangeInputVal($(this), n, rangeContainer);
+					}
+				});
+				toInput.on('blur', function() {
+					var rangeContainer = $(this).closest('.wpr-af-range-container');
+					if (rangeContainer.data('format-numbers') === 'yes') {
+						var n = parseRangeInputVal($(this).val());
+						if (!isNaN(n)) setRangeInputVal($(this), n, rangeContainer);
+					}
+				});
 			}
 
             if ( $scope.find('input[name="wpr_af_date"]').length > 0 ) {
@@ -10754,24 +10769,27 @@
 								rangeCheckMin = $('[data-id="' + $(this).data('rf-id') + '"]').find('.wpr-af-rf-control-min-input'),
 								rangeCheckMax = $('[data-id="' + $(this).data('rf-id') + '"]').find('.wpr-af-rf-control-max-input');
 
-							if (values && values.includes(',') && rangeCheckMin.filter((_, el) => values.split(',')[0] == $(el).val()).length > 0) {
+							if (values && values.includes(',') && rangeCheckMin.filter((_, el) => parseRangeInputVal(values.split(',')[0]) === parseRangeInputVal($(el).val())).length > 0) {
 								let [minValue, maxValue] = values.split(','),
-									rangeMin = rangeCheckMin.filter((_, el) => minValue == $(el).val()),
-									rangeMax = rangeCheckMax.filter((_, el) => maxValue == $(el).val()),
+									rangeMin = rangeCheckMin.filter((_, el) => parseRangeInputVal(minValue) === parseRangeInputVal($(el).val())),
+									rangeMax = rangeCheckMax.filter((_, el) => parseRangeInputVal(maxValue) === parseRangeInputVal($(el).val())),
 									outerContainer = rangeMin.closest('.wpr-advanced-filters-wrap'),
 									rangeContainer = outerContainer.find('.wpr-af-range-container'),
 									fromSlider = rangeContainer.find('.wpr-af-from-slider'),
 									toSlider = rangeContainer.find('.wpr-af-to-slider'),
 									fromSliderText = rangeContainer.find('.wpr-af-rs-value-min'),
-									toSliderText = rangeContainer.find('.wpr-af-rs-value-max');
+									toSliderText = rangeContainer.find('.wpr-af-rs-value-max'),
+									minVal = rangeMin.attr('min') || rangeMin.data('min'),
+									maxVal = rangeMax.attr('max') || rangeMax.data('max'),
+									fmt = (v) => rangeContainer.data('format-numbers') === 'yes' ? formatRangeDisplay(v, rangeContainer) : v;
 
-								fromSlider.val(rangeMin.attr('min'));
-								toSlider.val(rangeMax.attr('max'));
-								fromSliderText.text(rangeMin.attr('min'));
-								toSliderText.text(rangeMax.attr('max'));
+								fromSlider.val(minVal);
+								toSlider.val(maxVal);
+								fromSliderText.text(fmt(minVal));
+								toSliderText.text(fmt(maxVal));
 		
-								rangeMin.val(rangeMin.attr('min')).trigger('input');
-								rangeMax.val(rangeMax.attr('max')).trigger('input');
+								rangeMin.val(fmt(minVal)).attr('value', rangeMin.val()).trigger('input');
+								rangeMax.val(fmt(maxVal)).attr('value', rangeMax.val()).trigger('input');
 
 								rangeContainer.find('input.wpr-af-from-slider').trigger('change');
 
@@ -10865,11 +10883,12 @@
 					
 						// Range Filter
 						if (thisWrap.find('.wpr-af-rf-control').length > 0) {
-							var rangeValues = $(this).find('.wpr-af-rf-control input[type="number"]').map(function () {
-								return $(this).val();
-							}).get();
+							var minInp = thisWrap.find('.wpr-af-rf-control-min-input'),
+								maxInp = thisWrap.find('.wpr-af-rf-control-max-input'),
+								rangeDisplay = [minInp.val(), maxInp.val()].join(' - '),
+								rangeRealVal = [parseRangeInputVal(minInp.val()), parseRangeInputVal(maxInp.val())];
 
-							values.push({ label: label, value: rangeValues.join(' - '), realVal: rangeValues});
+							values.push({ label: label, value: rangeDisplay, realVal: rangeRealVal});
 						}
 	
 						thisWrap.find('select').each(function () {
@@ -10983,14 +11002,14 @@
 						var rangeContainer = $(this),
 							rangeActive = rangeContainer.attr('data-active'),
 							uniqueID = rangeContainer.closest('.elementor-element').data('id'),
-							minInput = rangeContainer.find('input.wpr-af-rf-control-min-input'),
-							maxInput = rangeContainer.find('input.wpr-af-rf-control-max-input'),
-							minValue = minInput.val(),
-							minAllowed = minInput.attr('min'),
-							maxValue = maxInput.val(),
-							maxAllowed = maxInput.attr('max'),
-							isMinAtDefault = minValue == minAllowed,
-							isMaxAtDefault = maxValue == maxAllowed;
+							minInput = rangeContainer.find('.wpr-af-rf-control-min-input'),
+							maxInput = rangeContainer.find('.wpr-af-rf-control-max-input'),
+							minValue = parseRangeInputVal(minInput.val()),
+							minAllowed = parseRangeInputVal(minInput.attr('min') || minInput.data('min')),
+							maxValue = parseRangeInputVal(maxInput.val()),
+							maxAllowed = parseRangeInputVal(maxInput.attr('max') || maxInput.data('max')),
+							isMinAtDefault = minValue === minAllowed || (isNaN(minValue) && isNaN(minAllowed)),
+							isMaxAtDefault = maxValue === maxAllowed || (isNaN(maxValue) && isNaN(maxAllowed));
 
 						if ( isMinAtDefault && isMaxAtDefault ) {
 							$('span[data-rf-id="'+ uniqueID +'"]').remove();
@@ -11101,36 +11120,44 @@
 					
 					if ( $scope.find('.wpr-af-range-apply-btn').length > 0 ) {
 						$scope.on('click', '.wpr-af-range-apply-btn', function() {
-							var selectedElement = $scope.find('.wpr-af-rf-control').find('input[type="number"]');
-							var selectedValue = [];
-							var selectedName = selectedElement.attr('name');
-			
-							selectedElement.each(function() {
-								selectedValue.push($(this).val());
-							});
-			
-							if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
-								$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
-								ajaxFilters($(this));
-							} else {
-								updateURL(selectedName, selectedValue, $(this));
+							var minInput = $scope.find('.wpr-af-rf-control-min-input'),
+								maxInput = $scope.find('.wpr-af-rf-control-max-input'),
+								selectedName = minInput.attr('name'),
+								selectedValue = [];
+							if (minInput.length && maxInput.length) {
+								var minVal = parseRangeInputVal(minInput.val());
+								var maxVal = parseRangeInputVal(maxInput.val());
+								selectedValue.push(isNaN(minVal) ? minInput.attr('min') || minInput.data('min') : minVal);
+								selectedValue.push(isNaN(maxVal) ? maxInput.attr('max') || maxInput.data('max') : maxVal);
+							}
+							if ( selectedValue.length ) {
+								if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
+									$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
+									ajaxFilters($(this));
+								} else {
+									updateURL(selectedName, selectedValue, $(this));
+								}
 							}
 						});
 					} else {
-						$scope.find('.wpr-af-range-container').find('input[type="range"], input[type="number"]').on('change', function() {
-							var selectedElement = $scope.find('.wpr-af-rf-control').find('input[type="number"]');
-							var selectedValue = [];
-							var selectedName = selectedElement.attr('name');
-			
-							selectedElement.each(function() {
-								selectedValue.push($(this).val());
-							});
-			
-							if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
-								$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
-								ajaxFilters($(this));
-							} else {
-								updateURL(selectedName, selectedValue, $(this));
+						$scope.find('.wpr-af-range-container').find('input[type="range"], .wpr-af-rf-control-min-input, .wpr-af-rf-control-max-input').on('change', function() {
+							var minInput = $scope.find('.wpr-af-rf-control-min-input'),
+								maxInput = $scope.find('.wpr-af-rf-control-max-input'),
+								selectedName = minInput.attr('name'),
+								selectedValue = [];
+							if (minInput.length && maxInput.length) {
+								var minVal = parseRangeInputVal(minInput.val());
+								var maxVal = parseRangeInputVal(maxInput.val());
+								selectedValue.push(isNaN(minVal) ? minInput.attr('min') || minInput.data('min') : minVal);
+								selectedValue.push(isNaN(maxVal) ? maxInput.attr('max') || maxInput.data('max') : maxVal);
+							}
+							if ( selectedValue.length ) {
+								if ( 'yes' == $(this).closest('.wpr-advanced-filters-wrap').data('enable-ajax') ) {
+									$(this).closest('.wpr-advanced-filters-wrap').attr('data-wpr-applied', 'yes');
+									ajaxFilters($(this));
+								} else {
+									updateURL(selectedName, selectedValue, $(this));
+								}
 							}
 						});
 					}
@@ -11138,86 +11165,122 @@
 			}
 
 			function controlFromInput(fromSlider, fromInput, toInput) {
+				const rangeContainer = fromInput.closest('.wpr-af-range-container');
+				const minAllowed = parseRangeInputVal(fromInput.attr('min') || fromInput.data('min'));
 				const [from, to] = getParsed(fromInput, toInput);
 				fillSlider(fromInput, toInput);
 				setToggleAccessible(fromInput, 'from');
 				if (from > to) {
 					fromSlider.val(to).attr('value', to);
-					fromInput.val(to).attr('value', to);
+					setRangeInputVal(fromInput, to, rangeContainer);
 				} else {
 					fromSlider.val(from).attr('value', from);
-					fromInput.val(from).attr('value', from);
+					setRangeInputVal(fromInput, from, rangeContainer);
 				}
 
-				if ( from < +fromInput.attr('min') ) {
-					fromInput.val(+fromInput.attr('min')).attr('value', +fromInput.attr('min'));
-					fromSlider.val(+fromInput.attr('min')).attr('value', +fromInput.attr('min'));
+				if (!isNaN(minAllowed) && from < minAllowed) {
+					fromSlider.val(minAllowed).attr('value', minAllowed);
+					setRangeInputVal(fromInput, minAllowed, rangeContainer);
 				}
 			}
 			
 			function controlToInput(toSlider, fromInput, toInput) {
+				const rangeContainer = toInput.closest('.wpr-af-range-container');
+				const maxAllowed = parseRangeInputVal(toInput.attr('max') || toInput.data('max'));
 				const [from, to] = getParsed(fromInput, toInput);
 				fillSlider(fromInput, toInput);
 				setToggleAccessible(toInput, 'to');
 
 				if (from <= to) {
-					if ( to > +toInput.attr('max') ) {
-						toSlider.val(+toInput.attr('max')).attr('value', +toInput.attr('max'));
-						toInput.val(+toInput.attr('max')).attr('value', +toInput.attr('max'));
+					if (!isNaN(maxAllowed) && to > maxAllowed) {
+						toSlider.val(maxAllowed).attr('value', maxAllowed);
+						setRangeInputVal(toInput, maxAllowed, rangeContainer);
 					} else {
 						toSlider.val(to).attr('value', to);
-						toInput.val(to).attr('value', to);
+						setRangeInputVal(toInput, to, rangeContainer);
 					}
 				} else {
-					if ( to > +toInput.attr('max') ) {
-						toInput.val(+toInput.attr('max')).attr('value', +toInput.attr('max'));
+					if (!isNaN(maxAllowed) && to > maxAllowed) {
+						setRangeInputVal(toInput, maxAllowed, rangeContainer);
 					} else {
-						toInput.val(from).attr('value', from);
+						setRangeInputVal(toInput, from, rangeContainer);
 					}
 				}
 			}
 			
+			function parseRangeInputVal(val) {
+				if (val === '' || val == null) return NaN;
+				const str = String(val).replace(/,/g, '');
+				return parseFloat(str);
+			}
+
+			function formatRangeDisplay(val, rangeContainer) {
+				if (rangeContainer && rangeContainer.data('format-numbers') === 'yes') {
+					const num = parseRangeInputVal(val);
+					if (!isNaN(num)) {
+						const decimals = Math.max(0, Math.min(4, parseInt(rangeContainer.data('decimal-places'), 10) || 2));
+						return num.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+					}
+				}
+				return val;
+			}
+
+			function setRangeInputVal($input, num, rangeContainer) {
+				if (rangeContainer && rangeContainer.data('format-numbers') === 'yes') {
+					$input.val(formatRangeDisplay(num, rangeContainer));
+				} else {
+					$input.val(num);
+				}
+				$input.attr('value', $input.val());
+			}
+
 			function controlFromSlider(fromSlider, toSlider, fromInput) {
+				const rangeContainer = fromSlider.closest('.wpr-af-range-container');
 				const [from, to] = getParsed(fromSlider, toSlider);
 				fillSlider(fromSlider, toSlider);
 				setToggleAccessible(fromSlider, 'from');
 				if (from > to) {
 					fromSlider.val(to).attr('value', to);
-					fromInput.val(to).attr('value', to);
-					$scope.find('.wpr-af-rs-value-min').text(to);
+					setRangeInputVal(fromInput, to, rangeContainer);
+					$scope.find('.wpr-af-rs-value-min').text(formatRangeDisplay(to, rangeContainer));
 				} else {
 					fromSlider.val(from).attr('value', from);
-					fromInput.val(from).attr('value', from);
-					$scope.find('.wpr-af-rs-value-min').text(from);
+					setRangeInputVal(fromInput, from, rangeContainer);
+					$scope.find('.wpr-af-rs-value-min').text(formatRangeDisplay(from, rangeContainer));
 				}
 			}
 			
 			function controlToSlider(fromSlider, toSlider, toInput) {
+				const rangeContainer = fromSlider.closest('.wpr-af-range-container');
 				const [from, to] = getParsed(fromSlider, toSlider);
 				fillSlider(fromSlider, toSlider);
 				setToggleAccessible(toSlider, 'to');
 				if (from <= to) {
 					toSlider.val(to).attr('value', to);
-					toInput.val(to).attr('value', to);
-					$scope.find('.wpr-af-rs-value-max').text(to);
+					setRangeInputVal(toInput, to, rangeContainer);
+					$scope.find('.wpr-af-rs-value-max').text(formatRangeDisplay(to, rangeContainer));
 				} else {
-					toInput.val(from).attr('value', from);
+					setRangeInputVal(toInput, from, rangeContainer);
 					toSlider.val(from).attr('value', from);
-					$scope.find('.wpr-af-rs-value-max').text(from);
+					$scope.find('.wpr-af-rs-value-max').text(formatRangeDisplay(from, rangeContainer));
 				}
 			}
 			
 			function getParsed(currentFrom, currentTo) {
-				const from = parseInt(currentFrom.val(), 10);
-				const to = parseInt(currentTo.val(), 10);
-				return [from, to];
+				const from = parseRangeInputVal(currentFrom.val());
+				const to = parseRangeInputVal(currentTo.val());
+				return [isNaN(from) ? 0 : from, isNaN(to) ? 0 : to];
 			}
 
 			function fillSlider(fromSlider, toSlider) {
-				const min = parseFloat(toSlider.prop('min'));
-				const max = parseFloat(toSlider.prop('max'));
-				const from = Math.min(parseFloat(fromSlider.val()), parseFloat(toSlider.val()));
-				const to = Math.max(parseFloat(fromSlider.val()), parseFloat(toSlider.val()));
+				const rangeContainer = fromSlider.closest('.wpr-af-range-container');
+				const rangeEl = rangeContainer.find('.wpr-af-from-slider')[0] ? rangeContainer.find('.wpr-af-from-slider') : toSlider;
+				const min = parseFloat(rangeEl.prop('min')) || parseRangeInputVal(rangeEl.attr('min')) || parseRangeInputVal(rangeEl.data('min')) || 0;
+				const max = parseFloat(rangeEl.prop('max')) || parseRangeInputVal(rangeEl.attr('max')) || parseRangeInputVal(rangeEl.data('max')) || 0;
+				const fromVal = parseRangeInputVal(fromSlider.val());
+				const toVal = parseRangeInputVal(toSlider.val());
+				const from = Math.min(fromVal, toVal);
+				const to = Math.max(fromVal, toVal);
 			
 				const rangeDistance = max - min;
 				const fromPercent = (((from - min) / rangeDistance) * 100) > 0 ? ((from - min) / rangeDistance) * 100 : 0;
@@ -11287,24 +11350,29 @@
 					} else {
 						// Reset range inputs to their min/max values
 						$('body').find('.wpr-advanced-filters-wrap .wpr-af-range-container').each(function() {
-							let rangeMin = $(this).find('input[type="number"].wpr-af-rf-control-min-input'),
-								rangeMax = $(this).find('input[type="number"].wpr-af-rf-control-max-input'),
-								thisFromSlider = $(this).find('input[type="range"].wpr-af-from-slider'),
-								thisToSlider = $(this).find('input[type="range"].wpr-af-to-slider'),
-								thisFromSliderText = $(this).find('.wpr-af-rs-value-min'),
-								thisToSliderText = $(this).find('.wpr-af-rs-value-max');
+							let rangeContainer = $(this),
+								rangeMin = rangeContainer.find('.wpr-af-rf-control-min-input'),
+								rangeMax = rangeContainer.find('.wpr-af-rf-control-max-input'),
+								thisFromSlider = rangeContainer.find('input[type="range"].wpr-af-from-slider'),
+								thisToSlider = rangeContainer.find('input[type="range"].wpr-af-to-slider'),
+								thisFromSliderText = rangeContainer.find('.wpr-af-rs-value-min'),
+								thisToSliderText = rangeContainer.find('.wpr-af-rs-value-max'),
+								minVal = rangeMin.attr('min') || rangeMin.data('min'),
+								maxVal = rangeMax.attr('max') || rangeMax.data('max'),
+								formatRange = rangeContainer.data('format-numbers') === 'yes',
+								fmt = function(v) { return formatRange && !isNaN(parseRangeInputVal(v)) ? formatRangeDisplay(v, rangeContainer) : v; };
 								
-							rangeMin.val(rangeMin.attr('min')).attr('value', rangeMin.attr('min'));
-							rangeMax.val(rangeMax.attr('max')).attr('value', rangeMax.attr('max'));
+							rangeMin.val(fmt(minVal)).attr('value', rangeMin.val());
+							rangeMax.val(fmt(maxVal)).attr('value', rangeMax.val());
 
 							fillSlider(rangeMin, rangeMax);
 
-							thisFromSlider.val(rangeMin.attr('min')).attr('value', rangeMin.attr('min'));
-							thisToSlider.val(rangeMax.attr('max')).attr('value', rangeMax.attr('max'));
-							thisFromSliderText.text(rangeMin.attr('min'));
-							thisToSliderText.text(rangeMax.attr('max'));
+							thisFromSlider.val(minVal).attr('value', minVal);
+							thisToSlider.val(maxVal).attr('value', maxVal);
+							thisFromSliderText.text(fmt(minVal));
+							thisToSliderText.text(fmt(maxVal));
 							
-							$(this).attr('data-active', 'no');
+							rangeContainer.attr('data-active', 'no');
 						});
 
 						// Reset all select elements to their default option (usually the first option)
