@@ -152,7 +152,7 @@
 				parallaxMultiLayer();
 			}
 
-			if ( $scope.hasClass('wpr-sticky-section-yes') ) {
+			if ( $scope.hasClass('wpr-sticky-section-yes') && typeof WprConfig !== 'undefined' && WprConfig.sticky_section === 'on'  ) {
 				$(document).ready(function() {
 					stickySection();
 				});
@@ -11631,25 +11631,27 @@
 					}
 
 					if ( $(this).find('.wpr-af-range-apply-btn').length > 0 && $(this).data('wpr-applied') == 'yes' ) {
-						var selectedElement = $(this).find('.wpr-af-rf-control').find('input[type="number"]');
-						var selectedValue = [];
-						var selectedName = selectedElement.attr('name');
-
-						selectedElement.each(function() {
-							selectedValue.push($(this).val());
-						});
-						
-						updateURL(selectedName, selectedValue, $(this).find('.wpr-af-range-apply-btn'), finalURL);
+						var minInp = $(this).find('.wpr-af-rf-control-min-input'),
+							maxInp = $(this).find('.wpr-af-rf-control-max-input'),
+							selectedName = minInp.attr('name'),
+							selectedValue = [];
+						if ( minInp.length && maxInp.length && selectedName ) {
+							var mn = parseRangeInputVal(minInp.val()), mx = parseRangeInputVal(maxInp.val());
+							selectedValue.push(isNaN(mn) ? minInp.attr('min') || minInp.data('min') : mn);
+							selectedValue.push(isNaN(mx) ? maxInp.attr('max') || maxInp.data('max') : mx);
+							updateURL(selectedName, selectedValue, $(this).find('.wpr-af-range-apply-btn'), finalURL);
+						}
 					} else if ( $(this).find('.wpr-af-range-container').length > 0 && ($(this).data('wpr-applied') == 'yes' || self.hasClass('wpr-af-apply-btn')) ) {
-						var selectedElement = $(this).find('.wpr-af-rf-control').find('input[type="number"]');
-						var selectedValue = [];
-						var selectedName = selectedElement.attr('name');
-
-						selectedElement.each(function() {
-							selectedValue.push($(this).val());
-						});
-						
-						updateURL(selectedName, selectedValue, $(this).find('.wpr-af-range-container'), finalURL);
+						var minInp = $(this).find('.wpr-af-rf-control-min-input'),
+							maxInp = $(this).find('.wpr-af-rf-control-max-input'),
+							selectedName = minInp.attr('name'),
+							selectedValue = [];
+						if ( minInp.length && maxInp.length && selectedName ) {
+							var mn = parseRangeInputVal(minInp.val()), mx = parseRangeInputVal(maxInp.val());
+							selectedValue.push(isNaN(mn) ? minInp.attr('min') || minInp.data('min') : mn);
+							selectedValue.push(isNaN(mx) ? maxInp.attr('max') || maxInp.data('max') : mx);
+							updateURL(selectedName, selectedValue, $(this).find('.wpr-af-range-container'), finalURL);
+						}
 					}
                 });
 
@@ -11696,7 +11698,7 @@
             }
 
 			function updateURL(selectedName, selectedValue, element, ajaxFilterURL = '') {
-				
+				if ( !selectedName ) return;
 				var currentURL = window.location.href,
 					dataRelation = '',
 					dataFilterType = '';
