@@ -1942,6 +1942,18 @@ class Pricing_Table extends Widget_Base {
 		);
 
 		$this->add_control(
+			'btn_icon_color',
+			[
+				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-pricing-table-btn i' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
 			'btn_border_color',
 			[
 				'label' => esc_html__( 'Border Color', 'wpr-addons' ),
@@ -1992,6 +2004,18 @@ class Pricing_Table extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-pricing-table-btn:hover' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
+		$this->add_control(
+			'btn_icon_hover_color',
+			[
+				'label' => esc_html__( 'Icon Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .wpr-pricing-table-btn:hover i' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -2108,6 +2132,36 @@ class Pricing_Table extends Widget_Base {
 				'name' => 'btn_typography',
 				'selector' => '{{WRAPPER}} .wpr-pricing-table-btn',
 				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'btn_icon_style_divider',
+			[
+				'type' => Controls_Manager::DIVIDER,
+				'style' => 'thick',
+			]
+		);
+
+		$this->add_responsive_control(
+			'btn_icon_size',
+			[
+				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', 'em' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 200,
+					],
+					'em' => [
+						'min' => 0.1,
+						'max' => 10,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-pricing-table-btn i' => 'font-size: {{SIZE}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -2773,9 +2827,9 @@ class Pricing_Table extends Widget_Base {
 
 						<?php if ( '' !== $item['select_icon']['value'] &&  $item['btn_position'] === 'after' ) : ?>
 						<i class="<?php echo esc_attr( $item['select_icon']['value'] ); ?>"></i>
+						<?php endif; ?>
 
 					</span>
-					<?php endif; ?>
 				</a>
 				
 			<?php elseif ( $item['type_select'] === 'divider' ) : ?>
