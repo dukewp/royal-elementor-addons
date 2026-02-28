@@ -3662,6 +3662,7 @@ i[class*="wpr-rating-icon-"] {
 .wpr-grid-pagi-right-arrows,
 .wpr-grid-pagination .wpr-load-more-btn {
     display: inline-block;
+    cursor: pointer;
 }
 
 .wpr-load-more-btn,

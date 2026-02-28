@@ -1465,7 +1465,10 @@
 							threshold = 300;
 							navClass = scopeClass +' .wpr-load-more-btn';
 						}
-	
+
+						// Advanced Filters + infinite-scroll: grid uses same AJAX as load more (handled in widgetAdvancedFilters)
+						var skipPathInfiniteScroll = ( 'infinite-scroll' === settings.pagination_type && iGrid.attr( 'data-advanced-filters' ) === 'yes' );
+						if ( ! skipPathInfiniteScroll ) {
 						iGrid.infiniteScroll({
 							path: scopeClass +' .wpr-grid-pagination a',
 							hideNav: navClass,
@@ -1584,6 +1587,7 @@
 							iGrid.infiniteScroll( 'loadNextPage' );
 							return false;
 						});
+						}
 					} else {
 						$scope.find( '.wpr-load-more-btn' ).on( 'click', function() {
 							alert( 'Load More is Disabled in the Editor! Please Preview this Page to see it in action' );
@@ -10364,6 +10368,136 @@
 			if ( widgetSelector.length > 0 ) {
 				if ( widgetSelector.find('.wpr-grid-pagination').data('pages') <= 1 ) {
 					widgetSelector.find('.wpr-load-more-btn').hide();
+				}
+			}
+
+			// Infinite scroll with Advanced Filters: same AJAX as load more (offset + wpr_url_params from URL)
+			if ( actionSelector.length > 0 ) {
+				var gridDataSettings = actionSelector.attr( 'data-settings' );
+				if ( gridDataSettings ) {
+					try {
+						var gridSettings = JSON.parse( gridDataSettings );
+						if ( gridSettings.pagination_type === 'infinite-scroll' ) {
+							widgetSelector.find( '.wpr-load-more-btn' ).hide();
+							widgetSelector.find( '.wpr-grid-pagination' ).css( { 'display': 'flex', 'justify-content': 'center' } );
+							var afInfiniteScrollLoading = false,
+								afInfiniteScrollFoundPosts = null,
+								afScrollThresholdPx = 400;
+							$( window ).off( 'scroll.afInfiniteScroll' ).on( 'scroll.afInfiniteScroll', function() {
+								if ( WprElements.editorCheck() || ! widgetSelector.length ) return;
+								var currentCount = widgetSelector.find( '.wpr-grid-item' ).length;
+								var perPage = ( gridSettings.grid_settings && gridSettings.grid_settings.query_posts_per_page ) || gridSettings.query_posts_per_page || 9;
+								if ( currentCount <= perPage ) {
+									afInfiniteScrollFoundPosts = null;
+								}
+								if ( afInfiniteScrollFoundPosts !== null && currentCount >= afInfiniteScrollFoundPosts ) return;
+								if ( afInfiniteScrollLoading ) return;
+								var paginationEl = widgetSelector.find( '.wpr-grid-pagination' )[ 0 ];
+								if ( ! paginationEl ) return;
+								var rect = paginationEl.getBoundingClientRect();
+								if ( rect.top > $( window ).height() + afScrollThresholdPx ) return;
+								afInfiniteScrollLoading = true;
+								settings = typeof gridSettings !== 'undefined' ? gridSettings : ( actionSelector.attr( 'data-settings' ) ? JSON.parse( actionSelector.attr( 'data-settings' ) ) : {} );
+								finalURL = window.location.href;
+								$('.wpr-advanced-filters-wrap').each(function() {
+									var wrap = $(this);
+									if ( wrap.find('input[type="checkbox"], input[type="radio"], input.wpr-rating-filter').length > 0 ) {
+										wrap.find('input[type="checkbox"], input[type="radio"], input.wpr-rating-filter').each(function() {
+											if ( $(this).is(':checked') || $(this).hasClass('wpr-rating-filter') ) {
+												updateURL( $(this).attr('name'), $(this).val(), $(this), finalURL );
+											}
+										});
+									}
+									wrap.find('input[type="text"], input[type="date"]').each(function() {
+										updateURL( $(this).attr('name'), $(this).val(), $(this), finalURL );
+									});
+									if ( wrap.find('select').length === 1 ) {
+										var sel = wrap.find('select');
+										updateURL( sel.attr('name'), sel.val(), sel, finalURL );
+									} else if ( wrap.find('select').length > 1 ) {
+										wrap.find('select').each(function() {
+											updateURL( $(this).attr('name'), $(this).val(), $(this), finalURL );
+										});
+									}
+									if ( wrap.find('.wpr-af-range-apply-btn').length > 0 && wrap.data('wpr-applied') == 'yes' ) {
+										var minInp = wrap.find('.wpr-af-rf-control-min-input'), maxInp = wrap.find('.wpr-af-rf-control-max-input'), sn = minInp.attr('name'), sv = [];
+										if ( minInp.length && maxInp.length && sn ) {
+											var mn = parseRangeInputVal(minInp.val()), mx = parseRangeInputVal(maxInp.val());
+											sv.push(isNaN(mn) ? (minInp.attr('min') || minInp.data('min')) : mn);
+											sv.push(isNaN(mx) ? (maxInp.attr('max') || maxInp.data('max')) : mx);
+											updateURL( sn, sv, wrap.find('.wpr-af-range-apply-btn'), finalURL );
+										}
+									} else if ( wrap.find('.wpr-af-range-container').length > 0 && wrap.data('wpr-applied') == 'yes' ) {
+										var minInp = wrap.find('.wpr-af-rf-control-min-input'), maxInp = wrap.find('.wpr-af-rf-control-max-input'), sn = minInp.attr('name'), sv = [];
+										if ( minInp.length && maxInp.length && sn ) {
+											var mn = parseRangeInputVal(minInp.val()), mx = parseRangeInputVal(maxInp.val());
+											sv.push(isNaN(mn) ? (minInp.attr('min') || minInp.data('min')) : mn);
+											sv.push(isNaN(mx) ? (maxInp.attr('max') || maxInp.data('max')) : mx);
+											updateURL( sn, sv, wrap.find('.wpr-af-range-container'), finalURL );
+										}
+									}
+								});
+								var paramsObj = {};
+								(new URL(finalURL)).searchParams.forEach( function( value, key ) { paramsObj[key] = value; } );
+								settings.grid_settings = settings.grid_settings || {};
+								settings.grid_settings.query_offset = currentCount;
+								widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
+								var orderby = widgetSelector.find( 'select.orderby' ).length > 0 ? widgetSelector.find( 'select.orderby' ).val() : '';
+								$.ajax( {
+									type: 'POST',
+									url: WprConfig.ajaxurl,
+									data: {
+										action: experimentActionContent,
+										nonce: WprConfig.nonce,
+										wpr_offset: currentCount,
+										wpr_item_length: currentCount,
+										grid_settings: settings.grid_settings,
+										wpr_url_params: paramsObj,
+										orderby: orderby,
+									},
+									success: function( response ) {
+										var rawItems = response.data && response.data.output ? $( response.data.output ) : $();
+										var items = rawItems.filter ? rawItems.filter( '.wpr-grid-item' ) : rawItems;
+										if ( response.data && response.data.found_posts != null ) {
+											afInfiniteScrollFoundPosts = response.data.found_posts;
+										} else if ( items.length === 0 ) {
+											afInfiniteScrollFoundPosts = currentCount;
+										} else if ( items.length < perPage ) {
+											afInfiniteScrollFoundPosts = currentCount + items.length;
+										}
+										if ( items.length ) {
+											actionSelector.append( items );
+											actionSelector.isotopewpr( 'appended', items );
+											items.imagesLoaded().progress( function() {
+												WprElements.isotopeLayout( settings, '', widgetSelector, true, $scope );
+												setTimeout( function() {
+													WprElements.isotopeLayout( settings, '', widgetSelector, true, $scope );
+												}, 100 );
+												setTimeout( function() { actionSelector.addClass( 'grid-images-loaded' ); }, 500 );
+											} );
+											WprElements.lightboxPopup( settings, widgetSelector, actionSelector );
+											if ( actionSelector.data( 'lightGallery' ) ) {
+												actionSelector.data( 'lightGallery' ).destroy( true );
+												actionSelector.lightGallery( settings.lightbox );
+											}
+											WprElements.mediaHoverLink( widgetSelector, actionSelector );
+										}
+										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+										if ( ! response.data || response.data.found_posts <= widgetSelector.find( '.wpr-grid-item' ).length ) {
+											widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
+											widgetSelector.find( '.wpr-grid-pagination' ).delay( 1000 ).fadeOut( 500 );
+										}
+										window.dispatchEvent( new Event( 'resize' ) );
+										afInfiniteScrollLoading = false;
+									},
+									error: function() {
+										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
+										afInfiniteScrollLoading = false;
+									},
+								} );
+							} );
+						}
+					} catch ( e ) {}
 				}
 			}
 
