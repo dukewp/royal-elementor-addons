@@ -223,6 +223,9 @@ function wpr_addons_settings_page() {
 
     // Render Create Templte Popup
     WPR_Templates_Loop::render_create_template_popup();
+
+    // Render Backup Plugin Popup
+    WPR_Templates_Loop::render_backup_plugin_popup();
     
     ?>
 
