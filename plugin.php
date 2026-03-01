@@ -77,6 +77,25 @@ class Plugin {
 		return self::$_instance;
 	}
 
+	/**
+	 * Cached extension/option toggles (reduces get_option calls on every request).
+	 */
+	private static $wpr_extension_options = null;
+
+	private function wpr_get_extension_option( $key, $default = 'on' ) {
+		if ( null === self::$wpr_extension_options ) {
+			self::$wpr_extension_options = [
+				'wpr-particles'             => get_option( 'wpr-particles', 'on' ),
+				'wpr-parallax-background'   => get_option( 'wpr-parallax-background', 'on' ),
+				'wpr-parallax-multi-layer'  => get_option( 'wpr-parallax-multi-layer', 'on' ),
+				'wpr-sticky-section'        => get_option( 'wpr-sticky-section', 'on' ),
+				'wpr-custom-css'            => get_option( 'wpr-custom-css', 'on' ),
+				'wpr_override_woo_templates'=> get_option( 'wpr_override_woo_templates', 'on' ),
+			];
+		}
+		return isset( self::$wpr_extension_options[ $key ] ) ? self::$wpr_extension_options[ $key ] : $default;
+	}
+
 	private function _includes() {
 		// Modules Manager
 		require WPR_ADDONS_PATH . 'includes/modules-manager.php';
@@ -115,22 +134,22 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-media.php';
 
 		// Particles
-		if ( 'on' === get_option('wpr-particles', 'on') ) {//TODO: make this check automatic(loop through) for all extensions
+		if ( 'on' === $this->wpr_get_extension_option( 'wpr-particles' ) ) {
 			require WPR_ADDONS_PATH . 'extensions/wpr-particles.php';
 		}
 
 		// Parallax
-		if ( 'on' === get_option('wpr-parallax-background', 'on') || 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+		if ( 'on' === $this->wpr_get_extension_option( 'wpr-parallax-background' ) || 'on' === $this->wpr_get_extension_option( 'wpr-parallax-multi-layer' ) ) {
 			require WPR_ADDONS_PATH . 'extensions/wpr-parallax.php';
 		}
 
 		// Sticky Header
-		if ( 'on' === get_option('wpr-sticky-section', 'on') ) {
+		if ( 'on' === $this->wpr_get_extension_option( 'wpr-sticky-section' ) ) {
 			require WPR_ADDONS_PATH . 'extensions/wpr-sticky-section.php';
 		}
 
 		// Custom CSS
-		if ( 'on' === get_option('wpr-custom-css', 'on') ) {
+		if ( 'on' === $this->wpr_get_extension_option( 'wpr-custom-css' ) ) {
 			require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
 		}
 
@@ -174,7 +193,7 @@ class Plugin {
 		}
 
 		if ( class_exists('WooCommerce') ) {
-			 if ( 'on' === get_option('wpr_override_woo_templates', 'on') ) {
+			 if ( 'on' === $this->wpr_get_extension_option( 'wpr_override_woo_templates' ) ) {
 				// add_filter( 'astra_enable_woocommerce_integration', '__return_false' );
 				require WPR_ADDONS_PATH . 'includes/woocommerce/woocommerce-config.php';
 			 }
@@ -446,19 +465,21 @@ class Plugin {
 	public function wpr_some_init_actions() {
 		load_plugin_textdomain('wpr-addons', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 		
-		if ( get_option('wpr_hide_banners') !== 'on' ) {
-			// Pro Features Notice
-			require WPR_ADDONS_PATH . 'admin/notices/pro-features-notice.php';
+		// Notices only in admin to reduce frontend CPU (no file I/O on every page view).
+		if ( is_admin() ) {
+			if ( get_option('wpr_hide_banners') !== 'on' ) {
+				// Pro Features Notice
+				require WPR_ADDONS_PATH . 'admin/notices/pro-features-notice.php';
 
-			// Plugin Update Notice
-			require WPR_ADDONS_PATH . 'admin/notices/plugin-update-notice.php';
-			
-			// Plugin Sale Notice
-			require WPR_ADDONS_PATH . 'admin/notices/plugin-sale-notice.php';
+				// Plugin Update Notice
+				require WPR_ADDONS_PATH . 'admin/notices/plugin-update-notice.php';
+				
+				// Plugin Sale Notice
+				require WPR_ADDONS_PATH . 'admin/notices/plugin-sale-notice.php';
+			}
+			// Rating Notice 
+			require WPR_ADDONS_PATH . 'admin/notices/rating-notice.php';
 		}
-			
-		// Rating Notice 
-		require WPR_ADDONS_PATH . 'admin/notices/rating-notice.php';
 
 		// if ( defined('REST_REQUEST') && REST_REQUEST ) {
 		// 	return;
@@ -609,7 +630,7 @@ class Plugin {
 				'woo_shop_tag_ppp' => get_option('wpr_woo_shop_tag_ppp', 9),
 				'is_product_category' => function_exists('is_product_category') ? is_product_category() : false,
 				'is_product_tag' => function_exists('is_product_tag') ? is_product_tag() : false,
-				'sticky_section' => get_option('wpr-sticky-section', 'on'),
+				'sticky_section' => $this->wpr_get_extension_option( 'wpr-sticky-section' ),
 				// 'token' => $custom_token
 			]
 		);
