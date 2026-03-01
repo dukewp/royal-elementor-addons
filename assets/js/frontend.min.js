@@ -249,18 +249,24 @@
 					if ( 'yes' !== $scope.data('wpr-replace-header') && 'yes' !== $scope.data('wpr-sticky-hide') ) {
 						// Function to be called when mutations are observed
 						const handleMutations = debounce(function(mutationsList) {
+							// if (!$scope[0] || !document.body.contains($scope[0])) return;
+							// var isGTranslate = function(node) {
+							// 	if (!node || !node.getAttribute) return false;
+							// 	var id = node.getAttribute('id') || '';
+							// 	if (id.indexOf('google_translate') !== -1 || id.indexOf('gtranslate') !== -1) return true;
+							// 	return node.closest && (node.closest('#google_translate_element') || node.closest('.gtranslate'));
+							// };
 							for (let mutation of mutationsList) {
+								// if (mutation.type === 'childList' && !isGTranslate(mutation.target)) {
 								if (mutation.type === 'childList') {
-									// Recalculate variables when new content is added
 									$(window).trigger('scroll');
 									recalculateVariables();
+									break;
 								}
 							}
 						}, 100); 
 	
 						const observer = new MutationObserver(handleMutations);
-	
-						// Start observing the target node for configured mutations
 						observer.observe(document.body, { childList: true, subtree: true });
 					}
 				}
