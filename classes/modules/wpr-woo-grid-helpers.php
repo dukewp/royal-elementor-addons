@@ -986,7 +986,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
+					if ( ! $term || ! isset( $term->term_id, $term->name ) ) {
+						continue;
+					}
+					$term_link = get_term_link( $term->term_id );
+					if ( is_wp_error( $term_link ) ) {
+						continue;
+					}
+					echo '<a '. $pointer_item_class .' href="'. esc_url( $term_link ) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
@@ -1043,7 +1050,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
-					echo '<a '. $pointer_item_class .' href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
+					if ( ! $term || ! isset( $term->term_id, $term->name ) ) {
+						continue;
+					}
+					$term_link = get_term_link( $term->term_id );
+					if ( is_wp_error( $term_link ) ) {
+						continue;
+					}
+					echo '<a '. $pointer_item_class .' href="'. esc_url( $term_link ) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}

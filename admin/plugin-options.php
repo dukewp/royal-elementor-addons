@@ -837,7 +837,7 @@ function wpr_addons_settings_page() {
                 <h4>
                     <span><?php esc_html_e( 'reCAPTCHA v2 (Checkbox) Site Key', 'wpr-addons' ); ?></span>
                     <br>
-                    <a href="https://www.google.com/recaptcha/admin" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA keys?', 'wpr-addons' ); ?></a>
+                    <a href="https://www.google.com/recaptcha/intro/v3.html" target="_blank"><?php esc_html_e( 'How to get reCAPTCHA keys?', 'wpr-addons' ); ?></a>
                     <p class="wpr-settings-group-description"><?php esc_html_e( 'Use reCAPTCHA v2 checkbox in Form Builder. Create a "reCAPTCHA v2" type key in Google reCAPTCHA admin.', 'wpr-addons' ); ?></p>
                 </h4>
 

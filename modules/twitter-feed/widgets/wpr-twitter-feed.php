@@ -4884,30 +4884,37 @@ class Wpr_Twitter_Feed extends Widget_Base {
 		}
         echo '<div '. wp_kses_post( $this->get_render_attribute_string( 'twitter_feed' ) ) .'>';
 
+        $posts_to_show = absint( $settings['number_of_posts'] );
+        $posts_shown = 0;
+
         foreach ( $items_array as $key=>$items ) :
         $i = 0;
 
-		if ($settings['twitter_feed_hashtag_name']) {
+		if ( ! empty( $items['data']['tweets'] ) && $settings['twitter_feed_hashtag_name']) {
 			$hashtag_names = explode(',', str_replace(' ', '', $settings['twitter_feed_hashtag_name']));
-
-			foreach ($items as $key => $item) {
+			$filtered_tweets = [];
+			foreach ( $items['data']['tweets'] as $tweet ) {
 				$match = false;
-
-				if ($item['entities']['hashtags']) {
-					foreach ($item['entities']['hashtags'] as $tag) {
-						if (in_array($tag['text'], $hashtag_names)) {
+				if ( ! empty( $tweet['entities']['hashtags'] ) ) {
+					foreach ( $tweet['entities']['hashtags'] as $tag ) {
+						if ( in_array( $tag['text'], $hashtag_names ) ) {
 							$match = true;
+							break;
 						}
 					}
 				}
-
-				if ($match == false) {
-					unset($items[$key]);
+				if ( $match ) {
+					$filtered_tweets[] = $tweet;
 				}
 			}
+			$items['data']['tweets'] = $filtered_tweets;
 		}
 
-        foreach ( $items['data']['tweets'] as $item ) :
+		$tweets = isset( $items['data']['tweets'] ) ? $items['data']['tweets'] : [];
+		foreach ( $tweets as $item ) :
+			if ( $posts_to_show > 0 && $posts_shown >= $posts_to_show ) {
+				break 2;
+			}
                 
         $banner_placeholder = WPR_ADDONS_ASSETS_URL . 'img/placeholder.png';
         // $banner = $item['author']['profile_banner_url'] ? $item['author']['profile_banner_url'] : $banner_placeholder;
@@ -4923,7 +4930,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
                         </article>
                 </div>
         <?php
-
+			$posts_shown++;
         endforeach;
         endforeach;
         echo '</div>';
