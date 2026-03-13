@@ -107,9 +107,9 @@ class Endpoints {
 			'icon'         => ! empty( $body['icon'] ) ? sanitize_text_field( $body['icon'] ) : 'eicon-cog',
 			'categories'   => [ $category ],
 			'push_id'      => $id,
-			'markup'       => isset( $body['markup'] ) ? $body['markup'] : '',
-			'css'          => isset( $body['css'] ) ? $body['css'] : '',
-			'js'           => isset( $body['js'] ) ? $body['js'] : '',
+			'markup'       => isset( $body['markup'] ) ? str_replace( [ '<?php', '<?=', '<?', '?>' ], '', $body['markup'] ) : '',
+			'css'          => isset( $body['css'] ) ? wp_strip_all_tags( $body['css'] ) : '',
+			'js'           => isset( $body['js'] ) ? str_replace( '</script>', '', $body['js'] ) : '',
 			'css_includes' => ! empty( $body['css_includes'] ) ? array_map( 'esc_url_raw', (array) $body['css_includes'] ) : [],
 			'js_includes'  => ! empty( $body['js_includes'] ) ? array_map( 'esc_url_raw', (array) $body['js_includes'] ) : [],
 			'tabs'         => isset( $body['tabs'] ) ? $body['tabs'] : [
@@ -279,6 +279,25 @@ class Endpoints {
 		}
 		if ( isset( $control['slider_step'] ) && $control['slider_step'] !== '' ) {
 			$clean['slider_step'] = floatval( $control['slider_step'] );
+		}
+
+		// No units (slider)
+		if ( ! empty( $control['no_units'] ) ) {
+			$clean['no_units'] = true;
+		}
+
+		// Allowed dimensions
+		if ( ! empty( $control['allowed_dimensions'] ) && in_array( $control['allowed_dimensions'], [ 'vertical', 'horizontal' ], true ) ) {
+			$clean['allowed_dimensions'] = $control['allowed_dimensions'];
+		}
+
+		// Code language
+		if ( ! empty( $control['language'] ) ) {
+			$allowed_langs = [ 'html', 'css', 'sass', 'scss', 'javascript', 'json', 'less', 'markdown', 'php', 'python', 'mysql', 'sql', 'svg', 'text', 'twig', 'typescript' ];
+			$lang = sanitize_text_field( $control['language'] );
+			if ( in_array( $lang, $allowed_langs, true ) ) {
+				$clean['language'] = $lang;
+			}
 		}
 
 		// Selectors (CSS mapping)

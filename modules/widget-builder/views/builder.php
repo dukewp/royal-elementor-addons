@@ -143,6 +143,62 @@ if ( $widget_id ) {
 			<button type="button" class="wpr-wb-code-tab" data-editor="css"><?php esc_html_e( 'CSS', 'wpr-addons' ); ?></button>
 			<button type="button" class="wpr-wb-code-tab" data-editor="js"><?php esc_html_e( 'JavaScript', 'wpr-addons' ); ?></button>
 			<button type="button" class="wpr-wb-code-tab" data-editor="includes"><?php esc_html_e( 'CSS/JS Includes', 'wpr-addons' ); ?></button>
+			<button type="button" class="wpr-wb-code-info-btn" id="wpr-wb-template-info-btn" title="<?php esc_attr_e( 'Template Tags Reference', 'wpr-addons' ); ?>"><i class="eicon-info-circle-o"></i></button>
+		</div>
+
+		<!-- Template Tags Info Popup -->
+		<div id="wpr-wb-template-info-popup" class="wpr-wb-template-info-popup">
+			<div class="wpr-wb-template-info-inner">
+				<div class="wpr-wb-template-info-header">
+					<span><?php esc_html_e( 'Template Tags Reference', 'wpr-addons' ); ?></span>
+					<button type="button" class="wpr-wb-template-info-close"><i class="eicon-close"></i></button>
+				</div>
+				<div class="wpr-wb-template-info-body">
+					<p><?php esc_html_e( 'Write your widget\'s HTML here. To show values from the controls you created on the left panel, use template tags.', 'wpr-addons' ); ?></p>
+					<p><?php esc_html_e( 'Template tags look like {{key}} — when the widget renders, they get replaced with whatever the user enters in that control. The "key" is the control\'s unique name shown in the left panel (e.g. text_1, color_2).', 'wpr-addons' ); ?></p>
+					<p><?php echo wp_kses( __( 'Example: if you have a Text control with key "title_1", writing <code>&lt;h2&gt;{{title_1}}&lt;/h2&gt;</code> here will display whatever text the user types into that field.', 'wpr-addons' ), [ 'code' => [] ] ); ?></p>
+					<h4><?php esc_html_e( 'Output Values', 'wpr-addons' ); ?></h4>
+					<table>
+						<tr><td><code>{{key}}</code></td><td><?php esc_html_e( 'Text, Number, Textarea, Select, Choose, Color, Switcher, Hidden, Font, Date/Time', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{key.url}}</code></td><td><?php esc_html_e( 'Media — outputs the image/file URL', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{key.size}}</code></td><td><?php esc_html_e( 'Slider — outputs the numeric value', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{icon(key)}}</code></td><td><?php esc_html_e( 'Icons — renders the selected icon SVG/font', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{key}}</code></td><td><?php esc_html_e( 'Code — displays escaped code in &lt;pre&gt;&lt;code&gt; block', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{key}}</code></td><td><?php esc_html_e( 'URL — outputs the link URL', 'wpr-addons' ); ?></td></tr>
+					</table>
+
+					<h4><?php esc_html_e( 'Conditionals', 'wpr-addons' ); ?></h4>
+					<table>
+						<tr><td><code>{{#if key}}</code></td><td><?php esc_html_e( 'Show block if value is not empty (great for Switcher)', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{#if key == val}}</code></td><td><?php esc_html_e( 'Show block if value equals "val" (great for Select/Choose)', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{#if key != val}}</code></td><td><?php esc_html_e( 'Show block if value does NOT equal "val"', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{else}}</code></td><td><?php esc_html_e( 'Optional else branch', 'wpr-addons' ); ?></td></tr>
+						<tr><td><code>{{/if}}</code></td><td><?php esc_html_e( 'End conditional block', 'wpr-addons' ); ?></td></tr>
+					</table>
+
+					<h4><?php esc_html_e( 'Examples', 'wpr-addons' ); ?></h4>
+					<pre><code>&lt;h2&gt;{{title_1}}&lt;/h2&gt;
+&lt;img src="{{media_1.url}}"&gt;
+{{icon(icons_1)}}
+
+{{#if switcher_1}}
+  &lt;span class="badge"&gt;New&lt;/span&gt;
+{{/if}}
+
+{{#if select_1 == grid}}
+  &lt;div class="grid"&gt;...&lt;/div&gt;
+{{else}}
+  &lt;div class="list"&gt;...&lt;/div&gt;
+{{/if}}</code></pre>
+
+					<h4><?php esc_html_e( 'Notes', 'wpr-addons' ); ?></h4>
+					<ul>
+						<li><?php esc_html_e( 'CSS Styles use {{VALUE}}, {{SIZE}}{{UNIT}}, {{TOP}}, etc. — these are Elementor placeholders, not template tags.', 'wpr-addons' ); ?></li>
+						<li><?php esc_html_e( 'Switcher returns "yes" when ON and "" (empty) when OFF.', 'wpr-addons' ); ?></li>
+						<li><?php esc_html_e( 'Group controls (Typography, Background, Border) only use CSS Styles — no template tags needed.', 'wpr-addons' ); ?></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 
 		<!-- Editor Areas -->

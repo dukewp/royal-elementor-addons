@@ -47,6 +47,7 @@ class ControlFactory {
 		'date_time'           => 'DATE_TIME',
 		'entrance_animation'  => 'ANIMATION',
 		'hover_animation'     => 'HOVER_ANIMATION',
+		'hidden'              => 'HIDDEN',
 		'image_dimensions'    => 'IMAGE_DIMENSIONS',
 	];
 
@@ -168,9 +169,27 @@ class ControlFactory {
 			}
 		}
 
+		// Code language
+		if ( $type === 'code' && ! empty( $conf->language ) ) {
+			$code .= "\t\t\t\t'language' => '" . self::escape_string( $conf->language ) . "'," . PHP_EOL;
+		}
+
 		// Slider-specific
 		if ( $type === 'slider' ) {
 			$code .= self::generate_slider_args( $conf );
+		}
+
+		// Number-specific min/max/step
+		if ( $type === 'number' ) {
+			if ( isset( $conf->slider_min ) && $conf->slider_min !== '' ) {
+				$code .= "\t\t\t\t'min' => " . floatval( $conf->slider_min ) . "," . PHP_EOL;
+			}
+			if ( isset( $conf->slider_max ) && $conf->slider_max !== '' ) {
+				$code .= "\t\t\t\t'max' => " . floatval( $conf->slider_max ) . "," . PHP_EOL;
+			}
+			if ( isset( $conf->slider_step ) && $conf->slider_step !== '' ) {
+				$code .= "\t\t\t\t'step' => " . floatval( $conf->slider_step ) . "," . PHP_EOL;
+			}
 		}
 
 		// Dimensions-specific
@@ -267,9 +286,7 @@ class ControlFactory {
 				}
 				$code .= "\t\t\t\t\t'" . $key . "' => [" . PHP_EOL;
 				$code .= "\t\t\t\t\t\t'title' => esc_html__( '" . $title . "', 'wpr-addons' )," . PHP_EOL;
-				if ( $icon ) {
-					$code .= "\t\t\t\t\t\t'icon' => '" . $icon . "'," . PHP_EOL;
-				}
+				$code .= "\t\t\t\t\t\t'icon' => '" . $icon . "'," . PHP_EOL;
 				$code .= "\t\t\t\t\t]," . PHP_EOL;
 			}
 		} else {
@@ -289,30 +306,43 @@ class ControlFactory {
 	 */
 	private static function generate_slider_args( $conf ) {
 		$code = '';
+		$no_units = ! empty( $conf->no_units );
 
-		$min_px  = isset( $conf->slider_min ) && $conf->slider_min !== '' ? floatval( $conf->slider_min ) : 0;
-		$max_px  = isset( $conf->slider_max ) && $conf->slider_max !== '' ? floatval( $conf->slider_max ) : 1000;
-		$step_px = isset( $conf->slider_step ) && $conf->slider_step !== '' ? floatval( $conf->slider_step ) : 1;
+		$min  = isset( $conf->slider_min ) && $conf->slider_min !== '' ? floatval( $conf->slider_min ) : 0;
+		$max  = isset( $conf->slider_max ) && $conf->slider_max !== '' ? floatval( $conf->slider_max ) : 1000;
+		$step = isset( $conf->slider_step ) && $conf->slider_step !== '' ? floatval( $conf->slider_step ) : 1;
 
-		// Size units
-		$code .= "\t\t\t\t'size_units' => [ 'px', 'em', '%' ]," . PHP_EOL;
+		if ( $no_units ) {
+			// No unit selector — plain numeric slider
+			$code .= "\t\t\t\t'size_units' => [ 'px' ]," . PHP_EOL;
+			$code .= "\t\t\t\t'range' => [" . PHP_EOL;
+			$code .= "\t\t\t\t\t'px' => [" . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'min' => " . $min . "," . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'max' => " . $max . "," . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'step' => " . $step . "," . PHP_EOL;
+			$code .= "\t\t\t\t\t]," . PHP_EOL;
+			$code .= "\t\t\t\t]," . PHP_EOL;
+		} else {
+			// Size units
+			$code .= "\t\t\t\t'size_units' => [ 'px', 'em', '%' ]," . PHP_EOL;
 
-		// Range
-		$code .= "\t\t\t\t'range' => [" . PHP_EOL;
-		$code .= "\t\t\t\t\t'px' => [" . PHP_EOL;
-		$code .= "\t\t\t\t\t\t'min' => " . $min_px . "," . PHP_EOL;
-		$code .= "\t\t\t\t\t\t'max' => " . $max_px . "," . PHP_EOL;
-		$code .= "\t\t\t\t\t\t'step' => " . $step_px . "," . PHP_EOL;
-		$code .= "\t\t\t\t\t]," . PHP_EOL;
-		$code .= "\t\t\t\t\t'%' => [" . PHP_EOL;
-		$code .= "\t\t\t\t\t\t'min' => 0," . PHP_EOL;
-		$code .= "\t\t\t\t\t\t'max' => 100," . PHP_EOL;
-		$code .= "\t\t\t\t\t]," . PHP_EOL;
-		$code .= "\t\t\t\t\t'em' => [" . PHP_EOL;
-		$code .= "\t\t\t\t\t\t'min' => 0," . PHP_EOL;
-		$code .= "\t\t\t\t\t\t'max' => 100," . PHP_EOL;
-		$code .= "\t\t\t\t\t]," . PHP_EOL;
-		$code .= "\t\t\t\t]," . PHP_EOL;
+			// Range
+			$code .= "\t\t\t\t'range' => [" . PHP_EOL;
+			$code .= "\t\t\t\t\t'px' => [" . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'min' => " . $min . "," . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'max' => " . $max . "," . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'step' => " . $step . "," . PHP_EOL;
+			$code .= "\t\t\t\t\t]," . PHP_EOL;
+			$code .= "\t\t\t\t\t'%' => [" . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'min' => 0," . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'max' => 100," . PHP_EOL;
+			$code .= "\t\t\t\t\t]," . PHP_EOL;
+			$code .= "\t\t\t\t\t'em' => [" . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'min' => 0," . PHP_EOL;
+			$code .= "\t\t\t\t\t\t'max' => 100," . PHP_EOL;
+			$code .= "\t\t\t\t\t]," . PHP_EOL;
+			$code .= "\t\t\t\t]," . PHP_EOL;
+		}
 
 		return $code;
 	}
@@ -324,6 +354,16 @@ class ControlFactory {
 		$code = '';
 
 		$code .= "\t\t\t\t'size_units' => [ 'px', 'em', '%' ]," . PHP_EOL;
+
+		// Allowed dimensions
+		if ( ! empty( $conf->allowed_dimensions ) ) {
+			$mode = $conf->allowed_dimensions;
+			if ( $mode === 'vertical' ) {
+				$code .= "\t\t\t\t'allowed_dimensions' => [ 'top', 'bottom' ]," . PHP_EOL;
+			} elseif ( $mode === 'horizontal' ) {
+				$code .= "\t\t\t\t'allowed_dimensions' => [ 'right', 'left' ]," . PHP_EOL;
+			}
+		}
 
 		if ( ! empty( $conf->selectors ) ) {
 			return $code;
@@ -349,9 +389,18 @@ class ControlFactory {
 
 			// Auto-convert {{VALUE}} for controls that use different placeholders
 			if ( $type === 'slider' && strpos( $value, '{{VALUE}}' ) !== false ) {
+				$no_units_check = ! empty( $conf->no_units );
 				$value = str_replace( '{{VALUE}}{{UNIT}}', '{{VALUE}}', $value );
-				$value = str_replace( '{{VALUE}}', '{{SIZE}}{{UNIT}}', $value );
-			} elseif ( $type === 'dimensions' && strpos( $value, '{{VALUE}}' ) !== false ) {
+				$value = str_replace( '{{VALUE}}', $no_units_check ? '{{SIZE}}' : '{{SIZE}}{{UNIT}}', $value );
+			}
+
+			// Auto-append {{UNIT}} to bare {{SIZE}} (unless units are disabled)
+			$no_units = ! empty( $conf->no_units );
+			if ( $type === 'slider' && ! $no_units && strpos( $value, '{{SIZE}}' ) !== false ) {
+				$value = preg_replace( '/\{\{SIZE\}\}(?!\{\{UNIT\}\})/', '{{SIZE}}{{UNIT}}', $value );
+			}
+
+			if ( $type === 'dimensions' && strpos( $value, '{{VALUE}}' ) !== false ) {
 				$value = str_replace( '{{VALUE}}{{UNIT}}', '{{VALUE}}', $value );
 				$value = str_replace( '{{VALUE}}', '{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}', $value );
 			}

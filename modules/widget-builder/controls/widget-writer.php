@@ -188,7 +188,8 @@ class WidgetWriter {
 		$php .= $this->build_register_controls( $tabs );
 
 		// render()
-		$php .= $this->build_render_method( $markup );
+		$code_keys = $this->collect_control_keys_by_type( $tabs, 'code' );
+		$php .= $this->build_render_method( $markup, $code_keys );
 
 		// Close class
 		$php .= '}' . PHP_EOL;
@@ -285,12 +286,12 @@ class WidgetWriter {
 	/**
 	 * Build the render() method with template tag replacement.
 	 */
-	private function build_render_method( $markup ) {
+	private function build_render_method( $markup, $code_keys = [] ) {
 		$php = "\t" . 'protected function render() {' . PHP_EOL;
 
 		if ( ! empty( $markup ) ) {
 			// Replace template tags
-			$markup = $this->replace_template_tags( $markup );
+			$markup = $this->replace_template_tags( $markup, $code_keys );
 
 			$php .= "\t\t" . '$settings = $this->get_settings_for_display();' . PHP_EOL . PHP_EOL;
 			$php .= "\t\t" . '?>' . PHP_EOL;
@@ -310,10 +311,14 @@ class WidgetWriter {
 	 *   {{key.subkey}}   -> Nested array access (e.g., image.url)
 	 *   {{icon(key)}}    -> Elementor icon rendering
 	 */
-	private function replace_template_tags( $markup ) {
+	private function replace_template_tags( $markup, $code_keys = [] ) {
+		// Step 1: Process conditional blocks {{#if key}}, {{#if key == value}}, {{else}}, {{/if}}
+		$markup = $this->replace_conditionals( $markup );
+
+		// Step 2: Process value tags {{key}}, {{key.subkey}}, {{icon(key)}}
 		return preg_replace_callback(
 			'/\{\{([^{}]+)\}\}/',
-			function( $matches ) {
+			function( $matches ) use ( $code_keys ) {
 				$tag = trim( $matches[1] );
 
 				// Check for function call: icon(key)
@@ -334,9 +339,81 @@ class WidgetWriter {
 					$access .= '[\'' . ControlFactory::escape_string( trim( $part ) ) . '\']';
 				}
 
-				return '<?php $__v = isset($settings' . $access . ') ? $settings' . $access . ' : \'\'; if (is_array($__v)) { if (isset($__v[\'url\'])) { echo esc_url($__v[\'url\']); } elseif (isset($__v[0])) { foreach ($__v as $__item) { $__url = esc_url($__item[\'url\']); $__ext = strtolower(pathinfo($__url, PATHINFO_EXTENSION)); if (in_array($__ext, [\'mp4\',\'webm\',\'ogg\',\'mov\'])) { echo \'<video src="\' . $__url . \'" controls></video>\'; } elseif (in_array($__ext, [\'mp3\',\'wav\',\'ogg\',\'flac\'])) { echo \'<audio src="\' . $__url . \'" controls></audio>\'; } else { echo \'<img src="\' . $__url . \'">\'; } } } } else { echo $__v; } ?>';
+				// Code controls: escape output and wrap in <pre><code>
+				$root_key = ControlFactory::escape_string( trim( $parts[0] ) );
+				if ( in_array( $root_key, $code_keys, true ) ) {
+					return '<?php echo \'<pre><code>\' . esc_html( isset($settings' . $access . ') ? $settings' . $access . ' : \'\' ) . \'</code></pre>\'; ?>';
+				}
+
+				return '<?php $__v = isset($settings' . $access . ') ? $settings' . $access . ' : \'\'; if (is_array($__v)) { if (isset($__v[\'url\'])) { echo esc_url($__v[\'url\']); } elseif (isset($__v[0])) { foreach ($__v as $__item) { $__url = esc_url($__item[\'url\']); $__ext = strtolower(pathinfo($__url, PATHINFO_EXTENSION)); if (in_array($__ext, [\'mp4\',\'webm\',\'ogg\',\'mov\'])) { echo \'<video src="\' . $__url . \'" controls></video>\'; } elseif (in_array($__ext, [\'mp3\',\'wav\',\'ogg\',\'flac\'])) { echo \'<audio src="\' . $__url . \'" controls></audio>\'; } else { echo \'<img src="\' . $__url . \'">\'; } } } } else { echo wp_kses_post($__v); } ?>';
 			},
 			$markup
 		);
+	}
+
+	/**
+	 * Replace conditional template tags with PHP if/else blocks.
+	 *
+	 * Supported syntax:
+	 *   {{#if key}}         — truthy check (non-empty, not null)
+	 *   {{#if key == val}}  — equality check
+	 *   {{#if key != val}}  — inequality check
+	 *   {{else}}            — else branch
+	 *   {{/if}}             — end block
+	 */
+	private function replace_conditionals( $markup ) {
+		// {{/if}}
+		$markup = str_replace( '{{/if}}', '<?php endif; ?>', $markup );
+
+		// {{else}}
+		$markup = str_replace( '{{else}}', '<?php else: ?>', $markup );
+
+		// {{#if key == value}} or {{#if key != value}}
+		$markup = preg_replace_callback(
+			'/\{\{#if\s+([a-zA-Z0-9_.]+)\s*(==|!=)\s*(.+?)\}\}/',
+			function( $m ) {
+				$key = ControlFactory::escape_string( trim( $m[1] ) );
+				$op  = $m[2];
+				$val = ControlFactory::escape_string( trim( $m[3], " \t\"'" ) );
+				return '<?php if ( isset($settings[\'' . $key . '\']) && $settings[\'' . $key . '\'] ' . $op . ' \'' . $val . '\' ): ?>';
+			},
+			$markup
+		);
+
+		// {{#if key}} — truthy check
+		$markup = preg_replace_callback(
+			'/\{\{#if\s+([a-zA-Z0-9_.]+)\}\}/',
+			function( $m ) {
+				$key = ControlFactory::escape_string( trim( $m[1] ) );
+				return '<?php if ( ! empty($settings[\'' . $key . '\']) ): ?>';
+			},
+			$markup
+		);
+
+		return $markup;
+	}
+
+	/**
+	 * Collect control keys of a specific type from all tabs.
+	 */
+	private function collect_control_keys_by_type( $tabs, $type ) {
+		$tabs = (object) $tabs;
+		$keys = [];
+
+		foreach ( [ 'content', 'style', 'advanced' ] as $tab_key ) {
+			$sections = isset( $tabs->$tab_key ) ? (array) $tabs->$tab_key : [];
+			foreach ( $sections as $section ) {
+				$section  = (object) $section;
+				$controls = ! empty( $section->controls ) ? (array) $section->controls : [];
+				foreach ( $controls as $control ) {
+					$control = (object) $control;
+					if ( ! empty( $control->type ) && $control->type === $type && ! empty( $control->key ) ) {
+						$keys[] = sanitize_key( $control->key );
+					}
+				}
+			}
+		}
+
+		return $keys;
 	}
 }

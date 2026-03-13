@@ -90,6 +90,7 @@ class Plugin {
 				'wpr-parallax-multi-layer'  => get_option( 'wpr-parallax-multi-layer', 'on' ),
 				'wpr-sticky-section'        => get_option( 'wpr-sticky-section', 'on' ),
 				'wpr-custom-css'            => get_option( 'wpr-custom-css', 'on' ),
+				'wpr-display-conditions'    => get_option( 'wpr-display-conditions', 'on' ),
 				'wpr_override_woo_templates'=> get_option( 'wpr_override_woo_templates', 'on' ),
 			];
 		}
@@ -151,6 +152,11 @@ class Plugin {
 		// Custom CSS
 		if ( 'on' === $this->wpr_get_extension_option( 'wpr-custom-css' ) ) {
 			require WPR_ADDONS_PATH . 'extensions/wpr-custom-css.php';
+		}
+
+		// Display Conditions (Visibility)
+		if ( 'on' === $this->wpr_get_extension_option( 'wpr-display-conditions' ) ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-display-conditions.php';
 		}
 
 		// Mega Menu
@@ -266,6 +272,8 @@ class Plugin {
 	public function register_ajax_hooks() {
         add_action( 'wp_ajax_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
         add_action( 'wp_ajax_nopriv_mailchimp_subscribe', [new Utilities, 'ajax_mailchimp_subscribe'] );
+        add_action( 'wp_ajax_wpr_ppc_verify_password', [new Utilities, 'ajax_ppc_verify_password'] );
+        add_action( 'wp_ajax_nopriv_wpr_ppc_verify_password', [new Utilities, 'ajax_ppc_verify_password'] );
 	}
 
 	public function mega_menu_ajax_loading() {

@@ -48,6 +48,20 @@
 				editors[editor].layout();
 			}
 		});
+
+		// Template Tags Info popup
+		$('#wpr-wb-template-info-btn').on('click', function () {
+			$('#wpr-wb-template-info-popup').toggleClass('open');
+		});
+		$('.wpr-wb-template-info-close').on('click', function () {
+			$('#wpr-wb-template-info-popup').removeClass('open');
+		});
+		$(document).on('click', function (e) {
+			var $popup = $('#wpr-wb-template-info-popup');
+			if ($popup.hasClass('open') && !$(e.target).closest('#wpr-wb-template-info-popup, #wpr-wb-template-info-btn').length) {
+				$popup.removeClass('open');
+			}
+		});
 	}
 
 	/* ------------------------------------------------------------------
@@ -266,7 +280,7 @@
 				if (res.post_id) {
 					wprWidgetBuilder.postId = res.post_id;
 					// Update URL without reload
-					var newUrl = window.location.pathname + '?post=' + res.post_id + '&action=edit';
+					var newUrl = window.location.pathname.replace('post-new.php', 'post.php') + '?post=' + res.post_id + '&action=edit';
 					window.history.replaceState(null, '', newUrl);
 				}
 				showToast('Widget created successfully!', 'success');
@@ -283,6 +297,69 @@
 	/* ------------------------------------------------------------------
 	 * Collect all data from UI
 	 * ----------------------------------------------------------------*/
+	var htmlReferenceComment = [
+		'<!-- ═══════════════════════════════════════════════════════════',
+		'HOW TO USE THE WIDGET BUILDER',
+		'═══════════════════════════════════════════════════════════',
+		'',
+		'1. Add controls in the left panel (Text, Color, Media, etc.)',
+		'2. Write your HTML here using template tags to display',
+		'   the control values: {{key}}',
+		'3. Style your widget in the CSS tab',
+		'4. Add interactivity in the JS tab (optional)',
+		'5. Save and use your widget in Elementor!',
+		'',
+		'───────────────────────────────────────────────────────',
+		'Template tags:',
+		'───────────────────────────────────────────────────────',
+		'  {{key}}            Text, Number, Textarea, Select,',
+		'                     Choose, Color, Switcher, Hidden,',
+		'                     Font, Date/Time, URL',
+		'  {{key.url}}        Media — image/file URL',
+		'  {{key.size}}       Slider — numeric value',
+		'  {{icon(key)}}      Icons — renders icon SVG/font',
+		'  {{key}}            Code — shows code as text',
+		'',
+		'───────────────────────────────────────────────────────',
+		'Conditionals (show/hide HTML):',
+		'───────────────────────────────────────────────────────',
+		'  {{#if key}} … {{/if}}',
+		'  {{#if key == value}} … {{else}} … {{/if}}',
+		'  {{#if key != value}} … {{/if}}',
+		'',
+		'───────────────────────────────────────────────────────',
+		'Quick example:',
+		'───────────────────────────────────────────────────────',
+		'  <h2>{{title_1}}</h2>',
+		'  <img src="{{media_1.url}}">',
+		'  {{#if show_badge}}',
+		'    <span class="badge">New</span>',
+		'  {{/if}}',
+		'',
+		'Notes:',
+		'  • Switcher returns "yes" (ON) or "" (OFF)',
+		'  • Group controls (Typography, Background, Border)',
+		'    only use CSS Styles — no template tags needed',
+		'  • Click the ⓘ button above for full reference',
+		'',
+		'═══════════════════════════════════════════════════════════ -->',
+	].join('\n');
+
+	var htmlReferenceMarker = '<!-- ═══════════════════════════════════════════════════════';
+
+	function getHtmlWithReference(markup) {
+		if (!markup) markup = '';
+		if (markup.indexOf(htmlReferenceMarker) !== -1) return markup;
+		return markup + '\n\n\n\n\n' + htmlReferenceComment;
+	}
+
+	function stripHtmlReference(markup) {
+		if (!markup) return '';
+		var idx = markup.indexOf(htmlReferenceMarker);
+		if (idx === -1) return markup;
+		return markup.substring(0, idx).replace(/\s+$/, '');
+	}
+
 	function collectData() {
 		return {
 			title: $('#wpr-wb-title').val() || 'New Widget',
@@ -293,7 +370,7 @@
 				style: collectTabSections('style'),
 				advanced: collectTabSections('advanced')
 			},
-			markup: editors.html ? editors.html.getValue() : '',
+			markup: editors.html ? stripHtmlReference(editors.html.getValue()) : '',
 			css: editors.css ? editors.css.getValue() : '',
 			js: editors.js ? editors.js.getValue() : '',
 			css_includes: $('#wpr-wb-css-includes').val() ? $('#wpr-wb-css-includes').val().split('\n').filter(Boolean) : [],
@@ -306,7 +383,11 @@
 	 * ----------------------------------------------------------------*/
 	function loadWidget() {
 		if (!wprWidgetBuilder.postId) {
-			return; // New widget, nothing to load
+			// New widget — show reference comment
+			if (editors.html) {
+				editors.html.setValue(getHtmlWithReference(''));
+			}
+			return;
 		}
 
 		$('#wpr-wb-app').addClass('loading');
@@ -358,8 +439,8 @@
 		}
 
 		// Right panel — Monaco editors
-		if (editors.html && data.markup) {
-			editors.html.setValue(data.markup);
+		if (editors.html) {
+			editors.html.setValue(getHtmlWithReference(data.markup || ''));
 		}
 		if (editors.css && data.css) {
 			editors.css.setValue(data.css);
@@ -624,16 +705,17 @@
 		color:              { label: 'Color',             icon: 'eicon-paint-brush',   group: 'Design' },
 		slider:             { label: 'Slider',            icon: 'eicon-h-align-stretch',   group: 'Design' },
 		dimensions:         { label: 'Dimensions',        icon: 'eicon-frame-expand',  group: 'Design' },
-		url:                { label: 'URL',               icon: 'eicon-url',           group: 'Basics' },
+		url:                { label: 'URL',               icon: 'eicon-url',           group: 'Basic' },
 		// Group Controls
-		typography:         { label: 'Typography',        icon: 'eicon-typography',    group: 'Group' },
-		background:         { label: 'Background',        icon: 'eicon-background',    group: 'Group' },
-		border:             { label: 'Border',            icon: 'eicon-square',        group: 'Group' },
-		box_shadow:         { label: 'Box Shadow',        icon: 'eicon-lightbox',      group: 'Group' },
-		text_shadow:        { label: 'Text Shadow',       icon: 'eicon-font',          group: 'Group' },
+		typography:         { label: 'Typography',        icon: 'eicon-typography',    group: 'Group Controls' },
+		background:         { label: 'Background',        icon: 'eicon-background',    group: 'Group Controls' },
+		border:             { label: 'Border',            icon: 'eicon-square',        group: 'Group Controls' },
+		box_shadow:         { label: 'Box Shadow',        icon: 'eicon-lightbox',      group: 'Group Controls' },
+		text_shadow:        { label: 'Text Shadow',       icon: 'eicon-font',          group: 'Group Controls' },
 		// Other
 		font:               { label: 'Font',              icon: 'eicon-font',          group: 'Other' },
 		date_time:          { label: 'Date/Time',         icon: 'eicon-date',          group: 'Other' },
+		hidden:             { label: 'Hidden',            icon: 'eicon-eye-slash',     group: 'Other' },
 	};
 
 	/** Group controls that need selector instead of options/default */
@@ -782,6 +864,11 @@
 		$controls.append($control);
 		initControlSortable($controls);
 
+		// Sync default select with premade options for choice controls
+		if (optionControlTypes.indexOf(type) !== -1) {
+			syncDefaultSelect($control.find('.wpr-wb-control-body'));
+		}
+
 		return $control;
 	}
 
@@ -793,7 +880,7 @@
 		var h = '<div class="wpr-wb-option-row">';
 		h += '<span class="wpr-wb-option-drag"><i class="eicon-handle"></i></span>';
 		h += '<input type="text" class="wpr-wb-option-key" value="' + escAttr(key || '') + '" placeholder="key">';
-		h += '<input type="text" class="wpr-wb-option-title" value="' + escAttr(title || '') + '" placeholder="title">';
+		h += '<input type="text" class="wpr-wb-option-title" value="' + escAttr(title || '') + '" placeholder="label">';
 		if (hasIcon) {
 			h += '<button type="button" class="wpr-wb-option-icon-btn" title="Choose Icon">';
 			h += '<i class="' + (icon ? escAttr(icon) : 'eicon-star') + '"></i>';
@@ -810,7 +897,7 @@
 	 * ----------------------------------------------------------------*/
 	var selectorPlaceholders = {
 		color: 'color: {{VALUE}}',
-		slider: 'width: {{SIZE}}{{UNIT}}',
+		slider: 'width: {{SIZE}}',
 		dimensions: 'padding: {{TOP}} {{RIGHT}} {{BOTTOM}} {{LEFT}}',
 		choose: 'text-align: {{VALUE}}',
 		select: 'display: {{VALUE}}',
@@ -818,8 +905,8 @@
 		font: 'font-family: {{VALUE}}',
 	};
 
-	function buildSelectorRow(selector, declaration, controlType) {
-		var placeholder = selectorPlaceholders[controlType] || 'color: {{VALUE}}';
+	function buildSelectorRow(selector, declaration, controlType, overridePlaceholder) {
+		var placeholder = overridePlaceholder || selectorPlaceholders[controlType] || 'color: {{VALUE}}';
 		var h = '<div class="wpr-wb-selector-row">';
 		h += '<div class="wpr-wb-selector-row-header">';
 		h += '<span class="wpr-wb-selector-row-drag"><i class="eicon-handle"></i></span>';
@@ -829,6 +916,25 @@
 		h += '<input type="text" class="wpr-wb-selector-row-decl" value="' + escAttr(declaration || '') + '" placeholder="' + placeholder + '">';
 		h += '</div>';
 		return h;
+	}
+
+	/**
+	 * Sync the default value <select> with options from the repeater.
+	 */
+	function syncDefaultSelect($body) {
+		var $select = $body.find('.wpr-wb-default-select');
+		if (!$select.length) return;
+		var curVal = $select.val();
+		var html = '<option value="">None</option>';
+		$body.find('.wpr-wb-options-repeater .wpr-wb-option-row').each(function () {
+			var k = $(this).find('.wpr-wb-option-key').val() || '';
+			var l = $(this).find('.wpr-wb-option-title').val() || k;
+			if (k) {
+				var sel = (k === curVal) ? ' selected' : '';
+				html += '<option value="' + escAttr(k) + '"' + sel + '>' + escAttr(l) + '</option>';
+			}
+		});
+		$select.html(html);
 	}
 
 	/**
@@ -852,8 +958,21 @@
 		h += '<button type="button" class="wpr-wb-key-copy-btn" title="Copy key"><i class="eicon-copy"></i></button>';
 		h += '</div>';
 		var hintTag = (type === 'icons') ? '{{icon(' + escAttr(key) + ')}}' : (type === 'media') ? '{{' + escAttr(key) + '.url}}' : '{{' + escAttr(key) + '}}';
-		h += '<span class="wpr-wb-control-field-hint">Use in template: ' + hintTag + '</span>';
+		h += '<span class="wpr-wb-control-field-hint">Copy to use in HTML: ' + hintTag + '</span>';
+		if (type === 'switcher') {
+			h += '<span class="wpr-wb-control-field-hint">Conditional: {{#if ' + escAttr(key) + '}}...{{else}}...{{/if}}</span>';
+		}
 		h += '</div>';
+
+		// Hidden control: only key + default value
+		if (type === 'hidden') {
+			h += '<div class="wpr-wb-control-field">';
+			h += '<label class="wpr-wb-control-field-label">Default Value</label>';
+			h += '<input type="text" class="wpr-wb-control-field-input" data-field="default" value="' + escAttr(conf.default || '') + '">';
+			h += '<span class="wpr-wb-control-field-hint">This value is stored but not visible to the user in Elementor</span>';
+			h += '</div>';
+			return h;
+		}
 
 		if (isGroup) {
 			// Selector for group controls
@@ -867,11 +986,53 @@
 			if (type !== 'icons') {
 				h += '<div class="wpr-wb-control-field">';
 				h += '<label class="wpr-wb-control-field-label">Default Value</label>';
-				h += '<input type="text" class="wpr-wb-control-field-input" data-field="default" value="' + escAttr(conf.default || '') + '">';
+				if (type === 'switcher') {
+					// On/Off select for switcher
+					var swVal = conf.default || '';
+					h += '<select class="wpr-wb-control-field-input" data-field="default">';
+					h += '<option value=""' + (swVal !== 'yes' ? ' selected' : '') + '>Off</option>';
+					h += '<option value="yes"' + (swVal === 'yes' ? ' selected' : '') + '>On</option>';
+					h += '</select>';
+				} else if (optionControlTypes.indexOf(type) !== -1) {
+					// Select dropdown for choice controls — populated dynamically from options repeater
+					h += '<select class="wpr-wb-control-field-input wpr-wb-default-select" data-field="default">';
+					h += '<option value="">None</option>';
+					if (conf.options && typeof conf.options === 'object') {
+						for (var dk in conf.options) {
+							var dlabel = (typeof conf.options[dk] === 'object') ? (conf.options[dk].title || dk) : (conf.options[dk] || dk);
+							var dsel = (dk === (conf.default || '')) ? ' selected' : '';
+							h += '<option value="' + escAttr(dk) + '"' + dsel + '>' + escAttr(dlabel) + '</option>';
+						}
+					}
+					h += '</select>';
+				} else {
+					h += '<input type="text" class="wpr-wb-control-field-input" data-field="default" value="' + escAttr(conf.default || '') + '">';
+				}
 				h += '</div>';
 
-				// Slider min/max
-				if (type === 'slider') {
+				// Code language
+				if (type === 'code') {
+					var codeLangs = {
+						html: 'HTML', css: 'CSS', sass: 'SASS', scss: 'SCSS',
+						javascript: 'JavaScript', json: 'JSON', less: 'LESS',
+						markdown: 'Markdown', php: 'PHP', python: 'Python',
+						mysql: 'MySQL', sql: 'SQL', svg: 'SVG', text: 'Text',
+						twig: 'Twig', typescript: 'TypeScript'
+					};
+					var curLang = conf.language || 'html';
+					h += '<div class="wpr-wb-control-field">';
+					h += '<label class="wpr-wb-control-field-label">Language</label>';
+					h += '<select class="wpr-wb-control-field-input" data-field="language">';
+					for (var lk in codeLangs) {
+						var sel = (lk === curLang) ? ' selected' : '';
+						h += '<option value="' + lk + '"' + sel + '>' + codeLangs[lk] + '</option>';
+					}
+					h += '</select>';
+					h += '</div>';
+				}
+
+				// Slider/Number min/max/step
+				if (type === 'slider' || type === 'number') {
 					var sliderMin = (conf.slider_min !== undefined && conf.slider_min !== '') ? conf.slider_min : '0';
 					var sliderMax = (conf.slider_max !== undefined && conf.slider_max !== '') ? conf.slider_max : '1000';
 					var sliderStep = (conf.slider_step !== undefined && conf.slider_step !== '') ? conf.slider_step : '1';
@@ -883,20 +1044,49 @@
 					h += '<div class="wpr-wb-slider-range-input"><span>Step</span><input type="number" step="any" class="wpr-wb-control-field-input" data-field="slider_step" value="' + escAttr(sliderStep) + '"></div>';
 					h += '</div>';
 					h += '</div>';
+
+					// No units toggle (slider only)
+					if (type === 'slider') {
+						var noUnits = conf.no_units ? 'yes' : '';
+						h += '<div class="wpr-wb-control-field">';
+						h += '<label class="wpr-wb-control-field-label">Disable Unit Selector</label>';
+						h += '<select class="wpr-wb-control-field-input" data-field="no_units">';
+						h += '<option value=""' + (noUnits !== 'yes' ? ' selected' : '') + '>No</option>';
+						h += '<option value="yes"' + (noUnits === 'yes' ? ' selected' : '') + '>Yes</option>';
+						h += '</select>';
+						h += '<span class="wpr-wb-control-field-hint">Hides px/em/% selector in Elementor — use your own unit in CSS Styles</span>';
+						h += '</div>';
+					}
 				}
 
+
 				h += '<hr class="wpr-wb-control-separator">';
+			}
+
+			// Allowed Dimensions (dimensions only)
+			if (type === 'dimensions') {
+				var dimMode = conf.allowed_dimensions || 'all';
+				h += '<div class="wpr-wb-control-field">';
+				h += '<label class="wpr-wb-control-field-label">Allowed Dimensions</label>';
+				h += '<select class="wpr-wb-control-field-input" data-field="allowed_dimensions">';
+				h += '<option value="all"' + (dimMode === 'all' ? ' selected' : '') + '>All Fields</option>';
+				h += '<option value="vertical"' + (dimMode === 'vertical' ? ' selected' : '') + '>Top & Bottom</option>';
+				h += '<option value="horizontal"' + (dimMode === 'horizontal' ? ' selected' : '') + '>Left & Right</option>';
+				h += '</select>';
+				h += '<span class="wpr-wb-control-field-hint">Which dimension fields to show in Elementor</span>';
+				h += '</div>';
 			}
 
 			// Options repeater for select/select2/choose
 			if (optionControlTypes.indexOf(type) !== -1) {
 				var isChoose = (type === 'choose');
+				var hasExisting = conf.options && typeof conf.options === 'object' && Object.keys(conf.options).length > 0;
 				h += '<div class="wpr-wb-control-field">';
 				h += '<label class="wpr-wb-control-field-label">Options</label>';
 				h += '<div class="wpr-wb-options-repeater" data-type="' + type + '">';
 
-				// Render existing options
-				if (conf.options && typeof conf.options === 'object') {
+				if (hasExisting) {
+					// Render existing options
 					for (var ok in conf.options) {
 						var optVal = conf.options[ok];
 						var optTitle = '';
@@ -908,6 +1098,17 @@
 							optTitle = (typeof optVal === 'string') ? optVal : '';
 						}
 						h += buildOptionRow(ok, optTitle, isChoose ? optIcon : null);
+					}
+				} else {
+					// Premade default options for new controls
+					if (isChoose) {
+						h += buildOptionRow('value-1', 'Option 1', 'eicon-h-align-left');
+						h += buildOptionRow('value-2', 'Option 2', 'eicon-h-align-center');
+						h += buildOptionRow('value-3', 'Option 3', 'eicon-h-align-right');
+					} else {
+						h += buildOptionRow('value-1', 'Option 1', null);
+						h += buildOptionRow('value-2', 'Option 2', null);
+						h += buildOptionRow('value-3', 'Option 3', null);
 					}
 				}
 
@@ -922,28 +1123,55 @@
 			// CSS Styles (only for style-related controls)
 			var selectorTypes = ['color', 'slider', 'dimensions', 'choose', 'select', 'number', 'font'];
 			if (selectorTypes.indexOf(type) !== -1) {
-				h += '<div class="wpr-wb-control-field wpr-wb-selectors-field" data-control-type="' + type + '">';
-				h += '<label class="wpr-wb-control-field-label">CSS Styles</label>';
-				h += '<div class="wpr-wb-selector-repeater">';
-				if (conf.selectors) {
-					for (var sk in conf.selectors) {
-						// Split merged declarations back into separate rows
-						var fullDecl = conf.selectors[sk];
-						var parts = fullDecl.split(';').map(function (p) { return p.trim(); }).filter(Boolean);
-						if (parts.length > 1) {
-							for (var pi = 0; pi < parts.length; pi++) {
-								h += buildSelectorRow(sk, parts[pi], type);
+				// Determine placeholder based on control settings
+				var sliderNoUnits = (type === 'slider' && conf.no_units);
+				var dimMode = (type === 'dimensions') ? (conf.allowed_dimensions || 'all') : '';
+				var curSelectorPlaceholder;
+				if (sliderNoUnits) {
+					curSelectorPlaceholder = 'width: {{SIZE}}px';
+				} else if (dimMode === 'vertical') {
+					curSelectorPlaceholder = 'padding-top: {{TOP}}';
+				} else if (dimMode === 'horizontal') {
+					curSelectorPlaceholder = 'padding-left: {{LEFT}}';
+				} else {
+					curSelectorPlaceholder = selectorPlaceholders[type] || 'color: {{VALUE}}';
+				}
+
+				if (type === 'font') {
+					// Font: single selector input, font-family: {{VALUE}} applied automatically
+					var fontSel = '';
+					if (conf.selectors) {
+						var fontKeys = Object.keys(conf.selectors);
+						if (fontKeys.length) fontSel = fontKeys[0];
+					}
+					h += '<div class="wpr-wb-control-field wpr-wb-font-selector-field">';
+					h += '<label class="wpr-wb-control-field-label">Selector</label>';
+					h += '<input type="text" class="wpr-wb-control-field-input" data-field="font_selector" value="' + escAttr(fontSel) + '" placeholder=".my-element">';
+					h += '<span class="wpr-wb-control-field-hint">font-family: {{VALUE}} is applied automatically</span>';
+					h += '</div>';
+				} else {
+					h += '<div class="wpr-wb-control-field wpr-wb-selectors-field" data-control-type="' + type + '">';
+					h += '<label class="wpr-wb-control-field-label">CSS Styles</label>';
+					h += '<div class="wpr-wb-selector-repeater">';
+					if (conf.selectors) {
+						for (var sk in conf.selectors) {
+							// Split merged declarations back into separate rows
+							var fullDecl = conf.selectors[sk];
+							var parts = fullDecl.split(';').map(function (p) { return p.trim(); }).filter(Boolean);
+							if (parts.length > 1) {
+								for (var pi = 0; pi < parts.length; pi++) {
+									h += buildSelectorRow(sk, parts[pi], type, curSelectorPlaceholder);
+								}
+							} else {
+								h += buildSelectorRow(sk, fullDecl.replace(/;?\s*$/, ''), type, curSelectorPlaceholder);
 							}
-						} else {
-							h += buildSelectorRow(sk, fullDecl.replace(/;?\s*$/, ''), type);
 						}
 					}
+					h += '</div>';
+					h += '<button type="button" class="wpr-wb-selector-add-btn"><i class="eicon-plus"></i> Add Selector</button>';
+					h += '<span class="wpr-wb-control-field-hint">e.g. ' + escAttr(curSelectorPlaceholder) + '</span>';
+					h += '</div>';
 				}
-				h += '</div>';
-				h += '<button type="button" class="wpr-wb-selector-add-btn"><i class="eicon-plus"></i> Add Selector</button>';
-				var selectorHint = selectorPlaceholders[type] || 'color: {{VALUE}}';
-				h += '<span class="wpr-wb-control-field-hint">e.g. ' + escAttr(selectorHint) + '</span>';
-				h += '</div>';
 				h += '<hr class="wpr-wb-control-separator">';
 			}
 		}
@@ -1012,25 +1240,34 @@
 				}
 			}
 
-			// Parse selectors from repeater rows
-			var $selectorsField = $control.find('.wpr-wb-selectors-field');
-			if ($selectorsField.length) {
-				var sels = {};
-				$selectorsField.find('.wpr-wb-selector-row').each(function () {
-					var sel = $(this).find('.wpr-wb-selector-row-sel').val().trim();
-					var decl = $(this).find('.wpr-wb-selector-row-decl').val().trim();
-					if (sel && decl) {
-						// Ensure declaration ends with semicolon for merging
-						var declClean = decl.replace(/;?\s*$/, '');
-						if (sels[sel]) {
-							sels[sel] = sels[sel].replace(/;?\s*$/, '') + '; ' + declClean + ';';
-						} else {
-							sels[sel] = declClean + ';';
+			// Font: single selector input
+			if (data.type === 'font') {
+				var fontSel = $control.find('[data-field="font_selector"]').val();
+				if (fontSel && fontSel.trim()) {
+					data.selectors = {};
+					data.selectors[fontSel.trim()] = 'font-family: {{VALUE}};';
+				}
+			} else {
+				// Parse selectors from repeater rows
+				var $selectorsField = $control.find('.wpr-wb-selectors-field');
+				if ($selectorsField.length) {
+					var sels = {};
+					$selectorsField.find('.wpr-wb-selector-row').each(function () {
+						var sel = $(this).find('.wpr-wb-selector-row-sel').val().trim();
+						var decl = $(this).find('.wpr-wb-selector-row-decl').val().trim();
+						if (sel && decl) {
+							// Ensure declaration ends with semicolon for merging
+							var declClean = decl.replace(/;?\s*$/, '');
+							if (sels[sel]) {
+								sels[sel] = sels[sel].replace(/;?\s*$/, '') + '; ' + declClean + ';';
+							} else {
+								sels[sel] = declClean + ';';
+							}
 						}
+					});
+					if (Object.keys(sels).length > 0) {
+						data.selectors = sels;
 					}
-				});
-				if (Object.keys(sels).length > 0) {
-					data.selectors = sels;
 				}
 			}
 		}
@@ -1042,14 +1279,33 @@
 			data.condition = { key: condKey, value: condVal || '' };
 		}
 
+		// Code language
+		if (data.type === 'code') {
+			var lang = $control.find('[data-field="language"]').val();
+			if (lang) data.language = lang;
+		}
+
 		// Slider min/max
-		if (data.type === 'slider') {
+		if (data.type === 'slider' || data.type === 'number') {
 			var sMin = $control.find('[data-field="slider_min"]').val();
 			var sMax = $control.find('[data-field="slider_max"]').val();
 			var sStep = $control.find('[data-field="slider_step"]').val();
 			if (sMin !== '' && sMin !== undefined) data.slider_min = sMin;
 			if (sMax !== '' && sMax !== undefined) data.slider_max = sMax;
 			if (sStep !== '' && sStep !== undefined) data.slider_step = sStep;
+
+			if (data.type === 'slider') {
+				var noUnits = $control.find('[data-field="no_units"]').val();
+				if (noUnits === 'yes') data.no_units = true;
+			}
+		}
+
+		// Allowed dimensions
+		if (data.type === 'dimensions') {
+			var dimMode = $control.find('[data-field="allowed_dimensions"]').val();
+			if (dimMode && dimMode !== 'all') {
+				data.allowed_dimensions = dimMode;
+			}
 		}
 
 		var sep = $control.find('[data-field="separator"]').val();
@@ -1193,7 +1449,7 @@
 			var ctrlType = $item.data('type');
 			var k = $(this).val();
 			var hint = (ctrlType === 'icons') ? '{{icon(' + k + ')}}' : (ctrlType === 'media') ? '{{' + k + '.url}}' : '{{' + k + '}}';
-			$item.find('.wpr-wb-control-field-hint').first().text('Use in template: ' + hint);
+			$item.find('.wpr-wb-control-field-hint').first().text('Copy to use in HTML: ' + hint);
 		});
 
 		// Copy key as template tag
@@ -1240,11 +1496,49 @@
 			} else {
 				$repeater.sortable('refresh');
 			}
+
+			syncDefaultSelect($(this).closest('.wpr-wb-control-body'));
 		});
 
 		// Options repeater: Remove option
 		$body.on('click', '.wpr-wb-option-remove', function () {
+			var $control = $(this).closest('.wpr-wb-control-body');
 			$(this).closest('.wpr-wb-option-row').remove();
+			syncDefaultSelect($control);
+		});
+
+		// Options repeater: Sync on key/label change
+		$body.on('input', '.wpr-wb-option-key, .wpr-wb-option-title', function () {
+			syncDefaultSelect($(this).closest('.wpr-wb-control-body'));
+		});
+
+		// Dimensions: update CSS Styles placeholders/hint when "Allowed Dimensions" changes
+		$body.on('change', '[data-field="allowed_dimensions"]', function () {
+			var $ctrlBody = $(this).closest('.wpr-wb-control-body');
+			var mode = $(this).val();
+			var placeholder, hint;
+			if (mode === 'vertical') {
+				placeholder = 'padding-top: {{TOP}}';
+				hint = 'e.g. padding-top: {{TOP}}, padding-bottom: {{BOTTOM}}';
+			} else if (mode === 'horizontal') {
+				placeholder = 'padding-left: {{LEFT}}';
+				hint = 'e.g. padding-left: {{LEFT}}, padding-right: {{RIGHT}}';
+			} else {
+				placeholder = 'padding: {{TOP}} {{RIGHT}} {{BOTTOM}} {{LEFT}}';
+				hint = 'e.g. padding: {{TOP}} {{RIGHT}} {{BOTTOM}} {{LEFT}}';
+			}
+			$ctrlBody.find('.wpr-wb-selector-row-decl').attr('placeholder', placeholder);
+			$ctrlBody.find('.wpr-wb-selectors-field > .wpr-wb-control-field-hint').text(hint);
+		});
+
+		// Slider: update CSS Styles placeholders/hint when "Disable Unit Selector" changes
+		$body.on('change', '[data-field="no_units"]', function () {
+			var $ctrlBody = $(this).closest('.wpr-wb-control-body');
+			var noUnits = $(this).val() === 'yes';
+			var placeholder = noUnits ? 'width: {{SIZE}}px' : 'width: {{SIZE}}';
+			var hint = noUnits ? 'e.g. width: {{SIZE}}px' : 'e.g. width: {{SIZE}}';
+			$ctrlBody.find('.wpr-wb-selector-row-decl').attr('placeholder', placeholder);
+			$ctrlBody.find('.wpr-wb-selectors-field > .wpr-wb-control-field-hint').text(hint);
 		});
 
 		// Options repeater: Icon picker for choose options
@@ -1257,7 +1551,16 @@
 		$body.on('click', '.wpr-wb-selector-add-btn', function () {
 			var $repeater = $(this).siblings('.wpr-wb-selector-repeater');
 			var controlType = $(this).closest('.wpr-wb-selectors-field').data('control-type') || 'color';
-			$repeater.append(buildSelectorRow('', '', controlType));
+			var $ctrlBody = $(this).closest('.wpr-wb-control-body');
+			var override = null;
+			if (controlType === 'slider' && $ctrlBody.find('[data-field="no_units"]').val() === 'yes') {
+				override = 'width: {{SIZE}}px';
+			} else if (controlType === 'dimensions') {
+				var dm = $ctrlBody.find('[data-field="allowed_dimensions"]').val() || 'all';
+				if (dm === 'vertical') override = 'padding-top: {{TOP}}';
+				else if (dm === 'horizontal') override = 'padding-left: {{LEFT}}';
+			}
+			$repeater.append(buildSelectorRow('', '', controlType, override));
 			if (!$repeater.data('ui-sortable')) {
 				$repeater.sortable({
 					handle: '.wpr-wb-selector-row-drag',
