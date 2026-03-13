@@ -156,7 +156,7 @@ class Plugin {
 
 		// Display Conditions (Visibility)
 		if ( 'on' === $this->wpr_get_extension_option( 'wpr-display-conditions' ) ) {
-			require WPR_ADDONS_PATH . 'extensions/wpr-display-conditions.php';
+			// require WPR_ADDONS_PATH . 'extensions/wpr-display-conditions.php';
 		}
 
 		// Mega Menu

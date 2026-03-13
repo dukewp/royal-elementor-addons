@@ -40,7 +40,7 @@ if ( function_exists( 'wpr_fs' ) ) {
 } else {
 	$register_freemius = true;
 
-	if ( get_option('royal_elementor_addons_pro_activation_time') ) {
+	if ( get_option('royal_elementor_addons_pro_activation_time') && (is_plugin_active('wpr-addons-pro/wpr-addons-pro.php') || is_plugin_active('royal-elementor-addons-pro/wpr-addons-pro.php')) ) {
 		$register_freemius = false;
 	}
 
