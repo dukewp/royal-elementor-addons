@@ -31,10 +31,6 @@ define( 'WPR_ADDONS_MODULES_URL', WPR_ADDONS_URL . 'modules/' );
  * Feemius Integration
  */
 
-if ( get_option('royal_elementor_addons_pro_activation_time') && !is_plugin_active('wpr-addons-pro/wpr-addons-pro.php') && !is_plugin_active('royal-elementor-addons-pro/wpr-addons-pro.php') ) {
-	delete_option('royal_elementor_addons_pro_activation_time');
-}
-
 if ( function_exists( 'wpr_fs' ) ) {
     wpr_fs()->set_basename( false, __FILE__ );
 } else {
