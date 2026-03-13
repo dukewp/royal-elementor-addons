@@ -36,7 +36,7 @@ if ( function_exists( 'wpr_fs' ) ) {
 } else {
 	$register_freemius = true;
 
-	if ( get_option('royal_elementor_addons_pro_activation_time') ) {
+	if ( get_option('royal_elementor_addons_pro_activation_time') && defined('WPR_ADDONS_PRO_VERSION') ) {
 		$register_freemius = false;
 	}
 
