@@ -1,0 +1,12 @@
+---
+description: Edit frontend.min.js for frontend JS; do not edit frontend.js
+globs: assets/js/frontend*.js
+alwaysApply: false
+---
+
+# Royal Elementor Addons – Frontend JS
+
+**Edit only `assets/js/frontend.min.js` for frontend JavaScript.**
+
+- Do **not** change `assets/js/frontend.js` for this project.
+- All frontend JS updates (AJAX, handlers, UI logic) go in `frontend.min.js`.

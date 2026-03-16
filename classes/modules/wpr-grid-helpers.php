@@ -908,7 +908,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					if ( 'word_count' === $settings['element_trim_text_by'] ) {
 						echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 					} else {
-						echo substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...';
+						$letter_count = isset( $settings['element_letter_count'] ) ? absint( $settings['element_letter_count'] ) : 0;
+						echo esc_html( substr( html_entity_decode( get_the_title(), ENT_QUOTES, 'UTF-8' ), 0, $letter_count ) ) . '...';
 					}
 				echo '</a>';
 			echo '</div>';

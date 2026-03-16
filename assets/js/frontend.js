@@ -71,6 +71,7 @@
 				'wpr-form-builder.default': WprElements.widgetFormBuilder,
 				'wpr-image-scroll.default': WprElements.widgetImageScroll,
 				'wpr-video-playlist.default': WprElements.widgetVideoPlaylist,
+				'wpr-password-protected-content.default': WprElements.widgetPasswordProtectedContent,
 				'global': WprElements.widgetSection,
 
 				// Single
@@ -2748,6 +2749,7 @@
 			function loadMoreExperiment() {
 				$scope.find('.wpr-load-more-btn').on('click', function(event) {
 					event.preventDefault();
+					event.stopPropagation();
 
 					var thisTaxonomy,
 						thisFilter;
@@ -8048,6 +8050,7 @@
 				type: 'POST',
 				data: {
 					action: 'count_wishlist_items',
+					nonce: WprConfig.nonce,
 					element_addcart_simple_txt: $scope.find('.wpr-wishlist-products').attr('element_addcart_simple_txt'),
 					element_addcart_grouped_txt: $scope.find('.wpr-wishlist-products').attr('element_addcart_grouped_txt'),
 					element_addcart_variable_txt: $scope.find('.wpr-wishlist-products').attr('element_addcart_variable_txt')
@@ -8439,6 +8442,7 @@
 				type: 'POST',
 				data: {
 					action: 'count_compare_items',
+					nonce: WprConfig.nonce,
 				},
 				success: function(response) {
 					let compare_count = response.compare_count;
@@ -8499,6 +8503,7 @@
 				type: 'POST',
 				data: {
 					action: 'count_compare_items',
+					nonce: WprConfig.nonce,
 					remove_text: $scope.find('.wpr-compare-table-wrap').attr('remove_from_compare_text'),
 					compare_empty_text: $scope.find('.wpr-compare-table-wrap').attr('compare_empty_text'),
 					element_addcart_simple_txt: $scope.find('.wpr-compare-table-wrap').attr('element_addcart_simple_txt'),
@@ -9974,6 +9979,7 @@
 				type: 'POST',
 				data: {
 					action: 'count_wishlist_items',
+					nonce: WprConfig.nonce,
 				},
 				success: function(response) {
 					if ( $scope.find('.wpr-wishlist-count').css('display') == 'none' && 0 < response.wishlist_count ) {
@@ -10025,6 +10031,7 @@
 					type: 'POST',
 					data: {
 						action: 'update_mini_wishlist',
+						nonce: WprConfig.nonce,
 						product_id: actionTargetProductId,
 					},
 					success: function(response) {
@@ -10045,6 +10052,7 @@
 					type: 'POST',
 					data: {
 						action: 'update_mini_wishlist',
+						nonce: WprConfig.nonce,
 						product_id: actionTargetProductId,
 					},
 					success: function(response) {
@@ -12738,6 +12746,47 @@
 			} // Data Table CSV export
 
 		}, // End widgetDataTable
+
+		widgetPasswordProtectedContent: function( $scope ) {
+			var ppcForm = $scope.find( '.wpr-ppc-form' );
+
+			if ( ! ppcForm.length ) {
+				return;
+			}
+
+			ppcForm.on( 'submit', function(e) {
+				e.preventDefault();
+
+				var $form = $(this),
+					$container = $scope.find( '.wpr-ppc-container' ),
+					$error = $form.find( '.wpr-ppc-error' ),
+					$input = $form.find( '.wpr-ppc-password-input' );
+
+				$error.hide();
+
+				$.ajax({
+					url: WprConfig.ajaxurl,
+					type: 'POST',
+					data: {
+						action: 'wpr_ppc_verify_password',
+						widget_id: $form.data( 'widget-id' ),
+						post_id: $form.data( 'post-id' ),
+						password: $input.val(),
+						nonce: $form.data( 'nonce' )
+					},
+					success: function( response ) {
+						if ( response.success ) {
+							$container.html( '<div class="wpr-ppc-content">' + response.data.content + '</div>' );
+						} else {
+							$error.text( response.data.message ).show();
+						}
+					},
+					error: function() {
+						$error.text( 'Something went wrong. Please try again.' ).show();
+					}
+				});
+			});
+		}, // End widgetPasswordProtectedContent
 
 		// Editor Check
 		editorCheck: function() {

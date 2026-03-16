@@ -4766,15 +4766,14 @@ class Wpr_Twitter_Feed extends Widget_Base {
 			// 'animation_delay' => $settings['layout_animation_delay'],
 		];
 
+		// Do not expose API key in frontend (data-settings). Load-more must resolve settings server-side if needed.
 		$twitter_settings['twitter_load_more_settings'] = [
 			'number_of_posts' => $settings['number_of_posts'],
-			'twitter_io_api_key' => $settings['twitter_io_api_key'],
 			'twitter_feed_hashtag_name' => $settings['twitter_feed_hashtag_name'],
-			// 'image_effects' => $settings['image_effects'],
-			// 'image_effects' => $settings['image_effects_size'],
-			// 'image_effects' => $settings['image_effects_duration'],
 			'twitter_accounts' => $settings['twitter_accounts'],
 			'twitter_feed_elements' => $settings['twitter_feed_elements'],
+			'post_id' => get_the_ID(),
+			'widget_id' => $this->get_id(),
 		];
 
 		if ( 'carousel' === $settings['layout_select'] ) {
