@@ -1,0 +1,11 @@
+---
+description: Use short array syntax in PHP
+globs: "**/*.php"
+alwaysApply: true
+---
+
+# PHP array syntax
+
+- Always use the short array syntax `[]` instead of `array()`.
+- Prefer: `$a = [1, 2];` and `$b = ['key' => 'val'];`
+- Avoid: `$a = array(1, 2);` and `$b = array('key' => 'val');`
