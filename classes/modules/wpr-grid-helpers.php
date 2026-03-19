@@ -1527,6 +1527,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				// Taxonomies
 				foreach ( $terms as $term ) {
+					if ( ! $term || ! isset( $term->term_id, $term->name ) ) {
+						continue;
+					}
+					$term_link = get_term_link( $term->term_id );
+					if ( is_wp_error( $term_link ) ) {
+						continue;
+					}
 
 					// Custom Colors
 					$enable_custom_colors = ! wpr_fs()->can_use_premium_code() ? '' : $general_settings['tax1_custom_color_switcher'];
@@ -1542,7 +1549,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						echo '<style>'. esc_html($custom_tax_styles) .'</style>'; // TODO: take out of loop if possible
 					}
 
-					echo '<a class="'. $pointer_item_class .' wpr-tax-id-'. esc_attr($term->term_id) .'" href="'. esc_url(get_term_link( $term->term_id )) .'">'. esc_html( $term->name );
+					echo '<a class="'. $pointer_item_class .' wpr-tax-id-'. esc_attr($term->term_id) .'" href="'. esc_url( $term_link ) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
