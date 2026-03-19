@@ -806,6 +806,49 @@
 				}
 			}
 
+			// Same-page anchor scroll (like onepage nav) – only when Consider Sticky Header setting is enabled
+			if ( $navMenu.attr( 'data-consider-header' ) === 'yes' ) {
+				var scrollSpeed = parseInt( $navMenu.attr( 'data-scroll-speed' ), 10 ) || 500;
+
+				function getScrollTopForSection( sectionPos ) {
+					if ( $( '[data-wpr-sticky-section="yes"]' ).first().length ) {
+						return sectionPos - $( '[data-wpr-sticky-section="yes"]' ).first().height();
+					}
+					return sectionPos;
+				}
+
+				$scope.find( '.wpr-nav-menu a, .wpr-mobile-nav-menu a' ).on( 'click', function( e ) {
+					var href = $( this ).attr( 'href' );
+					if ( ! href || href === '#' ) { return; }
+					var hashIndex = href.indexOf( '#' );
+					if ( hashIndex === -1 ) { return; }
+					var hash = href.slice( hashIndex );
+					if ( hash === '#' ) { return; }
+					var isSamePage = ( href.charAt( 0 ) === '#' ) || ( this.pathname === window.location.pathname && this.hostname === window.location.hostname );
+					if ( ! isSamePage ) { return; }
+					var $section = $( hash );
+					if ( ! $section.length ) { return; }
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					var sectionPos = $section.offset().top;
+					$( 'html, body' ).animate( {
+						scrollTop: getScrollTopForSection( sectionPos )
+					}, scrollSpeed );
+				} );
+
+				$( document ).ready( function() {
+					var hash = window.location.hash;
+					if ( ! hash || hash === '#' ) { return; }
+					var $section = $( hash );
+					if ( ! $section.length ) { return; }
+					if ( ! $scope.find( 'a[href*="' + hash + '"]' ).length ) { return; }
+					var sectionPos = $section.offset().top;
+					$( 'html, body' ).animate( {
+						scrollTop: getScrollTopForSection( sectionPos )
+					}, scrollSpeed );
+				} );
+			}
+
 		}, // End widgetNavMenu
 
 		widgetMegaMenu: function( $scope ) {
