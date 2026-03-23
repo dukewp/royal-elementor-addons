@@ -800,6 +800,16 @@ class Plugin {
 			 [ 'jquery' ], 
 			 '0.4.9' 
 		);
+
+		wp_register_script(
+			'wpr-universal-tilt',
+			WPR_ADDONS_URL . 'assets/js/lib/universal-tilt/universal-tilt'. $this->script_suffix() .'.js',
+			[
+				'jquery',
+			],
+			'6.0.3',
+			true
+		);
 	}
 
 	public function enqueue_panel_scripts() {
