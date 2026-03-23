@@ -14,6 +14,11 @@ class Wpr_Column_Slider {
 		add_action( 'elementor/section/print_template', array( $this, '_print_template' ), 10, 2 );
 		add_action( 'elementor/frontend/section/before_render', array( $this, '_before_render' ), 10, 1 );
 
+		// FLEXBOX CONTAINER
+		add_action( 'elementor/element/container/section_layout/after_section_end', [ $this, 'register_controls' ], 10 );
+		add_action( 'elementor/container/print_template', array( $this, '_print_template' ), 10, 2 );
+		add_action( 'elementor/frontend/container/before_render', array( $this, '_before_render' ), 10, 1 );
+
 	}
     
     public function register_controls( $element ) {
@@ -612,7 +617,7 @@ class Wpr_Column_Slider {
     }
 
     public function _before_render( $element ) {
-        if ( $element->get_name() !== 'section' ) {
+        if ( $element->get_name() !== 'section' && $element->get_name() !== 'container' ) {
             return;
         }
 
@@ -679,7 +684,7 @@ class Wpr_Column_Slider {
     }
     
     public function _print_template( $template, $widget ) {
-		if ( $widget->get_name() !== 'section' ) {
+		if ( $widget->get_name() !== 'section' && $widget->get_name() !== 'container' ) {
 			return $template;
 		}
 
