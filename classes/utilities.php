@@ -1370,45 +1370,67 @@ class Utilities {
 		$devices = array(
 			'desktop' => __( 'Desktop', 'elementor' ),
 		);
-
+	
 		if (
 			class_exists( '\Elementor\Plugin' ) &&
 			isset( \Elementor\Plugin::$instance->breakpoints ) &&
 			method_exists( \Elementor\Plugin::$instance->breakpoints, 'get_active_breakpoints' )
 		) {
 			$active_breakpoints = \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints();
-
-			foreach ( $active_breakpoints as $key => $breakpoint ) {
-				if ( 'desktop' === $key ) {
-					continue;
+	
+			if ( is_array( $active_breakpoints ) ) {
+				foreach ( $active_breakpoints as $key => $breakpoint ) {
+					if ( 'desktop' === $key ) {
+						continue;
+					}
+	
+					$label = '';
+	
+					if ( is_object( $breakpoint ) && method_exists( $breakpoint, 'get_label' ) ) {
+						$label = $breakpoint->get_label();
+					}
+	
+					if ( '' === $label ) {
+						$label = ucwords( str_replace( '_', ' ', $key ) );
+					}
+	
+					$devices[ $key ] = $label;
 				}
-
-				$label = '';
-				if ( is_object( $breakpoint ) && method_exists( $breakpoint, 'get_label' ) ) {
-					$label = $breakpoint->get_label();
-				}
-
-				if ( '' === $label ) {
-					$label = ucwords( str_replace( '_', ' ', $key ) );
-				}
-
-				$devices[ $key ] = $label;
 			}
 		}
-
-		// Backward compatibility for older Elementor versions/configs.
+	
 		if ( ! isset( $devices['tablet'] ) ) {
 			$devices['tablet'] = __( 'Tablet', 'elementor' );
 		}
+	
 		if ( ! isset( $devices['mobile'] ) ) {
 			$devices['mobile'] = __( 'Mobile', 'elementor' );
 		}
-
-		if ( 'keys' === $type ) {
-			$devices = array_keys( $devices );
+	
+		$order = array(
+			'widescreen',
+			'desktop',
+			'laptop',
+			'tablet_extra',
+			'tablet',
+			'mobile_extra',
+			'mobile',
+		);
+	
+		$ordered_devices = array();
+	
+		foreach ( $order as $breakpoint_key ) {
+			if ( isset( $devices[ $breakpoint_key ] ) ) {
+				$ordered_devices[ $breakpoint_key ] = $devices[ $breakpoint_key ];
+			}
 		}
-
-		return $devices;
-
+	
+		foreach ( $devices as $breakpoint_key => $label ) {
+			if ( ! isset( $ordered_devices[ $breakpoint_key ] ) ) {
+				$ordered_devices[ $breakpoint_key ] = $label;
+			}
+		}
+	
+		return ( 'keys' === $type ) ? array_keys( $ordered_devices ) : $ordered_devices;
 	}
 }
