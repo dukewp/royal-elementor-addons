@@ -73,7 +73,6 @@ class Wpr_Display_Conditions {
 	 * Minimal frontend styles for hidden elements and fallback.
 	 */
 	public function frontend_styles() {
-		wp_register_style( 'wpr-addons-css', false ); // phpcs:ignore
 		wp_add_inline_style(
 			'elementor-frontend',
 			'.wpr-dc-hidden{display:none!important}.wpr-dc-fallback{margin:0;padding:0}'
