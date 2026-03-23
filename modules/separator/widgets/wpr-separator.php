@@ -9,8 +9,6 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
 use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
@@ -366,7 +364,6 @@ class Wpr_Separator extends Widget_Base {
 			[
 				'name' => 'pagination_content_typography',
 				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-separator-content p',
 				'fields_options' => [
 					'typography' => [
@@ -647,7 +644,7 @@ class Wpr_Separator extends Widget_Base {
 		if ( 'yes' === $enable_separator_link ) :
 		echo '</a>';
 		else:
-		echo '</div';
+		echo '</div>';
 		endif ;
     }
 }
