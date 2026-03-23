@@ -9,8 +9,6 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
 use Elementor\Repeater;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Image_Size;
@@ -387,7 +385,6 @@ class Wpr_Random_Image extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-attachment-caption',
 			]
 		);
