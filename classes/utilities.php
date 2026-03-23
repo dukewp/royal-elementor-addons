@@ -1366,4 +1366,49 @@ class Utilities {
 		return $value;
 	}
 
+	public static function get_all_breakpoints( $type = 'assoc' ) {
+		$devices = array(
+			'desktop' => __( 'Desktop', 'elementor' ),
+		);
+
+		if (
+			class_exists( '\Elementor\Plugin' ) &&
+			isset( \Elementor\Plugin::$instance->breakpoints ) &&
+			method_exists( \Elementor\Plugin::$instance->breakpoints, 'get_active_breakpoints' )
+		) {
+			$active_breakpoints = \Elementor\Plugin::$instance->breakpoints->get_active_breakpoints();
+
+			foreach ( $active_breakpoints as $key => $breakpoint ) {
+				if ( 'desktop' === $key ) {
+					continue;
+				}
+
+				$label = '';
+				if ( is_object( $breakpoint ) && method_exists( $breakpoint, 'get_label' ) ) {
+					$label = $breakpoint->get_label();
+				}
+
+				if ( '' === $label ) {
+					$label = ucwords( str_replace( '_', ' ', $key ) );
+				}
+
+				$devices[ $key ] = $label;
+			}
+		}
+
+		// Backward compatibility for older Elementor versions/configs.
+		if ( ! isset( $devices['tablet'] ) ) {
+			$devices['tablet'] = __( 'Tablet', 'elementor' );
+		}
+		if ( ! isset( $devices['mobile'] ) ) {
+			$devices['mobile'] = __( 'Mobile', 'elementor' );
+		}
+
+		if ( 'keys' === $type ) {
+			$devices = array_keys( $devices );
+		}
+
+		return $devices;
+
+	}
 }
