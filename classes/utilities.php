@@ -74,6 +74,7 @@ class Utilities {
 			'Date' => ['date', 'https://royal-elementor-addons.com/elementor-date-widget/', '', ''],
 			// 'Video Playlist' => ['video-playlist', 'https://royal-elementor-addons.com/elementor-video-playlist-widget/', '', ''],
 			'Password Protected Content' => ['password-protected-content', '', '', 'new'],
+			'Icon Box' => ['icon-box', '', '', 'new'],
 		];
 	}
 
