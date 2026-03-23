@@ -2,7 +2,6 @@
 use Elementor\Controls_Manager;
 use WprAddons\Classes\Utilities;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -489,7 +488,6 @@ class Wpr_Column_Slider {
 			[
 				'name' => 'wpr_cs_pag_fraction_typography',
 				'label' => __( 'Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-fraction',
 				'fields_options' => [
 					'typography' => [

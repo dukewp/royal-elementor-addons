@@ -160,6 +160,11 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'extensions/wpr-display-conditions.php';
 		}
 
+		// Column Slider
+		if ( 'on' === $this->wpr_get_extension_option( 'wpr-column-slider' ) ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-column-slider.php';
+		}
+
 		// Mega Menu
 		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
 
