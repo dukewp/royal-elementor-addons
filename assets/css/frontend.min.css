@@ -20152,6 +20152,20 @@ input.wpr-date-filter-end {
     border-bottom-left-radius: 3px;
 }
 
+/*--------------------------------------------------------------
+  == Separator
+  --------------------------------------------------------------*/
+
+.wpr-separator-wrap {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wpr-separator-wrap p {
+    margin-bottom: 0;
+}
+
   @media only screen and (max-width: 768px) {
     .wpr-vplaylist-heading {
         padding: 7px 10px;
