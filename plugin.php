@@ -165,6 +165,11 @@ class Plugin {
 			require WPR_ADDONS_PATH . 'extensions/wpr-column-slider.php';
 		}
 
+		// Equal Height
+		if ( 'on' === get_option('wpr-equal-height', 'on') ) {
+			require WPR_ADDONS_PATH . 'extensions/wpr-equal-height.php';
+		}
+
 		// Mega Menu
 		require WPR_ADDONS_PATH . 'admin/mega-menu.php';
 
