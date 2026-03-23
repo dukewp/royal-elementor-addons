@@ -37,6 +37,10 @@ class Wpr_Separator extends Widget_Base {
         return [ 'royal', 'separator', 'divider', 'line' ];
     }
 
+	public function get_script_depends() {
+		return [ 'wpr-lottie-animations' ];
+	}
+
     public function get_custom_help_url() {
         if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
@@ -151,6 +155,92 @@ class Wpr_Separator extends Widget_Base {
 				'default' => 'SEPARATOR',
 				'condition' => [
                     'separator_content_type' => 'text'
+				]
+			]
+		);
+
+		$this->add_control(
+			'separator_animation_source',
+			[
+				'label'   => esc_html__( 'Animation Source', 'wpr-addons' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => [
+					'url'  => esc_html__( 'External URL', 'wpr-addons' ),
+					'file' => esc_html__( 'Media File', 'wpr-addons' ),
+				],
+				'default' => 'url',
+				'condition' => [
+					'separator_content_type' => 'animation'
+				]
+			]
+		);
+
+		$this->add_control(
+			'separator_animation_json_url',
+			[
+				'label'       => esc_html__( 'Animation JSON URL', 'wpr-addons' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => 'https://assets3.lottiefiles.com/packages/lf20_ghs9bkkc.json',
+				'label_block' => true,
+				'condition'   => [
+					'separator_content_type' => 'animation',
+					'separator_animation_source' => 'url',
+				],
+			]
+		);
+
+		$this->add_control(
+			'separator_animation_json_file',
+			[
+				'label'      => esc_html__( 'Upload JSON File', 'wpr-addons' ),
+				'type'       => Controls_Manager::MEDIA,
+				'media_type' => 'application/json',
+				'condition'  => [
+					'separator_content_type' => 'animation',
+					'separator_animation_source' => 'file',
+				]
+			]
+		);
+
+		$this->add_control(
+			'separator_animation_loop',
+			[
+				'label' => esc_html__( 'Loop', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'separator_content_type' => 'animation'
+				]
+			]
+		);
+
+		$this->add_control(
+			'separator_animation_autoplay',
+			[
+				'label' => esc_html__( 'Autoplay', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'return_value' => 'yes',
+				'condition' => [
+					'separator_content_type' => 'animation'
+				]
+			]
+		);
+
+		$this->add_control(
+			'separator_animation_renderer',
+			[
+				'label' => esc_html__( 'Renderer', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'svg' => esc_html__( 'SVG', 'wpr-addons' ),
+					'canvas' => esc_html__( 'Canvas', 'wpr-addons' ),
+					'html' => esc_html__( 'HTML', 'wpr-addons' ),
+				],
+				'default' => 'svg',
+				'condition' => [
+					'separator_content_type' => 'animation'
 				]
 			]
 		);
@@ -580,6 +670,16 @@ class Wpr_Separator extends Widget_Base {
         $this->end_controls_section();
     }
 
+	public function separator_lottie_attributes( $settings ) {
+		$attributes = [
+			'loop' => isset( $settings['separator_animation_loop'] ) ? $settings['separator_animation_loop'] : 'yes',
+			'autoplay' => isset( $settings['separator_animation_autoplay'] ) ? $settings['separator_animation_autoplay'] : 'yes',
+			'lottie_renderer' => isset( $settings['separator_animation_renderer'] ) ? $settings['separator_animation_renderer'] : 'svg',
+		];
+
+		return wp_json_encode( $attributes );
+	}
+
     public function render_separator_content($settings) {
         switch ($settings['separator_content_type']) {
             case 'image':		
@@ -599,8 +699,16 @@ class Wpr_Separator extends Widget_Base {
               echo '</div>';
               break;
             case 'animation':
+			  $separator_lottie_json = 'url' === $settings['separator_animation_source']
+				? esc_url( $settings['separator_animation_json_url'] )
+				: ( ! empty( $settings['separator_animation_json_file']['url'] ) ? esc_url( $settings['separator_animation_json_file']['url'] ) : '' );
+
+			  if ( '' === $separator_lottie_json ) {
+				$separator_lottie_json = WPR_ADDONS_URL .'modules/lottie-animations/assets/default.json';
+			  }
+
               echo '<div class="wpr-separator-content">';
-                echo '';
+				echo '<div class="wpr-separator-animations" data-settings="'. esc_attr( $this->separator_lottie_attributes( $settings ) ) .'" data-json-url="'. esc_url( $separator_lottie_json ) .'"></div>';
               echo '</div>';
               break;
             case 'none';
