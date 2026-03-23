@@ -20166,6 +20166,17 @@ input.wpr-date-filter-end {
     margin-bottom: 0;
 }
 
+/*--------------------------------------------------------------
+== Random Image
+--------------------------------------------------------------*/
+
+.wpr-random-image-overlay .wpr-attachment-caption {
+    position: absolute;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
   @media only screen and (max-width: 768px) {
     .wpr-vplaylist-heading {
         padding: 7px 10px;

@@ -76,6 +76,7 @@ class Utilities {
 			'Password Protected Content' => ['password-protected-content', '', '', 'new'],
 			'Icon Box' => ['icon-box', '', '', 'new'],
 			'Separator' => ['separator', '', '', 'new'],
+			'Random Image' => ['random-image', '', '', 'new'],
 		];
 	}
 
