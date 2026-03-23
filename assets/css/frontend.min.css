@@ -14302,6 +14302,25 @@ flex-grow: 0; */
 == Section Extensions
 --------------------------------------------------------------*/
 
+/* Column Slider */
+.wpr-column-slider-css {
+    opacity: 0;
+}
+
+section.wpr-column-slider-yes .swiper-button-prev,
+section.wpr-column-slider-yes .swiper-button-next {
+    background-image: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    transform: translateY(-50%);
+}
+
+.wpr-column-slider-navigation {
+    display: none;
+}
+
 /* Particles */
 .wpr-particle-wrapper {
     position: absolute;

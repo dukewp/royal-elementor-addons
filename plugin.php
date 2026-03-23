@@ -92,6 +92,7 @@ class Plugin {
 				'wpr-custom-css'            => get_option( 'wpr-custom-css', 'on' ),
 				'wpr-display-conditions'    => get_option( 'wpr-display-conditions', 'on' ),
 				'wpr_override_woo_templates'=> get_option( 'wpr_override_woo_templates', 'on' ),
+				'wpr-column-slider'         => get_option( 'wpr-column-slider', 'on' ),
 			];
 		}
 		return isset( self::$wpr_extension_options[ $key ] ) ? self::$wpr_extension_options[ $key ] : $default;
