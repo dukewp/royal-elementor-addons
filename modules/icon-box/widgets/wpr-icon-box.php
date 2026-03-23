@@ -9,8 +9,6 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
-use Elementor\Core\Schemes\Color;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
@@ -735,10 +733,12 @@ class Wpr_Icon_Box extends Widget_Base {
 				'label' => esc_html__( 'Easing', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
+					// 'cubic-bezier(.03, .98, .52, .99)' => esc_html__( 'Cubic Bezier', 'wpr-addons' ),
 					'cubic-bezier' => esc_html__( 'Cubic Bezier', 'wpr-addons' ),
 					'ease' => esc_html__( 'Ease', 'wpr-addons' ),
 					'linear' => esc_html__( 'Linear', 'wpr-addons' )
 				],
+				// 'default' => 'cubic-bezier(.03, .98, .52, .99)',
 				'default' => 'cubic-bezier'
 			]
 		);
@@ -1344,7 +1344,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'icon_box_title',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box-title',
 				'fields_options' => [
 					'typography' => [
@@ -1392,7 +1391,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'icon_box_title_hover',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box:hover .wpr-icon-box-title:hover',
 				'fields_options' => [
 					'typography' => [
@@ -1453,7 +1451,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'icon_box_description',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box-description',
 				'fields_options' => [
 					'typography' => [
@@ -1500,7 +1497,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'icon_box_description_hover',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box:hover .wpr-icon-box-description',
 				'fields_options' => [
 					'typography' => [
@@ -1666,7 +1662,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'btn_typography',
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box-btn',
 				'separator' => 'before',
 			]
@@ -1946,7 +1941,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'name' => 'badge_typography',
 				'label' => esc_html__( 'Typography', 'wpr-addons' ),
-				'scheme' => Typography::TYPOGRAPHY_3,
 				'selector' => '{{WRAPPER}} .wpr-icon-box-badge-inner'
 			]
 		);
@@ -2015,13 +2009,19 @@ class Wpr_Icon_Box extends Widget_Base {
 			$this->add_link_attributes( 'icon_box_url', $settings['icon_box_title_url'] );
 		}
 
+		// $tilt_easing = isset( $settings['tilt_easing'] ) ? $settings['tilt_easing'] : 'linear';
+		// if ( 'cubic-bezier' === $tilt_easing ) {
+		// 	$tilt_easing = 'cubic-bezier(.03, .98, .52, .99)';
+		// }
+
 		$this->add_render_attribute(
 			'tilt_attributes',
 			[
 				'enable-tilt' => $settings['enable_mouse_tilt'],
 				'tilt-base' => $settings['tilt_base'],
 				'tilt-disable' => isset($settings['tilt_disable']) ? $settings['tilt_disable'] : null,
-				'tilt-easing' => isset($settings['tilt_easing']) ? $settings['tilt_easing'] : 'linear'
+				'tilt-easing' => isset($settings['tilt_easing']) ? $settings['tilt_easing'] : 'linear',
+				// 'tilt-easing' => $tilt_easing
 			]
 		);
 
