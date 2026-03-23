@@ -2612,6 +2612,23 @@ class Wpr_Media_Grid extends Widget_Base {
 		);
 
 		$this->add_control(
+			'pagination_load_more_tag',
+			[
+				'label' => esc_html__( 'Load More Markup', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'a',
+				'options' => [
+					'a' => esc_html__( 'Link (&lt;a&gt;)', 'wpr-addons' ),
+					'button' => esc_html__( 'Button (&lt;button&gt;)', 'wpr-addons' ),
+				],
+				'description' => esc_html__( 'Button avoids full-page navigation if JavaScript does not intercept the click. Link is the classic markup.', 'wpr-addons' ),
+				'condition' => [
+					'pagination_type' => [ 'load-more' ],
+				]
+			]
+		);
+
+		$this->add_control(
 			'pagination_finish_text',
 			[
 				'label' => esc_html__( 'Finish Text', 'wpr-addons' ),
@@ -6191,6 +6208,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'color: {{VALUE}}',
@@ -6206,6 +6224,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-pagination-finish' => 'color: {{VALUE}}',
@@ -6221,6 +6240,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'border-color: {{VALUE}}',
 				],
@@ -6231,7 +6251,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'pagination_box_shadow',
-				'selector' => '{{WRAPPER}} .wpr-grid-pagination a, {{WRAPPER}} .wpr-grid-pagination > div > span',
+				'selector' => '{{WRAPPER}} .wpr-grid-pagination a, {{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn, {{WRAPPER}} .wpr-grid-pagination > div > span',
 			]
 		);
 
@@ -6286,6 +6306,8 @@ class Wpr_Media_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a:hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination a:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn:hover svg' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'color: {{VALUE}}',
 				],
@@ -6300,6 +6322,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'default' => '#4A45D2',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a:hover' => 'background-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn:hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'background-color: {{VALUE}}',
 				]
@@ -6314,6 +6337,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'default' => '#E8E8E8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a:hover' => 'border-color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn:hover' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover' => 'border-color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-color: {{VALUE}}',
 				]
@@ -6324,7 +6348,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name' => 'pagination_box_shadow_hr',
-				'selector' => '{{WRAPPER}} .wpr-grid-pagination a:hover, {{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover',
+				'selector' => '{{WRAPPER}} .wpr-grid-pagination a:hover, {{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn:hover, {{WRAPPER}} .wpr-grid-pagination > div > span:not(.wpr-disabled-arrow):hover',
 				'separator' => 'after',
 			]
 		);
@@ -6344,6 +6368,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'step' => 0.1,
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-grid-pagination svg' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'transition-duration: {{VALUE}}s',
 				],
@@ -6355,7 +6380,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'pagination_typography',
-				'selector' => '{{WRAPPER}} .wpr-grid-pagination'
+				'selector' => '{{WRAPPER}} .wpr-grid-pagination, {{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn',
 			]
 		);
 
@@ -6398,6 +6423,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'default' => 'none',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'border-style: {{VALUE}};',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-style: {{VALUE}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'border-style: {{VALUE}};',
@@ -6420,6 +6446,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -6471,6 +6498,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'margin-right: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'margin-right: {{SIZE}}{{UNIT}};',
@@ -6525,6 +6553,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-disabled-arrow' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -6564,6 +6593,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-grid-pagination a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-grid-pagination button.wpr-load-more-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination > div > span' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-grid-pagination span.wpr-grid-current-page' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -7507,13 +7537,16 @@ class Wpr_Media_Grid extends Widget_Base {
 
 		// Load More / Infinite Scroll
 		} else {
-			if ( 'yes' === $settings['filters_experiment'] ) {
-				echo '<a class="wpr-load-more-btn" data-e-disable-page-transition >';
-					echo esc_html($settings['pagination_load_more_text']);
-				echo '</a>';
+			$wpr_next_page = esc_url( get_pagenum_link( $paged + 1, true ) );
+			$load_more_tag = isset( $settings['pagination_load_more_tag'] ) ? $settings['pagination_load_more_tag'] : 'a';
+
+			if ( 'button' === $load_more_tag ) {
+				echo '<button type="button" class="wpr-load-more-btn" data-wpr-next-page="' . esc_attr( $wpr_next_page ) . '" data-e-disable-page-transition>';
+					echo esc_html( $settings['pagination_load_more_text'] );
+				echo '</button>';
 			} else {
-				echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-load-more-btn" data-e-disable-page-transition >';
-					echo esc_html($settings['pagination_load_more_text']);
+				echo '<a href="' . esc_url( $wpr_next_page ) . '" class="wpr-load-more-btn" data-e-disable-page-transition>';
+					echo esc_html( $settings['pagination_load_more_text'] );
 				echo '</a>';
 			}
 

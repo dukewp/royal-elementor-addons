@@ -90,7 +90,7 @@ class Plugin {
 				'wpr-parallax-multi-layer'  => get_option( 'wpr-parallax-multi-layer', 'on' ),
 				'wpr-sticky-section'        => get_option( 'wpr-sticky-section', 'on' ),
 				'wpr-custom-css'            => get_option( 'wpr-custom-css', 'on' ),
-				'wpr-display-conditions'    => get_option( 'wpr-display-conditions', 'on' ),
+				// 'wpr-display-conditions'    => get_option( 'wpr-display-conditions', 'on' ),
 				'wpr_override_woo_templates'=> get_option( 'wpr_override_woo_templates', 'on' ),
 			];
 		}
