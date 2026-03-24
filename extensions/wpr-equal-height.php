@@ -91,6 +91,7 @@ class Wpr_Equal_Height {
 				'label_block' => true,
 				'placeholder' => esc_html__( '.class-name, .class-name2 .my-custom-class', 'wpr-addons' ),
 				'description' => esc_html__( 'Enter selectors separated with \' , \' ', 'wpr-addons' ),
+				'render_type' => 'none',
 				'condition'   => [
 					'wpr_enable_equal_height' => 'yes',
 					'wpr_equal_height_target_type'     => 'custom',
@@ -136,12 +137,30 @@ class Wpr_Equal_Height {
 			
 			$target_type = $settings['wpr_equal_height_target_type'];
 
-			$target = ( 'custom' === $target_type ) ? explode( ',', $settings['wpr_equal_height_custom_target'] ) : $settings['wpr_equal_height_target'];
+			if ( 'custom' === $target_type ) {
+				$target = array_map( 'trim', explode( ',', (string) $settings['wpr_equal_height_custom_target'] ) );
+			} else {
+				$target = $settings['wpr_equal_height_target'] ?? [];
+				if ( is_array( $target ) ) {
+					$target = array_values( $target );
+				} elseif ( is_string( $target ) && '' !== $target ) {
+					$target = [ $target ];
+				} else {
+					$target = [];
+				}
+			}
+
+			$enable_on = $settings['wpr_enable_equal_height_on'] ?? [];
+			if ( ! is_array( $enable_on ) ) {
+				$enable_on = '' !== (string) $enable_on ? [ $enable_on ] : [];
+			} else {
+				$enable_on = array_values( $enable_on );
+			}
 
 			$equal_height_settings = array(
 				'wpr_eh_target-type' => $target_type,
 				'wpr_eh_target'     => $target,
-				'enable_on'   => $settings['wpr_enable_equal_height_on'],
+				'enable_on'   => $enable_on,
 			);
 
 			$element->add_render_attribute( '_wrapper', 'data-wpr-equal-height', wp_json_encode( $equal_height_settings ) );

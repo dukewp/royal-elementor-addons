@@ -72,7 +72,8 @@
 				'wpr-image-scroll.default': WprElements.widgetImageScroll,
 				'wpr-video-playlist.default': WprElements.widgetVideoPlaylist,
 				'wpr-password-protected-content.default': WprElements.widgetPasswordProtectedContent,
-				'global': WprElements.widgetSection,
+				'wpr-icon-box.default': WprElements.widgetIconBox,		
+				'wpr-separator.default': WprElements.widgetSeparator,
 
 				// Single
 				'wpr-post-media.default' : WprElements.widgetPostMedia,
@@ -81,6 +82,13 @@
 			$.each( widgets, function( widget, callback ) {
 				window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
 			});
+
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.initColumnSlider );
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.initColumnSlider );
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.equalHeight );
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.equalHeight );
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.widgetSection );
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.widgetSection );
 
 			// Remove Mega Menu Templates from "Edit with Elementor"
 			WprElements.changeAdminBarMenu();
@@ -603,6 +611,285 @@
 				}
 			}
 		}, // end widgetSection
+
+		initColumnSlider: function( $scope ) {
+
+			if ( ! $scope.hasClass('wpr-column-slider-yes') ) {
+				return;
+			}
+
+			var swiperLoader = function swiperLoader(swiperElement, swiperConfig) {
+				if ('undefined' === typeof Swiper) {
+					var asyncSwiper = elementorFrontend.utils.swiper;
+					return new asyncSwiper(swiperElement, swiperConfig).then( function (newSwiperInstance) {
+						return newSwiperInstance;
+					});
+				}
+				return swiperPromise(swiperElement, swiperConfig);
+			};
+
+			var swiperPromise = function swiperPromise(swiperElement, swiperConfig) {
+				return new Promise(function (resolve, reject) {
+					var swiperInstance = new Swiper(swiperElement, swiperConfig);
+					resolve(swiperInstance);
+				});
+			};
+
+			var sliderInner = $scope.find('.elementor-container').first();
+
+			if ( ! sliderInner.length ) {
+				sliderInner = $scope.children('.e-con-inner').first();
+			}
+
+			if ( sliderInner.length ) {
+
+				sliderInner.css('flexWrap', 'nowrap');
+
+				var sliderSettings = $scope.data('wpr-column-slider') ? $scope.data('wpr-column-slider') : $scope.find('.wpr-column-slider-editor').data('wpr-column-slider');
+				if ( sliderSettings ) {
+
+					$scope.addClass('swiper');
+					sliderInner.addClass('swiper-wrapper');
+					var sliderItems = sliderInner.children('.elementor-element.e-con');
+					if ( ! sliderItems.length ) {
+						sliderItems = sliderInner.children('.e-child');
+					}
+					if ( ! sliderItems.length ) {
+						sliderItems = sliderInner.children('.elementor-column');
+					}
+					if ( ! sliderItems.length ) {
+						sliderItems = sliderInner.children();
+					}
+					sliderItems.addClass('swiper-slide');
+					sliderInner.css({
+						display: 'flex',
+						flexWrap: 'nowrap'
+					});
+					sliderItems.css({
+						flex: '0 0 auto',
+						flexBasis: 'auto',
+						minWidth: '0',
+						maxWidth: 'none'
+					});
+					$scope.css('overflow', 'hidden');
+					sliderInner.css('margin', '0');
+					var swiperSlider = $scope;
+					var prevButtonEl = null;
+					var nextButtonEl = null;
+					var paginationEl = null;
+
+					if ( 'yes' === sliderSettings.wpr_cs_navigation ) {
+
+						$scope.append('<div class="swiper-button-prev"></div><div class="swiper-button-next"></div>');
+						prevButtonEl = $scope.find('.swiper-button-prev').last()[0];
+						nextButtonEl = $scope.find('.swiper-button-next').last()[0];
+
+						if ( !WprElements.editorCheck() ) {
+							var csNavigation = $scope.prev('.wpr-column-slider-navigation');
+							if ( !csNavigation.length ) {
+								csNavigation = $scope.prevAll('.wpr-column-slider-navigation').first();
+							}
+							var csNavigationPrev = csNavigation.find('i:first-child')[0] || csNavigation.find('svg:first-child')[0];
+							var csNavigationNext = csNavigation.find('i:last-child')[0] || csNavigation.find('svg:last-child')[0];
+
+							csNavigation.remove();
+							if ( csNavigationPrev ) {
+								$(prevButtonEl).append(csNavigationPrev);
+							}
+							if ( csNavigationNext ) {
+								$(nextButtonEl).append(csNavigationNext);
+							}
+						} else {
+							var csNavigation = $scope.find('.wpr-column-slider-navigation-editor');
+							var csNavigationPrev = csNavigation.find('i:first-child')[0] || csNavigation.find('svg:first-child')[0];
+							var csNavigationNext = csNavigation.find('i:last-child')[0] || csNavigation.find('svg:last-child')[0];
+
+							csNavigation.remove();
+							if ( csNavigationPrev ) {
+								$(prevButtonEl).append(csNavigationPrev);
+							}
+							if ( csNavigationNext ) {
+								$(nextButtonEl).append(csNavigationNext);
+							}
+						}
+					}
+					if ( 'yes' === sliderSettings.wpr_cs_pagination ) {
+						$scope.append('<div class="swiper-pagination"></div>');
+						paginationEl = $scope.find('.swiper-pagination').last()[0];
+					}
+
+					var breakpointsConfig = elementorFrontend && elementorFrontend.config && elementorFrontend.config.responsive ? elementorFrontend.config.responsive.breakpoints : {};
+					var getBp = function( key, fallback ) {
+						return breakpointsConfig && breakpointsConfig[ key ] && 'undefined' !== typeof breakpointsConfig[ key ].value ? +breakpointsConfig[ key ].value : fallback;
+					};
+					var bpMobile = getBp( 'mobile', 767 );
+					var bpMobileExtra = getBp( 'mobile_extra', bpMobile );
+					var bpTablet = getBp( 'tablet', 1024 );
+					var bpTabletExtra = getBp( 'tablet_extra', bpTablet );
+					var bpLaptop = getBp( 'laptop', 1366 );
+					var bpWidescreen = getBp( 'widescreen', 2400 );
+
+					var aboveMobileResp = bpMobile + 1;
+					var aboveMobileExtraResp = bpMobileExtra + 1;
+					var aboveTabletResp = bpTablet + 1;
+					var aboveTabletExtraResp = bpTabletExtra + 1;
+					var aboveLaptopResp = bpLaptop + 1;
+					var wideScreenResp = bpWidescreen;
+
+					swiperLoader(swiperSlider, {
+						hashNavigation: sliderSettings.wpr_cs_navigation === 'yes' ? true : false,
+						autoplay: sliderSettings.wpr_cs_autoplay === 'yes' ? {
+							delay: +sliderSettings.wpr_cs_delay,
+						} : false,
+						loop: sliderSettings.wpr_cs_loop === 'yes' ? true : false,
+						slidesPerView: +sliderSettings.wpr_cs_slides_to_show,
+						spaceBetween: +sliderSettings.wpr_cs_space_between,
+						speed: +sliderSettings.wpr_cs_speed,
+						pagination: sliderSettings.wpr_cs_pagination === 'yes' ? {
+							el: paginationEl,
+							type: sliderSettings.wpr_cs_pagination_type,
+						} : false,
+						navigation: sliderSettings.wpr_cs_navigation === 'yes' ? {
+							prevEl: prevButtonEl,
+							nextEl: nextButtonEl,
+						} : false,
+						breakpoints: {
+							320: {
+								slidesPerView: +sliderSettings.wpr_cs_slides_to_show_mobile,
+								spaceBetween: +sliderSettings.wpr_cs_space_between_mobile,
+							},
+							[aboveMobileResp]: {
+								slidesPerView: +sliderSettings.wpr_cs_slides_to_show_mobile_extra,
+								spaceBetween: +sliderSettings.wpr_cs_space_between_mobile_extra,
+							},
+							[aboveMobileExtraResp]: {
+								slidesPerView: +sliderSettings.wpr_cs_slides_to_show_tablet,
+								spaceBetween: +sliderSettings.wpr_cs_space_between_tablet,
+							},
+							[aboveTabletResp]: {
+								slidesPerView: +sliderSettings.wpr_cs_slides_to_show_tablet_extra,
+								spaceBetween: +sliderSettings.wpr_cs_space_between_tablet_extra,
+							},
+							[aboveTabletExtraResp]: {
+								slidesPerView: +sliderSettings.wpr_cs_slides_to_show_laptop,
+								spaceBetween: +sliderSettings.wpr_cs_space_between_laptop,
+							},
+							[aboveLaptopResp]: {
+								slidesPerView: +sliderSettings.wpr_cs_slides_to_show,
+								spaceBetween: +sliderSettings.wpr_cs_space_between,
+							},
+							[wideScreenResp]: {
+								slidesPerView: +sliderSettings.wpr_cs_slides_to_show_widescreen,
+								spaceBetween: +sliderSettings.wpr_cs_space_between_widescreen,
+							}
+						},
+
+					});
+
+					$scope.css('opacity', 1);
+				}
+			}
+		},
+
+		equalHeight: function( $scope ) {
+
+			if ( ! $scope.hasClass('wpr-equal-height-yes') ) {
+				return;
+			}
+
+			var section = $scope,
+				editMode = elementorFrontend.isEditMode(),
+				dataContainer = (editMode) ? section.find('#wpr-equal-height-' + section.data('id')) : section,
+				equalHeightSettings = dataContainer.data('wpr-equal-height'),
+				rawEh = dataContainer.attr && dataContainer.attr('data-wpr-equal-height');
+
+			if (!equalHeightSettings && editMode) {
+				dataContainer = section.find('[data-wpr-equal-height]').first();
+				equalHeightSettings = dataContainer.data('wpr-equal-height');
+				rawEh = dataContainer.attr && dataContainer.attr('data-wpr-equal-height');
+			}
+
+			if (rawEh && 'string' === typeof rawEh) {
+				try {
+					equalHeightSettings = JSON.parse(rawEh);
+				} catch (err) {}
+			} else if (!equalHeightSettings && rawEh) {
+				try {
+					equalHeightSettings = JSON.parse(rawEh);
+				} catch (err2) {}
+			}
+
+			if (!equalHeightSettings) {
+				return;
+			}
+
+			var normalizeList = function (val) {
+				if (!val) {
+					return [];
+				}
+				if (Array.isArray(val)) {
+					return val;
+				}
+				if ('object' === typeof val) {
+					return Object.keys(val).length ? Object.values(val) : [];
+				}
+				return [ val ];
+			};
+
+			var ehTargets = normalizeList(equalHeightSettings.wpr_eh_target);
+			var enableOn = normalizeList(equalHeightSettings.enable_on);
+
+			if (elementorFrontend && elementorFrontend.breakpoints && 'function' === typeof elementorFrontend.breakpoints.getActiveBreakpointsList && 0 === enableOn.length) {
+				enableOn = elementorFrontend.breakpoints.getActiveBreakpointsList({ withDesktop: true });
+			}
+
+			var scopeId = section.data('id') ? section.data('id') : 'global';
+
+			if (0 === Object.keys(equalHeightSettings).length) {
+				return;
+			}
+
+			function matchHeight(selector) {
+				var $targets = section.find(selector),
+					heights = [];
+
+				section.find(selector).css('minHeight', 'unset');
+
+				jQuery.each($targets, function (key, valueObj) {
+					heights.push($(valueObj).outerHeight(true));
+				});
+
+				section.find(selector).css('minHeight', Math.max.apply(null, heights));
+			}
+
+			function triggerEqualHeight() {
+				var mode = (elementorFrontend.getCurrentDeviceMode() || '').replace(/^["']|["']$/g, '').trim();
+				if (!mode && elementorFrontend.breakpoints && 'function' === typeof elementorFrontend.breakpoints.getActiveBreakpointsList) {
+					var bpList = elementorFrontend.breakpoints.getActiveBreakpointsList({ withDesktop: true });
+					mode = bpList[0] || 'desktop';
+				}
+				var deviceActive = (0 === enableOn.length) || enableOn.includes(mode);
+
+				if (deviceActive && ehTargets.length) {
+					ehTargets.forEach(function (target) {
+						if (target) {
+							matchHeight(target);
+						}
+					});
+				} else {
+					ehTargets.forEach(function (target) {
+						if (target) {
+							section.find(target).css('minHeight', 'unset');
+						}
+					});
+				}
+			}
+
+			triggerEqualHeight();
+
+			$(window).off('resize.wprEqualHeight-' + scopeId).on('resize.wprEqualHeight-' + scopeId, triggerEqualHeight);
+			setTimeout(triggerEqualHeight, 0);
+		},
 
 		widgetNavMenu: function( $scope ) {
 
@@ -1520,7 +1807,6 @@
 						var skipPathInfiniteScroll = ( 'infinite-scroll' === settings.pagination_type && iGrid.attr( 'data-advanced-filters' ) === 'yes' );
 						if ( ! skipPathInfiniteScroll ) {
 						iGrid.infiniteScroll({
-							// Support <a href> (legacy) or <button data-wpr-next-page> so load more never relies on link navigation.
 							path: function() {
 								var $btn = $scope.find( '.wpr-grid-pagination .wpr-load-more-btn' ).first();
 								if ( ! $btn.length ) {
@@ -12848,6 +13134,58 @@
 				});
 			});
 		}, // End widgetPasswordProtectedContent
+
+		widgetIconBox: function( $scope ) {
+
+			let tiltBox = $scope.find('.wpr-icon-box-wrap');
+		
+			if ( 'yes' === tiltBox.attr('enable-tilt') ) {
+				tiltBox.universalTilt({
+					settings: {
+						base: tiltBox.attr('tilt-base'),
+						disabled: 'none' === tiltBox.attr('tilt-disable') ? null : tiltBox.attr('tilt-disable'),
+						easing: tiltBox.attr('tilt-easing'),
+						max: 35,
+						perspective: 800,
+						reset: true,
+						reverse: false,
+						scale: 1,
+						shine: true,
+						'shine-opacity': 0.9,
+						'shine-save': false,
+						speed: 200,
+					},
+					callbacks: {
+					  // callbacks...
+					}
+				});
+			}
+		}, // End widgetIconBox
+		
+		widgetSeparator: function($scope) { // temporary
+		
+			var lottieAnimations = $scope.find('.wpr-separator-animations'),
+				lottieDataSettings = lottieAnimations.attr('data-settings'),
+				lottieJSON = null;
+
+			if ( ! lottieAnimations.length || ! lottieDataSettings || 'undefined' === typeof lottie ) {
+				return;
+			}
+
+			try {
+				lottieJSON = JSON.parse(lottieDataSettings);
+			} catch (e) {
+				return;
+			}
+		
+			var animation = lottie.loadAnimation({
+			  container: lottieAnimations[0], // Required
+			  path: lottieAnimations.attr('data-json-url'), // Required
+			  renderer: lottieJSON.lottie_renderer, // Required
+			  loop: 'yes' === lottieJSON.loop ? true : false, // Optional
+			  autoplay: 'yes' === lottieJSON.autoplay ? true : false
+			});
+		}, // end widgetSeparator
 
 		// Editor Check
 		editorCheck: function() {
