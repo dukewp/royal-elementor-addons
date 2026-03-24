@@ -515,6 +515,12 @@
           box-shadow: none !important;
 }
 
+.wpr-elements-extensions {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
 .wpr-sticky-video-tutorial,
 .wpr-sticky-video-tutorial:hover {
   color: #f51f3d !important;
