@@ -4,6 +4,7 @@ namespace WprAddons;
 use Elementor\Utils;
 use Elementor\Controls_Manager;
 use WprAddons\Includes\Controls\WprAjaxSelect2\WPR_Control_Ajax_Select2;
+use WprAddons\Includes\Controls\WPR_Select2;
 use WprAddons\Includes\Controls\WPR_Control_Animations;
 use WprAddons\Includes\Controls\WPR_Control_Animations_Alt;
 use WprAddons\Includes\Controls\WPR_Control_Button_Animations;
@@ -330,6 +331,7 @@ class Plugin {
 
 		$controls_manager = \Elementor\Plugin::$instance->controls_manager;
 		$controls_manager->register( new WPR_Control_Ajax_Select2() );
+		$controls_manager->register( new WPR_Select2() );
 		$controls_manager->register( new WPR_Control_Animations() );
 		$controls_manager->register( new WPR_Control_Animations_Alt() );
 		$controls_manager->register( new WPR_Control_Button_Animations() );
