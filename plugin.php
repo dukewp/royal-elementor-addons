@@ -107,6 +107,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-ajax-select2/wpr-control-ajax-select2-api.php';
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-animations.php';
 		require WPR_ADDONS_PATH . 'includes/controls/wpr-control-icons.php';
+		require WPR_ADDONS_PATH . 'includes/controls/wpr-select2.php';
 
 		// Templates Library
 		require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-library.php';
