@@ -432,7 +432,6 @@ class Wpr_Column_Slider {
 				'default' => '#222222',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-bullet' => 'background-color: {{VALUE}}',
-					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-bullet-active' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-fraction' => 'color: {{VALUE}}',
 					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-progressbar' => 'background-color: {{VALUE}};',
 					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-progressbar-fill' => 'background-color: {{VALUE}};'
@@ -440,6 +439,23 @@ class Wpr_Column_Slider {
 				'condition' => [
 					'wpr_enable_column_slider' => 'yes',
 					'wpr_enable_cs_pag' => 'yes',
+				]
+			]
+		);
+
+		$element->add_control(
+			'wpr_cs_pag_active_color',
+			[
+				'label'  => esc_html__( 'Active Bullet Color', 'wpr-addons' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-bullet-active' => 'background-color: {{VALUE}}',
+				],
+				'condition' => [
+					'wpr_enable_column_slider' => 'yes',
+					'wpr_enable_cs_pag' => 'yes',
+					'wpr_cs_pag_type' => 'bullets'
 				]
 			]
 		);
