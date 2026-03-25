@@ -640,6 +640,11 @@ class Wpr_Column_Slider {
 		$settings = $element->get_settings_for_display();
 		
 		if ( 'yes' === $settings['wpr_enable_column_slider'] ) {
+			if ( wp_style_is( 'e-swiper', 'registered' ) ) {
+				wp_enqueue_style( 'e-swiper' );
+			} elseif ( wp_style_is( 'swiper', 'registered' ) ) {
+				wp_enqueue_style( 'swiper' );
+			}
 			
 			$navigation = $settings['wpr_enable_cs_nav'];
 			$pagination = $settings['wpr_enable_cs_pag'];
