@@ -794,7 +794,15 @@ class Plugin {
 			true
 		);
 
-		wp_register_script( 
+		wp_register_script(
+			'wpr-circle-menu',
+			WPR_ADDONS_URL . 'assets/js/lib/circle-menu/circle-menu.min.js',
+			[ 'jquery' ],
+			'2.0.0',
+			true
+		);
+
+		wp_register_script(
 			'wpr-perfect-scroll-js',
 			 WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js', 
 			 [ 'jquery' ], 
