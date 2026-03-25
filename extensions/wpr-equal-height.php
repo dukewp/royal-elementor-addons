@@ -139,6 +139,7 @@ class Wpr_Equal_Height {
 
 			if ( 'custom' === $target_type ) {
 				$target = array_map( 'trim', explode( ',', (string) $settings['wpr_equal_height_custom_target'] ) );
+				$target = array_values( array_filter( $target ) );
 			} else {
 				$target = $settings['wpr_equal_height_target'] ?? [];
 				if ( is_array( $target ) ) {
@@ -180,7 +181,7 @@ class Wpr_Equal_Height {
 			view.addRenderAttribute( 'wpr_equal_height', 'id', 'wpr-equal-height-' + view.getID() );
 			var targetType = settings.wpr_equal_height_target_type,
 
-				target = 'custom' === targetType ? settings.wpr_equal_height_custom_target.split(',') : settings.wpr_equal_height_target,
+				target = 'custom' === targetType ? settings.wpr_equal_height_custom_target.split(',').map(function(s){ return s.trim(); }).filter(function(s){ return s; }) : settings.wpr_equal_height_target,
 
 				addonSettings = {
 					'wpr_eh_target-type': targetType,
