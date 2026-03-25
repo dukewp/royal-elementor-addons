@@ -24,7 +24,7 @@ class WPR_DC_Section_Date_Time extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_date_from',
 			[
-				'label'       => esc_html__( 'Visible From', 'wpr-addons' ),
+				'label'       => esc_html__( 'Date From', 'wpr-addons' ),
 				'description' => esc_html__( 'Leave empty for no start limit.', 'wpr-addons' ),
 				'type'        => Controls_Manager::DATE_TIME,
 				'default'     => '',
@@ -36,7 +36,7 @@ class WPR_DC_Section_Date_Time extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_date_to',
 			[
-				'label'       => esc_html__( 'Visible Until', 'wpr-addons' ),
+				'label'       => esc_html__( 'Date To', 'wpr-addons' ),
 				'description' => esc_html__( 'Leave empty for no end limit.', 'wpr-addons' ),
 				'type'        => Controls_Manager::DATE_TIME,
 				'default'     => '',
@@ -48,8 +48,8 @@ class WPR_DC_Section_Date_Time extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_weekdays',
 			[
-				'label'       => esc_html__( 'Show on Days', 'wpr-addons' ),
-				'description' => esc_html__( 'Leave empty to show every day.', 'wpr-addons' ),
+				'label'       => esc_html__( 'Days of Week', 'wpr-addons' ),
+				'description' => esc_html__( 'Leave empty to skip this condition.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'label_block' => true,
@@ -71,7 +71,7 @@ class WPR_DC_Section_Date_Time extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_time_from',
 			[
-				'label'       => esc_html__( 'Show After Time', 'wpr-addons' ),
+				'label'       => esc_html__( 'Time From', 'wpr-addons' ),
 				'description' => esc_html__( 'Format: HH:MM (24h). Uses your site timezone.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
 				'placeholder' => '09:00',
@@ -84,7 +84,7 @@ class WPR_DC_Section_Date_Time extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_time_to',
 			[
-				'label'       => esc_html__( 'Hide After Time', 'wpr-addons' ),
+				'label'       => esc_html__( 'Time To', 'wpr-addons' ),
 				'description' => esc_html__( 'Supports overnight ranges, e.g. 22:00 to 06:00.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
 				'placeholder' => '17:00',
