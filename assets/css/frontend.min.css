@@ -20173,17 +20173,17 @@ input.wpr-date-filter-end {
     transform: scale(0);
 }
 
-.wpr-circle-menu-trigger-click .wpr-circle-menu-box.circleMenu-open li.wpr-circle-menu-item-trigger .wpr-circle-menu-item .wpr-circle-menu-close {
+.wpr-circle-menu-close {
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%) scale(0);
+    transform: translate(-50%, -50%) scale(0);
 }
 
-.wpr-circle-menu-trigger-click .wpr-circle-menu-box.circleMenu-closed li.wpr-circle-menu-item-trigger .wpr-circle-menu-item .wpr-circle-menu-close {
-    -webkit-transform: scale(0);
-    transform: scale(0);
+.wpr-circle-menu-trigger-click .wpr-circle-menu-box.circleMenu-open li.wpr-circle-menu-item-trigger .wpr-circle-menu-item .wpr-circle-menu-close {
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .wpr-circle-menu-trigger-click .wpr-circle-menu-box.circleMenu-closed li.wpr-circle-menu-item-trigger .wpr-circle-menu-item .wpr-circle-menu-icon-wrap {
