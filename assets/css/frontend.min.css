@@ -20100,6 +20100,7 @@ input.wpr-date-filter-end {
 
 /* Circle Menu */
 .wpr-circle-menu-wrapper {
+    display: -ms-grid;
     display: grid;
 }
 
@@ -20120,6 +20121,7 @@ input.wpr-date-filter-end {
     background-color: #605BE5;
     cursor: pointer;
     -webkit-transition: .3s;
+    -o-transition: .3s;
     transition: .3s;
 }
 
@@ -20154,23 +20156,27 @@ input.wpr-date-filter-end {
 }
 
 .wpr-circle-menu-box li a {
+    display: -ms-inline-grid;
     display: inline-grid;
     line-height: 1;
     position: relative;
     justify-items: center;
     -webkit-transition: .3s;
+    -o-transition: .3s;
     transition: .3s;
 }
 
 .wpr-circle-menu-box li a i,
 .wpr-circle-menu-box li a svg {
     -webkit-transition: .3s;
+    -o-transition: .3s;
     transition: .3s;
 }
 
 .wpr-circle-menu-trigger-click .wpr-circle-menu-box.circleMenu-open li.wpr-circle-menu-item-trigger .wpr-circle-menu-item .wpr-circle-menu-icon-wrap {
     -webkit-transform: scale(0);
-    transform: scale(0);
+    -ms-transform: scale(0);
+        transform: scale(0);
 }
 
 .wpr-circle-menu-close {
@@ -20178,17 +20184,20 @@ input.wpr-date-filter-end {
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%) scale(0);
-    transform: translate(-50%, -50%) scale(0);
+    -ms-transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0);
 }
 
 .wpr-circle-menu-trigger-click .wpr-circle-menu-box.circleMenu-open li.wpr-circle-menu-item-trigger .wpr-circle-menu-item .wpr-circle-menu-close {
     -webkit-transform: translate(-50%, -50%) scale(1);
-    transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1);
 }
 
 .wpr-circle-menu-trigger-click .wpr-circle-menu-box.circleMenu-closed li.wpr-circle-menu-item-trigger .wpr-circle-menu-item .wpr-circle-menu-icon-wrap {
     -webkit-transform: scale(1);
-    transform: scale(1);
+    -ms-transform: scale(1);
+        transform: scale(1);
 }
 
 /* Unfold */
@@ -20214,7 +20223,8 @@ input.wpr-date-filter-end {
     bottom: 0;
     left: 0;
     right: 0;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(white));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+    background: -o-linear-gradient(rgba(255, 255, 255, 0), #fff);
     background: linear-gradient(rgba(255, 255, 255, 0), #fff);
     z-index: 11;
     height: 100%;
