@@ -769,7 +769,6 @@ class Wpr_Column_Slider {
 			});
 
 			var csNavigationArrows = settings.wpr_cs_nav_arrows;
-			console.log(csNavigationArrows);
 
 			view.addRenderAttribute( 'wpr_navigation_arrows_left', {
 				'class' : csNavigationArrows + '-left',
