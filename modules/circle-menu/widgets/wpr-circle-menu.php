@@ -26,7 +26,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'wpr-icon eicon-global-colors';
+		return 'wpr-icon eicon-plus-circle';
 	}
 
 	public function get_categories() {
@@ -183,6 +183,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 			'cm_distance',
 			[
 				'label' => esc_html__( 'Circle Menu Distance', 'wpr-addons' ),
+				'separator' => 'before',
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 150,
@@ -205,6 +206,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 				'label' => esc_html__( 'Button Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'render_type' => 'template',
+				'separator' => 'before',
 				'default' => [
 					'size' => 60,
 				],
@@ -227,6 +229,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 				'label' => esc_html__( 'Show Titles', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'yes',
+				'separator' => 'before',
 			]
 		);
 
@@ -309,6 +312,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 						'max' => 200,
 					],
 				],
+				'separator' => 'after',
 			]
 		);
 
@@ -517,7 +521,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 
 		// After Tabs
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'item_icon_size',
 			[
 				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
@@ -541,7 +545,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'item_icon_distance',
 			[
 				'label' => esc_html__( 'Icon Distance', 'wpr-addons' ),

@@ -75,6 +75,7 @@ class Utilities {
 			// 'Video Playlist' => ['video-playlist', 'https://royal-elementor-addons.com/elementor-video-playlist-widget/', '', ''],
 			'Password Protected Content' => ['password-protected-content', '', '', 'new'],
 			'Circle Menu' => ['circle-menu', '', '', 'new'],
+			'Unfold' => ['unfold', '', '', 'new'],
 		];
 	}
 
