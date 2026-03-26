@@ -24,7 +24,7 @@ class WPR_DC_Section_Device_Browser extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_devices',
 			[
-				'label'       => esc_html__( 'Show on Devices', 'wpr-addons' ),
+				'label'       => esc_html__( 'Devices', 'wpr-addons' ),
 				'description' => esc_html__( 'Hidden elements are removed from the page code for faster loading.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
@@ -42,7 +42,7 @@ class WPR_DC_Section_Device_Browser extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_browsers',
 			[
-				'label'       => esc_html__( 'Show on Browsers', 'wpr-addons' ),
+				'label'       => esc_html__( 'Browsers', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'label_block' => true,

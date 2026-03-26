@@ -24,8 +24,8 @@ class WPR_DC_Section_Visitor_Roles extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_visitor_type',
 			[
-				'label'       => esc_html__( 'Visible to', 'wpr-addons' ),
-				'description' => esc_html__( 'Choose who can see this element. Leave empty to skip this condition.', 'wpr-addons' ),
+				'label'       => esc_html__( 'User Roles', 'wpr-addons' ),
+				'description' => esc_html__( 'Select user roles. Leave empty to skip this condition.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'label_block' => true,

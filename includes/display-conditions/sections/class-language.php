@@ -28,8 +28,8 @@ class WPR_DC_Section_Language extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_languages',
 			[
-				'label'       => esc_html__( 'Show for Languages', 'wpr-addons' ),
-				'description' => esc_html__( 'Show this element only for selected languages.', 'wpr-addons' ),
+				'label'       => esc_html__( 'Languages', 'wpr-addons' ),
+				'description' => esc_html__( 'Select languages to match.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'label_block' => true,

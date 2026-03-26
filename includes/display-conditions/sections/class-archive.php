@@ -24,8 +24,8 @@ class WPR_DC_Section_Archive extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_archive_types',
 			[
-				'label'       => esc_html__( 'Show on Page Types', 'wpr-addons' ),
-				'description' => esc_html__( 'Show when the current page matches any of these types.', 'wpr-addons' ),
+				'label'       => esc_html__( 'Page Types', 'wpr-addons' ),
+				'description' => esc_html__( 'Select page types to match.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'label_block' => true,

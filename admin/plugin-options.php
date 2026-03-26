@@ -1581,9 +1581,9 @@ function wpr_addons_settings_page() {
         // array of option names
         $option_names = $new_allowed_options[ 'wpr-extension-settings' ];
 
-        echo '<div class="wpr-elements">';
+        echo '<div class="wpr-elements wpr-elements-extensions">';
 
-        foreach ($option_names as $option_name) {  
+        foreach ($option_names as $option_name) {
             $option_title = ucwords( preg_replace( '/-/i', ' ', preg_replace('/wpr-||-toggle/i', '', $option_name ) ));
 
             echo '<div class="wpr-element">';

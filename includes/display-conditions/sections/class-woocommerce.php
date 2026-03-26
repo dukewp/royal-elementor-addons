@@ -45,7 +45,7 @@ class WPR_DC_Section_Woocommerce extends WPR_DC_Section_Base {
 			'wpr_dc_woo_cart_products',
 			[
 				'label'       => esc_html__( 'Products in Cart', 'wpr-addons' ),
-				'description' => esc_html__( 'Comma-separated product IDs. Show when any of these are in cart.', 'wpr-addons' ),
+				'description' => esc_html__( 'Comma-separated product IDs.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
 				'default'     => '',
@@ -57,7 +57,7 @@ class WPR_DC_Section_Woocommerce extends WPR_DC_Section_Base {
 			'wpr_dc_woo_cart_categories',
 			[
 				'label'       => esc_html__( 'Product Categories in Cart', 'wpr-addons' ),
-				'description' => esc_html__( 'Comma-separated category slugs. Show when products from these categories are in cart.', 'wpr-addons' ),
+				'description' => esc_html__( 'Comma-separated category slugs.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
 				'default'     => '',
@@ -69,7 +69,7 @@ class WPR_DC_Section_Woocommerce extends WPR_DC_Section_Base {
 			'wpr_dc_woo_product_type',
 			[
 				'label'       => esc_html__( 'Product Type', 'wpr-addons' ),
-				'description' => esc_html__( 'Show on product pages of these types.', 'wpr-addons' ),
+				'description' => esc_html__( 'Match product pages of these types.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'label_block' => true,

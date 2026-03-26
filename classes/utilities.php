@@ -77,6 +77,7 @@ class Utilities {
 			'Icon Box' => ['icon-box', '', '', 'new'],
 			'Separator' => ['separator', '', '', 'new'],
 			'Random Image' => ['random-image', '', '', 'new'],
+			'Circle Menu' => ['circle-menu', '', '', 'new'],
 		];
 	}
 
@@ -526,6 +527,35 @@ class Utilities {
 
     	// Render Elementor Template Content
 		echo ''. $get_elementor_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+
+	/**
+	** Enqueue a nested/inner Elementor template's widget assets and CSS.
+	** Ensures icon fonts and widget-specific styles are loaded when a
+	** template is rendered inside another widget (Offcanvas, Tabs, etc.).
+	*/
+	public static function enqueue_inner_template_assets( $template_id ) {
+		if ( empty( $template_id ) || ! class_exists( '\Elementor\Plugin' ) ) {
+			return;
+		}
+
+		$elementor = \Elementor\Plugin::instance();
+
+		// Enable widget-level asset dependencies (icon fonts, widget CSS files)
+		// stored in the template's post meta by Elementor's asset system.
+		if ( class_exists( '\Elementor\Core\Base\Elements_Iteration_Actions\Assets' ) ) {
+			$page_assets = get_post_meta( $template_id, \Elementor\Core\Base\Elements_Iteration_Actions\Assets::ASSETS_META_KEY, true );
+			if ( ! empty( $page_assets ) && isset( $elementor->assets_loader ) ) {
+				$elementor->assets_loader->enable_assets( $page_assets );
+			}
+		}
+
+		// Enqueue the template's own Post CSS file.
+		if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+			$css_file = new \Elementor\Core\Files\CSS\Post( $template_id );
+			$css_file->enqueue();
+		}
 	}
 
 

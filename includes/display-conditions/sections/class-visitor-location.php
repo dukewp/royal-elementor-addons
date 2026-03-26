@@ -24,7 +24,7 @@ class WPR_DC_Section_Visitor_Location extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_ip_addresses',
 			[
-				'label'       => esc_html__( 'Allowed IP Addresses', 'wpr-addons' ),
+				'label'       => esc_html__( 'IP Addresses', 'wpr-addons' ),
 				'description' => esc_html__( 'One IP address per line.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 3,
@@ -37,7 +37,7 @@ class WPR_DC_Section_Visitor_Location extends WPR_DC_Section_Base {
 			'wpr_dc_referrer_domains',
 			[
 				'label'       => esc_html__( 'Referral Domains', 'wpr-addons' ),
-				'description' => esc_html__( 'Show when visitor comes from these sites. One domain per line, e.g. google.com.', 'wpr-addons' ),
+				'description' => esc_html__( 'One domain per line, e.g. google.com.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 3,
 				'default'     => '',

@@ -24,8 +24,8 @@ class WPR_DC_Section_Page_Content extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_post_types',
 			[
-				'label'       => esc_html__( 'Show on Content Types', 'wpr-addons' ),
-				'description' => esc_html__( 'Show when viewing these post types.', 'wpr-addons' ),
+				'label'       => esc_html__( 'Content Types', 'wpr-addons' ),
+				'description' => esc_html__( 'Select post types to match.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'label_block' => true,
@@ -38,7 +38,7 @@ class WPR_DC_Section_Page_Content extends WPR_DC_Section_Base {
 		$element->add_control(
 			'wpr_dc_specific_posts',
 			[
-				'label'       => esc_html__( 'Show on Specific Pages', 'wpr-addons' ),
+				'label'       => esc_html__( 'Specific Pages', 'wpr-addons' ),
 				'description' => esc_html__( 'Enter comma-separated post/page IDs.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
@@ -63,7 +63,7 @@ class WPR_DC_Section_Page_Content extends WPR_DC_Section_Base {
 			'wpr_dc_terms',
 			[
 				'label'       => esc_html__( 'Required Terms', 'wpr-addons' ),
-				'description' => esc_html__( 'Comma-separated term slugs or IDs. Show when the current post has any of these.', 'wpr-addons' ),
+				'description' => esc_html__( 'Comma-separated term slugs or IDs.', 'wpr-addons' ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
 				'default'     => '',

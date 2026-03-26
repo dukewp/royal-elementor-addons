@@ -101,6 +101,26 @@ class WPR_DC_Conditions_Manager {
 			add_action( "elementor/frontend/{$type}/before_render", [ $this, 'before_render' ] );
 			add_action( "elementor/frontend/{$type}/after_render", [ $this, 'after_render' ] );
 		}
+
+		// Prevent Elementor from caching elements that have visibility conditions.
+		// Without this, the first render result gets cached and served to all users,
+		// breaking role-based and other dynamic visibility logic.
+		add_filter( 'elementor/element/is_dynamic_content', [ $this, 'disable_element_caching' ], 10, 2 );
+	}
+
+	/**
+	 * Tell Elementor that elements with visibility conditions are dynamic
+	 * so they are never served from the element cache.
+	 *
+	 * @param bool  $is_dynamic_content Current dynamic-content flag.
+	 * @param array $raw_data           Raw element data including settings.
+	 * @return bool
+	 */
+	public function disable_element_caching( $is_dynamic_content, $raw_data ) {
+		if ( ! empty( $raw_data['settings']['wpr_dc_enabled'] ) ) {
+			return true;
+		}
+		return $is_dynamic_content;
 	}
 
 	/**
