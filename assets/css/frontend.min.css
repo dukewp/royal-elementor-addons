@@ -20240,7 +20240,7 @@ input.wpr-date-filter-end {
 }
 
 .wpr-unfold-content p:not(:last-child) {
-    margin-bottom: 50px;
+    margin-bottom: 15px;
 }
 
 .wpr-unfold-content p:last-child {
@@ -20248,7 +20248,7 @@ input.wpr-date-filter-end {
 }
 
 .wpr-unfold-content ul {
-    margin-bottom: 50px;
+    margin-bottom: 15px;
 }
 
 .wpr-unfold-content li {

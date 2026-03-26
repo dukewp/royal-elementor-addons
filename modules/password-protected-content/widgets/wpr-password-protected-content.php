@@ -64,6 +64,21 @@ class Wpr_Password_Protected_Content extends Widget_Base {
 		return \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
+	public function add_control_content_type() {
+		$this->add_control(
+			'content_type',
+			[
+				'label' => esc_html__( 'Content Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'text',
+				'options' => [
+					'text'         => esc_html__( 'Text', 'wpr-addons' ),
+					'pro-template' => esc_html__( 'Elementor Template (Pro)', 'wpr-addons' ),
+				],
+			]
+		);
+	}
+
 	protected function register_controls() {
 
 		// Section: Protected Content
@@ -74,18 +89,10 @@ class Wpr_Password_Protected_Content extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'content_type',
-			[
-				'label' => esc_html__( 'Content Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'text',
-				'options' => [
-					'text' => esc_html__( 'Text', 'wpr-addons' ),
-					'template' => esc_html__( 'Elementor Template', 'wpr-addons' ),
-				],
-			]
-		);
+		$this->add_control_content_type();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'password-protected-content', 'content_type', ['pro-template'] );
 
 		$this->add_control(
 			'protected_content',
@@ -225,6 +232,11 @@ class Wpr_Password_Protected_Content extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'password-protected-content', [
+			'Content Type: Elementor Template - protect any template behind a password',
+		] );
 
 		// ===== Style Tab =====
 

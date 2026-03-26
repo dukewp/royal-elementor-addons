@@ -67,6 +67,21 @@ class Wpr_Unfold extends Widget_Base {
 		return \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
+	public function add_control_unfold_content_type() {
+		$this->add_control(
+			'unfold_content_type',
+			[
+				'label' => esc_html__( 'Content Type', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'text',
+				'options' => [
+					'text'         => esc_html__( 'Text', 'wpr-addons' ),
+					'pro-template' => esc_html__( 'Elementor Template (Pro)', 'wpr-addons' ),
+				],
+			]
+		);
+	}
+
 	protected function register_controls() {
 
 		// Section: Content
@@ -77,18 +92,10 @@ class Wpr_Unfold extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'unfold_content_type',
-			[
-				'label' => esc_html__( 'Content Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'text',
-				'options' => [
-					'text' => esc_html__( 'Text', 'wpr-addons' ),
-					'template' => esc_html__( 'Elementor Template', 'wpr-addons' ),
-				],
-			]
-		);
+		$this->add_control_unfold_content_type();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'unfold', 'unfold_content_type', ['pro-template'] );
 
 		$this->add_control(
 			'unfold_title',
@@ -256,7 +263,7 @@ class Wpr_Unfold extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'render_type' => 'template',
 				'default' => [
-					'size' => 79,
+					'size' => 140,
 				],
 				'range' => [
 					'px' => [
@@ -285,6 +292,11 @@ class Wpr_Unfold extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'unfold', [
+			'Content Type: Elementor Template - unfold any template',
+		] );
 
 		// Style: Title
 		$this->start_controls_section(
