@@ -318,11 +318,12 @@ class Wpr_Password_Protected_Content extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em' ],
 				'default' => [
-					'top' => '20',
-					'right' => '20',
-					'bottom' => '20',
-					'left' => '20',
+					'top' => '0',
+					'right' => '0',
+					'bottom' => '0',
+					'left' => '0',
 					'unit' => 'px',
+					'isLinked' => true,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ppc-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -551,6 +552,24 @@ class Wpr_Password_Protected_Content extends Widget_Base {
 			[
 				'name' => 'input_border',
 				'selector' => '{{WRAPPER}} .wpr-ppc-password-input',
+				'fields_options' => [
+					'border' => [
+						'default' => 'solid',
+					],
+					'width' => [
+						'default' => [
+							'top' => '1',
+							'right' => '1',
+							'bottom' => '1',
+							'left' => '1',
+							'unit' => 'px',
+							'isLinked' => true,
+						],
+					],
+					'color' => [
+						'default' => '#020101',
+					],
+				],
 			]
 		);
 
@@ -633,7 +652,7 @@ class Wpr_Password_Protected_Content extends Widget_Base {
 			[
 				'label' => esc_html__( 'Background Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#6A4BFF',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-ppc-submit-btn' => 'background-color: {{VALUE}};',
 				],

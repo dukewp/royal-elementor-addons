@@ -263,7 +263,7 @@ class Wpr_Unfold extends Widget_Base {
 				'type' => Controls_Manager::SLIDER,
 				'render_type' => 'template',
 				'default' => [
-					'size' => 140,
+					'size' => 100,
 				],
 				'range' => [
 					'px' => [
