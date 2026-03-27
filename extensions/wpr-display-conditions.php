@@ -41,6 +41,9 @@ class Wpr_Display_Conditions {
 		require_once $base . 'class-render-handler.php';
 		require_once $base . 'class-conditions-manager.php';
 
+		// Allow pro plugin to load override classes before the manager instantiates
+		do_action( 'wpr_display_conditions_classes_loaded' );
+
 		new WPR_DC_Conditions_Manager();
 	}
 
