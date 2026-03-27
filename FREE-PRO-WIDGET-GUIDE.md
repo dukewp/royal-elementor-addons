@@ -204,15 +204,24 @@ if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 
 ## Pro Features List Section
 
-At the end of the content tab sections, add a pro features summary:
+At the end of all content tab sections (right before the first Style tab section), add a pro features summary. This creates a dedicated section in the Elementor panel listing all pro features with a "Get Pro" button.
 
 ```php
+// Place this AFTER the last content tab end_controls_section() and BEFORE the first Style section
 Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, '{widget-slug}', [
-    'Feature description 1',
-    'Feature description 2',
-    'Feature description 3',
+    'Unlimited Menu Items',
+    'All Menu Directions',
+    'Hide Titles option',
+    'Advanced Transition Effects',
 ] );
 ```
+
+**Key rules:**
+- The `{widget-slug}` is used to build the referral link to the pro purchase page
+- Each string in the array becomes a bullet point in the features list
+- Every pro-locked feature in the widget should be listed here (repeater limits, locked select options, disabled switchers, etc.)
+- When you add a new pro feature to the widget, also add it to this list
+- The section automatically hides when pro is active (`Utilities` handles the `WPR_ADDONS_PRO_VERSION` check internally)
 
 ---
 
@@ -264,6 +273,118 @@ The pro widget does NOT need to override `render()` in most cases -- the free re
    - Extend the free widget class: `class Wpr_{Widget_Name}_Pro extends \WprAddons\Modules\{WidgetName}\Widgets\Wpr_{Widget_Name}`
    - Override ONLY the stub methods with real control implementations
    - Do NOT override `get_name()`, `get_title()`, `get_icon()`, `register_controls()`, or `render()` unless absolutely necessary
+
+---
+
+## Pro-Locked Select Options
+
+When a SELECT control has some options available only in pro, use this pattern:
+
+### Free version — stub method with `pro-` prefixed keys:
+```php
+public function add_control_cm_direction() {
+    $this->add_control('cm_direction', [
+        'type' => Controls_Manager::SELECT,
+        'default' => 'top',
+        'options' => [
+            'top'      => esc_html__( 'Top', 'wpr-addons' ),         // free
+            'bottom'   => esc_html__( 'Bottom', 'wpr-addons' ),      // free
+            'pro-full' => esc_html__( 'Full (Pro)', 'wpr-addons' ),  // locked
+        ],
+    ]);
+}
+```
+Then in `register_controls()`, call the method and add upgrade notice:
+```php
+$this->add_control_cm_direction();
+Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'widget-slug', 'cm_direction', ['pro-full'] );
+```
+
+### Pro version — override with real keys:
+```php
+public function add_control_cm_direction() {
+    $this->add_control('cm_direction', [
+        'type' => Controls_Manager::SELECT,
+        'default' => 'top',
+        'options' => [
+            'top'    => esc_html__( 'Top', 'wpr-addons' ),
+            'bottom' => esc_html__( 'Bottom', 'wpr-addons' ),
+            'full'   => esc_html__( 'Full', 'wpr-addons' ),  // unlocked
+        ],
+    ]);
+}
+```
+
+**Key rules:**
+- Free option keys use `'pro-xx'` prefix (e.g. `'pro-vr'`, `'pro-full'`)
+- Free labels include `'(Pro)'` suffix
+- Pro override replaces `'pro-xx'` with real value (e.g. `'vertical'`, `'full'`)
+- Pro override removes `'(Pro)'` from labels
+- The `Utilities::upgrade_pro_notice()` call shows a notice when a pro option is selected
+
+---
+
+## Pro-Locked Switcher (Disabled Toggle with Pro Badge)
+
+When a SWITCHER should be visible but disabled in free:
+
+### Free version — stub method with disabled switcher:
+```php
+public function add_control_cm_show_titles() {
+    $this->add_control('cm_show_titles', [
+        'label' => sprintf( __( 'Show Titles %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+        'type' => Controls_Manager::SWITCHER,
+        'classes' => 'wpr-pro-control',  // disables the toggle
+    ]);
+}
+```
+
+### Pro version — override with functional switcher:
+```php
+public function add_control_cm_show_titles() {
+    $this->add_control('cm_show_titles', [
+        'label' => esc_html__( 'Show Titles', 'wpr-addons' ),
+        'type' => Controls_Manager::SWITCHER,
+        'default' => 'yes',
+    ]);
+}
+```
+
+**Key rules:**
+- Free label includes `<i class="eicon-pro-icon"></i>` via `sprintf()` — shows pro badge icon
+- Free uses `'classes' => 'wpr-pro-control'` — CSS class that grays out/disables the toggle
+- Use `'classes' => 'wpr-pro-control no-distance'` if you need less spacing
+- Pro override removes the icon from label, removes the `classes` key, and sets proper `default`
+- The switcher value will always be empty/off in free since the user can't toggle it
+
+---
+
+## Pro-Locked Repeater Items
+
+To limit repeater items in the free version:
+
+### Free version — add pro notice and break render loop:
+```php
+// After the repeater control in register_controls():
+if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
+    $this->add_control('repeater_pro_notice', [
+        'type' => Controls_Manager::RAW_HTML,
+        'raw' => 'More than 4 Items are available<br> in the <strong><a href="https://..." target="_blank">Pro version</a></strong>',
+        'content_classes' => 'wpr-pro-notice',
+    ]);
+}
+
+// In the render() loop:
+foreach ( $settings['items'] as $index => $item ) :
+    if ( (!defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code()) && $index === 4 ) {
+        break;  // Stop at 4 items in free
+    }
+    // ... render item
+endforeach;
+```
+
+### Pro version — just exists:
+The pro widget class extends the free one. Since `WPR_ADDONS_PRO_VERSION` is defined when pro is active, the limit check is bypassed and the pro notice is hidden. No method override needed for this.
 
 ---
 

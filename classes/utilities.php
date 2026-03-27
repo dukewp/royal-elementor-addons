@@ -78,6 +78,7 @@ class Utilities {
 			'Separator' => ['separator', '', '', 'new'],
 			'Random Image' => ['random-image', '', '', 'new'],
 			'Circle Menu' => ['circle-menu', '', '', 'new'],
+			'Unfold' => ['unfold', '', '', 'new'],
 		];
 	}
 

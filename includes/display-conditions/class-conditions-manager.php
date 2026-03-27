@@ -61,11 +61,16 @@ class WPR_DC_Conditions_Manager {
 			'WPR_DC_Section_Interaction',
 			'WPR_DC_Section_Random_Limits',
 			'WPR_DC_Section_Fallback_Content',
+			'WPR_DC_Section_Pro_Features',
 		];
 
 		foreach ( $section_classes as $class_name ) {
-			if ( class_exists( $class_name ) ) {
-				$section = new $class_name();
+			// Use pro override class if available
+			$pro_class = $class_name . '_Pro';
+			$use_class = class_exists( $pro_class ) ? $pro_class : $class_name;
+
+			if ( class_exists( $use_class ) ) {
+				$section = new $use_class();
 				if ( $section->is_available() ) {
 					$this->sections[] = $section;
 				}

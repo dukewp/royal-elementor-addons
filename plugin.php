@@ -607,21 +607,12 @@ class Plugin {
 
 	public function enqueue_scripts() {
 
-		// Register DOMPurify
-		wp_enqueue_script(
-			'dompurify',
-			WPR_ADDONS_URL . 'assets/js/lib/dompurify/dompurify.min.js',
-			['jquery', 'elementor-frontend'],
-			'3.0.6',
-		);
-
 		wp_enqueue_script(
 			'wpr-addons-js',
 			WPR_ADDONS_URL . 'assets/js/frontend'. $this->script_suffix() .'.js',
 			[
 				'jquery',
 				'elementor-frontend',
-				'dompurify'
 			],
 			Plugin::instance()->get_version(),
 			true
@@ -672,6 +663,14 @@ class Plugin {
 	}	
 
 	public function register_scripts() {
+
+		// Register DOMPurify
+		wp_register_script(
+			'wpr-dompurify',
+			WPR_ADDONS_URL . 'assets/js/lib/dompurify/dompurify.min.js',
+			['jquery'],
+			'3.0.6',
+		);
 
 		wp_register_script(
 			'wpr-infinite-scroll',

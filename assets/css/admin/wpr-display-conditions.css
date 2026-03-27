@@ -29,3 +29,15 @@
 	top: 50%;
 	transform: translateY(-50%);
 }
+
+/* Pro Features section title styling */
+.elementor-control-wpr_dc_pro_features .elementor-panel-heading-toggle,
+.elementor-control-wpr_dc_pro_features .elementor-section-title {
+	color: #f54;
+	line-height: 20px;
+}
+
+.elementor-control-wpr_dc_pro_features .elementor-section-title .dashicons {
+	font-size: 13px;
+	line-height: 20px;
+}

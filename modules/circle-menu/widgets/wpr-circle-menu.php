@@ -26,7 +26,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'wpr-icon eicon-global-colors';
+		return 'wpr-icon eicon-plus-circle';
 	}
 
 	public function get_categories() {
@@ -49,6 +49,77 @@ class Wpr_Circle_Menu extends Widget_Base {
 		if ( empty( get_option( 'wpr_wl_plugin_links' ) ) )
 			return 'https://wordpress.org/support/plugin/royal-elementor-addons/';
 		return '';
+	}
+
+	public function add_control_cm_trigger() {
+		$this->add_control(
+			'cm_trigger',
+			[
+				'label' => esc_html__( 'Trigger', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'hover',
+				'options' => [
+					'hover'     => esc_html__( 'Hover', 'wpr-addons' ),
+					'pro-click' => esc_html__( 'Click (Pro)', 'wpr-addons' ),
+				],
+			]
+		);
+	}
+
+	public function add_control_cm_transition() {
+		$this->add_control(
+			'cm_transition',
+			[
+				'label' => esc_html__( 'Transition', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'ease',
+				'options' => [
+					'ease'           => esc_html__( 'Ease', 'wpr-addons' ),
+					'linear'         => esc_html__( 'Linear', 'wpr-addons' ),
+					'pro-ei'         => esc_html__( 'Ease In (Pro)', 'wpr-addons' ),
+					'pro-eo'         => esc_html__( 'Ease Out (Pro)', 'wpr-addons' ),
+					'pro-eio'        => esc_html__( 'Ease In Out (Pro)', 'wpr-addons' ),
+				],
+			]
+		);
+	}
+
+	public function add_control_cm_hide_titles() {
+		$this->add_control(
+			'cm_hide_titles',
+			[
+				'label' => sprintf( __( 'Hide Titles %s', 'wpr-addons' ), '<i class="eicon-pro-icon"></i>' ),
+				'type' => Controls_Manager::SWITCHER,
+				'separator' => 'before',
+				'classes' => 'wpr-pro-control',
+			]
+		);
+	}
+
+	public function add_control_cm_direction() {
+		$this->add_control(
+			'cm_direction',
+			[
+				'label' => esc_html__( 'Menu Direction', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'right',
+				'options' => [
+					'top'              => esc_html__( 'Top', 'wpr-addons' ),
+					'right'            => esc_html__( 'Right', 'wpr-addons' ),
+					'bottom'           => esc_html__( 'Bottom', 'wpr-addons' ),
+					'left'             => esc_html__( 'Left', 'wpr-addons' ),
+					'pro-full'         => esc_html__( 'Full (Pro)', 'wpr-addons' ),
+					'pro-tl'           => esc_html__( 'Top Left (Pro)', 'wpr-addons' ),
+					'pro-tr'           => esc_html__( 'Top Right (Pro)', 'wpr-addons' ),
+					'pro-th'           => esc_html__( 'Top Half (Pro)', 'wpr-addons' ),
+					'pro-bl'           => esc_html__( 'Bottom Left (Pro)', 'wpr-addons' ),
+					'pro-br'           => esc_html__( 'Bottom Right (Pro)', 'wpr-addons' ),
+					'pro-bh'           => esc_html__( 'Bottom Half (Pro)', 'wpr-addons' ),
+					'pro-lh'           => esc_html__( 'Left Half (Pro)', 'wpr-addons' ),
+					'pro-rh'           => esc_html__( 'Right Half (Pro)', 'wpr-addons' ),
+				],
+			]
+		);
 	}
 
 	protected function register_controls() {
@@ -128,13 +199,6 @@ class Wpr_Circle_Menu extends Widget_Base {
 						],
 					],
 					[
-						'cm_title' => esc_html__( 'FAQ', 'wpr-addons' ),
-						'cm_icon' => [
-							'value' => 'fas fa-question-circle',
-							'library' => 'fa-solid',
-						],
-					],
-					[
 						'cm_title' => esc_html__( 'Contact', 'wpr-addons' ),
 						'cm_icon' => [
 							'value' => 'fas fa-envelope',
@@ -144,6 +208,17 @@ class Wpr_Circle_Menu extends Widget_Base {
 				],
 			]
 		);
+
+		if ( ! defined( 'WPR_ADDONS_PRO_VERSION' ) || ! wpr_fs()->can_use_premium_code() ) {
+			$this->add_control(
+				'cm_repeater_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => 'More than 4 Items are available<br> in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-circle-menu-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>',
+					'content_classes' => 'wpr-pro-notice',
+				]
+			);
+		}
 
 		$this->end_controls_section();
 
@@ -155,34 +230,16 @@ class Wpr_Circle_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'cm_direction',
-			[
-				'label' => esc_html__( 'Menu Direction', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'bottom-right',
-				'options' => [
-					'top'          => esc_html__( 'Top', 'wpr-addons' ),
-					'right'        => esc_html__( 'Right', 'wpr-addons' ),
-					'bottom'       => esc_html__( 'Bottom', 'wpr-addons' ),
-					'left'         => esc_html__( 'Left', 'wpr-addons' ),
-					'full'         => esc_html__( 'Full', 'wpr-addons' ),
-					'top-left'     => esc_html__( 'Top Left', 'wpr-addons' ),
-					'top-right'    => esc_html__( 'Top Right', 'wpr-addons' ),
-					'top-half'     => esc_html__( 'Top Half', 'wpr-addons' ),
-					'bottom-left'  => esc_html__( 'Bottom Left', 'wpr-addons' ),
-					'bottom-right' => esc_html__( 'Bottom Right', 'wpr-addons' ),
-					'bottom-half'  => esc_html__( 'Bottom Half', 'wpr-addons' ),
-					'left-half'    => esc_html__( 'Left Half', 'wpr-addons' ),
-					'right-half'   => esc_html__( 'Right Half', 'wpr-addons' ),
-				],
-			]
-		);
+		$this->add_control_cm_direction();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'circle-menu', 'cm_direction', ['pro-full','pro-tl','pro-tr','pro-th','pro-bl','pro-br','pro-bh','pro-lh','pro-rh'] );
 
 		$this->add_control(
 			'cm_distance',
 			[
 				'label' => esc_html__( 'Circle Menu Distance', 'wpr-addons' ),
+				'separator' => 'before',
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 150,
@@ -205,6 +262,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 				'label' => esc_html__( 'Button Size', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'render_type' => 'template',
+				'separator' => 'before',
 				'default' => [
 					'size' => 60,
 				],
@@ -221,14 +279,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
-			'cm_show_titles',
-			[
-				'label' => esc_html__( 'Show Titles', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'default' => 'yes',
-			]
-		);
+		$this->add_control_cm_hide_titles();
 
 		$this->end_controls_section();
 
@@ -309,39 +360,30 @@ class Wpr_Circle_Menu extends Widget_Base {
 						'max' => 200,
 					],
 				],
+				'separator' => 'after',
 			]
 		);
 
-		$this->add_control(
-			'cm_trigger',
-			[
-				'label' => esc_html__( 'Trigger', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'hover',
-				'options' => [
-					'hover' => esc_html__( 'Hover', 'wpr-addons' ),
-					'click' => esc_html__( 'Click', 'wpr-addons' ),
-				],
-			]
-		);
+		$this->add_control_cm_trigger();
 
-		$this->add_control(
-			'cm_transition',
-			[
-				'label' => esc_html__( 'Transition', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'ease',
-				'options' => [
-					'ease'        => esc_html__( 'Ease', 'wpr-addons' ),
-					'linear'      => esc_html__( 'Linear', 'wpr-addons' ),
-					'ease-in'     => esc_html__( 'Ease-In', 'wpr-addons' ),
-					'ease-out'    => esc_html__( 'Ease-Out', 'wpr-addons' ),
-					'ease-in-out' => esc_html__( 'Ease-In-Out', 'wpr-addons' ),
-				],
-			]
-		);
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'circle-menu', 'cm_trigger', ['pro-click'] );
+
+		$this->add_control_cm_transition();
+
+		// Upgrade to Pro Notice
+		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'circle-menu', 'cm_transition', ['pro-ei','pro-eo','pro-eio'] );
 
 		$this->end_controls_section();
+
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'circle-menu', [
+			'Unlimited Menu Items',
+			'All Menu Directions',
+			'Click Trigger option',
+			'Hide Titles option',
+			'Advanced Transition Effects',
+		] );
 
 		// Style: Items
 		$this->start_controls_section(
@@ -517,7 +559,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 
 		// After Tabs
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'item_icon_size',
 			[
 				'label' => esc_html__( 'Icon Size', 'wpr-addons' ),
@@ -541,7 +583,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'item_icon_distance',
 			[
 				'label' => esc_html__( 'Icon Distance', 'wpr-addons' ),
@@ -642,12 +684,16 @@ class Wpr_Circle_Menu extends Widget_Base {
 			'data-settings' => wp_json_encode( $circle_config ),
 		] );
 
-		$show_titles = 'yes' === $settings['cm_show_titles'];
+		$show_titles = 'yes' !== $settings['cm_hide_titles'];
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'circle-menu-wrapper' ); ?>>
 			<ul class="wpr-circle-menu-box">
 				<?php foreach ( $settings['cm_items'] as $index => $item ) :
+					if ( ( ! defined( 'WPR_ADDONS_PRO_VERSION' ) || ! wpr_fs()->can_use_premium_code() ) && $index === 4 ) {
+						break;
+					}
+
 					if ( ! empty( $item['cm_link']['url'] ) ) {
 						$this->add_link_attributes( 'cm_link_' . $item['_id'], $item['cm_link'] );
 					}
