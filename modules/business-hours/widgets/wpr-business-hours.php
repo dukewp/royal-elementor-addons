@@ -38,6 +38,10 @@ class Wpr_Business_Hours extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-business-hours' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'business hours', 'opening Hours', 'opening times', 'currently Open' ];
 	}

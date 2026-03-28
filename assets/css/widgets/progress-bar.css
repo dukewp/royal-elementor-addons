@@ -1,0 +1,231 @@
+
+.wpr-prbar-counter-value-suffix {
+    line-height: 1;
+}
+
+
+/* Horizontal Line */
+
+.wpr-prbar-hr-line {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.wpr-prbar-hr-line-inner {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    -webkit-transition-property: width;
+    -o-transition-property: width;
+    transition-property: width;
+    overflow: hidden;
+}
+
+.wpr-prbar-hr-line .wpr-prbar-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wpr-prbar-hr-line .wpr-prbar-title-wrap {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    -webkit-transform: translateY( -50%);
+    -ms-transform: translateY( -50%);
+    transform: translateY( -50%);
+}
+
+.wpr-prbar-layout-hr-line .wpr-prbar-subtitle {
+    text-align: left;
+}
+
+.wpr-prbar-hr-line .wpr-prbar-counter {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    -webkit-transform: translateY( -50%);
+    -ms-transform: translateY( -50%);
+    transform: translateY( -50%);
+}
+
+.wpr-prbar-layout-hr-line .wpr-prbar-title-wrap {
+    float: left;
+}
+
+.wpr-prbar-layout-hr-line .wpr-prbar-counter {
+    float: right;
+}
+
+
+/* Vertical Line */
+
+.wpr-prbar-vr-line {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.wpr-prbar-vr-line-inner {
+    position: relative;
+    width: 100%;
+    height: 0;
+    -webkit-transition-property: height;
+    -o-transition-property: height;
+    transition-property: height;
+    overflow: hidden;
+}
+
+
+/* Circle */
+
+.wpr-prbar-circle {
+    position: relative;
+    display: table;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.wpr-prbar-circle-svg {
+    width: 100%;
+    height: auto;
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    border-radius: 50%;
+}
+
+.wpr-prbar-circle-prline {
+    -webkit-transition-property: stroke-dasharray, stroke-dashoffset;
+    -o-transition-property: stroke-dasharray, stroke-dashoffset;
+    transition-property: stroke-dasharray, stroke-dashoffset;
+    stroke-linecap: butt;
+}
+
+.wpr-prbar-circle .wpr-prbar-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate( -50%, -50%);
+    -ms-transform: translate( -50%, -50%);
+    transform: translate( -50%, -50%);
+}
+
+.wpr-prbar-content {
+    text-align: center;
+    overflow: hidden;
+}
+
+.wpr-prbar-counter {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: flex;
+    font-size: 12px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.wpr-prbar-title,
+.wpr-prbar-subtitle {
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* Stripe */
+
+.wpr-prbar-stripe-yes .wpr-prbar-hr-line-inner:after,
+.wpr-prbar-stripe-yes .wpr-prbar-vr-line-inner:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: calc(100% + 60px);
+    height: 100%;
+    background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-size: 30px 30px;
+}
+
+.wpr-prbar-stripe-yes.wpr-prbar-stripe-anim-right .wpr-prbar-hr-line-inner:after,
+.wpr-prbar-stripe-yes.wpr-prbar-stripe-anim-right .wpr-prbar-vr-line-inner:after {
+    -webkit-animation: stripe-anim-right 2s linear infinite;
+    animation: stripe-anim-right 2s linear infinite;
+}
+
+.wpr-prbar-stripe-yes.wpr-prbar-stripe-anim-left .wpr-prbar-hr-line-inner:after,
+.wpr-prbar-stripe-yes.wpr-prbar-stripe-anim-left .wpr-prbar-vr-line-inner:after {
+    -webkit-animation: stripe-anim-left 2s linear infinite;
+    animation: stripe-anim-left 2s linear infinite;
+}
+
+@-webkit-keyframes stripe-anim-right {
+    0% {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -webkit-transform: translate(30px, 0);
+        transform: translate(30px, 0);
+    }
+}
+
+@keyframes stripe-anim-right {
+    0% {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -webkit-transform: translate(30px, 0);
+        transform: translate(30px, 0);
+    }
+}
+
+@-webkit-keyframes stripe-anim-left {
+    0% {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -webkit-transform: translate(-30px, 0);
+        transform: translate(-30px, 0);
+    }
+}
+
+@keyframes stripe-anim-left {
+    0% {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -webkit-transform: translate(-30px, 0);
+        transform: translate(-30px, 0);
+    }
+}
+
+
+/* Defaults */
+
+.elementor-widget-wpr-progress-bar .wpr-prbar-hr-line-inner,
+.elementor-widget-wpr-progress-bar .wpr-prbar-vr-line-inner {
+    background-color: #605BE5;
+}

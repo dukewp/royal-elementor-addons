@@ -32,6 +32,10 @@ class Wpr_Mailchimp extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-mailchimp' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'subscribe', 'subscription form', 'email subscription', 'sing up form', 'singup form', 'newsletter', 'mailchimp' ];
 	}

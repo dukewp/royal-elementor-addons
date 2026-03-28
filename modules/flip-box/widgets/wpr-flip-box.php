@@ -43,7 +43,7 @@ class Wpr_Flip_Box extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-button-animations-css', 'wpr-animations-css' ];
+		return [ 'wpr-widget-flip-box', 'wpr-button-animations-css', 'wpr-animations-css' ];
 	}
 
 	public function has_widget_inner_wrapper(): bool {

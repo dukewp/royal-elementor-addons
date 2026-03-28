@@ -50,6 +50,10 @@ class Wpr_Content_Ticker extends Widget_Base {
 		return [ 'wpr-slick', 'wpr-marquee' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-content-ticker' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-content-ticker-help-btn';

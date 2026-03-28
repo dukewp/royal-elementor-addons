@@ -38,6 +38,10 @@ class Wpr_Price_List extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-price-list' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'pricing list', 'price list', 'price menu', 'pricing menu', 'food menu', 'restaurant menu' ];
 	}

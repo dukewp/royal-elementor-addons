@@ -1,0 +1,194 @@
+/* Filter: Active */
+.wpr-active-filters-horizontal .wpr-product-active-filters {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.wpr-active-alignment-left .wpr-af-active-filters,
+.wpr-active-alignment-center .wpr-af-active-filters,
+.wpr-active-alignment-right .wpr-af-active-filters {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+.wpr-active-alignment-justify .wpr-remove-filter {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+.wpr-active-alignment-justify .wpr-remove-filter span {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-left: auto;
+}
+
+.wpr-product-active-filters {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+ 
+.wpr-product-active-filters li a::before {
+    font-family: "Font Awesome 5 Free" !important;
+    content: '\f00d';
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+    font-weight: 600 !important;
+}
+
+/* Filter: Rating */
+.wpr-product-filter-title {
+    margin: 0;
+}
+
+.wpr-product-filters .wpr-search-form-input-wrap { 
+    display: -webkit-box; 
+    display: -ms-flexbox; 
+    display: flex;
+}
+
+.wpr-product-filter-rating {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.wpr-product-filter-label-left .wpr-product-filter-rating a {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.wpr-product-filter-label-right .wpr-product-filter-rating a {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.wpr-product-filter-rating .wpr-rating-icon-full {
+    color: orange;
+}
+
+.wpr-product-filter-rating .wpr-rating-icon-empty {
+    color: lightgray;
+}
+
+.wpr-product-filter-rating.wpr-woo-rating-style-2 i:before {
+    content: '\002605';
+}
+
+.wpr-product-filter-rating .wpr-active-product-filter .wpr-rating-icon-full {
+    color: red
+}
+
+/* Filter: Attributes */
+.wpr-product-filter-tax-wrap {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.wpr-product-filter-tax-wrap .wpr-active-product-filter {
+    color: red;
+}
+
+.wpr-product-filter-tax-wrap li a {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    line-height: 1;
+}
+
+.wpr-product-filter-tax-wrap li a span:last-child:not(.wpr-product-filter-tax-name) {
+    margin-left: 4px;
+}
+
+.wpr-product-filter-label-right .wpr-product-filter-tax-wrap li a span:last-child:not(.wpr-product-filter-tax-name) {
+    margin-left: auto;
+}
+
+.wpr-product-filter-tax-wrap li a span:first-child {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.wpr-active-product-filter:not(.wpr-woo-rating) span:first-child:before {
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.wpr-product-filter-tax-child a {
+    margin-left: 10px;
+}
+  
+/* Filter: Price */
+.wpr-product-filter-price input {
+    visibility: hidden;
+}
+
+.wpr-product-filter-price-slider .ui-slider-range {
+    position: absolute;
+    display: block;
+    /* outline aris focusze mosashorebeli */
+}
+
+.wpr-product-filter-price-slider .ui-slider-handle {
+    position: absolute;
+    cursor: ew-resize;
+}
+
+.wpr-product-filter-slide-handlers-round .wpr-product-filter-price-slider .ui-slider-handle {
+    border-radius: 100%;
+}
+
+.wpr-product-filter-slide-handlers-square .wpr-product-filter-price-slider .ui-slider-handle {
+    border-radius: 0;
+    border: none !important;
+    outline: none !important;
+}
+
+.wpr-product-filter-price-amount {
+    margin-top: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.wpr-product-filter-price-btn-right .wpr-product-filter-price-amount {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+}
+
+.wpr-product-filters .wpr-product-filter-price-amount button.button {
+    font-weight: 400;
+}

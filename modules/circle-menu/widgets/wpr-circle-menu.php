@@ -33,6 +33,10 @@ class Wpr_Circle_Menu extends Widget_Base {
 		return [ 'wpr-widgets' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-circle-menu' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'circle menu', 'floating menu', 'radial menu', 'circular navigation' ];
 	}

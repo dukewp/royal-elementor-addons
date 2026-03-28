@@ -1,0 +1,26 @@
+
+.wpr-breadcrumbs {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    list-style-type: none;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    padding: 0;
+}
+
+.wpr-breadcrumbs li:not(:last-of-type) {
+    margin-right: 4px;
+}
+
+@media screen and (max-width: 767px) {
+    .wpr-breadcrumbs {
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+
+    .wpr-breadcrumbs li {
+        white-space: nowrap;
+    }
+}

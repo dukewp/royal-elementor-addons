@@ -45,7 +45,7 @@ class Wpr_Product_Media extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'woocommerce_prettyPhoto_css', 'photoswipe', 'photoswipe-default-skin', 'wpr-lightgallery-css'];
+		return [ 'wpr-widget-product-media', 'wpr-widget-woocommerce', 'woocommerce_prettyPhoto_css', 'photoswipe', 'photoswipe-default-skin', 'wpr-lightgallery-css'];
 	}
 
 	public function add_control_gallery_slider_thumbs() {

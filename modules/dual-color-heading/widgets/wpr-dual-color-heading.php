@@ -37,6 +37,10 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		return ['wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-dual-color-heading' ];
+	}
+
 	public function get_keywords() {
 		return ['royal', 'Dual Color Heading'];
 	}

@@ -46,7 +46,7 @@ class Wpr_Post_Media extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-lightgallery-css' ];
+		return [ 'wpr-widget-theme-builder', 'wpr-lightgallery-css' ];
 	}
 
 	protected function register_controls() {

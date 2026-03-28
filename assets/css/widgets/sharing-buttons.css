@@ -1,0 +1,339 @@
+
+.wpr-sharing-buttons .wpr-sharing-icon {
+    overflow: hidden;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    color: #ffffff !important;
+}
+
+.wpr-sharing-buttons .wpr-sharing-icon i {
+    display: block;
+    text-align: center;
+}
+
+.wpr-sharing-label {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+
+.elementor-widget-wpr-sharing-buttons.elementor-grid-0 .wpr-sharing-buttons,
+.elementor-widget-wpr-sharing-buttons[class*="elementor-grid-pro-"] .wpr-sharing-buttons {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.elementor-widget-wpr-sharing-buttons:not(.elementor-grid-0):not(.elementor-grid-pro-3):not(.elementor-grid-pro-4):not(.elementor-grid-pro-5):not(.elementor-grid-pro-6) .wpr-sharing-label-off .wpr-sharing-icon i {
+    width: 100% !important;
+}
+
+.wpr-sharing-buttons.wpr-sharing-col-1 .wpr-sharing-icon {
+    width: 100%;
+    margin-right: 0 !important;
+}
+
+.wpr-sharing-buttons .wpr-sharing-icon:last-child,
+.wpr-sharing-col-1 .wpr-sharing-buttons .wpr-sharing-icon,
+.wpr-sharing-col-2 .wpr-sharing-buttons .wpr-sharing-icon:nth-child(2n),
+.wpr-sharing-col-3 .wpr-sharing-buttons .wpr-sharing-icon:nth-child(3n),
+.wpr-sharing-col-4 .wpr-sharing-buttons .wpr-sharing-icon:nth-child(4n),
+.wpr-sharing-col-5 .wpr-sharing-buttons .wpr-sharing-icon:nth-child(5n),
+.wpr-sharing-col-6 .wpr-sharing-buttons .wpr-sharing-icon:nth-child(6n) {
+    margin-right: 0 !important;
+}
+
+.wpr-sharing-buttons .wpr-sharing-icon {
+    -webkit-transition-property: opacity, border-color;
+    -o-transition-property: opacity, border-color;
+    transition-property: opacity, border-color;
+    -webkit-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+}
+
+.wpr-sharing-buttons .wpr-sharing-icon i,
+.wpr-sharing-buttons .wpr-sharing-icon span {
+    -webkit-transition-property: color, background-color;
+    -o-transition-property: color, background-color;
+    transition-property: color, background-color;
+    -webkit-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+}
+
+.wpr-sharing-official .wpr-sharing-icon:hover {
+    opacity: 0.85;
+}
+
+.wpr-sharing-official .wpr-sharing-facebook-f i,
+.wpr-sharing-official .wpr-sharing-facebook-f span {
+    background-color: #3b5998;
+}
+
+.wpr-sharing-official .wpr-sharing-twitter i,
+.wpr-sharing-official .wpr-sharing-twitter span {
+    background-color: #1da1f2;
+}
+
+.wpr-sharing-official .wpr-sharing-linkedin-in i,
+.wpr-sharing-official .wpr-sharing-linkedin-in span {
+    background-color: #0077b5;
+}
+
+.wpr-sharing-official .wpr-sharing-pinterest-p i,
+.wpr-sharing-official .wpr-sharing-pinterest-p span {
+    background-color: #bd081c;
+}
+
+.wpr-sharing-official .wpr-sharing-reddit i,
+.wpr-sharing-official .wpr-sharing-reddit span {
+    background-color: #ff4500;
+}
+
+.wpr-sharing-official .wpr-sharing-tumblr i,
+.wpr-sharing-official .wpr-sharing-tumblr span {
+    background-color: #35465c;
+}
+
+.wpr-sharing-official .wpr-sharing-digg i,
+.wpr-sharing-official .wpr-sharing-digg span {
+    background-color: #005be2;
+}
+
+.wpr-sharing-official .wpr-sharing-xing i,
+.wpr-sharing-official .wpr-sharing-xing span {
+    background-color: #026466;
+}
+
+.wpr-sharing-official .wpr-sharing-stumbleupon i,
+.wpr-sharing-official .wpr-sharing-stumbleupon span {
+    background-color: #eb4924;
+}
+
+.wpr-sharing-official .wpr-sharing-vk i,
+.wpr-sharing-official .wpr-sharing-vk span {
+    background-color: #45668e;
+}
+
+.wpr-sharing-official .wpr-sharing-odnoklassniki i,
+.wpr-sharing-official .wpr-sharing-odnoklassniki span {
+    background-color: #f4731c;
+}
+
+.wpr-sharing-official .wpr-sharing-get-pocket i,
+.wpr-sharing-official .wpr-sharing-get-pocket span {
+    background-color: #ef3f56;
+}
+
+.wpr-sharing-official .wpr-sharing-skype i,
+.wpr-sharing-official .wpr-sharing-skype span {
+    background-color: #00aff0;
+}
+
+.wpr-sharing-official .wpr-sharing-whatsapp i,
+.wpr-sharing-official .wpr-sharing-whatsapp span {
+    background-color: #25d366;
+}
+
+.wpr-sharing-official .wpr-sharing-telegram i,
+.wpr-sharing-official .wpr-sharing-telegram span {
+    background-color: #2ca5e0;
+}
+
+.wpr-sharing-official .wpr-sharing-delicious i,
+.wpr-sharing-official .wpr-sharing-delicious span {
+    background-color: #3399ff;
+}
+
+.wpr-sharing-official .wpr-sharing-envelope i,
+.wpr-sharing-official .wpr-sharing-envelope span {
+    background-color: #c13B2c;
+}
+
+.wpr-sharing-official .wpr-sharing-print i,
+.wpr-sharing-official .wpr-sharing-print span {
+    background-color: #96c859;
+}
+
+.wpr-sharing-official .wpr-sharing-facebook-f {
+    border-color: #3b5998;
+}
+
+.wpr-sharing-official .wpr-sharing-twitter {
+    border-color: #1da1f2;
+}
+
+.wpr-sharing-official .wpr-sharing-linkedin-in {
+    border-color: #0077b5;
+}
+
+.wpr-sharing-official .wpr-sharing-pinterest-p {
+    border-color: #bd081c;
+}
+
+.wpr-sharing-official .wpr-sharing-reddit {
+    border-color: #ff4500;
+}
+
+.wpr-sharing-official .wpr-sharing-tumblr {
+    border-color: #35465c;
+}
+
+.wpr-sharing-official .wpr-sharing-digg {
+    border-color: #005be2;
+}
+
+.wpr-sharing-official .wpr-sharing-xing {
+    border-color: #026466;
+}
+
+.wpr-sharing-official .wpr-sharing-stumbleupon {
+    border-color: #eb4924;
+}
+
+.wpr-sharing-official .wpr-sharing-vk {
+    border-color: #45668e;
+}
+
+.wpr-sharing-official .wpr-sharing-odnoklassniki {
+    border-color: #f4731c;
+}
+
+.wpr-sharing-official .wpr-sharing-get-pocket {
+    border-color: #ef3f56;
+}
+
+.wpr-sharing-official .wpr-sharing-skype {
+    border-color: #00aff0;
+}
+
+.wpr-sharing-official .wpr-sharing-whatsapp {
+    border-color: #25d366;
+}
+
+.wpr-sharing-official .wpr-sharing-telegram {
+    border-color: #2ca5e0;
+}
+
+.wpr-sharing-official .wpr-sharing-delicious {
+    border-color: #3399ff;
+}
+
+.wpr-sharing-official .wpr-sharing-envelope {
+    border-color: #c13B2c;
+}
+
+.wpr-sharing-official .wpr-sharing-print {
+    border-color: #96c859;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-facebook-f i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-facebook-f span {
+    color: #3b5998;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-twitter i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-twitter span {
+    color: #1da1f2;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-linkedin-in i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-linkedin-in span {
+    color: #0077b5;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-pinterest-p i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-pinterest-p span {
+    color: #bd081c;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-reddit i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-reddit span {
+    color: #ff4500;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-tumblr i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-tumblr span {
+    color: #35465c;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-digg i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-digg span {
+    color: #005be2;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-xing i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-xing span {
+    color: #026466;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-stumbleupon i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-stumbleupon span {
+    color: #eb4924;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-vk i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-vk span {
+    color: #45668e;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-odnoklassniki i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-odnoklassniki span {
+    color: #f4731c;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-get-pocket i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-get-pocket span {
+    color: #ef3f56;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-skype i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-skype span {
+    color: #00aff0;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-whatsapp i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-whatsapp span {
+    color: #25d366;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-telegram i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-telegram span {
+    color: #2ca5e0;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-delicious i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-delicious span {
+    color: #3399ff;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-envelope i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-envelope span {
+    color: #c13B2c;
+    background-color: transparent;
+}
+
+.wpr-sharing-official.wpr-sharing-icon-tr .wpr-sharing-print i,
+.wpr-sharing-official.wpr-sharing-label-tr .wpr-sharing-print span {
+    color: #96c859;
+    background-color: transparent;
+}

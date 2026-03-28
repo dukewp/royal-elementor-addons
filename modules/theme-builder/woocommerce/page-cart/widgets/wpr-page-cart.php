@@ -41,6 +41,10 @@ class Wpr_Page_Cart extends Widget_Base {
 		return [];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-page-cart', 'wpr-widget-woocommerce' ];
+	}
+
 	public $gettext_modifications;
 
 	protected function register_controls() {

@@ -32,6 +32,10 @@ class Wpr_Taxonomy_List extends Widget_Base {
 		return [ 'wpr-widgets' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-taxonomy-list' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'taxonomy-list', 'taxonomy', 'category', 'categories', 'tag', 'list'];
 	}

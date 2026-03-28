@@ -48,7 +48,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
+		return [ 'wpr-widget-advanced-accordion', 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
 	}
 
     public function get_custom_help_url() {

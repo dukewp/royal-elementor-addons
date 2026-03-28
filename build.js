@@ -8,6 +8,7 @@ const { minify } = require('terser');
 const CSS_DIRS = [
 	'assets/css',
 	'assets/css/lib/animations',
+	'assets/css/widgets',
 ];
 
 const JS_DIRS = [

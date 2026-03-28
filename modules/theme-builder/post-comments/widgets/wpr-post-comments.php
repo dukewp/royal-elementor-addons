@@ -32,6 +32,10 @@ class Wpr_Post_Comments extends Widget_Base {
 		return Utilities::show_theme_buider_widget_on('single') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-theme-builder' ];
+	}
+
 	public function get_keywords() {
 		return [ 'comments', 'post' ];
 	}

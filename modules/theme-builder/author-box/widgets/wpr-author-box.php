@@ -32,6 +32,10 @@ class Wpr_Author_Box extends Widget_Base {
 		return Utilities::show_theme_buider_widget_on('single') || Utilities::show_theme_buider_widget_on('archive') ? [ 'wpr-theme-builder-widgets' ] : [];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-theme-builder' ];
+	}
+
 	public function get_keywords() {
 		return [ 'author', 'box', 'post', ];
 	}

@@ -32,6 +32,10 @@ class Wpr_Page_List extends Widget_Base {
 		return [ 'wpr-widgets' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-page-list' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'page-list', 'list'];
 	}

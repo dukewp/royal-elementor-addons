@@ -52,7 +52,7 @@ class Wpr_Advanced_Slider extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-animations-css' ];
+		return [ 'wpr-widget-advanced-slider', 'wpr-animations-css' ];
 	}
 
     public function get_custom_help_url() {

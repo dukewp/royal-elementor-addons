@@ -33,6 +33,10 @@ class Wpr_Unfold extends Widget_Base {
 		return [ 'wpr-widgets' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-unfold' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'unfold', 'fold', 'read more', 'expand', 'collapse', 'toggle content' ];
 	}

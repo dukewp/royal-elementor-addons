@@ -43,7 +43,7 @@ class Wpr_Content_Toggle extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-animations-css' ];
+		return [ 'wpr-widget-content-toggle', 'wpr-animations-css' ];
 	}
 
 	public function has_widget_inner_wrapper(): bool {

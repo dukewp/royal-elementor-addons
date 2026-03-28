@@ -26,6 +26,10 @@ class Wpr_Product_Description extends Widget_Base {
 		return Utilities::show_theme_buider_widget_on('product_single') ? [ 'wpr-woocommerce-builder-widgets' ] : [];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-woocommerce' ];
+	}
+
 	public function get_keywords() {
 		return [ 'woocommerce', 'product-description', 'product', 'description' ];
 	}

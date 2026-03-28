@@ -43,7 +43,7 @@ class Wpr_Nav_Menu extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-link-animations-css' ];
+		return [ 'wpr-widget-nav-menu', 'wpr-link-animations-css' ];
 	}
 
     public function get_custom_help_url() {

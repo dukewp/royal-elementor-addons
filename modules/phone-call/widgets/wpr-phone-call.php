@@ -31,6 +31,10 @@ class Wpr_Phone_Call extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-phone-call' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'Phone', 'call','phone','Phone call' ];
 	}

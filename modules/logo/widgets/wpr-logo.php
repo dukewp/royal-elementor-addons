@@ -38,6 +38,10 @@ class Wpr_Logo extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-logo' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'site logo', 'image' ];
 	}

@@ -32,6 +32,10 @@ class Wpr_Forms extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-forms' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'cf7', 'contact form 7', 'caldera forms', 'ninja forms', 'wpforms', 'wp forms' ];
 	}

@@ -50,7 +50,7 @@ class Wpr_Flip_Carousel extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-flipster-css' ];
+		return [ 'wpr-widget-flip-carousel', 'wpr-flipster-css' ];
 	}
 
     public function get_custom_help_url() {

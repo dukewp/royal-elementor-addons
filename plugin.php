@@ -406,6 +406,82 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
+		// Per-widget CSS (registered, loaded on demand via get_style_depends)
+		$widget_styles = [
+			'wpr-widget-nav-menu',
+			'wpr-widget-mega-menu',
+			'wpr-widget-onepage-nav',
+			'wpr-widget-theme-builder',
+			'wpr-widget-grid',
+			'wpr-widget-magazine-grid',
+			'wpr-widget-sharing-buttons',
+			'wpr-widget-countdown',
+			'wpr-widget-google-maps',
+			'wpr-widget-forms',
+			'wpr-widget-before-after',
+			'wpr-widget-popups',
+			'wpr-widget-mailchimp',
+			'wpr-widget-advanced-slider',
+			'wpr-widget-pricing-table',
+			'wpr-widget-logo',
+			'wpr-widget-testimonial',
+			'wpr-widget-search',
+			'wpr-widget-team-member',
+			'wpr-widget-button',
+			'wpr-widget-dual-button',
+			'wpr-widget-advanced-text',
+			'wpr-widget-progress-bar',
+			'wpr-widget-price-list',
+			'wpr-widget-image-hotspots',
+			'wpr-widget-divider',
+			'wpr-widget-business-hours',
+			'wpr-widget-flip-box',
+			'wpr-widget-promo-box',
+			'wpr-widget-content-ticker',
+			'wpr-widget-tabs',
+			'wpr-widget-content-toggle',
+			'wpr-widget-back-to-top',
+			'wpr-widget-phone-call',
+			'wpr-widget-posts-timeline',
+			'wpr-widget-lottie-animations',
+			'wpr-widget-twitter-feed',
+			'wpr-widget-instagram-feed',
+			'wpr-widget-flip-carousel',
+			'wpr-widget-dual-color-heading',
+			'wpr-widget-taxonomy-list',
+			'wpr-widget-feature-list',
+			'wpr-widget-image-accordion',
+			'wpr-widget-section-extensions',
+			'wpr-widget-data-table',
+			'wpr-widget-woocommerce',
+			'wpr-widget-product-media',
+			'wpr-widget-page-cart',
+			'wpr-widget-page-checkout',
+			'wpr-widget-my-account',
+			'wpr-widget-advanced-filters',
+			'wpr-widget-product-filters',
+			'wpr-widget-charts',
+			'wpr-widget-advanced-accordion',
+			'wpr-widget-page-list',
+			'wpr-widget-offcanvas',
+			'wpr-widget-form-builder',
+			'wpr-widget-post-breadcrumbs',
+			'wpr-widget-image-scroll',
+			'wpr-widget-circle-menu',
+			'wpr-widget-unfold',
+		];
+
+		$version = Plugin::instance()->get_version();
+		foreach ( $widget_styles as $handle ) {
+			$file = str_replace( 'wpr-widget-', '', $handle );
+			wp_register_style(
+				$handle,
+				WPR_ADDONS_URL . 'assets/css/widgets/' . $file . $this->script_suffix() . '.css',
+				[ 'wpr-addons-css' ],
+				$version
+			);
+		}
+
 		wp_enqueue_style(
 			'wpr-addons-css',
 			WPR_ADDONS_URL . 'assets/css/frontend'. $this->script_suffix() .'.css',

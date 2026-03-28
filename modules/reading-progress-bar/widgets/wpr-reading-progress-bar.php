@@ -38,6 +38,10 @@ class Wpr_Reading_Progress_Bar extends Widget_Base {
         return [ 'wpr-widgets'];
     }
 
+    public function get_style_depends() {
+        return [ 'wpr-widget-section-extensions' ];
+    }
+
     public function get_keywords() {
         return [ 'royal', 'reading progress bar', 'skills bar', 'percentage bar', 'scroll' ];
     }

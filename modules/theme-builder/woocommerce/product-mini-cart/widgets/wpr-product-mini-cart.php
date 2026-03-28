@@ -43,6 +43,10 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 		return ['wpr-perfect-scroll-js'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-woocommerce' ];
+	}
+
 	public function add_control_mini_cart_style() {
 		$this->add_control(
 			'mini_cart_style',

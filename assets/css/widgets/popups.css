@@ -1,0 +1,208 @@
+
+body:not(.elementor-editor-active) .wpr-template-popup {
+    display: none;
+}
+
+.wpr-template-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999999;
+}
+
+.wpr-template-popup-inner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.wpr-popup-container {
+    position: relative;
+}
+
+.wpr-popup-container-inner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff;
+}
+
+.wpr-popup-container-inner>div {
+    width: 100%;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+
+.wpr-popup-container>div {
+    width: 100%;
+}
+
+.wpr-popup-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+}
+
+.wpr-popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: rgba( 0, 0, 0, 0.7);
+}
+
+.wpr-popup-close-btn {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    text-align: center;
+    cursor: pointer;
+}
+
+.wpr-popup-notification.wpr-template-popup,
+.wpr-popup-notification .wpr-template-popup-inner {
+    height: auto !important;
+}
+
+.wpr-popup-notification .wpr-popup-overlay {
+    display: none !important;
+}
+
+.wpr-popup-container-inner.ps-container.ps-active-y>.ps-scrollbar-y-rail,
+.wpr-popup-container-inner.ps.ps--active-y>.ps__rail-y {
+    display: block;
+    background-color: transparent;
+}
+
+.wpr-popup-container-inner.ps-container>.ps-scrollbar-y-rail,
+.wpr-popup-container-inner.ps>.ps__rail-y {
+    display: none;
+    position: absolute;
+    right: 3px;
+    width: 3px;
+}
+
+.wpr-popup-container-inner.ps-container>.ps-scrollbar-y-rail>.ps-scrollbar-y,
+.wpr-popup-container-inner.ps>.ps__rail-y>.ps__thumb-y {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    width: 3px;
+}
+
+.wpr-popup-container .ps-scrollbar-x-rail {
+    display: none !important;
+}
+
+.wpr-popup-notification .wpr-popup-container .slideInDown {
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+.wpr-popup-notification .wpr-popup-container {
+    width: 100% !important;
+    -webkit-box-align: start !important;
+    -ms-flex-align: start !important;
+    align-items: flex-start !important;
+}
+
+.wpr-popup-trigger-button {
+    display: inline-block;
+    font-size: 14px;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.wpr-popup-trigger-button svg {
+    display: block;
+}
+
+
+/* Only For Editing */
+
+.wpr-popup-container .elementor-editor-section-settings {
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    border-radius: 0 0 5px 5px;
+}
+
+.wpr-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:first-child {
+    border-radius: 0 0 0 5px;
+}
+
+.wpr-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:first-child:before {
+    top: 0;
+    border-width: 0 12px 22px 0;
+}
+
+.wpr-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:last-child {
+    border-radius: 0 0 5px 0;
+}
+
+.wpr-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:last-child:after {
+    top: 0;
+    border-width: 0 0 22px 12px;
+}
+
+.elementor-editor-active [data-elementor-type="wpr-popups"] .elementor-section-wrap:not(:empty)+#elementor-add-new-section,
+.elementor-editor-active [data-elementor-type="wpr-popups"]:not(.elementor-edit-mode) {
+    display: none;
+}
+
+.elementor .elementor-widget-wpr-popup-trigger .wpr-popup-trigger-button {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.elementor-editor-active [data-elementor-type="wpr-popup"] .elementor-section-wrap:not(:empty)+#elementor-add-new-section,
+.elementor-editor-active [data-elementor-type="wpr-popup"]:not(.elementor-edit-mode) {
+    display: none;
+}
+
+
+/* Template Edit button */
+
+.wpr-template-edit-btn {
+    position: absolute;
+    top: 0;
+    right: 40px;
+    display: none;
+    line-height: 1;
+    padding: 8px 13px;
+    cursor: pointer;
+    background: #333;
+    color: #fff;
+    border: 1px solid #000;
+}
+
+.elementor-editor-active .wpr-template-edit-btn {
+    display: inline-block;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.elementor-editor-active .elementor-element-edit-mode:hover .wpr-template-edit-btn {
+    opacity: 1;
+    visibility: visible;
+}

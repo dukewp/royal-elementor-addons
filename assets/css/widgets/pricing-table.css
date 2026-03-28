@@ -1,0 +1,381 @@
+
+.wpr-pricing-table {
+    position: relative;
+}
+
+
+/* Heading */
+
+.wpr-pricing-table-heading {
+    text-align: center;
+}
+
+.wpr-pricing-table-headding-inner {
+    display: inline-block;
+}
+
+.wpr-pricing-table-heading-left .wpr-pricing-table-headding-inner>div,
+.wpr-pricing-table-heading-right .wpr-pricing-table-headding-inner>div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.wpr-pricing-table-heading-left .wpr-pricing-table-icon {
+    float: left;
+}
+
+.wpr-pricing-table-heading-right .wpr-pricing-table-icon {
+    float: right;
+}
+
+.wpr-pricing-table-heading-left .wpr-pricing-table-title-wrap,
+.wpr-pricing-table-heading-right .wpr-pricing-table-title-wrap {
+    text-align: left;
+}
+
+.wpr-pricing-table-heading-center .wpr-pricing-table-icon img {
+    margin: 0 auto;
+}
+
+.wpr-pricing-table-icon img {
+    display: block;
+    border-style: none;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-title-wrap .wpr-pricing-table-title {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-title-wrap .wpr-pricing-table-sub-title {
+    font-size: 14px;
+}
+
+.wpr-pricing-table-price {
+    text-align: center;
+    font-size: 65px;
+    font-weight: 500;
+    line-height: 0.9;
+}
+
+.wpr-pricing-table-price-inner {
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.wpr-pricing-table-sub-price,
+.wpr-pricing-table-currency,
+.wpr-pricing-table-old-price,
+.wpr-pricing-table-preiod {
+    line-height: 1;
+}
+
+.wpr-pricing-table-preiod {
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-align-self: flex-end;
+    -ms-flex-item-align: end;
+    align-self: flex-end;
+}
+
+.wpr-pricing-table-old-price {
+    text-decoration: line-through !important;
+}
+
+
+/* Feature */
+
+.wpr-pricing-table-feature {
+    position: relative;
+    font-size: 15px;
+    padding: 0;
+}
+
+.wpr-pricing-table-feature-inner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.wpr-pricing-table-feature-inner span {
+    position: relative;
+}
+
+.wpr-pricing-table-feature-inner span.wpr-pricing-table-ftext-line-yes {
+    text-decoration: line-through;
+}
+
+.wpr-pricing-table-feature:after {
+    content: "";
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.wpr-pricing-table section:last-of-type:after {
+    display: none;
+}
+
+.wpr-pricing-table-feature-text,
+.wpr-pricing-table-feature-icon {
+    display: inline;
+}
+
+.wpr-pricing-table-feature-icon {
+    margin-right: 8px;
+}
+
+.wpr-pricing-table-feature-tooltip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-radius: 4px;
+    padding: 6px 10px;
+    visibility: hidden;
+    opacity: 0;
+    font-size: 15px;
+    -webkit-transform: translate(-50%, -100%);
+    -ms-transform: translate(-50%, -100%);
+    transform: translate(-50%, -100%);
+    -webkit-transition: all 230ms ease-in-out 0s;
+    -o-transition: all 230ms ease-in-out 0s;
+    transition: all 230ms ease-in-out 0s;
+    text-align: center;
+}
+
+.wpr-pricing-table-feature-tooltip:before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    bottom: -5px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top-style: solid;
+    border-top-width: 6px;
+}
+
+.wpr-pricing-table-feature:hover .wpr-pricing-table-feature-tooltip {
+    visibility: visible;
+    opacity: 1;
+    top: 5px;
+    -ms-transform: translate(-50%, -100%);
+    transform: translate(-50%, -100%);
+    -webkit-transform: translate(-50%, -100%);
+}
+
+.wpr-pricing-table-feature-tooltip:before {
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%) !important;
+}
+
+
+/* Button */
+
+.wpr-pricing-table-button {
+    text-align: center;
+    font-size: 17px;
+}
+
+.wpr-pricing-table-btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.wpr-pricing-table-btn span {
+    position: relative;
+    z-index: 2;
+    opacity: 1 !important;
+}
+
+.wpr-pricing-table-btn:before,
+.wpr-pricing-table-btn:after {
+    z-index: 1 !important;
+}
+
+
+/* Badge */
+
+.wpr-pricing-table-badge {
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    z-index: 2;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-badge .wpr-pricing-table-badge-inner {
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.wpr-pricing-table-badge-left {
+    left: 0;
+    right: auto;
+}
+
+.wpr-pricing-table-badge-right {
+    left: auto;
+    right: 0;
+}
+
+.wpr-pricing-table-badge-corner {
+    top: 0;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.wpr-pricing-table-badge-corner .wpr-pricing-table-badge-inner {
+    width: 200%;
+}
+
+.wpr-pricing-table-badge-corner.wpr-pricing-table-badge-right {
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+.wpr-pricing-table-badge-cyrcle {
+    top: 0;
+}
+
+.wpr-pricing-table-badge-cyrcle .wpr-pricing-table-badge-inner {
+    border-radius: 100%;
+}
+
+.wpr-pricing-table-badge-flag {
+    border-right: 5px;
+}
+
+.wpr-pricing-table-badge-flag.wpr-pricing-table-badge-left {
+    margin-left: -10px;
+}
+
+.wpr-pricing-table-badge-flag.wpr-pricing-table-badge-right {
+    margin-right: -10px;
+}
+
+.wpr-pricing-table-badge-flag:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -5px;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top-style: solid;
+    border-top-width: 10px;
+}
+
+.wpr-pricing-table-badge-flag .wpr-pricing-table-badge-inner {
+    position: relative;
+    z-index: 2;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.wpr-pricing-table-badge-flag.wpr-pricing-table-badge-left:before {
+    left: 5px;
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+
+.wpr-pricing-table-badge-flag.wpr-pricing-table-badge-right:before {
+    right: -5px;
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+}
+
+.wpr-pricing-table-badge-flag.wpr-pricing-table-badge-left .wpr-pricing-table-badge-inner {
+    border-bottom-right-radius: 3px;
+}
+
+.wpr-pricing-table-badge-flag.wpr-pricing-table-badge-right .wpr-pricing-table-badge-inner {
+    border-bottom-left-radius: 3px;
+}
+
+
+/* Text */
+.wpr-pricing-table-text {
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+
+/* Divider */
+.wpr-pricing-table-divider {
+    margin: 0 auto;
+    border: 0;
+}
+
+
+/* Animation */
+.wpr-pricing-table-animation-slide {
+    -webkit-transition-property: margin;
+    -o-transition-property: margin;
+    transition-property: margin;
+    -webkit-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+
+.wpr-pricing-table-animation-bounce {
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+}
+
+.wpr-pricing-table-animation-slide:hover {
+    margin-top: -5px;
+}
+
+.wpr-pricing-table-animation-bounce:hover {
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
+}
+
+
+/* Defaults */
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-heading {
+    background-color: #f9f9f9;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-price {
+    background-color: #605be5;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-button {
+    background-color: #f9f9f9;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-btn {
+    background-color: #2B2B2B;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-btn:hover {
+    background-color: #4A45D2;
+}
+
+.elementor-widget-wpr-pricing-table .wpr-pricing-table-text {
+    background-color: #f9f9f9;
+}

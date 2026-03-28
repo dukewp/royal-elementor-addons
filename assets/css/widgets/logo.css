@@ -1,0 +1,67 @@
+
+.wpr-logo {
+    position: relative;
+    display: inline-table;
+    overflow: hidden;
+}
+
+.wpr-logo-image img {
+    display: block;
+}
+
+.wpr-logo-description {
+    margin: 0;
+}
+
+.wpr-logo-image,
+.wpr-logo-text {
+    position: relative;
+    display: block;
+    width: 100%;
+    z-index: 7;
+}
+
+.wpr-logo-url {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.wpr-logo-position-left .wpr-logo-image,
+.wpr-logo-position-left .wpr-logo-text {
+    float: left;
+}
+
+.wpr-logo-position-right .wpr-logo-image,
+.wpr-logo-position-right .wpr-logo-text {
+    float: right;
+}
+
+.wpr-logo-position-center .wpr-logo-image {
+    margin: 0 auto;
+}
+
+.wpr-logo-position-center .wpr-logo-text {
+    text-align: center;
+}
+
+.wpr-logo-position-left .wpr-logo-text,
+.wpr-logo-position-right .wpr-logo-text {
+    text-align: left;
+}
+
+
+/* Defaults */
+
+.elementor-widget-wpr-logo .wpr-logo-title {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.elementor-widget-wpr-logo .wpr-logo-description {
+    font-size: 13px;
+}

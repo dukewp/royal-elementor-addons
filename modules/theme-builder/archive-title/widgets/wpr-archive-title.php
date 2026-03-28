@@ -38,6 +38,10 @@ class Wpr_Archive_Title extends Widget_Base {
 		}
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-theme-builder' ];
+	}
+
 	public function get_keywords() {
 		return [ 'archive', 'title', 'description', 'category', 'tag' ];
 	}

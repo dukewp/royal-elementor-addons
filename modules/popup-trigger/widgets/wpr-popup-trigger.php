@@ -33,6 +33,10 @@ class Wpr_Popup_Trigger extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-popups' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'popup', 'trigger', 'button', 'action', 'close' ];
 	}

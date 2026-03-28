@@ -50,7 +50,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-animations-css' ];
+		return [ 'wpr-widget-progress-bar', 'wpr-animations-css' ];
 	}
 
     public function get_custom_help_url() {

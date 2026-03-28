@@ -1,0 +1,170 @@
+
+.wpr-team-member {
+    overflow: hidden;
+}
+
+.wpr-member-content {
+    overflow: hidden;
+}
+
+.wpr-member-name {
+    display: block;
+    line-height: 1;
+}
+
+.elementor .elementor-widget-wpr-team-member .wpr-member-name {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.wpr-member-job {
+    font-size: 13px;
+}
+
+.wpr-member-description {
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.wpr-member-media {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+}
+
+.wpr-member-image {
+    overflow: hidden;
+}
+
+
+/* Image Overlay */
+
+.wpr-member-overlay-content {
+    position: relative;
+}
+
+.wpr-member-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* Social Media */
+
+.wpr-member-social-media {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+}
+
+.wpr-member-social {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 45px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    text-align: center;
+    -webkit-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+    cursor: pointer;
+    outline: none !important;
+}
+
+.wpr-member-social i {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: inherit;
+}
+
+.wpr-member-social:last-child {
+    margin-right: 0 !important;
+}
+
+.wpr-team-member-social-media-left .wpr-member-social-media {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+
+.wpr-team-member-social-media-right .wpr-member-social-media {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+
+.wpr-team-member-social-media-center .wpr-member-social-media {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+
+/* Member Button */
+
+.wpr-member-btn {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #222222;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.wpr-member-btn span {
+    position: relative;
+    z-index: 2;
+    opacity: 1 !important;
+}
+
+.wpr-member-btn:before,
+.wpr-member-btn:after {
+    z-index: 1 !important;
+}
+
+
+/* Divider */
+
+.wpr-member-divider {
+    overflow: hidden;
+}
+
+.wpr-member-divider:after {
+    content: "";
+    display: block;
+    width: 100%;
+    margin-top: 0;
+    overflow: hidden;
+}
+
+.wpr-team-member-divider-left .wpr-member-divider:after {
+    float: left;
+}
+
+.wpr-team-member-divider-right .wpr-member-divider:after {
+    float: right;
+}
+
+.wpr-team-member-divider-center .wpr-member-divider:after {
+    margin-left: auto;
+    margin-right: auto;
+}

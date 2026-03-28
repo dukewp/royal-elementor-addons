@@ -46,7 +46,7 @@ class Wpr_Dual_Button extends Widget_Base {
 	}
 	
 	public function get_style_depends() {
-		return [ 'wpr-button-animations-css' ];
+		return [ 'wpr-widget-dual-button', 'wpr-button-animations-css' ];
 	}
 
     public function get_custom_help_url() {

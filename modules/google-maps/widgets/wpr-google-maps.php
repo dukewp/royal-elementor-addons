@@ -44,6 +44,10 @@ class Wpr_Google_Maps extends Widget_Base {
 		return [ 'wpr-google-maps', 'wpr-google-maps-clusters' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-google-maps' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-google-maps-help-btn';

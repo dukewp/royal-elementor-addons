@@ -44,7 +44,7 @@ class Advanced_Text extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-text-animations-css' ];
+		return [ 'wpr-widget-advanced-text', 'wpr-text-animations-css' ];
 	}
 
     public function get_custom_help_url() {

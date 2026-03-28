@@ -48,7 +48,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['swiper', 'wpr-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css', 'e-swiper'];
+		return ['wpr-widget-instagram-feed', 'swiper', 'wpr-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css', 'e-swiper'];
 	}
 
     public function get_custom_help_url() {

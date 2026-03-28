@@ -48,7 +48,7 @@ class Wpr_Charts extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return ['wpr-loading-animations-css'];
+		return ['wpr-widget-charts', 'wpr-loading-animations-css'];
 	}
 
     public function get_custom_help_url() {

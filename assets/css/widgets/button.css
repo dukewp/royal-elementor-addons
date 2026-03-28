@@ -1,0 +1,210 @@
+
+.wpr-button-wrap {
+    position: relative;
+    display: inline-table;
+    z-index: 1;
+    width: 100%;
+}
+
+.wpr-button {
+    display: block;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.elementor .elementor-widget-wpr-button .wpr-button-text {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.wpr-button-icon-style-block .wpr-button-text,
+.wpr-button-icon-style-inline-block .wpr-button-text {
+    width: 100%;
+}
+
+.wpr-button-icon-style-block .wpr-button-icon,
+.wpr-button-icon-style-inline-block .wpr-button-icon {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.wpr-button-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.wpr-button-text,
+.wpr-button-icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.wpr-button-icon-position-left .wpr-button-icon {
+    -webkit-box-ordinal-group: 2;
+    -ms-flex-order: 1;
+    order: 1;
+}
+
+.wpr-button-icon-position-left .wpr-button-text {
+    -webkit-box-ordinal-group: 3;
+    -ms-flex-order: 2;
+    order: 2;
+}
+
+
+/* Tooltip */
+
+.wpr-button-tooltip {
+    position: absolute;
+    border-radius: 4px;
+    visibility: hidden;
+    opacity: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-transition-property: all;
+    -o-transition-property: all;
+    transition-property: all;
+    -webkit-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    z-index: 20;
+}
+
+.wpr-button-tooltip:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top-style: solid;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top-width: 6px;
+}
+
+.wpr-button-tooltip p {
+    margin: 0;
+}
+
+.wpr-button-wrap:hover .wpr-button-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.wpr-button-tooltip-position-top .wpr-button-tooltip {
+    top: 0;
+    left: 50%;
+    -ms-transform: translate(-50%, -120%);
+    transform: translate(-50%, -120%);
+    -webkit-transform: translate(-50%, -120%);
+    margin-top: -5px;
+}
+
+.wpr-button-tooltip-position-top .wpr-button-wrap:hover .wpr-button-tooltip {
+    -ms-transform: translate(-50%, -100%);
+    transform: translate(-50%, -100%);
+    -webkit-transform: translate(-50%, -100%);
+}
+
+.wpr-button-tooltip-position-top .wpr-button-tooltip:before {
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    bottom: -5px;
+}
+
+.wpr-button-tooltip-position-bottom .wpr-button-tooltip {
+    bottom: 0;
+    left: 50%;
+    -ms-transform: translate(-50%, 120%);
+    transform: translate(-50%, 120%);
+    -webkit-transform: translate(-50%, 120%);
+    margin-bottom: -5px;
+}
+
+.wpr-button-tooltip-position-bottom .wpr-button-wrap:hover .wpr-button-tooltip {
+    -ms-transform: translate(-50%, 100%);
+    transform: translate(-50%, 100%);
+    -webkit-transform: translate(-50%, 100%);
+}
+
+.wpr-button-tooltip-position-bottom .wpr-button-tooltip:before {
+    top: -5px;
+    left: 50%;
+    -webkit-transform: translateX(-50%) rotate(180deg);
+    -ms-transform: translateX(-50%) rotate(180deg);
+    transform: translateX(-50%) rotate(180deg);
+}
+
+.wpr-button-tooltip-position-left .wpr-button-tooltip {
+    top: 50%;
+    left: 0;
+    -ms-transform: translate(-120%, -50%);
+    transform: translate(-120%, -50%);
+    -webkit-transform: translate(-120%, -50%);
+    margin-left: -5px;
+}
+
+.wpr-button-tooltip-position-left .wpr-button-wrap:hover .wpr-button-tooltip {
+    -ms-transform: translate(-100%, -50%);
+    transform: translate(-100%, -50%);
+    -webkit-transform: translate(-100%, -50%);
+}
+
+.wpr-button-tooltip-position-left .wpr-button-tooltip:before {
+    right: -8px;
+    top: 50%;
+    -webkit-transform: translateY(-50%) rotate(-90deg);
+    -ms-transform: translateY(-50%) rotate(-90deg);
+    transform: translateY(-50%) rotate(-90deg);
+}
+
+.wpr-button-tooltip-position-right .wpr-button-tooltip {
+    top: 50%;
+    right: 0;
+    -ms-transform: translate(120%, -50%);
+    transform: translate(120%, -50%);
+    -webkit-transform: translate(120%, -50%);
+    margin-right: -5px;
+}
+
+.wpr-button-tooltip-position-right .wpr-button-wrap:hover .wpr-button-tooltip {
+    -ms-transform: translate(100%, -50%);
+    transform: translate(100%, -50%);
+    -webkit-transform: translate(100%, -50%);
+}
+
+.wpr-button-tooltip-position-right .wpr-button-tooltip:before {
+    left: -8px;
+    top: 50%;
+    -ms-transform: translateY(-50%) rotate(90deg);
+    transform: translateY(-50%) rotate(90deg);
+    -webkit-transform: translateY(-50%) rotate(90deg);
+}
+
+
+/* Defaults */
+
+.elementor-widget-wpr-button .wpr-button {
+    background-color: #605BE5;
+}
+
+.elementor-widget-wpr-button .wpr-button-none:hover,
+.elementor-widget-wpr-button [class*="elementor-animation"]:hover,
+.elementor-widget-wpr-button .wpr-button::before,
+.elementor-widget-wpr-button .wpr-button::after {
+    background-color: #4A45D2;
+}
+
+.elementor-widget-wpr-button .wpr-button-text,
+.elementor-widget-wpr-button .wpr-button::after {
+    font-size: 14px;
+}

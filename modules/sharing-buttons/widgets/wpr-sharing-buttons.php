@@ -32,6 +32,10 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-sharing-buttons' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'social sharing', 'sharing buttons', ];
 	}

@@ -38,6 +38,10 @@ class Wpr_Image_Scroll extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-image-scroll' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'image scroll' ];
 	}

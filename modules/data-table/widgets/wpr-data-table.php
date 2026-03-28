@@ -49,6 +49,10 @@ class Wpr_Data_Table extends Widget_Base {
 		return ['wpr-table-to-excel-js', 'wpr-perfect-scroll-js'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-data-table' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-pricing-table-help-btn';

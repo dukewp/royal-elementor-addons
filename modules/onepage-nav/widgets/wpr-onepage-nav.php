@@ -37,6 +37,10 @@ class Wpr_OnepageNav extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-onepage-nav' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'one page', 'onepage', 'navigation', 'one page scroll', 'scroll navigation', 'floating menu', 'sticky menu', 'page scroll' ];
 	}

@@ -1,0 +1,72 @@
+
+.wpr-countdown-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.wpr-countdown-item {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+}
+
+.wpr-countdown-item:first-child {
+    margin-left: 0 !important;
+}
+
+.wpr-countdown-item:last-of-type {
+    margin-right: 0 !important;
+}
+
+.wpr-countdown-number {
+    display: block;
+}
+
+.wpr-countdown-separator {
+    -ms-flex-item-align: center;
+    -ms-grid-row-align: center;
+    align-self: center;
+}
+
+.wpr-countdown-separator span {
+    display: block;
+}
+
+.wpr-countdown-separator:last-of-type {
+    display: none !important;
+}
+
+.wpr-countdown-wrap+div:not(.wpr-countdown-message) {
+    display: none;
+}
+
+.wpr-countdown-message+div {
+    display: none;
+}
+
+
+/* Defaults */
+
+.elementor-widget-wpr-countdown .wpr-countdown-item {
+    background-color: #605BE5;
+}
+
+.elementor-widget-wpr-countdown .wpr-countdown-number {
+    font-size: 70px;
+}
+
+.elementor-widget-wpr-countdown .wpr-countdown-label {
+    font-size: 19px;
+    line-height: 45px;
+}

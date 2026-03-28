@@ -45,7 +45,7 @@ class Wpr_Form_Builder extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-loading-animations-css' ];
+		return [ 'wpr-widget-form-builder', 'wpr-loading-animations-css' ];
 	}
 
     public function get_custom_help_url() {

@@ -44,6 +44,10 @@ class Wpr_Lottie_Animations extends Widget_Base {
 		return [ 'wpr-lottie-animations' ];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-lottie-animations' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-lottie-animations-help-btn';

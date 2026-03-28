@@ -1,0 +1,199 @@
+.wpr-image-accordion * {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.wpr-img-accordion-wrapper-link-yes {
+    cursor: pointer;
+}
+
+.wpr-image-accordion-wrap {
+    overflow: hidden;
+    opacity: 0;
+}
+
+.wpr-skew-acc-images-yes .wpr-image-accordion-wrap {
+    overflow: visible;
+}
+
+.wpr-image-accordion-wrap h1 {
+    position: relative;
+    margin-bottom: 45px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 44px;
+    text-transform: uppercase;
+    color: #424242;
+}
+
+.wpr-image-accordion-wrap .wpr-image-accordion {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+}
+
+.wpr-image-accordion-wrap .wpr-image-accordion-item {
+    position: relative;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    overflow: hidden;
+}
+
+.wpr-image-accordion-wrap .wpr-image-accordion-item .wpr-accordion-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.wpr-img-accordion-item-description .inner-block {
+    display: inline-block;
+}
+
+.wpr-image-accordion-wrap .wpr-img-accordion-media-hover,
+.wpr-image-accordion-wrap .wpr-img-accordion-hover-bg {
+    /* pointer-events: none; */
+    position: absolute;
+}
+
+.wpr-image-accordion-item {
+    text-align: center;
+}
+
+.wpr-image-accordion-item-inner {
+    position: relative;
+    text-align: center;
+}
+
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-center {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wpr-img-accordion-media-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.wpr-img-accordion-media-hover-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+.wpr-img-accordion-media-hover-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+.wpr-img-accordion-media-hover-middle {
+    position: relative;
+    z-index: 2;
+}
+
+.wpr-img-accordion-sep-style-1 .inner-block>span,
+.wpr-img-accordion-sep-style-2 .inner-block>span {
+    display: inline-block;
+}
+
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-sep-style-2 .inner-block>span,
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-sep-style-1 .inner-block>span {
+    width: 100%;
+}
+
+.wpr-img-accordion-item-display-block {
+    clear: both;
+}
+
+.wpr-img-accordion-item-separator.wpr-img-accordion-item-display-inline span {
+    width: 100% !important;
+}
+
+.wpr-img-accordion-item-display-inline.wpr-img-accordion-item-align-left,
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-left {
+    float: left;
+}
+
+.wpr-img-accordion-item-display-inline.wpr-img-accordion-item-align-right,
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-right {
+    float: right;
+}
+
+.wpr-img-accordion-item-display-inline.wpr-img-accordion-item-align-center,
+.wpr-img-accordion-item-display-custom.wpr-img-accordion-item-align-center {
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.wpr-accordion-image-wrap {
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    background-size: cover;
+    background-position: center center;
+}
+
+.wpr-accordion-image-wrap img {
+    display: inline;
+    max-height: 100%;
+}
+
+.wpr-img-accordion-item-lightbox .inner-block>span,
+.wpr-img-accordion-lightbox-overlay {
+    cursor: pointer;
+}
+
+.wpr-img-accordion-item-lightbox {
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.wpr-animation-wrap-active .wpr-img-accordion-item-lightbox {
+    pointer-events: auto;
+}
+
+.wpr-img-accordion-item-lightbox .inner-block {
+    position: relative;
+}
+
+.wpr-img-accordion-lightbox-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.wpr-image-accordion-item .inner-block a {
+    position: relative;
+    display: inline-block;
+}
+
+.wpr-image-accordion .wpr-template-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+}

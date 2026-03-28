@@ -42,6 +42,10 @@ class Wpr_Product_AddToCart extends Widget_Base {
 		return ['wc-add-to-cart', 'wc-add-to-cart-variation', 'wc-single-product'];
 	}
 
+	public function get_style_depends() {
+		return [ 'wpr-widget-woocommerce' ];
+	}
+
 	protected function register_controls() {
 
 		// Tab: Content ==============

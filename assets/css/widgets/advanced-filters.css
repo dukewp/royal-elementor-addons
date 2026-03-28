@@ -1,0 +1,288 @@
+.wpr-advanced-filters-inner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+
+.wpr-af-check-radio-group.wpr-advanced-filters-inner {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.wpr-af-filters-label {
+    margin: 0;
+}
+
+.wpr-grid-loading {
+    opacity: 0.7 !important;
+}
+
+.wpr-af-input-wrap {
+    cursor: pointer;
+}
+
+.wpr-af-input-wrap.wpr-af-child {
+    margin-left: 16px !important;
+}
+.wpr-af-input-wrap.wpr-af-g-child {
+    margin-left: 32px !important;
+}
+
+.wpr-af-input-wrap.wpr-af-g-grand-child {
+    margin-left: 48px !important;
+}
+
+.wpr-af-visual-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.wpr-af-visual-group .wpr-af-input-wrap input {
+    display: none !important;
+}
+
+.wpr-af-visual-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    gap: 5px;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    overflow: hidden;
+}
+
+.wpr-af-visual-wrap.wpr-af-visual-color-wrap .wpr-af-visual {
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+}
+
+.wpr-af-visual-wrap * {
+    cursor: pointer;
+}
+
+.wpr-af-hide-label-yes .wpr-af-visual-wrap {
+    gap: 0;
+}
+
+.wpr-af-visual-wrap .wpr-af-count {
+    margin-left: 3px;
+}
+
+.wpr-af-visual-wrap .wpr-af-input-wrap {
+    width: 100%;
+}
+
+/* Range */
+.wpr-af-range-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+
+.wpr-af-apply-btn-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.wpr-af-apply-btn-stretch .wpr-af-apply-btn-wrap button {
+    width: 100%;
+}
+
+.wpr-af-range-container .wpr-af-rs-control {
+    position: relative;
+}
+
+.wpr-af-range-container .wpr-af-rf-control {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.wpr-af-range-container[show-inputs='no'] .wpr-af-rf-control {
+    display: none;
+}
+
+.wpr-af-range-container input[type=number]::-webkit-inner-spin-button,
+.wpr-af-range-container input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+}
+
+.wpr-af-range-container input[type="range"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+         appearance: none !important;
+    height: 12px;
+    width: 100% !important;
+    position: absolute !important;
+    background-color: #C6C6C6;
+    pointer-events: none !important;
+}
+
+.wpr-af-range-container input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    pointer-events: all !important;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    cursor: pointer !important;
+}
+
+.wpr-af-range-container input[type=range]::-moz-range-thumb {
+    pointer-events: all !important;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    cursor: pointer !important;
+}
+
+.wpr-af-range-container [id^="wpr-af-from-slider-"]input[type=range] {
+    height: 0 !important;
+    z-index: 1 !important;
+}
+
+.wpr-af-range-container [id^="wpr-af-to-slider-"]input[type=range] {
+    /* transform: translateY(-50%) !important; */
+}
+
+/* Base track */
+.wpr-af-slider-track-bg {
+	position: absolute;
+	left: 0;
+	width: 100%;
+}
+
+/* Filled (active) range */
+.wpr-af-slider-fill {
+	position: absolute;
+    width: 100%;
+}
+
+/* Range sliders */
+input[type=range].wpr-af-from-slider,
+input[type=range].wpr-af-to-slider {
+	position: absolute;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	     appearance: none;
+}
+
+/* Hide native track */
+input[type=range]::-webkit-slider-runnable-track {
+	background: transparent;
+}
+
+input[type=range]::-moz-range-track {
+	background: transparent;
+}
+
+/* View More Less */
+.wpr-view-ml-wrap {
+    display: block;
+    width: 100% !important;
+    text-align: center;
+}
+
+.wpr-view-more-less {
+    display: inline-block;
+}
+
+/* Select */
+.wpr-af-select-wrap {
+    position: relative;
+}
+
+input.wpr-date-filter-start {
+    width: 49%;
+    margin-right: 2%;
+}
+
+input.wpr-date-filter-end {
+    width: 49%;
+}
+
+/* Grid Active Filters */
+.wpr-af-active-filters {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    gap: 5px;
+}
+
+.wpr-af-active-filters span {
+    display: block;
+    cursor: pointer;
+}
+
+.wpr-af-active-filters .wpr-remove-filter span {
+    vertical-align: middle;
+    line-height: 1;
+    margin-left: 5px;
+}
+
+[class^="wpr-af-active-wrap-"] {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+[class^="wpr-af-active-wrap-"] span {
+    display: inline-block;
+}
+
+[class^="wpr-af-active-wrap-"]:empty {
+    display: none;
+}
+
+.wpr-af-active-filters .wpr-af-reset-btn {
+    background-color: transparent;
+}
+
+.wpr-af-rating-filter input {
+    display: none;
+}
+
+.wpr-af-rating-filter .wpr-woo-rating {
+    cursor: pointer;
+}
+
+/* TMP style for demo rating */
+.wpr-af-rating-filter li > span {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
