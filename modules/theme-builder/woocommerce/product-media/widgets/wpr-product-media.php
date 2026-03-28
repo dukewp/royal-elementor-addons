@@ -41,7 +41,7 @@ class Wpr_Product_Media extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'flexslider', 'zoom', 'wc-single-product', 'photoswipe', 'photoswipe-ui-default', 'wpr-lightgallery'];
+		return [ 'wpr-widget-js-product-media', 'flexslider', 'zoom', 'wc-single-product', 'photoswipe', 'photoswipe-ui-default', 'wpr-lightgallery'];
 	}
 
 	public function get_style_depends() {

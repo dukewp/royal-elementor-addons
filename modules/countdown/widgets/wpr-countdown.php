@@ -38,6 +38,10 @@ class Wpr_Countdown extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-countdown' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-countdown' ];
 	}

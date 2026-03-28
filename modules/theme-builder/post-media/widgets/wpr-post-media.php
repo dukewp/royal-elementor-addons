@@ -42,7 +42,7 @@ class Wpr_Post_Media extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'jquery-slick', 'wpr-lightgallery' ];
+		return [ 'wpr-widget-js-post-media', 'jquery-slick', 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {

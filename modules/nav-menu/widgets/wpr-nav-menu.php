@@ -42,6 +42,10 @@ class Wpr_Nav_Menu extends Widget_Base {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-nav-menu' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-nav-menu', 'wpr-link-animations-css' ];
 	}

@@ -34,6 +34,10 @@ class Wpr_Facebook_Feed extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-facebook-feed' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'facebook feed' ];
 	}

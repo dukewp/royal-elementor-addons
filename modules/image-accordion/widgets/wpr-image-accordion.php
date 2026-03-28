@@ -45,7 +45,7 @@ class Wpr_Image_Accordion extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-        return ['wpr-lightgallery'];
+        return ['wpr-widget-js-image-accordion', 'wpr-lightgallery'];
 	}
 
 	public function get_style_depends() {

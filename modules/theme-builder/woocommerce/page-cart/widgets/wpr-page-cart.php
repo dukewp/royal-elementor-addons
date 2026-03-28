@@ -38,7 +38,7 @@ class Wpr_Page_Cart extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [];
+		return ['wpr-widget-js-page-cart'];
 	}
 
 	public function get_style_depends() {

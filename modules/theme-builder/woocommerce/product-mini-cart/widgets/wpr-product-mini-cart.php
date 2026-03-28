@@ -40,7 +40,7 @@ class Wpr_Product_Mini_Cart extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return ['wpr-perfect-scroll-js'];
+		return ['wpr-widget-js-product-mini-cart', 'wpr-perfect-scroll-js'];
 	}
 
 	public function get_style_depends() {

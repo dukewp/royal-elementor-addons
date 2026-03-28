@@ -46,7 +46,7 @@ class Wpr_Media_Grid extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-isotope', 'wpr-slick', 'wpr-lightgallery' ];
+		return [ 'wpr-widget-js-grid', 'wpr-isotope', 'wpr-slick', 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {

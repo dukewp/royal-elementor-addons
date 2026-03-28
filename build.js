@@ -13,6 +13,7 @@ const CSS_DIRS = [
 
 const JS_DIRS = [
 	'assets/js',
+	'assets/js/widgets',
 ];
 
 const ROOT = __dirname;

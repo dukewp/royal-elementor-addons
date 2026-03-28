@@ -45,7 +45,7 @@ class Wpr_Testimonial_Carousel extends Widget_Base {
 	}
 	
 	public function get_script_depends() {
-		return [ 'imagesloaded', 'wpr-slick' ];
+		return [ 'wpr-widget-js-testimonial', 'imagesloaded', 'wpr-slick' ];
 	}
 
 	public function get_style_depends() {

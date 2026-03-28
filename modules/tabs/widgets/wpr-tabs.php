@@ -44,6 +44,10 @@ class Wpr_Tabs extends Widget_Base {
 		return [ 'royal', 'vertical tabs', 'horizontal tabs', 'accordion' ];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-tabs' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-tabs', 'wpr-animations-css' ];
 	}

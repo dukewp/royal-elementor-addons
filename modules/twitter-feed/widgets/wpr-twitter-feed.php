@@ -43,7 +43,7 @@ class Wpr_Twitter_Feed extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-isotope', 'wpr-lightgallery' ];
+		return [ 'wpr-widget-js-twitter-feed', 'wpr-isotope', 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {

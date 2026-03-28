@@ -32,6 +32,10 @@ class Wpr_Mailchimp extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-mailchimp' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-mailchimp' ];
 	}

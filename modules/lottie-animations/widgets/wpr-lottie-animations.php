@@ -41,7 +41,7 @@ class Wpr_Lottie_Animations extends Widget_Base {
 	}
 	
 	public function get_script_depends() {
-		return [ 'wpr-lottie-animations' ];
+		return [ 'wpr-widget-js-lottie-animations', 'wpr-lottie-animations' ];
 	}
 
 	public function get_style_depends() {

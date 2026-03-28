@@ -41,7 +41,7 @@ class Wpr_Google_Maps extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-google-maps', 'wpr-google-maps-clusters' ];
+		return [ 'wpr-widget-js-google-maps', 'wpr-google-maps', 'wpr-google-maps-clusters' ];
 	}
 
 	public function get_style_depends() {

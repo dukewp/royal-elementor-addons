@@ -41,6 +41,10 @@ class Wpr_Feature_List extends Widget_Base {
 		return [ 'wpr-widget-feature-list' ];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-feature-list' ];
+	}
+
 	public function get_keywords() {
 		return [ 'royal', 'features', 'feature list', 'icon list' ];
 	}

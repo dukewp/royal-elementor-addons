@@ -34,6 +34,10 @@ class Wpr_Password_Protected_Content extends Widget_Base {
 		return [ 'password', 'protected', 'content', 'restrict', 'role', 'gate' ];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-password-protected' ];
+	}
+
 	public function check_password_cookie( $settings ) {
 		$widget_id = $this->get_id();
 		$password = isset( $settings['set_password'] ) ? $settings['set_password'] : '';

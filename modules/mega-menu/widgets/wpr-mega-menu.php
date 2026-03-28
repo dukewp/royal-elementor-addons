@@ -42,6 +42,10 @@ class Wpr_Mega_Menu extends Widget_Base {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-mega-menu' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-mega-menu', 'wpr-link-animations-css' ];
 	}

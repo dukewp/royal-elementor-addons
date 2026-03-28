@@ -42,6 +42,10 @@ class Wpr_Content_Toggle extends Widget_Base {
 		return [ 'royal', 'content toggle', 'content switcher', 'pricing toggle', 'toggle price plan', 'pricing table' ];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-content-toggle' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-content-toggle', 'wpr-animations-css' ];
 	}

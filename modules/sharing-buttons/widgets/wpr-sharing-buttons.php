@@ -32,6 +32,10 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-sharing-buttons' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-sharing-buttons' ];
 	}

@@ -39,7 +39,7 @@ class Wpr_Product_AddToCart extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return ['wc-add-to-cart', 'wc-add-to-cart-variation', 'wc-single-product'];
+		return ['wpr-widget-js-product-add-to-cart', 'wc-add-to-cart', 'wc-add-to-cart-variation', 'wc-single-product'];
 	}
 
 	public function get_style_depends() {

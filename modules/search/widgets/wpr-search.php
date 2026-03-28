@@ -45,6 +45,10 @@ class Wpr_Search extends Widget_Base {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-search' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-search', 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
 	}

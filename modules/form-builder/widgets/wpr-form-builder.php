@@ -48,6 +48,10 @@ class Wpr_Form_Builder extends Widget_Base {
 		return [ 'wpr-widget-form-builder', 'wpr-loading-animations-css' ];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-form-builder' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-forms-help-btn';

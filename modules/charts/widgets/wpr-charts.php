@@ -44,7 +44,7 @@ class Wpr_Charts extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-charts' ];
+		return [ 'wpr-widget-js-charts', 'wpr-charts' ];
 	}
 
 	public function get_style_depends() {

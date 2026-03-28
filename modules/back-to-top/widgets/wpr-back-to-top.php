@@ -30,6 +30,10 @@ class Wpr_Back_To_Top extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-back-to-top' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-back-to-top' ];
 	}

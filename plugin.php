@@ -674,6 +674,7 @@ class Plugin {
 			[
 				'jquery',
 				'elementor-frontend',
+				'wpr-dompurify',
 			],
 			Plugin::instance()->get_version(),
 			true
@@ -878,10 +879,82 @@ class Plugin {
 
 		wp_register_script(
 			'wpr-perfect-scroll-js',
-			 WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js', 
-			 [ 'jquery' ], 
-			 '0.4.9' 
+			 WPR_ADDONS_URL .'assets/js/lib/perfect-scrollbar/perfect-scrollbar.min.js',
+			 [ 'jquery' ],
+			 '0.4.9'
 		);
+
+		// Per-widget JS (registered, loaded on demand via get_script_depends)
+		$widget_scripts = [
+			'wpr-widget-js-post-media',
+			'wpr-widget-js-nav-menu',
+			'wpr-widget-js-mega-menu',
+			'wpr-widget-js-onepage-nav',
+			'wpr-widget-js-grid',
+			'wpr-widget-js-magazine-grid',
+			'wpr-widget-js-featured-media',
+			'wpr-widget-js-product-media',
+			'wpr-widget-js-countdown',
+			'wpr-widget-js-google-maps',
+			'wpr-widget-js-before-after',
+			'wpr-widget-js-mailchimp',
+			'wpr-widget-js-advanced-slider',
+			'wpr-widget-js-testimonial',
+			'wpr-widget-js-search',
+			'wpr-widget-js-advanced-text',
+			'wpr-widget-js-progress-bar',
+			'wpr-widget-js-image-hotspots',
+			'wpr-widget-js-flip-box',
+			'wpr-widget-js-content-ticker',
+			'wpr-widget-js-tabs',
+			'wpr-widget-js-content-toggle',
+			'wpr-widget-js-back-to-top',
+			'wpr-widget-js-lottie-animations',
+			'wpr-widget-js-charts',
+			'wpr-widget-js-taxonomy-list',
+			'wpr-widget-js-posts-timeline',
+			'wpr-widget-js-sharing-buttons',
+			'wpr-widget-js-twitter-feed',
+			'wpr-widget-js-instagram-feed',
+			'wpr-widget-js-facebook-feed',
+			'wpr-widget-js-flip-carousel',
+			'wpr-widget-js-feature-list',
+			'wpr-widget-js-advanced-accordion',
+			'wpr-widget-js-image-accordion',
+			'wpr-widget-js-offcanvas',
+			'wpr-widget-js-wishlist',
+			'wpr-widget-js-wishlist-button',
+			'wpr-widget-js-compare-button',
+			'wpr-widget-js-mini-compare',
+			'wpr-widget-js-compare',
+			'wpr-widget-js-form-builder',
+			'wpr-widget-js-image-scroll',
+			'wpr-widget-js-video-playlist',
+			'wpr-widget-js-product-add-to-cart',
+			'wpr-widget-js-mini-wishlist',
+			'wpr-widget-js-product-mini-cart',
+			'wpr-widget-js-product-filters',
+			'wpr-widget-js-advanced-filters',
+			'wpr-widget-js-page-cart',
+			'wpr-widget-js-page-my-account',
+			'wpr-widget-js-reading-progress-bar',
+			'wpr-widget-js-data-table',
+			'wpr-widget-js-password-protected',
+			'wpr-widget-js-circle-menu',
+			'wpr-widget-js-unfold',
+		];
+
+		$version = Plugin::instance()->get_version();
+		foreach ( $widget_scripts as $handle ) {
+			$file = str_replace( 'wpr-widget-js-', '', $handle );
+			wp_register_script(
+				$handle,
+				WPR_ADDONS_URL . 'assets/js/widgets/' . $file . $this->script_suffix() . '.js',
+				[ 'jquery', 'wpr-addons-js' ],
+				$version,
+				true
+			);
+		}
 	}
 
 	public function enqueue_panel_scripts() {

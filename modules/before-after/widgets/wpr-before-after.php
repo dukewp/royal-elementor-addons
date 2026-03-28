@@ -43,7 +43,7 @@ class Wpr_Before_After extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'jquery-event-move' ];
+		return [ 'wpr-widget-js-before-after', 'jquery-event-move' ];
 	}
 
 	public function get_style_depends() {

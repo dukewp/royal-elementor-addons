@@ -46,7 +46,7 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-isotope', 'wpr-slick' ];
+		return [ 'wpr-widget-js-magazine-grid', 'wpr-isotope', 'wpr-slick' ];
 	}
 
 	public function get_style_depends() {

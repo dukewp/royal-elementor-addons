@@ -46,7 +46,7 @@ class Wpr_Progress_Bar extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'jquery-numerator' ];
+		return [ 'wpr-widget-js-progress-bar', 'jquery-numerator' ];
 	}
 
 	public function get_style_depends() {

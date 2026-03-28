@@ -42,6 +42,10 @@ class Wpr_Flip_Box extends Widget_Base {
 		return [ 'royal', 'hover box', 'banner box', 'animated banner' ];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-flip-box' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-flip-box', 'wpr-button-animations-css', 'wpr-animations-css' ];
 	}

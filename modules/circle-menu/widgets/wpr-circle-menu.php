@@ -42,7 +42,7 @@ class Wpr_Circle_Menu extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-circle-menu' ];
+		return [ 'wpr-widget-js-circle-menu', 'wpr-circle-menu' ];
 	}
 
 	public function has_widget_inner_wrapper(): bool {

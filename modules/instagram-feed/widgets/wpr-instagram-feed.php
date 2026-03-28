@@ -44,7 +44,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wpr-dompurify', 'swiper', 'wpr-isotope', 'wpr-lightgallery' ];
+		return [ 'wpr-widget-js-instagram-feed', 'wpr-dompurify', 'swiper', 'wpr-isotope', 'wpr-lightgallery' ];
 	}
 
 	public function get_style_depends() {

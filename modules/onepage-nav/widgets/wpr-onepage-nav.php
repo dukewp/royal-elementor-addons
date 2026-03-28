@@ -37,6 +37,10 @@ class Wpr_OnepageNav extends Widget_Base {
 		return [ 'wpr-widgets'];
 	}
 
+	public function get_script_depends() {
+		return [ 'wpr-widget-js-onepage-nav' ];
+	}
+
 	public function get_style_depends() {
 		return [ 'wpr-widget-onepage-nav' ];
 	}
