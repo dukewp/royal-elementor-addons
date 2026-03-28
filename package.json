@@ -1,0 +1,14 @@
+{
+  "name": "royal-elementor-addons",
+  "private": true,
+  "scripts": {
+    "build:css": "node build.js css",
+    "build:js": "node build.js js",
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "cssnano": "^7.0.0",
+    "postcss": "^8.4.38",
+    "terser": "^5.31.0"
+  }
+}
