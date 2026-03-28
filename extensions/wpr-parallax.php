@@ -19,7 +19,8 @@ class Wpr_Parallax_Scroll {
         add_action( 'elementor/element/section/section_background/after_section_end', [$this, 'register_controls'], 10);
         add_action( 'elementor/frontend/section/before_render', [$this, '_before_render'], 10, 1);
         add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'elementor/frontend/before_register_scripts', [ $this, 'register_scripts' ] );
+        add_action( 'elementor/preview/enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
         // FLEXBOX
         add_action('elementor/element/container/section_layout/after_section_end', [$this, 'register_controls'], 10);
@@ -374,7 +375,8 @@ class Wpr_Parallax_Scroll {
 
         // Parallax Background
         if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
-            if ( 'yes' === $settings['wpr_enable_jarallax'] ) { 
+            if ( 'yes' === $settings['wpr_enable_jarallax'] ) {
+                wp_enqueue_script( 'wpr-jarallax' );
                 $element->add_render_attribute( '_wrapper', [
                     'class' => 'wpr-jarallax',
                     'speed-data' => $settings['speed'],
@@ -392,6 +394,7 @@ class Wpr_Parallax_Scroll {
         if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
             if ( $settings['wpr_enable_parallax_hover'] == 'yes' ) {
                  if ( $settings['hover_parallax'] ) {
+                    wp_enqueue_script( 'wpr-parallax-hover' );
 
                     echo '<div class="wpr-parallax-multi-layer" scalar-speed="'. esc_attr($settings['scalar_speed']['size']) .'" direction="'. esc_attr($settings['invert_direction']) .'" style="overflow: hidden;">';
 
@@ -450,6 +453,16 @@ class Wpr_Parallax_Scroll {
 
         ob_end_clean();
         return $template . $parallax_content;
+    }
+
+    public static function register_scripts() {
+        if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
+            wp_register_script( 'wpr-jarallax', WPR_ADDONS_URL . 'assets/js/lib/jarallax/jarallax.min.js', ['jquery'], '1.12.7', true );
+        }
+
+        if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
+            wp_register_script( 'wpr-parallax-hover', WPR_ADDONS_URL . 'assets/js/lib/parallax/parallax.min.js', ['jquery'], '1.0', true );
+        }
     }
 
     public static function enqueue_scripts() {

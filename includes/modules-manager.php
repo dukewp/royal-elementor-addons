@@ -11,7 +11,7 @@ final class Manager {
 	public function __construct() {
     	$modules = Utilities::get_available_modules( Utilities::get_registered_modules() );
 
-    	if ( empty(Utilities::get_available_modules( Utilities::get_registered_modules() )) && false === get_option('wpr-element-toggle-all') ) {
+    	if ( empty($modules) && false === get_option('wpr-element-toggle-all') ) {
     		$modules = Utilities::get_registered_modules();
     	}
 
@@ -28,7 +28,7 @@ final class Manager {
 		// Theme Builder Modules
 		$theme_builder_modules = Utilities::get_available_modules( Utilities::get_theme_builder_modules() );
 
-    	if ( empty(Utilities::get_available_modules( Utilities::get_theme_builder_modules() )) && false === get_option('wpr-element-toggle-all') ) {
+    	if ( empty($theme_builder_modules) && false === get_option('wpr-element-toggle-all') ) {
     		$theme_builder_modules = Utilities::get_theme_builder_modules();
     	}
 
@@ -45,8 +45,8 @@ final class Manager {
 		// Woocommerce Builder Modules
 		if ( class_exists( 'woocommerce' ) ) {
 			$woocommerce_builder_modules = Utilities::get_available_modules( Utilities::get_woocommerce_builder_modules() );
-	
-			if ( empty(Utilities::get_available_modules( Utilities::get_woocommerce_builder_modules() )) && false === get_option('wpr-element-toggle-all') ) {
+
+			if ( empty($woocommerce_builder_modules) && false === get_option('wpr-element-toggle-all') ) {
 				$woocommerce_builder_modules = Utilities::get_woocommerce_builder_modules();
 			}
 	

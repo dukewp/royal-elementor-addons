@@ -371,8 +371,7 @@ class Plugin {
 			Plugin::instance()->get_version()
 		);
 
-		// GOGA - enqueue instead of register (because of animations)
-		wp_enqueue_style(
+		wp_register_style(
 			'wpr-text-animations-css',
 			WPR_ADDONS_URL . 'assets/css/lib/animations/text-animations'. $this->script_suffix() .'.css',
 			[],

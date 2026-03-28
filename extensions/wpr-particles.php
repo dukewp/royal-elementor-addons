@@ -16,7 +16,8 @@ class Wpr_Particles {
 		add_action( 'elementor/element/section/section_background/after_section_end', [ $this, 'register_controls' ], 10 );
 		add_action( 'elementor/frontend/section/before_render', [ $this, '_before_render' ], 10, 1 );
 		add_action( 'elementor/section/print_template', [ $this, '_print_template' ], 10, 2 );
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        add_action( 'elementor/frontend/before_register_scripts', [ $this, 'register_scripts' ] );
+        add_action( 'elementor/preview/enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 
         // FLEXBOX
         add_action( 'elementor/element/container/section_layout/after_section_end', [$this, 'register_controls'], 10 );
@@ -153,6 +154,7 @@ class Wpr_Particles {
 		$settings = $element->get_settings();
 
 		if ( $settings['wpr_enable_particles'] === 'yes' ) {
+			wp_enqueue_script( 'wpr-particles' );
 			$settings['which_particle'] = 'pro-pjs' === $settings['which_particle'] ? 'wpr_particle_json_custom' : $settings['which_particle'];
 			
 			if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
@@ -172,6 +174,10 @@ class Wpr_Particles {
 				] );
 			}
 		}
+	}
+
+    public function register_scripts() {
+		wp_register_script( 'wpr-particles', WPR_ADDONS_URL . 'assets/js/lib/particles/particles.js', [ 'jquery' ], '3.0.6', true );
 	}
 
     public function enqueue_scripts() {
