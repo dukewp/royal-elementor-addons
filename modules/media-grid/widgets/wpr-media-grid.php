@@ -7691,11 +7691,11 @@ class Wpr_Media_Grid extends Widget_Base {
 		$slider_options = [
 			'rtl' => $slider_is_rtl,
 			'infinite' => ( $settings['layout_slider_loop'] === 'yes' ),
-			'speed' => absint( $settings['layout_slider_effect_duration'] * 1000 ),
+			'speed' => absint( ( floatval( $settings['layout_slider_effect_duration'] ?: 1 ) ) * 1000 ),
 			'arrows' => true,
 			'dots' => true,
 			'autoplay' => ( $settings['layout_slider_autoplay'] === 'yes' ),
-			'autoplaySpeed' => absint( $settings['layout_slider_autoplay_duration'] * 1000 ),
+			'autoplaySpeed' => absint( ( floatval( $settings['layout_slider_autoplay_duration'] ?: 1 ) ) * 1000 ),
 			'pauseOnHover' => $settings['layout_slider_pause_on_hover'],
 			'prevArrow' => '#wpr-grid-slider-prev-'. $this->get_id(),
 			'nextArrow' => '#wpr-grid-slider-next-'. $this->get_id(),
