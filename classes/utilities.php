@@ -72,7 +72,7 @@ class Utilities {
 			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', ''],
 			'Image Scroll' => ['image-scroll', 'https://royal-elementor-addons.com/elementor-image-scroll-widget/', '', ''],
 			'Date' => ['date', 'https://royal-elementor-addons.com/elementor-date-widget/', '', ''],
-			// 'Video Playlist' => ['video-playlist', 'https://royal-elementor-addons.com/elementor-video-playlist-widget/', '', ''],
+			'Video Playlist' => ['video-playlist', '', '', 'new'],
 			'Password Protected Content' => ['password-protected-content', '', '', 'new'],
 			'Icon Box' => ['icon-box', '', '', 'new'],
 			'Separator' => ['separator', '', '', 'new'],
