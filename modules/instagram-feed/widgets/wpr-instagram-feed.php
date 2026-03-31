@@ -5546,7 +5546,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 							\Elementor\Icons_Manager::render_icon( $settings['instagram_follow_icon'], [ 'aria-hidden' => 'true' ] ); 
 						}
 					?>
-					<?php echo $settings['instagram_follow_text'] ?>
+					<?php echo esc_html__($settings['instagram_follow_text']) ?>
 				</a>
 			</div>
 		<?php endif; ?>
@@ -5641,7 +5641,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 								\Elementor\Icons_Manager::render_icon( $settings['instagram_follow_icon'], [ 'aria-hidden' => 'true' ] ); 
 							}
 							?>
-							<?php echo $settings['instagram_follow_text'] ?>
+							<?php echo esc_html__($settings['instagram_follow_text']) ?>
 						</a>
 					</div>
 				<?php endif;
