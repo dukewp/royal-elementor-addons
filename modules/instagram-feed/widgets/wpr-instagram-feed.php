@@ -4950,7 +4950,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$response = wp_remote_get($url);
 		if(!isset($body)) {
 			$body = json_decode($response['body']);
-			if ($body->error) {
+			if ($body && $body->error) {
 				$this->reauthorization_needed = true;
 			} else {
 				set_transient('wpr_instagram_access_token'. $this->get_ID(), $body->access_token, $body->expires_in);

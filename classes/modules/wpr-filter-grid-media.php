@@ -958,9 +958,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Load More / Infinite Scroll
 		} else {
-			echo '<a href="'. esc_url(get_pagenum_link( $paged + 1, true )) .'" class="wpr-load-more-btn" data-e-disable-page-transition >';
-				echo esc_html($settings['pagination_load_more_text']);
-			echo '</a>';
+			$wpr_next_page = esc_url( get_pagenum_link( $paged + 1, true ) );
+			$load_more_tag = isset( $settings['pagination_load_more_tag'] ) ? $settings['pagination_load_more_tag'] : 'a';
+
+			if ( 'button' === $load_more_tag ) {
+				echo '<button type="button" class="wpr-load-more-btn" data-wpr-next-page="' . esc_attr( $wpr_next_page ) . '" data-e-disable-page-transition>';
+					echo esc_html( $settings['pagination_load_more_text'] );
+				echo '</button>';
+			} else {
+				echo '<a href="' . esc_url( $wpr_next_page ) . '" class="wpr-load-more-btn" data-e-disable-page-transition>';
+					echo esc_html( $settings['pagination_load_more_text'] );
+				echo '</a>';
+			}
 
 			echo '<div class="wpr-pagination-loading">';
 				switch ( $settings['pagination_animation'] ) {

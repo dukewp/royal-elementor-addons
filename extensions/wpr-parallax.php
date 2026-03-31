@@ -148,6 +148,22 @@ class Wpr_Parallax_Scroll {
             ]
         );
 
+        if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
+            \WprAddonsPro\Extensions\Wpr_Parallax_Scroll_Pro::add_control_bg_image_mobile($element);
+        } else {
+            $element->add_control(
+                'bg_image_mobile',
+                [
+                    'label' => __( 'Choose Mobile Image (Pro)', 'wpr-addons' ),
+                    'type' => Controls_Manager::MEDIA,
+                    'classes' => 'wpr-pro-control',
+                    'condition' => [
+                        'wpr_enable_jarallax' => 'yes'
+                    ]
+                ]
+            );
+        }
+
         } // end if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
 
         $element->add_control(
@@ -379,6 +395,7 @@ class Wpr_Parallax_Scroll {
                     'class' => 'wpr-jarallax',
                     'speed-data' => $settings['speed'],
                     'bg-image' => $settings['bg_image']['url'],
+                    'bg-image-mobile' => isset($settings['bg_image_mobile']['url']) ? $settings['bg_image_mobile']['url'] : '',
                     'scroll-effect' => $settings['scroll_effect'],
                 ] );
 
@@ -414,7 +431,7 @@ class Wpr_Parallax_Scroll {
         ob_start();
         
         if ( 'on' === get_option('wpr-parallax-background', 'on') ) {
-            echo '<div class="wpr-jarallax" speed-data-editor="{{settings.speed}}" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}"></div>';
+            echo '<div class="wpr-jarallax" speed-data-editor="{{settings.speed}}" scroll-effect-editor="{{settings.scroll_effect}}" bg-image-editor="{{settings.bg_image.url}}" bg-image-mobile-editor="{{ settings.bg_image_mobile && settings.bg_image_mobile.url ? settings.bg_image_mobile.url : \'\' }}"></div>';
         }
         // Multi Layer
         if ( 'on' === get_option('wpr-parallax-multi-layer', 'on') ) {
