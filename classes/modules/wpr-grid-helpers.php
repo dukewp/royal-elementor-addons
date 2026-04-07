@@ -29,7 +29,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     }
 
 	public function get_dependent_terms() {
-		// check_ajax_referer('wpr_addons_elementor', 'nonce');
 
 		if ( empty($_POST['taxonomy']) || empty($_POST['parent_term']) ) {
 			wp_send_json_error('Missing data');

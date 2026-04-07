@@ -92,8 +92,75 @@
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.widgetSection );
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.widgetSection );
 
+			WprElements.bindElementorTabsCompatibility();
+
 			// Remove Mega Menu Templates from "Edit with Elementor"
 			WprElements.changeAdminBarMenu();
+		},
+
+		bindElementorTabsCompatibility: function() {
+			var tabBindNamespace = '.wprTabsCompat';
+
+			$( document ).off( 'click' + tabBindNamespace + ' keyup' + tabBindNamespace, '.elementor-widget-tabs .elementor-tab-title' );
+			$( document ).on( 'click' + tabBindNamespace + ' keyup' + tabBindNamespace, '.elementor-widget-tabs .elementor-tab-title', function( event ) {
+				if ( 'keyup' === event.type && 'Enter' !== event.key && ' ' !== event.key ) {
+					return;
+				}
+
+				var $tabTitle = $( this );
+
+				setTimeout( function() {
+					var tabIndex = $tabTitle.attr( 'data-tab' ),
+						$tabsWidget = $tabTitle.closest( '.elementor-widget-tabs' ),
+						$activeTabContent = $tabsWidget.find( '.elementor-tab-content[data-tab="' + tabIndex + '"]' );
+
+					WprElements.runReadyTriggerForTabContent( $activeTabContent );
+				}, 80 );
+			} );
+
+			$( document ).off( 'click' + tabBindNamespace, '.e-n-tabs [role="tab"], .e-n-tabs .e-n-tab-title' );
+			$( document ).on( 'click' + tabBindNamespace, '.e-n-tabs [role="tab"], .e-n-tabs .e-n-tab-title', function() {
+				var $tabTitle = $( this );
+
+				setTimeout( function() {
+					var tabPanelId = $tabTitle.attr( 'aria-controls' ),
+						$tabPanel = tabPanelId ? $( '#' + tabPanelId ) : $();
+
+					WprElements.runReadyTriggerForTabContent( $tabPanel );
+				}, 80 );
+			} );
+
+			if ( window.elementorFrontend && window.elementorFrontend.elements && window.elementorFrontend.elements.$window ) {
+				window.elementorFrontend.elements.$window.off( 'elementor/nested-tabs/activate' + tabBindNamespace );
+				window.elementorFrontend.elements.$window.on( 'elementor/nested-tabs/activate' + tabBindNamespace, function( event, content ) {
+					WprElements.runReadyTriggerForTabContent( $( content ) );
+				} );
+			}
+		},
+
+		runReadyTriggerForTabContent: function( $tabContent ) {
+			if ( ! $tabContent || ! $tabContent.length || ! window.elementorFrontend || ! window.elementorFrontend.elementsHandler ) {
+				return;
+			}
+
+			$tabContent.find( '.elementor-element' ).each( function() {
+				var $element = $( this );
+
+				if ( $element.attr( 'data-wpr-tab-ready' ) === 'yes' ) {
+					return;
+				}
+
+				window.elementorFrontend.elementsHandler.runReadyTrigger( $element );
+				$element.attr( 'data-wpr-tab-ready', 'yes' );
+			} );
+
+			setTimeout( function() {
+				$( window ).trigger( 'resize' );
+				if ( window.elementorFrontend && window.elementorFrontend.elements && window.elementorFrontend.elements.$window ) {
+					window.elementorFrontend.elements.$window.trigger( 'elementor-pro/motion-fx/recalc' );
+					window.elementorFrontend.elements.$window.trigger( 'elementor/bg-video/recalc' );
+				}
+			}, 0 );
 		},
 
 		widgetPostMedia: function( $scope ) {
@@ -156,6 +223,7 @@
             }
 
 			if ( $scope.hasClass('wpr-jarallax') || $scope.hasClass('wpr-jarallax-yes') ) {
+				bindParallaxResize($scope);
 				observeParallax($scope);
 			}
 
@@ -540,22 +608,121 @@
 			}
 
 			function parallaxBackground() {
-				if ( ! WprElements.editorCheck() && $scope.hasClass('wpr-jarallax') ) {
-					$scope.css('background-image', 'url("' + $scope.attr('bg-image') + '")');
-					$scope.jarallax({
-						type: $scope.attr('scroll-effect'),
-						speed: $scope.attr('speed-data'),
+				function getResponsiveJarallaxImage(desktopImage, mobileImage) {
+					var hasMobileImage = !! mobileImage;
+					var isMobileDevice = window.matchMedia('(max-width: 767px)').matches;
+
+					if ( hasMobileImage && isMobileDevice ) {
+						return mobileImage;
+					}
+
+					return desktopImage;
+				}
+
+				function cleanupJarallaxArtifacts(scopeElement) {
+					if ( ! scopeElement ) {
+						return;
+					}
+
+					scopeElement.querySelectorAll('[id^="jarallax-container-"]').forEach((container) => {
+						var containerId = container.getAttribute('id') || '';
+						var instanceId = containerId.replace('jarallax-container-', '');
+						var clipStyle = document.getElementById('jarallax-clip-' + instanceId);
+
+						if ( clipStyle && clipStyle.parentNode ) {
+							clipStyle.parentNode.removeChild(clipStyle);
+						}
+
+						if ( container.parentNode ) {
+							container.parentNode.removeChild(container);
+						}
 					});
-				} else if ( WprElements.editorCheck() ) {
-					$scope.css('background-image', 'url("' + $scope.find('> .wpr-jarallax').attr('bg-image-editor') + '")');
+				}
+
+				if ( ! WprElements.editorCheck() && ( $scope.hasClass('wpr-jarallax') || $scope.hasClass('wpr-jarallax-yes') ) ) {
+					var targetImage = getResponsiveJarallaxImage($scope.attr('bg-image'), $scope.attr('bg-image-mobile'));
+
+					if ( ! targetImage ) {
+						return;
+					}
+
+					if ( $scope.attr('data-wpr-jarallax-initialized') === 'yes' && $scope.attr('data-wpr-jarallax-image') === targetImage ) {
+						return;
+					}
+
+					if ( typeof $scope.data('jarallax') !== 'undefined' ) {
+						$scope.jarallax('destroy');
+					}
+					cleanupJarallaxArtifacts($scope[0]);
+					$scope.removeData('jarallax');
+
+					$scope.css('background-image', 'url("' + targetImage + '")');
+
+					var scrollType = $scope.attr('scroll-effect');
+					var parallaxSpeed = parseFloat($scope.attr('speed-data'));
+
+					if ( isNaN(parallaxSpeed) ) {
+						parallaxSpeed = 0.5;
+					}
+
+					if ( scrollType === 'scroll' ) {
+						parallaxSpeed = Math.max(-0.8, Math.min(0.8, parallaxSpeed));
+					}
+
 					$scope.jarallax({
-						type: $scope.find('> .wpr-jarallax').attr('scroll-effect-editor'),
-						speed: $scope.find('> .wpr-jarallax').attr('speed-data-editor')
-					});									
+						type: scrollType,
+						speed: parallaxSpeed,
+					});
+					$scope.attr('data-wpr-jarallax-image', targetImage);
+					$scope.attr('data-wpr-jarallax-initialized', 'yes');
+				} else if ( WprElements.editorCheck() ) {
+					var editorDesktopImage = $scope.find('> .wpr-jarallax').attr('bg-image-editor');
+					var editorMobileImage = $scope.find('> .wpr-jarallax').attr('bg-image-mobile-editor');
+					var editorTargetImage = getResponsiveJarallaxImage(editorDesktopImage, editorMobileImage);
+
+					if ( ! editorTargetImage ) {
+						return;
+					}
+
+					if ( $scope.attr('data-wpr-jarallax-initialized') === 'yes' && $scope.attr('data-wpr-jarallax-image') === editorTargetImage ) {
+						return;
+					}
+
+					if ( typeof $scope.data('jarallax') !== 'undefined' ) {
+						$scope.jarallax('destroy');
+					}
+					cleanupJarallaxArtifacts($scope[0]);
+					$scope.removeData('jarallax');
+
+					$scope.css('background-image', 'url("' + editorTargetImage + '")');
+
+					var editorType = $scope.find('> .wpr-jarallax').attr('scroll-effect-editor');
+					var editorSpeed = parseFloat($scope.find('> .wpr-jarallax').attr('speed-data-editor'));
+
+					if ( isNaN(editorSpeed) ) {
+						editorSpeed = 0.5;
+					}
+
+					if ( editorType === 'scroll' ) {
+						editorSpeed = Math.max(-0.8, Math.min(0.8, editorSpeed));
+					}
+
+					$scope.jarallax({
+						type: editorType,
+						speed: editorSpeed
+					});
+					$scope.attr('data-wpr-jarallax-image', editorTargetImage);
+					$scope.attr('data-wpr-jarallax-initialized', 'yes');
 				}
 			}
 
 			function observeParallax($scope) {
+				if ( ! $scope.length || $scope.attr('data-wpr-jarallax-observed') === 'yes' || $scope.attr('data-wpr-jarallax-initialized') === 'yes' ) {
+					return;
+				}
+
+				$scope.attr('data-wpr-jarallax-observed', 'yes');
+
 				const observer = new IntersectionObserver((entries, obs) => {
 					entries.forEach(entry => {
 						if (entry.isIntersecting) {
@@ -565,11 +732,27 @@
 						}
 					});
 				}, {
-					rootMargin: '0px',
-					threshold: 0.1
+					rootMargin: '400px 0px',
+					threshold: 0
 				});
 			
 				observer.observe($scope[0]);
+			}
+
+			function bindParallaxResize($scope) {
+				if ( $scope.attr('data-wpr-jarallax-resize-bound') === 'yes' ) {
+					return;
+				}
+
+				$scope.attr('data-wpr-jarallax-resize-bound', 'yes');
+
+				let resizeTimer;
+				window.addEventListener('resize', function() {
+					clearTimeout(resizeTimer);
+					resizeTimer = setTimeout(function() {
+						parallaxBackground.call(this, $scope);
+					}, 120);
+				});
 			}
 
 			function parallaxMultiLayer() {
@@ -619,6 +802,7 @@
 			if ( ! $scope.hasClass('wpr-column-slider-yes') ) {
 				return;
 			}
+			$scope.removeClass('wpr-column-slider-ready');
 
 			var swiperLoader = function swiperLoader(swiperElement, swiperConfig) {
 				if ('undefined' === typeof Swiper) {
@@ -647,8 +831,35 @@
 
 				sliderInner.css('flexWrap', 'nowrap');
 
-				var sliderSettings = $scope.data('wpr-column-slider') ? $scope.data('wpr-column-slider') : $scope.find('.wpr-column-slider-editor').data('wpr-column-slider');
+				var dataContainer = $scope;
+				var sliderSettings = dataContainer.data('wpr-column-slider');
+				var rawSliderSettings = dataContainer.attr && dataContainer.attr('data-wpr-column-slider');
+
+				if ( ! sliderSettings && WprElements.editorCheck() ) {
+					dataContainer = $scope.find('.wpr-column-slider-editor, [data-wpr-column-slider]').first();
+					sliderSettings = dataContainer.data('wpr-column-slider');
+					rawSliderSettings = dataContainer.attr && dataContainer.attr('data-wpr-column-slider');
+				}
+
+				if ( rawSliderSettings && 'string' === typeof rawSliderSettings ) {
+					try {
+						sliderSettings = JSON.parse(rawSliderSettings);
+					} catch (err) {}
+				} else if ( ! sliderSettings && rawSliderSettings ) {
+					try {
+						sliderSettings = JSON.parse(rawSliderSettings);
+					} catch (err2) {}
+				}
 				if ( sliderSettings ) {
+
+					if ( $scope[0] && $scope[0].swiper ) {
+						try {
+							$scope[0].swiper.destroy(true, true);
+						} catch (e) {}
+					}
+
+					$scope.find('> .swiper-button-prev, > .swiper-button-next, > .swiper-pagination').remove();
+					sliderInner.removeClass('swiper-wrapper');
 
 					$scope.addClass('swiper');
 					sliderInner.addClass('swiper-wrapper');
@@ -675,7 +886,7 @@
 					});
 					$scope.css('overflow', 'hidden');
 					sliderInner.css('margin', '0');
-					var swiperSlider = $scope;
+					var swiperSlider = $scope[0] ? $scope[0] : $scope;
 					var prevButtonEl = null;
 					var nextButtonEl = null;
 					var paginationEl = null;
@@ -747,9 +958,11 @@
 						slidesPerView: +sliderSettings.wpr_cs_slides_to_show,
 						spaceBetween: +sliderSettings.wpr_cs_space_between,
 						speed: +sliderSettings.wpr_cs_speed,
+						watchOverflow: false,
 						pagination: sliderSettings.wpr_cs_pagination === 'yes' ? {
 							el: paginationEl,
 							type: sliderSettings.wpr_cs_pagination_type,
+							clickable: true,
 						} : false,
 						navigation: sliderSettings.wpr_cs_navigation === 'yes' ? {
 							prevEl: prevButtonEl,
@@ -786,11 +999,16 @@
 							}
 						},
 
+					}).then(function () {
+						$scope.addClass('wpr-column-slider-ready');
+					}).catch(function () {
+						$scope.addClass('wpr-column-slider-ready');
 					});
 
-					$scope.css('opacity', 1);
+					return;
 				}
 			}
+			$scope.addClass('wpr-column-slider-ready');
 		},
 
 		equalHeight: function( $scope ) {
@@ -798,6 +1016,7 @@
 			if ( ! $scope.hasClass('wpr-equal-height-yes') ) {
 				return;
 			}
+			$scope.removeClass('wpr-equal-height-ready');
 
 			var section = $scope,
 				editMode = elementorFrontend.isEditMode(),
@@ -822,6 +1041,7 @@
 			}
 
 			if (!equalHeightSettings) {
+				$scope.addClass('wpr-equal-height-ready');
 				return;
 			}
 
@@ -838,8 +1058,37 @@
 				return [ val ];
 			};
 
-			var ehTargets = normalizeList(equalHeightSettings.wpr_eh_target);
+			var rawEhTargets = equalHeightSettings.wpr_eh_target || equalHeightSettings.wprEhTarget || equalHeightSettings['wpr_eh_target'];
+			var looksLikeSelector = function (str) {
+				return 'string' === typeof str && /[.#\[]/.test(str);
+			};
+			var normalizeEhTargets = function (val) {
+				if (!val) {
+					return [];
+				}
+				if (Array.isArray(val)) {
+					return val;
+				}
+				if ('object' === typeof val) {
+					var keys = Object.keys(val),
+						values = Object.values(val);
+					var valueSelectors = values.filter(looksLikeSelector);
+					if (valueSelectors.length) {
+						return valueSelectors;
+					}
+					var keySelectors = keys.filter(looksLikeSelector);
+					if (keySelectors.length) {
+						return keySelectors;
+					}
+					return values;
+				}
+				return [ val ];
+			};
+			var ehTargets = normalizeEhTargets(rawEhTargets);
 			var enableOn = normalizeList(equalHeightSettings.enable_on);
+			var targetType = equalHeightSettings['wpr_eh_target-type'] || equalHeightSettings.wpr_eh_target_type || equalHeightSettings.wprEhTargetType || 'widget';
+
+			console.log('WPR Equal Height targets:', ehTargets, 'type:', targetType);
 
 			if (elementorFrontend && elementorFrontend.breakpoints && 'function' === typeof elementorFrontend.breakpoints.getActiveBreakpointsList && 0 === enableOn.length) {
 				enableOn = elementorFrontend.breakpoints.getActiveBreakpointsList({ withDesktop: true });
@@ -848,20 +1097,54 @@
 			var scopeId = section.data('id') ? section.data('id') : 'global';
 
 			if (0 === Object.keys(equalHeightSettings).length) {
+				$scope.addClass('wpr-equal-height-ready');
 				return;
 			}
 
-			function matchHeight(selector) {
-				var $targets = section.find(selector),
-					heights = [];
-
-				section.find(selector).css('minHeight', 'unset');
-
-				jQuery.each($targets, function (key, valueObj) {
-					heights.push($(valueObj).outerHeight(true));
+			function collectUniqueTargets(selectors) {
+				var seenNodes = [],
+					$all = $();
+				selectors.forEach(function (sel) {
+					if (!sel) {
+						return;
+					}
+					var selector = ('string' === typeof sel) ? sel.trim() : String(sel).trim();
+					if (!selector) {
+						return;
+					}
+					var $matches = section.find(selector);
+					if (!$matches.length && -1 !== selector.indexOf('.elementor-widget-container')) {
+						var fallbackSelector = selector.replace(/\s*\.elementor-widget-container\b/g, '').trim();
+						if (fallbackSelector) {
+							$matches = section.find(fallbackSelector);
+						}
+					}
+					$matches.each(function () {
+						if (-1 === seenNodes.indexOf(this)) {
+							seenNodes.push(this);
+							$all = $all.add(this);
+						}
+					});
 				});
+				return $all;
+			}
 
-				section.find(selector).css('minHeight', Math.max.apply(null, heights));
+			function matchHeightAcrossSelectors(selectors) {
+				var filtered = selectors.filter(function (s) {
+					return s;
+				});
+				if (!filtered.length) {
+					return;
+				}
+				var $targets = collectUniqueTargets(filtered);
+				$targets.css('minHeight', 'unset');
+				var heights = [];
+				$targets.each(function () {
+					heights.push($(this).outerHeight(true));
+				});
+				if (heights.length) {
+					$targets.css('minHeight', Math.max.apply(null, heights));
+				}
 			}
 
 			function triggerEqualHeight() {
@@ -873,24 +1156,21 @@
 				var deviceActive = (0 === enableOn.length) || enableOn.includes(mode);
 
 				if (deviceActive && ehTargets.length) {
-					ehTargets.forEach(function (target) {
-						if (target) {
-							matchHeight(target);
-						}
-					});
+					// One max height for every element matching any listed selector (not per-selector groups).
+					matchHeightAcrossSelectors(ehTargets);
 				} else {
-					ehTargets.forEach(function (target) {
-						if (target) {
-							section.find(target).css('minHeight', 'unset');
-						}
-					});
+					collectUniqueTargets(ehTargets).css('minHeight', 'unset');
 				}
 			}
 
 			triggerEqualHeight();
+			$scope.addClass('wpr-equal-height-ready');
 
 			$(window).off('resize.wprEqualHeight-' + scopeId).on('resize.wprEqualHeight-' + scopeId, triggerEqualHeight);
-			setTimeout(triggerEqualHeight, 0);
+			setTimeout(function () {
+				triggerEqualHeight();
+				$scope.addClass('wpr-equal-height-ready');
+			}, 0);
 		},
 
 		widgetNavMenu: function( $scope ) {

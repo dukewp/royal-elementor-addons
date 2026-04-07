@@ -6,7 +6,10 @@ alwaysApply: true
 
 # Royal Elementor Addons – Frontend JS
 
-**Do not touch `assets/js/frontend.js` at all** (no edits, refactors, or sync changes).
+`assets/js/frontend.js` is listed in **`.cursorignore`** so it stays out of Cursor indexing—treat it as if it does not exist.
 
-- All frontend JavaScript work happens in **`assets/js/frontend.min.js`** only.
-- If a task would normally require updating both files, **only change `frontend.min.js`** and leave `frontend.js` unchanged.
+**Do not open, edit, refactor, or search-replace `assets/js/frontend.js`.**
+
+- The only editable frontend bundle is **`assets/js/frontend.min.js`**.
+- Enqueued script path in PHP may say `frontend.js` or `frontend.min.js` per build; still edit **`frontend.min.js`** when the task is “change frontend JS.”
+- If something appears to require both files, **only change `frontend.min.js`**.
