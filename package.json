@@ -1,0 +1,14 @@
+{
+  "name": "royal-elementor-addons-frontend-build",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Deterministic frontend.min.js build tooling",
+  "scripts": {
+    "build:frontend-safe": "node scripts/build-frontend-safe.mjs"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "terser": "^5.39.0"
+  }
+}

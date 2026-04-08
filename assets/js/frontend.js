@@ -9478,6 +9478,7 @@
 							const createPostResponse = responses.find((response) => response && response.data.action === 'wpr_form_builder_submissions');
 
 							const postId = createPostResponse ? createPostResponse.data.post_id : null;
+							const submissionSecret = createPostResponse && createPostResponse.data.submission_secret ? createPostResponse.data.submission_secret : null;
 							
 								// Update post meta for each action
 								var updateMetaPromises = actions.map((action) => {
@@ -9493,14 +9494,14 @@
 										if (response && response.data.status === 'success') {
 											responsesArray.push('success');
 
-											if (postId) {
-												return updateFormActionMeta(postId, action, 'success', message);
+											if (postId && submissionSecret) {
+												return updateFormActionMeta(postId, action, 'success', message, submissionSecret);
 											}
 										} else {
 											responsesArray.push('error');
 											
-											if (postId) {
-												return updateFormActionMeta(postId, action, 'error', message);
+											if (postId && submissionSecret) {
+												return updateFormActionMeta(postId, action, 'error', message, submissionSecret);
 											}
 										}
 									}
@@ -9549,18 +9550,18 @@
 					}
 				});
 
-				function updateFormActionMeta(postId, actionName, status, message) {
+				function updateFormActionMeta(postId, actionName, status, message, submissionSecret) {
 					return $.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
 						data: {
                             action: 'wpr_update_form_action_meta',
                             nonce: WprConfig.nonce,
-							// custom_token: WprConfig.token,
 							post_id: postId,
 							action_name: actionName,
 							status: status,
-							message: message
+							message: message,
+							submission_secret: submissionSecret
 						},
 					});
 				}
