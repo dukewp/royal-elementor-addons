@@ -188,6 +188,10 @@ class Plugin {
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
+			// AI Builder
+			require WPR_ADDONS_PATH . 'admin/ai-builder/class-ai-builder.php';
+			new \WprAddons\Admin\AiBuilder\WPR_AI_Builder();
+
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/theme-builder.php';
 

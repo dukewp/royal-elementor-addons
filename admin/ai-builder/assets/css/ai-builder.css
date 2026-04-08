@@ -1,0 +1,276 @@
+.wpr-ai-builder-wrap {
+	max-width: 800px;
+	margin: 20px auto;
+}
+
+.wpr-ai-builder-header {
+	margin-bottom: 24px;
+}
+
+.wpr-ai-builder-header h1 {
+	font-size: 28px;
+	font-weight: 600;
+	margin-bottom: 8px;
+}
+
+.wpr-ai-builder-header p {
+	color: #666;
+	font-size: 14px;
+	margin: 0;
+}
+
+/* Panels */
+.wpr-ai-panel {
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 24px;
+	margin-bottom: 20px;
+}
+
+.wpr-ai-panel h2 {
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0 0 16px;
+	padding: 0;
+}
+
+/* Fields */
+.wpr-ai-field {
+	margin-bottom: 16px;
+}
+
+.wpr-ai-field label {
+	display: block;
+	font-weight: 500;
+	margin-bottom: 6px;
+	font-size: 13px;
+	color: #333;
+}
+
+.wpr-ai-field input[type="text"],
+.wpr-ai-field input[type="password"],
+.wpr-ai-field select,
+.wpr-ai-field textarea {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 14px;
+	line-height: 1.5;
+	transition: border-color 0.2s;
+}
+
+.wpr-ai-field input:focus,
+.wpr-ai-field select:focus,
+.wpr-ai-field textarea:focus {
+	border-color: #6C5CE7;
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.15);
+}
+
+.wpr-ai-field textarea {
+	resize: vertical;
+	min-height: 100px;
+}
+
+/* Style Options */
+.wpr-ai-style-options {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.wpr-ai-style-option {
+	padding: 10px 20px;
+	border: 2px solid #ddd;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 500;
+	transition: all 0.2s;
+	user-select: none;
+}
+
+.wpr-ai-style-option:hover {
+	border-color: #6C5CE7;
+}
+
+.wpr-ai-style-option.active {
+	border-color: #6C5CE7;
+	background: #f0edff;
+	color: #6C5CE7;
+}
+
+/* Actions */
+.wpr-ai-actions {
+	text-align: center;
+	padding-top: 8px;
+}
+
+.wpr-ai-actions .button-hero {
+	background: #6C5CE7;
+	border-color: #6C5CE7;
+	color: #fff;
+	font-size: 16px;
+	padding: 10px 40px;
+	height: auto;
+	border-radius: 8px;
+	transition: all 0.2s;
+}
+
+.wpr-ai-actions .button-hero:hover {
+	background: #5A4BD1;
+	border-color: #5A4BD1;
+}
+
+.wpr-ai-actions .button-hero:disabled {
+	background: #ccc;
+	border-color: #ccc;
+	cursor: not-allowed;
+}
+
+.wpr-ai-notice {
+	color: #e74c3c;
+	font-size: 13px;
+	margin-top: 8px;
+}
+
+/* Settings */
+.wpr-ai-settings-panel {
+	border-left: 4px solid #f0ad4e;
+}
+
+.wpr-ai-field-actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 16px;
+}
+
+.wpr-ai-status {
+	font-size: 13px;
+	margin-left: 8px;
+}
+
+.wpr-ai-status.success { color: #27ae60; }
+.wpr-ai-status.error { color: #e74c3c; }
+
+/* Progress */
+.wpr-ai-progress-panel {
+	text-align: center;
+}
+
+.wpr-ai-progress-steps {
+	text-align: left;
+	max-width: 400px;
+	margin: 20px auto;
+}
+
+.wpr-ai-progress-step {
+	padding: 8px 0;
+	color: #999;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.wpr-ai-progress-step.active {
+	color: #6C5CE7;
+	font-weight: 500;
+}
+
+.wpr-ai-progress-step.done {
+	color: #27ae60;
+}
+
+.wpr-ai-progress-step.done .wpr-ai-step-icon {
+	color: #27ae60;
+}
+
+.wpr-ai-step-icon {
+	font-size: 18px;
+	width: 20px;
+	text-align: center;
+}
+
+.wpr-ai-progress-bar {
+	background: #eee;
+	border-radius: 10px;
+	height: 8px;
+	margin: 24px 0;
+	overflow: hidden;
+}
+
+.wpr-ai-progress-fill {
+	background: linear-gradient(90deg, #6C5CE7, #a29bfe);
+	height: 100%;
+	border-radius: 10px;
+	transition: width 0.5s ease;
+}
+
+/* Result */
+.wpr-ai-result-success {
+	text-align: center;
+}
+
+.wpr-ai-result-success h2 {
+	color: #27ae60;
+}
+
+.wpr-ai-result-title {
+	font-size: 18px;
+	font-weight: 600;
+	margin: 12px 0;
+}
+
+.wpr-ai-result-info {
+	color: #666;
+	margin-bottom: 20px;
+}
+
+.wpr-ai-result-actions {
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.wpr-ai-result-actions .button-hero {
+	background: #6C5CE7;
+	border-color: #6C5CE7;
+	color: #fff;
+	border-radius: 8px;
+}
+
+.wpr-ai-result-actions .button-hero:hover {
+	background: #5A4BD1;
+}
+
+/* Error */
+.wpr-ai-error-panel {
+	text-align: center;
+	border-left: 4px solid #e74c3c;
+}
+
+.wpr-ai-error-panel h2 {
+	color: #e74c3c;
+}
+
+.wpr-ai-error-message {
+	color: #666;
+	margin-bottom: 16px;
+}
+
+/* Steps */
+.wpr-ai-step {
+	margin-bottom: 24px;
+	padding-bottom: 24px;
+	border-bottom: 1px solid #eee;
+}
+
+.wpr-ai-step:last-of-type {
+	border-bottom: none;
+	padding-bottom: 0;
+	margin-bottom: 16px;
+}
