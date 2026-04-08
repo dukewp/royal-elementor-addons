@@ -6782,11 +6782,13 @@
 					$scope.find('.wpr-grid-pagination').css('visibility', 'hidden');
 				}
 
-				AOS.init({
-					offset: parseInt(aosOffset),
-					duration: aosDuration,
-					once: true,
-				});
+				if ( 'undefined' !== typeof AOS && 'function' === typeof AOS.init ) {
+					AOS.init({
+						offset: parseInt(aosOffset),
+						duration: aosDuration,
+						once: true,
+					});
+				}
 
 				postsTimelineFill(lastIcon, firstIcon);
 
@@ -6842,11 +6844,13 @@
 							});
 						}
 
-						AOS.init({
-							offset: parseInt(aosOffset),
-							duration: aosDuration,
-							once: true,
-						});
+						if ( 'undefined' !== typeof AOS && 'function' === typeof AOS.init ) {
+							AOS.init({
+								offset: parseInt(aosOffset),
+								duration: aosDuration,
+								once: true,
+							});
+						}
 
 						$(window).scroll();
 
