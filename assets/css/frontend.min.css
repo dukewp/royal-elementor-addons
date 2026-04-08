@@ -6897,6 +6897,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-slider-video-btn {
+    visibility: hidden;
     margin: 0 auto;
 }
 
@@ -6909,6 +6910,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-slider-video-icon-size-small .wpr-slider-video-btn {
+    visibility: visible;
     height: 50px;
     width: 50px;
     font-size: 16px;
@@ -6917,6 +6919,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-slider-video-icon-size-medium .wpr-slider-video-btn {
+    visibility: visible;
     height: 80px;
     width: 80px;
     font-size: 26px;
@@ -6925,6 +6928,7 @@ body:not(.elementor-editor-active) .wpr-template-popup {
 }
 
 .wpr-slider-video-icon-size-large .wpr-slider-video-btn {
+    visibility: visible;
     height: 100px;
     width: 100px;
     font-size: 30px;
