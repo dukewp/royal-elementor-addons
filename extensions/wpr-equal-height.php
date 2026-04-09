@@ -26,7 +26,7 @@ class Wpr_Equal_Height {
 			'wpr_section_equal_height',
 			[
 				'tab'   => Controls_Manager::TAB_ADVANCED,
-                'label' =>  sprintf(esc_html__('Equal Height - %s', 'wpr-addons'), Utilities::get_plugin_name()),
+                'label' =>  sprintf(esc_html__('Equal Height - %s', 'wpr-addons'), esc_html('RA')),
             ]
 		);
 

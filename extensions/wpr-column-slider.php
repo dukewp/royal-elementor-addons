@@ -27,7 +27,7 @@ class Wpr_Column_Slider {
 			'wpr_section_column_slider',
 			[
 				'tab'   => Controls_Manager::TAB_ADVANCED,
-                'label' =>  sprintf(esc_html__('Column Slider - %s', 'wpr-addons'), Utilities::get_plugin_name()),
+                'label' =>  sprintf(esc_html__('Column Slider - %s', 'wpr-addons'), esc_html('RA')),
             ]
 		);
 
@@ -49,6 +49,43 @@ class Wpr_Column_Slider {
 				'return_value' => 'yes',
 				'prefix_class' => 'wpr-column-slider-',
 				'render_type' => 'template',
+			]
+		);
+
+		$element->add_responsive_control(
+			'wpr_column_slider_slides_to_show',
+			[
+				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'min' => 1,
+				'condition' => [
+					'wpr_enable_column_slider' => 'yes',
+				]
+			]
+		);
+				
+		$element->add_responsive_control(
+			'wpr_column_slider_space_between',
+			[
+				'label' => __( 'Gutter', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 5,
+				'condition' => [
+					'wpr_enable_column_slider' => 'yes',
+				]
+			]
+		);
+				
+		$element->add_control(
+			'wpr_column_slider_speed',
+			[
+				'label' => __( 'Speed', 'wpr-addons' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 3500,
+				'condition' => [
+					'wpr_enable_column_slider' => 'yes',
+				]
 			]
 		);
 
@@ -429,7 +466,7 @@ class Wpr_Column_Slider {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#222222',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-bullet' => 'background-color: {{VALUE}}',
 					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-fraction' => 'color: {{VALUE}}',
@@ -465,7 +502,7 @@ class Wpr_Column_Slider {
 			[
 				'label'  => esc_html__( 'Bar Background', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#00000040',
+				'default' => '#EDEDED',
 				'selectors' => [
 					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-progressbar' => 'background-color: {{VALUE}};'
 				],
@@ -585,43 +622,6 @@ class Wpr_Column_Slider {
 				'label' => esc_html__( 'Loop', 'wpr-addons' ),
 				'render_type' => 'template',
 				'separator' => 'before',
-				'condition' => [
-					'wpr_enable_column_slider' => 'yes',
-				]
-			]
-		);
-
-		$element->add_responsive_control(
-			'wpr_column_slider_slides_to_show',
-			[
-				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
-				'type' => Controls_Manager::NUMBER,
-				'default' => 1,
-				'min' => 1,
-				'condition' => [
-					'wpr_enable_column_slider' => 'yes',
-				]
-			]
-		);
-				
-		$element->add_responsive_control(
-			'wpr_column_slider_space_between',
-			[
-				'label' => __( 'Gutter', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 5,
-				'condition' => [
-					'wpr_enable_column_slider' => 'yes',
-				]
-			]
-		);
-				
-		$element->add_control(
-			'wpr_column_slider_speed',
-			[
-				'label' => __( 'Speed', 'wpr-addons' ),
-				'type' => \Elementor\Controls_Manager::NUMBER,
-				'default' => 500,
 				'condition' => [
 					'wpr_enable_column_slider' => 'yes',
 				]

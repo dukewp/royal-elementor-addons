@@ -68,14 +68,6 @@ class Wpr_Icon_Box extends Widget_Base {
 
         Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
-		$this->add_control(
-			'enable_mouse_tilt',
-			[
-				'label' => esc_html__( 'Mouse Tilt', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-			]
-		);
-
         $this->add_control(
             'icon_box_media_type',
             [
@@ -309,74 +301,6 @@ class Wpr_Icon_Box extends Widget_Base {
 			]
 		);
 
-        $this->add_responsive_control(
-			'icon_box_icon_distance',
-			[
-				'label' => esc_html__( 'Distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px'],
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 80,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 10,
-				],
-				'selectors' => [
-					'{{WRAPPER}}.wpr-icon-box-left .wpr-icon-box-media-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-icon-box-right .wpr-icon-box-media-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.wpr-icon-box-center .wpr-icon-box-media-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};'
-				],
-				'separator' => 'before'
-			]
-		);
-
-		$this->add_responsive_control(
-			'icon_box_title_distance',
-			[
-				'label' => esc_html__( 'Title distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box-title' => 'margin-bottom: {{SIZE}}{{UNIT}}'
-                ]
-			]
-		);
-
-
-		$this->add_responsive_control(
-			'icon_box_description_distance',
-			[
-				'label' => esc_html__( 'Description distance', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'unit' => 'px',
-					'size' => 15,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box-description' => 'margin-bottom: {{SIZE}}{{UNIT}}'
-                ]
-			]
-		);
-
 		$this->end_controls_section(); // End Controls Section
 
         // Tab: Content ==============
@@ -397,7 +321,7 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'type' => Controls_Manager::SELECT,
 				'label' => esc_html__( 'Media Type', 'wpr-addons' ),
-				'default' => 'icon',
+				'default' => 'none',
 				'options' => [
 					'none' => esc_html__( 'None', 'wpr-addons' ),
 					'icon' => esc_html__( 'Icon', 'wpr-addons' ),
@@ -705,29 +629,43 @@ class Wpr_Icon_Box extends Widget_Base {
 		);
 
 		$this->add_control(
-			'tilt_base',
+			'enable_mouse_tilt',
 			[
-				'label' => esc_html__( 'Interaction Base', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'element' => esc_html__( 'Element', 'wpr-addons' ),
-					'window' => esc_html__( 'Window', 'wpr-addons' ),
-				],
-				'default' => 'element'
+				'label' => esc_html__( 'Mouse Tilt', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
 			]
 		);
 
 		$this->add_control(
-			'tilt_disable',
+			'tilt_base',
 			[
-				'label' => esc_html__( 'Disable', 'wpr-addons' ),
+				'label' => esc_html__( 'Interaction Base', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
+				'default' => 'element',
 				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
+					'element' => esc_html__( 'Element', 'wpr-addons' ),
+					'window' => esc_html__( 'Window', 'wpr-addons' ),
+				],
+				'condition' => [
+					'enable_mouse_tilt' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tilt_orientation',
+			[
+				'label' => esc_html__( 'Orientation', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'none',
+				'options' => [
+					'none' => esc_html__( 'All', 'wpr-addons' ),
 					'x' => esc_html__( 'Horizontally', 'wpr-addons' ),
 					'y' => esc_html__( 'Vertically', 'wpr-addons' )
 				],
-				'default' => 'none'
+				'condition' => [
+					'enable_mouse_tilt' => 'yes',
+				],
 			]
 		);
 
@@ -736,14 +674,17 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'label' => esc_html__( 'Easing', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
+				// 'default' => 'cubic-bezier(.03, .98, .52, .99)',
+				'default' => 'ease',
 				'options' => [
 					// 'cubic-bezier(.03, .98, .52, .99)' => esc_html__( 'Cubic Bezier', 'wpr-addons' ),
 					'cubic-bezier' => esc_html__( 'Cubic Bezier', 'wpr-addons' ),
 					'ease' => esc_html__( 'Ease', 'wpr-addons' ),
 					'linear' => esc_html__( 'Linear', 'wpr-addons' )
 				],
-				// 'default' => 'cubic-bezier(.03, .98, .52, .99)',
-				'default' => 'cubic-bezier'
+				'condition' => [
+					'enable_mouse_tilt' => 'yes',
+				],
 			]
 		);
 
@@ -1031,7 +972,7 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_icon_box_media_styles',
 			[
-				'label' => esc_html__( 'Media', 'wpr-addons' ),
+				'label' => esc_html__( 'Icon / Image', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1299,6 +1240,31 @@ class Wpr_Icon_Box extends Widget_Base {
 			]
 		);
 
+        $this->add_responsive_control(
+			'icon_box_icon_distance',
+			[
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px'],
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 80,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 10,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-icon-box-left .wpr-icon-box-media-wrap' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-icon-box-right .wpr-icon-box-media-wrap' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-icon-box-center .wpr-icon-box-media-wrap' => 'margin-bottom: {{SIZE}}{{UNIT}};'
+				],
+				// 'separator' => 'before'
+			]
+		);
+
         $this->end_controls_section();
 
 		// Tab: STYLE ==============
@@ -1383,7 +1349,7 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#3cff00',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon-box:hover .wpr-icon-box-title' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-icon-box:hover .wpr-icon-box-title a.wpr-icon-box-url' => 'color: {{VALUE}}',
@@ -1419,6 +1385,28 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->end_controls_tab();
 
 		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'icon_box_title_distance',
+			[
+				'label' => esc_html__( 'Title distance', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-title' => 'margin-bottom: {{SIZE}}{{UNIT}}'
+                ]
+			]
+		);
+
 		$this->add_control(
 			'description_heading',
 			[
@@ -1490,7 +1478,7 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#3cff00',
+				'default' => '#ffffff',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon-box:hover .wpr-icon-box-description' => 'color: {{VALUE}}',
 				],
@@ -1525,6 +1513,27 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->end_controls_tab();
 		
 		$this->end_controls_tabs();
+
+		$this->add_responsive_control(
+			'icon_box_description_distance',
+			[
+				'label' => esc_html__( 'Description', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 15,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-description' => 'margin-bottom: {{SIZE}}{{UNIT}}'
+                ]
+			]
+		);
 
 		$this->end_controls_section();
 

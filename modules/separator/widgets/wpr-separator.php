@@ -113,7 +113,7 @@ class Wpr_Separator extends Widget_Base {
 					'icon' => esc_html__( 'Icon', 'wpr-addons' ),
 					'image' => esc_html__( 'Image', 'wpr-addons' ),
 					'text' => esc_html__( 'Text', 'wpr-addons' ),
-					'animation' => esc_html__( 'Lottie Animation', 'wpr-addons' ),
+					// 'animation' => esc_html__( 'Lottie Animation', 'wpr-addons' ),
 				],
 				'render_type' => 'template',
 				'separator' => 'before',

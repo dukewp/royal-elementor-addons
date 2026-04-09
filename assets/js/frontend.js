@@ -13444,9 +13444,9 @@
 						reset: true,
 						reverse: false,
 						scale: 1,
-						shine: true,
-						'shine-opacity': 0.9,
-						'shine-save': false,
+						shine: false,
+						// 'shine-opacity': 0.9,
+						// 'shine-save': false,
 						speed: 200,
 					},
 					callbacks: {

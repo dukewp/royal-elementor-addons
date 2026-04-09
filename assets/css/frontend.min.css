@@ -19865,6 +19865,13 @@ input.wpr-date-filter-end {
     background-color: black;
     overflow: hidden;
   }
+
+  .wpr-vplaylist-wrap.wpr-vplaylist-pos-left {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+  }
   
   .wpr-vplaylist-wrap * {
     color: white;
