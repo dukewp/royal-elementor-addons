@@ -328,7 +328,7 @@ class Wpr_Separator extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-separator-wrap hr' => 'border-top-color: {{VALUE}}',
 				],
@@ -367,7 +367,7 @@ class Wpr_Separator extends Widget_Base {
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 500,
+						'max' => 1000,
 					],
 					'%' => [
 						'min' => 0,
@@ -453,7 +453,7 @@ class Wpr_Separator extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-separator-content p' => 'color: {{VALUE}}',
 				],
@@ -646,7 +646,7 @@ class Wpr_Separator extends Widget_Base {
 			[
 				'label'  => esc_html__( 'Color', 'wpr-addons' ),
 				'type' => Controls_Manager::COLOR,
-				'default' => '#000',
+				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-separator-wrap i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-separator-wrap svg' => 'fill: {{VALUE}}',
