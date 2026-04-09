@@ -45,6 +45,7 @@ class Wpr_Column_Slider {
 			[
 				'type' => Controls_Manager::SWITCHER,
 				'label' => esc_html__( 'Enable Column Slider', 'wpr-addons' ),
+				'description' => esc_html__( 'Converts section columns into a horizontal sliding carousel. Each column becomes a slide that users can swipe or navigate through. Click "Apply" above after enabling to see the changes.', 'wpr-addons' ),
 				'default' => 'no',
 				'return_value' => 'yes',
 				'prefix_class' => 'wpr-column-slider-',
@@ -56,6 +57,7 @@ class Wpr_Column_Slider {
 			'wpr_column_slider_slides_to_show',
 			[
 				'label' => esc_html__( 'Slides To Show', 'wpr-addons' ),
+				'description' => esc_html__( 'Number of slides visible at once. Set different values per breakpoint for responsive behavior.', 'wpr-addons' ),
 				'type' => Controls_Manager::NUMBER,
 				'default' => 1,
 				'min' => 1,
@@ -64,7 +66,7 @@ class Wpr_Column_Slider {
 				]
 			]
 		);
-				
+
 		$element->add_responsive_control(
 			'wpr_column_slider_space_between',
 			[
@@ -76,7 +78,7 @@ class Wpr_Column_Slider {
 				]
 			]
 		);
-				
+
 		$element->add_control(
 			'wpr_column_slider_speed',
 			[
@@ -601,7 +603,7 @@ class Wpr_Column_Slider {
 				]
 			]
 		);
-				
+
 		$element->add_control(
 			'wpr_column_slider_delay',
 			[
