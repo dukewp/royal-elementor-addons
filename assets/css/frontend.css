@@ -20305,9 +20305,20 @@ input.wpr-date-filter-end {
   --------------------------------------------------------------*/
 
 .wpr-separator-wrap {
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.wpr-separator-wrap .line-before,
+.wpr-separator-wrap .line-after {
+    min-width: 0;
+    flex: 1 1 0;
+}
+
+.wpr-separator-wrap .line-before hr,
+.wpr-separator-wrap .line-after hr {
+    width: 100%;
 }
 
 .wpr-separator-wrap p {

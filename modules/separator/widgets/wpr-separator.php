@@ -75,8 +75,8 @@ class Wpr_Separator extends Widget_Base {
 					1 => esc_html__( 'One', 'wpr-addons' ),
 					2 => esc_html__( 'Two', 'wpr-addons' ),
 					3 => esc_html__( 'Three', 'wpr-addons' ),
-					4 => esc_html__( 'Four (Pro)', 'wpr-addons' ),
-					5 => esc_html__( 'Five (Pro)', 'wpr-addons' ),
+					4 => esc_html__( 'Four', 'wpr-addons' ),
+					5 => esc_html__( 'Five', 'wpr-addons' ),
 				],
 				'render_type' => 'template',
 			]
@@ -299,8 +299,13 @@ class Wpr_Separator extends Widget_Base {
 				],
 				'default' => 'center',
 				'separator' => 'before',
+				'selectors_dictionary' => [
+					'left' => 'flex-start',
+					'center' => 'center',
+					'right' => 'flex-end',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-separator-outer-wrap' => 'text-align: {{VALUE}};'
+					'{{WRAPPER}} .wpr-separator-outer-wrap' => 'display: flex; justify-content: {{VALUE}};'
 				]
 			]
 		);
@@ -358,20 +363,23 @@ class Wpr_Separator extends Widget_Base {
 			[
 				'type' => Controls_Manager::SLIDER,
 				'label' => esc_html__( 'Width', 'wpr-addons' ),
-				'size_units' => [ 'px'],
+				'size_units' => [ 'px', '%'],
 				'range' => [
 					'px' => [
 						'min' => 0,
-						'max' => 1000,
+						'max' => 500,
+					],
+					'%' => [
+						'min' => 0,
+						'max' => 100,
 					]
 				],
 				'default' => [
-					'unit' => 'px',
+					'unit' => '%',
 					'size' => 100,
 				],
 				'selectors' => [
-					'{{WRAPPER}} .line-before hr' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .line-after hr' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-separator-wrap' => 'width: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -730,7 +738,7 @@ class Wpr_Separator extends Widget_Base {
 
 		if ( 'yes' === $enable_separator_link ) : 
 		$this->add_link_attributes( 'separator_link', $separator_link );
-		echo '<a class="wpr-separator-outer-wrap" style="display: block;" '. $this->get_render_attribute_string( 'separator_link' ) .'>';
+		echo '<a class="wpr-separator-outer-wrap" '. $this->get_render_attribute_string( 'separator_link' ) .'>';
 		else :
 		echo '<div class="wpr-separator-outer-wrap">';
 		endif;

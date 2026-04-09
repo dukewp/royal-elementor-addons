@@ -161,7 +161,7 @@ class Wpr_Video_Playlist extends Widget_Base {
             [
                 'label' => esc_html__( 'HTML Tag', 'wpr-addons' ),
                 'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 'h6',
+                'default' => 'h3',
                 'options' => [
                     'h1' => 'H1',
                     'h2' => 'H2',
