@@ -3675,7 +3675,8 @@ i[class*="wpr-rating-icon-"] {
     padding: 0;
     margin: 0;
     -webkit-appearance: none;
-    appearance: none;
+    -moz-appearance: none;
+         appearance: none;
     vertical-align: baseline;
 }
 
@@ -14332,11 +14333,19 @@ flex-grow: 0; */
     position: absolute;
     top: 50%;
     z-index: 11;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     margin-top: 0;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
 }
 
 .wpr-column-slider-yes .swiper-button-prev {
@@ -20118,7 +20127,8 @@ input.wpr-date-filter-end {
 .wpr-icon-box-wrap * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 .wpr-icon-box-link {
@@ -20141,26 +20151,50 @@ input.wpr-date-filter-end {
 }
 
 .wpr-icon-box-left .wpr-icon-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .wpr-icon-box-center .wpr-icon-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .wpr-icon-box-right .wpr-icon-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
 }
 
 .wpr-icon-box .wpr-icon-box-icon-inner-wrap {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     overflow: hidden;
 }
 
@@ -20305,15 +20339,23 @@ input.wpr-date-filter-end {
   --------------------------------------------------------------*/
 
 .wpr-separator-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .wpr-separator-wrap .line-before,
 .wpr-separator-wrap .line-after {
     min-width: 0;
-    flex: 1 1 0;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 0px;
+            flex: 1 1 0;
 }
 
 .wpr-separator-wrap .line-before hr,
@@ -20331,9 +20373,15 @@ input.wpr-date-filter-end {
 
 .wpr-random-image-overlay .wpr-attachment-caption {
     position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex; 
-    justify-content: center; 
-    align-items: center;
+    -webkit-box-pack: center; 
+        -ms-flex-pack: center; 
+            justify-content: center; 
+    -webkit-box-align: center; 
+        -ms-flex-align: center; 
+            align-items: center;
 }
 
 /* Icon Animations */
@@ -20543,8 +20591,8 @@ input.wpr-date-filter-end {
     bottom: 0;
     left: 0;
     right: 0;
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
     background: -o-linear-gradient(rgba(255, 255, 255, 0), #fff);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
     background: linear-gradient(rgba(255, 255, 255, 0), #fff);
     z-index: 11;
     height: 100%;
