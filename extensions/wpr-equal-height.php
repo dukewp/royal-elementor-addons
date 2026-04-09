@@ -44,6 +44,7 @@ class Wpr_Equal_Height {
 			[
 				'type' => Controls_Manager::SWITCHER,
 				'label' => esc_html__( 'Enable Equal Height', 'wpr-addons' ),
+				'description' => esc_html__( 'Makes all selected child elements the same height within this section/container. Useful for aligning columns, cards, or widgets in a row so they match regardless of content length. Click "Apply" above after enabling.', 'wpr-addons' ),
 				'default' => 'no',
 				'return_value' => 'yes',
 				'prefix_class' => 'wpr-equal-height-',
@@ -55,6 +56,7 @@ class Wpr_Equal_Height {
 			'wpr_equal_height_target_type',
 			[
 				'label'     => esc_html__( 'Equalize', 'wpr-addons' ),
+				'description' => esc_html__( 'Choose what to equalize: "Widgets" lets you pick specific widget types from a list, "Custom Selector" lets you target elements by CSS class name.', 'wpr-addons' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'widget',
 				'options'   => [
@@ -71,6 +73,7 @@ class Wpr_Equal_Height {
 			'wpr_equal_height_target',
 			[
 				'label'              => esc_html__( 'Widgets', 'wpr-addons' ),
+				'description'        => esc_html__( 'Select which widget types should have equal height within this section.', 'wpr-addons' ),
 				'type'               => 'wpr-select2',
 				'render_type'        => 'template',
 				'label_block'        => true,
@@ -82,7 +85,7 @@ class Wpr_Equal_Height {
 				],
 			]
 		);
-		
+
 		$element->add_control(
 			'wpr_equal_height_custom_target',
 			array(
@@ -90,7 +93,7 @@ class Wpr_Equal_Height {
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
 				'placeholder' => esc_html__( '.class-name, .class-name2 .my-custom-class', 'wpr-addons' ),
-				'description' => esc_html__( 'Enter selectors separated with \' , \' ', 'wpr-addons' ),
+				'description' => esc_html__( 'Enter CSS selectors separated by commas. All matching elements within this section will be set to equal height.', 'wpr-addons' ),
 				'render_type' => 'none',
 				'condition'   => [
 					'wpr_enable_equal_height' => 'yes',
@@ -103,6 +106,7 @@ class Wpr_Equal_Height {
 			'wpr_enable_equal_height_on',
 			array(
 				'label'       => esc_html__( 'Enable Equal Height on', 'wpr-addons' ),
+				'description' => esc_html__( 'Choose which screen sizes should apply equal height. Deselect smaller breakpoints if you want columns to stack naturally on mobile.', 'wpr-addons' ),
 				'type'        => Controls_Manager::SELECT2,
 				'multiple'    => true,
 				'options'     => Utilities::get_all_breakpoints(),
