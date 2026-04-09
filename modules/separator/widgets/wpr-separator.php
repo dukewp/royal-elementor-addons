@@ -63,8 +63,7 @@ class Wpr_Separator extends Widget_Base {
                 ]
         );
 
-        Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
-
+        // Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
         
 		$this->add_control(
 			'number_of_lines',

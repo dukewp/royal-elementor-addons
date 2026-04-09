@@ -66,7 +66,7 @@ class Wpr_Icon_Box extends Widget_Base {
             ]
         );
 
-        Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+        // Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
 
         $this->add_control(
             'icon_box_media_type',
@@ -1389,7 +1389,7 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_box_title_distance',
 			[
-				'label' => esc_html__( 'Title distance', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -1517,7 +1517,7 @@ class Wpr_Icon_Box extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_box_description_distance',
 			[
-				'label' => esc_html__( 'Description', 'wpr-addons' ),
+				'label' => esc_html__( 'Distance', 'wpr-addons' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
