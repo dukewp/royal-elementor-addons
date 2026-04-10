@@ -160,7 +160,7 @@ class Wpr_Icon_Box extends Widget_Base {
 				'label' => esc_html__( 'Content', 'wpr-addons' ),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'rows' => 10,
-				'default' => esc_html__( 'Content', 'wpr-addons' ),
+				'default' => esc_html__( 'Lorem ipsum dolor sit amet.', 'wpr-addons' ),
 				'placeholder' => esc_html__( 'Type your description here', 'wpr-addons' ),
 			]
 		);
@@ -945,10 +945,12 @@ class Wpr_Icon_Box extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'default' => [
-					'top' => 25,
-					'right' => 5,
-					'bottom' => 25,
-					'left' => 5,
+					'top' => '50',
+					'right' =>  '50',
+					'bottom' => '70',
+					'left' => '50',
+					'unit' => 'px',
+					'isLinked' => false
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-icon-box' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1841,10 +1843,10 @@ class Wpr_Icon_Box extends Widget_Base {
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
-					'top' => 0,
-					'right' => 0,
-					'bottom' => 0,
-					'left' => 0,
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-watermark-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
