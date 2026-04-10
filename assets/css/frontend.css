@@ -14371,7 +14371,6 @@ flex-grow: 0; */
 .wpr-column-slider-yes .swiper-pagination-progressbar,
 .wpr-column-slider-yes .swiper-pagination-progressbar-fill {
     display: block;
-    min-height: 10px;
 }
 
 .wpr-column-slider-navigation {
@@ -19984,6 +19983,7 @@ input.wpr-date-filter-end {
             align-items: center;
     height: 100%;
     min-width: 20%;
+    border-bottom-left-radius: 3px;
   }
   
   .wpr-vplaylist-controller svg {

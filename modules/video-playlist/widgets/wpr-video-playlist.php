@@ -89,6 +89,13 @@ class Wpr_Video_Playlist extends Widget_Base {
 		];
 	}
 
+	public function add_repeater_args_custom_title() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => '',
+		];
+	}
+
 	protected function register_controls() {
 
 		$this->start_controls_section(
@@ -181,13 +188,7 @@ class Wpr_Video_Playlist extends Widget_Base {
 
 		$repeater->add_control(
 			'custom_title',
-			[
-				'label' => esc_html__( 'Custom Title', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'placeholder' => esc_html__( 'Leave empty to use default', 'wpr-addons' ),
-				'label_block' => true,
-			]
+			$this->add_repeater_args_custom_title()
 		);
 
 		$video_urls_args = $this->add_repeater_args_video_urls();
@@ -218,6 +219,7 @@ class Wpr_Video_Playlist extends Widget_Base {
 		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'video-playlist', [
 			'Dynamic YouTube Playlist Query',
 			'Unlimited Custom Video Items',
+            'Custom Video Titles for Custom Items',
 		] );
 
 		$this->start_controls_section(
@@ -382,7 +384,7 @@ class Wpr_Video_Playlist extends Widget_Base {
 				}
                 if ( !empty($video_item['video_url']['url']) ) {
                     $video_urls[] = esc_url($video_item['video_url']['url']);
-					$video_titles[] = ! empty( $video_item['custom_title'] ) ? sanitize_text_field( $video_item['custom_title'] ) : '';
+					$video_titles[] = (isset($video_item['custom_title']) && ! empty( $video_item['custom_title'] )) ? sanitize_text_field( $video_item['custom_title'] ) : '';
                 }
             }
         }

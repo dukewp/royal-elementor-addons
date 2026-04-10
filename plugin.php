@@ -163,9 +163,9 @@ class Plugin {
 		}
 
 		// Column Slider
-		if ( 'on' === $this->wpr_get_extension_option( 'wpr-column-slider' ) ) {
-			require WPR_ADDONS_PATH . 'extensions/wpr-column-slider.php';
-		}
+		// if ( 'on' === $this->wpr_get_extension_option( 'wpr-column-slider' ) ) {
+		// 	require WPR_ADDONS_PATH . 'extensions/wpr-column-slider.php';
+		// }
 
 		// Equal Height
 		if ( 'on' === get_option('wpr-equal-height', 'on') ) {
