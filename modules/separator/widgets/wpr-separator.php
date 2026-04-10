@@ -366,11 +366,11 @@ class Wpr_Separator extends Widget_Base {
 				'size_units' => [ 'px', '%'],
 				'range' => [
 					'px' => [
-						'min' => 0,
+						'min' => 50,
 						'max' => 1000,
 					],
 					'%' => [
-						'min' => 0,
+						'min' => 5,
 						'max' => 100,
 					]
 				],
