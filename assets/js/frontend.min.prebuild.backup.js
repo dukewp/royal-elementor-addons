@@ -960,6 +960,7 @@
 						slidesPerView: +sliderSettings.wpr_cs_slides_to_show,
 						spaceBetween: +sliderSettings.wpr_cs_space_between,
 						speed: +sliderSettings.wpr_cs_speed,
+						autoHeight: true,
 						watchOverflow: false,
 						pagination: sliderSettings.wpr_cs_pagination === 'yes' ? {
 							el: paginationEl,
