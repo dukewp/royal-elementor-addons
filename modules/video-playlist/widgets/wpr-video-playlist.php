@@ -199,7 +199,7 @@ class Wpr_Video_Playlist extends Widget_Base {
 			$video_urls_args
 		);
 
-		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ) {
 			$this->add_control(
 				'video_urls_pro_notice',
 				[
