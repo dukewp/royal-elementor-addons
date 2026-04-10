@@ -85,8 +85,8 @@
 				window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
 			});
 
-			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.initColumnSlider );
-			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.initColumnSlider );
+			// window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.initColumnSlider );
+			// window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.initColumnSlider );
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.equalHeight );
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.equalHeight );
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.widgetSection );
@@ -10193,14 +10193,16 @@
 					}
 		
 					const urls = $widget.find('.wpr-vplaylist-thumbs').data('urls');
+					const customTitles = $widget.find('.wpr-vplaylist-thumbs').data('titles');
 					if (urls && Array.isArray(urls)) {
-						this.processVideos($widget, urls);
+						this.processVideos($widget, urls, customTitles);
 					}
 				},
 		
-				processVideos: function($widget, urls) {
+				processVideos: function($widget, urls, customTitles) {
 					const $playlistUl = $widget.find('.wpr-vplaylist-thumbs ul');
 					const title_tag = $widget.find('.wpr-vplaylist-current-title').prop('tagName').toLowerCase();
+					const titles = Array.isArray(customTitles) ? customTitles : [];
 		
 					const videoPromises = urls.map((url, index) => {
 						return new Promise(resolve => {
@@ -10215,14 +10217,21 @@
 								format: 'json'
 							})
 							.done(response => {
+								const customTitle = titles[index] && String(titles[index]).trim().length ? String(titles[index]).trim() : '';
+								const defaultTitle = response && response.title ? response.title : ('Video ' + (index + 1));
 								resolve({
 									videoId: videoId,
-									title: response.title,
+									title: customTitle || defaultTitle,
 									index: index
 								});
 							})
 							.fail(() => {
-								resolve(null);
+								const customTitle = titles[index] && String(titles[index]).trim().length ? String(titles[index]).trim() : '';
+								resolve({
+									videoId: videoId,
+									title: customTitle || ('Video ' + (index + 1)),
+									index: index
+								});
 							});
 						});
 					});
