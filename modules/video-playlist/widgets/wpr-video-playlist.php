@@ -73,65 +73,22 @@ class Wpr_Video_Playlist extends Widget_Base {
 
 	public function add_control_youtube_playlist_id() {}
 
-	public function add_control_video_urls() {
-		$repeater = new Repeater();
-
-		$repeater->add_control(
-			'video_url',
-			[
-				'label' => esc_html__( 'Video URL', 'wpr-addons' ),
-				'type' => Controls_Manager::URL,
-				'default' => [
-					'url' => 'https://youtu.be/OrtzJs-wzlw',
-				],
-				'label_block' => true,
-			]
-		);
-
-		$repeater->add_control(
-			'custom_title',
-			[
-				'label' => esc_html__( 'Custom Title', 'wpr-addons' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => '',
-				'placeholder' => esc_html__( 'Leave empty to use default', 'wpr-addons' ),
-				'label_block' => true,
-			]
-		);
-
-		$this->add_control(
-			'video_urls',
-			[
-				'label' => esc_html__( 'Video URLs', 'wpr-addons' ),
-				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'default' => [
-					[ 'video_url' => [ 'url' => 'https://youtu.be/OrtzJs-wzlw' ] ],
-					[ 'video_url' => [ 'url' => 'https://youtu.be/zCfzzUuX8HE' ] ],
-					[ 'video_url' => [ 'url' => 'https://youtu.be/Abw5LIIfgEo' ] ],
-				],
-				'title_field' => '{{ video_url.url }}',
-				'condition' => [
-					'playlist_query' => 'custom',
-				],
-			]
-		);
-
-		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
-            $this->add_control(
-                'video_urls_pro_notice',
-                [
-                    'type' => Controls_Manager::RAW_HTML,
-                    'raw' => __('More than 3 Items are<br>available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
-                    'content_classes' => 'wpr-pro-notice',
-                    'condition' => [
-                        'playlist_query' => 'custom',
-                    ],
-                ]
-            );
-        }
+	public function add_repeater_args_video_urls() {
+		return [
+			'label' => esc_html__( 'Video URLs', 'wpr-addons' ),
+			'type' => Controls_Manager::REPEATER,
+			'default' => [
+				[ 'video_url' => [ 'url' => 'https://youtu.be/OrtzJs-wzlw' ] ],
+				[ 'video_url' => [ 'url' => 'https://youtu.be/zCfzzUuX8HE' ] ],
+				[ 'video_url' => [ 'url' => 'https://youtu.be/Abw5LIIfgEo' ] ],
+			],
+			'title_field' => '{{ video_url.url }}',
+			'condition' => [
+				'playlist_query' => 'custom',
+			],
+		];
 	}
-	
+
 	protected function register_controls() {
 
 		$this->start_controls_section(
@@ -208,7 +165,52 @@ class Wpr_Video_Playlist extends Widget_Base {
             ]
         );
 
-		$this->add_control_video_urls();
+		$repeater = new Repeater();
+
+		$repeater->add_control(
+			'video_url',
+			[
+				'label' => esc_html__( 'Video URL', 'wpr-addons' ),
+				'type' => Controls_Manager::URL,
+				'default' => [
+					'url' => 'https://youtu.be/OrtzJs-wzlw',
+				],
+				'label_block' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'custom_title',
+			[
+				'label' => esc_html__( 'Custom Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'placeholder' => esc_html__( 'Leave empty to use default', 'wpr-addons' ),
+				'label_block' => true,
+			]
+		);
+
+		$video_urls_args = $this->add_repeater_args_video_urls();
+		$video_urls_args['fields'] = $repeater->get_controls();
+
+		$this->add_control(
+			'video_urls',
+			$video_urls_args
+		);
+
+		if ( !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->is_plan( 'expert' ) ) {
+			$this->add_control(
+				'video_urls_pro_notice',
+				[
+					'type' => Controls_Manager::RAW_HTML,
+					'raw' => __('More than 3 Items are<br>available in the <strong><a href="https://royal-elementor-addons.com/?ref=rea-plugin-panel-form-builder-upgrade-pro#purchasepro" target="_blank">Pro version</a></strong>'),
+					'content_classes' => 'wpr-pro-notice',
+					'condition' => [
+						'playlist_query' => 'custom',
+					],
+				]
+			);
+		}
 
 		$this->end_controls_section();
 
