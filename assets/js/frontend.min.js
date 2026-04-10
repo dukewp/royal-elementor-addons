@@ -2089,14 +2089,7 @@
 						var skipPathInfiniteScroll = ( 'infinite-scroll' === settings.pagination_type && iGrid.attr( 'data-advanced-filters' ) === 'yes' );
 						if ( ! skipPathInfiniteScroll ) {
 						iGrid.infiniteScroll({
-							path: function() {
-								var $btn = $scope.find( '.wpr-grid-pagination .wpr-load-more-btn' ).first();
-								if ( ! $btn.length ) {
-									return;
-								}
-								var url = $btn.is( 'a' ) ? $btn.attr( 'href' ) : $btn.attr( 'data-wpr-next-page' );
-								return url || undefined;
-							},
+							path: scopeClass +' .wpr-grid-pagination a',
 							hideNav: navClass,
 							append: false,
 							history: false,
@@ -6802,14 +6795,7 @@
 					// var navClass = scopeClass +' .wpr-load-more-btn';
 					
 					iScrollTarget.infiniteScroll({
-						path: function() {
-							var $btn = $scope.find( '.wpr-grid-pagination .wpr-load-more-btn' ).first();
-							if ( ! $btn.length ) {
-								return;
-							}
-							var url = $btn.is( 'a' ) ? $btn.attr( 'href' ) : $btn.attr( 'data-wpr-next-page' );
-							return url || undefined;
-						},
+						path: scopeClass +' .wpr-grid-pagination a',
 						hideNav: false,
 						append:  scopeClass +'.wpr-timeline-entry',
 						history: false,

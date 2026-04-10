@@ -2624,6 +2624,7 @@ class Wpr_Media_Grid extends Widget_Base {
 				'description' => esc_html__( 'Button avoids full-page navigation if JavaScript does not intercept the click. Link is the classic markup.', 'wpr-addons' ),
 				'condition' => [
 					'pagination_type' => [ 'load-more' ],
+					'filters_experiment' => 'yes',
 				]
 			]
 		);
@@ -7540,7 +7541,7 @@ class Wpr_Media_Grid extends Widget_Base {
 			$wpr_next_page = esc_url( get_pagenum_link( $paged + 1, true ) );
 			$load_more_tag = isset( $settings['pagination_load_more_tag'] ) ? $settings['pagination_load_more_tag'] : 'a';
 
-			if ( 'button' === $load_more_tag ) {
+			if ( 'yes' === $settings['filters_experiment'] && 'button' === $load_more_tag ) {
 				echo '<button type="button" class="wpr-load-more-btn" data-wpr-next-page="' . esc_attr( $wpr_next_page ) . '" data-e-disable-page-transition>';
 					echo esc_html( $settings['pagination_load_more_text'] );
 				echo '</button>';
