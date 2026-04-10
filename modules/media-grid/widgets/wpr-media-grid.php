@@ -6670,6 +6670,7 @@ class Wpr_Media_Grid extends Widget_Base {
 		$args = [
 			'post_type' => 'attachment',
         	'post_status' => 'inherit',
+			'post_mime_type' => 'image',
 			'tax_query' => $this->get_tax_query_args(),
 			'post__not_in' => $settings[ 'query_exclude_attachment' ],
 			'posts_per_page' => $settings['query_posts_per_page'],
