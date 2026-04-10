@@ -88,6 +88,17 @@ class Wpr_Video_Playlist extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'custom_title',
+			[
+				'label' => esc_html__( 'Custom Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => '',
+				'placeholder' => esc_html__( 'Leave empty to use default', 'wpr-addons' ),
+				'label_block' => true,
+			]
+		);
+
 		$this->add_control(
 			'video_urls',
 			[
@@ -201,6 +212,12 @@ class Wpr_Video_Playlist extends Widget_Base {
 
 		$this->end_controls_section();
 
+		// Section: Pro Features
+		Utilities::pro_features_list_section( $this, '', Controls_Manager::RAW_HTML, 'video-playlist', [
+			'Dynamic YouTube Playlist Query',
+			'Unlimited Custom Video Items',
+		] );
+
 		$this->start_controls_section(
 			'general_section',
 			[
@@ -246,7 +263,7 @@ class Wpr_Video_Playlist extends Widget_Base {
             [
                 'name' => 'title_typography',
                 'label' => esc_html__( 'Playlist Title Typography', 'wpr-addons' ),
-                'selector' => '{{WRAPPER}} .wpr-vplaylist-info-title',
+                'selector' => '{{WRAPPER}} .wpr-vplaylist-heading span',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -266,7 +283,7 @@ class Wpr_Video_Playlist extends Widget_Base {
             [
                 'name' => 'current_title_typography',
                 'label' => esc_html__( 'Video Title Typography', 'wpr-addons' ),
-                'selector' => '{{WRAPPER}} .wpr-vplaylist-current-title',
+                'selector' => '{{WRAPPER}} .wpr-vplaylist-current-title, {{WRAPPER}} .wpr-vplaylist-info-title',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -351,6 +368,7 @@ class Wpr_Video_Playlist extends Widget_Base {
 		$playlist_position_class = 'left' === $playlist_position ? ' wpr-vplaylist-pos-left' : '';
 
         $video_urls = [];
+		$video_titles = [];
 
         if ( 'playlist' === $playlist_query && !empty($settings['youtube_playlist_id']) ) {
             $video_urls = $this->get_youtube_playlist_videos($settings['youtube_playlist_id'], $settings['youtube_api_key']);
@@ -362,6 +380,7 @@ class Wpr_Video_Playlist extends Widget_Base {
 				}
                 if ( !empty($video_item['video_url']['url']) ) {
                     $video_urls[] = esc_url($video_item['video_url']['url']);
+					$video_titles[] = ! empty( $video_item['custom_title'] ) ? sanitize_text_field( $video_item['custom_title'] ) : '';
                 }
             }
         }
@@ -394,7 +413,7 @@ class Wpr_Video_Playlist extends Widget_Base {
                     echo '</div>';
                 echo '</div>';
 
-                echo '<div class="wpr-vplaylist-thumbs" data-urls=\'' . esc_attr(wp_json_encode($video_urls)) . '\'>';
+                echo '<div class="wpr-vplaylist-thumbs" data-urls=\'' . esc_attr(wp_json_encode($video_urls)) . '\' data-titles=\'' . esc_attr(wp_json_encode($video_titles)) . '\'>';
                     echo '<ul></ul>';
                 echo '</div>';
 

@@ -875,48 +875,6 @@ class Wpr_Icon_Box extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon_box_border_type_hover',
-			[
-				'label' => esc_html__( 'Border Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'solid' => esc_html__( 'Solid', 'wpr-addons' ),
-					'double' => esc_html__( 'Double', 'wpr-addons' ),
-					'dotted' => esc_html__( 'Dotted', 'wpr-addons' ),
-					'dashed' => esc_html__( 'Dashed', 'wpr-addons' ),
-					'groove' => esc_html__( 'Groove', 'wpr-addons' ),
-				],
-				'default' => 'none',
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box:hover' => 'border-style: {{VALUE}};',
-				],
-				'separator' => 'before',
-			]
-		);
-
-		$this->add_control(
-			'icon_box_border_width_hover',
-			[
-				'label' => esc_html__( 'Border Width', 'wpr-addons' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 1,
-					'right' => 1,
-					'bottom' => 1,
-					'left' => 1,
-				],
-				'selectors' => [
-					'{{WRAPPER}} .wpr-icon-box:hover' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-				'condition' => [
-					'icon_box_border_type_hover!' => 'none',
-				]
-			]
-		);
-
-		$this->add_control(
 			'icon_box_border_radius_hover',
 			[
 				'label' => esc_html__( 'Border Radius', 'wpr-addons' ),

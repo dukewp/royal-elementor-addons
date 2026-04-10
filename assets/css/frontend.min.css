@@ -19984,6 +19984,7 @@ input.wpr-date-filter-end {
             align-items: center;
     height: 100%;
     min-width: 20%;
+    border-bottom-left-radius: 3px;
   }
   
   .wpr-vplaylist-controller svg {
