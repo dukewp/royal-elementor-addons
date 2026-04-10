@@ -653,15 +653,31 @@ class Wpr_Icon_Box extends Widget_Base {
 		);
 
 		$this->add_control(
-			'tilt_orientation',
+			'tilt_interaction',
 			[
-				'label' => esc_html__( 'Orientation', 'wpr-addons' ),
+				'label' => esc_html__( 'Interaction', 'wpr-addons' ),
+				'type' => Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => [
+					'default' => esc_html__( 'Default', 'wpr-addons' ),
+					'reverse' => esc_html__( 'Reverse', 'wpr-addons' ),
+				],
+				'condition' => [
+					'enable_mouse_tilt' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tilt_disable',
+			[
+				'label' => esc_html__( 'Direction', 'wpr-addons' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => [
 					'none' => esc_html__( 'All', 'wpr-addons' ),
-					'x' => esc_html__( 'Horizontally', 'wpr-addons' ),
-					'y' => esc_html__( 'Vertically', 'wpr-addons' )
+					'x' => esc_html__( 'Horizontal', 'wpr-addons' ),
+					'y' => esc_html__( 'Vertical', 'wpr-addons' )
 				],
 				'condition' => [
 					'enable_mouse_tilt' => 'yes',
@@ -2032,6 +2048,7 @@ class Wpr_Icon_Box extends Widget_Base {
 			[
 				'enable-tilt' => $settings['enable_mouse_tilt'],
 				'tilt-base' => $settings['tilt_base'],
+				'tilt-interaction' => isset( $settings['tilt_interaction'] ) ? $settings['tilt_interaction'] : 'default',
 				'tilt-disable' => isset($settings['tilt_disable']) ? $settings['tilt_disable'] : null,
 				'tilt-easing' => isset($settings['tilt_easing']) ? $settings['tilt_easing'] : 'linear',
 				// 'tilt-easing' => $tilt_easing

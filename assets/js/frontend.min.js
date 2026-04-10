@@ -13457,7 +13457,7 @@
 						max: 35,
 						perspective: 800,
 						reset: true,
-						reverse: false,
+						reverse: 'reverse' === tiltBox.attr('tilt-interaction'),
 						scale: 1,
 						shine: false,
 						// 'shine-opacity': 0.9,
