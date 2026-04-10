@@ -515,6 +515,34 @@ class Wpr_Column_Slider {
 				]
 			]
 		);
+
+		$element->add_responsive_control(
+			'wpr_cs_pag_progressbar_height',
+			[
+				'type' => Controls_Manager::SLIDER,
+				'label' => esc_html__( 'Progress Bar Height', 'wpr-addons' ),
+				'size_units' => [ 'px' ],
+				'range' => [
+					'px' => [
+						'min' => 1,
+						'max' => 15,
+					]
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 5,
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-progressbar' => 'height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-column-slider-yes .swiper-pagination-progressbar-fill' => 'height: {{SIZE}}{{UNIT}};'
+				],
+				'condition' => [
+					'wpr_enable_column_slider' => 'yes',
+					'wpr_enable_cs_pag' => 'yes',
+					'wpr_cs_pag_type' => 'progressbar'
+				]
+			]
+		);
 		
 		$element->add_responsive_control(
 			'wpr_cs_pag_size',
