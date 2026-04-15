@@ -16,8 +16,6 @@ use Elementor\Repeater;
 use Elementor\Group_Control_Image_Size;
 use WprAddons\Classes\Utilities;
 
-
-
 // Security Note: Blocks direct access to the plugin PHP files.
 defined('ABSPATH') || die();
 
