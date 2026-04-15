@@ -1876,7 +1876,7 @@ class Wpr_Data_Table extends Widget_Base {
 			// Add more allowed tags and attributes as needed
 		);		
 
-		$handle = $this->wpr_get_csv_handle( $filename, $settings );
+		$handle = $this->wpr_get_csv_handle( $filename );
 
 		if ( is_wp_error( $handle ) ) {
 			echo '<p class="wpr-no-csv-file-found">' . esc_html( $handle->get_error_message() ) . '</p>';
@@ -1890,8 +1890,11 @@ class Wpr_Data_Table extends Widget_Base {
 		if ( 'yes' === $settings['display_header'] ) {
 			$csvcontents = fgetcsv($handle, 0, $delimiter);
 			echo '<thead><tr class="wpr-table-head-row wpr-table-row">';
-			foreach ($csvcontents as $headercolumn) {
-				echo "<th class='wpr-table-th wpr-table-text'>". wp_kses($headercolumn, $allowed_html) . $sorting_icon ."</th>";
+			if ( is_array( $csvcontents ) ) {
+				foreach ($csvcontents as $headercolumn) {
+					$headercolumn = is_scalar( $headercolumn ) ? (string) $headercolumn : '';
+					echo "<th class='wpr-table-th wpr-table-text'>". wp_kses($headercolumn, $allowed_html) . $sorting_icon ."</th>";
+				}
 			}
 			echo '</tr></thead>';
 		}
@@ -1905,6 +1908,7 @@ class Wpr_Data_Table extends Widget_Base {
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				echo '<tr class="wpr-table-row  '. esc_attr($oddEven) .'">';
 				foreach ($csvcontents as $column) {
+					$column = is_scalar( $column ) ? (string) $column : '';
 					echo '<td class="wpr-table-td wpr-table-text">'. wp_kses($column, $allowed_html) .'</td>';
 				}
 				echo '</tr>';
@@ -1952,7 +1956,7 @@ class Wpr_Data_Table extends Widget_Base {
 		return $bestDelimiter;
 	}
 
-	protected function wpr_get_csv_handle( $source, $settings ) {
+	protected function wpr_get_csv_handle( $source ) {
 		if ( ! is_string( $source ) || '' === trim( $source ) ) {
 			return new \WP_Error( 'wpr_csv_invalid_source', esc_html__( 'Please provide a valid CSV source.', 'wpr-addons' ) );
 		}
@@ -1970,12 +1974,26 @@ class Wpr_Data_Table extends Widget_Base {
 			);
 
 			if ( is_wp_error( $response ) ) {
-				return new \WP_Error( 'wpr_csv_remote_fetch_failed', esc_html__( 'Could not fetch CSV data from the provided URL.', 'wpr-addons' ) );
+				return new \WP_Error(
+					'wpr_csv_remote_fetch_failed',
+					sprintf(
+						/* translators: %s: HTTP error message. */
+						esc_html__( 'Could not fetch CSV data from the provided URL. Error: %s', 'wpr-addons' ),
+						esc_html( $response->get_error_message() )
+					)
+				);
 			}
 
 			$code = wp_remote_retrieve_response_code( $response );
 			if ( 200 !== (int) $code ) {
-				return new \WP_Error( 'wpr_csv_remote_bad_response', esc_html__( 'Could not fetch CSV data from the provided URL.', 'wpr-addons' ) );
+				return new \WP_Error(
+					'wpr_csv_remote_bad_response',
+					sprintf(
+						/* translators: %d: HTTP status code. */
+						esc_html__( 'Could not fetch CSV data from the provided URL. HTTP status: %d', 'wpr-addons' ),
+						(int) $code
+					)
+				);
 			}
 
 			$body = wp_remote_retrieve_body( $response );
@@ -2016,6 +2034,7 @@ class Wpr_Data_Table extends Widget_Base {
 		}
 
 		$url = trim( $url );
+		$url = $this->wpr_normalize_google_sheets_csv_url( $url );
 		$parsed_url = wp_parse_url( $url );
 
 		if ( ! is_array( $parsed_url ) || empty( $parsed_url['host'] ) ) {
@@ -2028,19 +2047,21 @@ class Wpr_Data_Table extends Widget_Base {
 		}
 
 		$host = strtolower( $parsed_url['host'] );
-		$allowed_hosts = apply_filters( 'wpr_data_table_allowed_csv_hosts', [ 'docs.google.com' ] );
+		$allowed_hosts = apply_filters( 'wpr_data_table_allowed_csv_hosts', [] );
 		$allowed_hosts = array_filter( array_map( 'strtolower', (array) $allowed_hosts ) );
 
-		$is_allowed_host = false;
-		foreach ( $allowed_hosts as $allowed_host ) {
-			if ( $host === $allowed_host || str_ends_with( $host, '.' . $allowed_host ) ) {
-				$is_allowed_host = true;
-				break;
+		if ( ! empty( $allowed_hosts ) ) {
+			$is_allowed_host = false;
+			foreach ( $allowed_hosts as $allowed_host ) {
+				if ( $host === $allowed_host || str_ends_with( $host, '.' . $allowed_host ) ) {
+					$is_allowed_host = true;
+					break;
+				}
 			}
-		}
 
-		if ( ! $is_allowed_host ) {
-			return new \WP_Error( 'wpr_csv_host_not_allowed', esc_html__( 'This CSV host is not allowed.', 'wpr-addons' ) );
+			if ( ! $is_allowed_host ) {
+				return new \WP_Error( 'wpr_csv_host_not_allowed', esc_html__( 'This CSV host is not allowed.', 'wpr-addons' ) );
+			}
 		}
 
 		if ( $this->wpr_is_blocked_remote_host( $host ) ) {
@@ -2048,6 +2069,62 @@ class Wpr_Data_Table extends Widget_Base {
 		}
 
 		return esc_url_raw( $url );
+	}
+
+	protected function wpr_normalize_google_sheets_csv_url( $url ) {
+		if ( ! is_string( $url ) || '' === trim( $url ) ) {
+			return $url;
+		}
+
+		$url = trim( $url );
+		$parsed = wp_parse_url( $url );
+
+		if ( ! is_array( $parsed ) || empty( $parsed['host'] ) || empty( $parsed['path'] ) ) {
+			return $url;
+		}
+
+		$host = strtolower( $parsed['host'] );
+		if ( 'docs.google.com' !== $host ) {
+			return $url;
+		}
+
+		// Keep Google "published to web" URLs and ensure CSV output is requested.
+		if ( preg_match( '#^/spreadsheets/d/e/[a-zA-Z0-9\-_]+/pub$#', $parsed['path'] ) ) {
+			$query_args = [];
+			if ( ! empty( $parsed['query'] ) ) {
+				parse_str( $parsed['query'], $query_args );
+			}
+
+			$query_args['output'] = 'csv';
+			$normalized_query = http_build_query( $query_args, '', '&', PHP_QUERY_RFC3986 );
+
+			return 'https://docs.google.com' . $parsed['path'] . ( $normalized_query ? '?' . $normalized_query : '' );
+		}
+
+		if ( ! preg_match( '#^/spreadsheets/d/([a-zA-Z0-9\-_]+)(?:/|$)#', $parsed['path'], $matches ) ) {
+			return $url;
+		}
+
+		$sheet_id = $matches[1];
+		$gid = null;
+
+		if ( ! empty( $parsed['query'] ) ) {
+			parse_str( $parsed['query'], $query_args );
+			if ( isset( $query_args['gid'] ) && '' !== (string) $query_args['gid'] ) {
+				$gid = preg_replace( '/[^0-9]/', '', (string) $query_args['gid'] );
+			}
+		}
+
+		if ( null === $gid && ! empty( $parsed['fragment'] ) && preg_match( '/(?:^|&)gid=([0-9]+)/', (string) $parsed['fragment'], $frag_match ) ) {
+			$gid = $frag_match[1];
+		}
+
+		$csv_url = 'https://docs.google.com/spreadsheets/d/' . rawurlencode( $sheet_id ) . '/export?format=csv';
+		if ( null !== $gid && '' !== $gid ) {
+			$csv_url .= '&gid=' . rawurlencode( $gid );
+		}
+
+		return $csv_url;
 	}
 
 	protected function wpr_is_elementor_editor_ajax() {
@@ -2094,8 +2171,9 @@ class Wpr_Data_Table extends Widget_Base {
 		}
 
 		$ips = array_unique( array_filter( $ips ) );
+		// DNS resolution can be unreliable in some environments; don't block solely on that.
 		if ( empty( $ips ) ) {
-			return true;
+			return false;
 		}
 
 		foreach ( $ips as $ip ) {
@@ -2282,7 +2360,8 @@ class Wpr_Data_Table extends Widget_Base {
 
 			// Storing Data table content values
 			$countRows = 0;
-			foreach( $settings['table_content_rows'] as $content_row ) {
+			$table_content_rows = ( isset( $settings['table_content_rows'] ) && is_array( $settings['table_content_rows'] ) ) ? $settings['table_content_rows'] : [];
+			foreach( $table_content_rows as $content_row ) {
 				$countRows++;
 				$oddEven = $countRows % 2 == 0 ? 'wpr-even' : 'wpr-odd';
 				$row_id = uniqid();
@@ -2321,12 +2400,13 @@ class Wpr_Data_Table extends Widget_Base {
 				}
 			} ?>
 
+			<?php $table_header = ( isset( $settings['table_header'] ) && is_array( $settings['table_header'] ) ) ? $settings['table_header'] : []; ?>
 			<table class="wpr-data-table" id="wpr-data-table">
-			<?php if ( $settings['table_header'] ) { ?>
+			<?php if ( ! empty( $table_header ) ) { ?>
 					
 				<thead>
 					<tr class="wpr-table-head-row wpr-table-row">
-					<?php $i = 0; foreach ($settings['table_header'] as $item) { 
+					<?php $i = 0; foreach ( $table_header as $item ) {
 
 						$this->add_render_attribute('th_class'. esc_attr($i), [
 							'class' => ['wpr-table-th', 'elementor-repeater-item-'. esc_attr($item['_id'])],
