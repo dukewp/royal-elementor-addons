@@ -121,7 +121,7 @@ function wpr_register_addons_settings() {
     register_setting('wpr-extension-settings', 'wpr-custom-css');
     register_setting('wpr-extension-settings', 'wpr-display-conditions');
     register_setting('wpr-extension-settings', 'wpr-equal-height');
-    // register_setting('wpr-extension-settings', 'wpr-column-slider');
+    register_setting('wpr-extension-settings', 'wpr-column-slider');
     register_setting('wpr-extension-settings', 'wpr-sticky-section');
 
     // Element Toggle
