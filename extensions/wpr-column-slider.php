@@ -119,6 +119,36 @@ class Wpr_Column_Slider extends Wpr_Extensions_Base {
 			);
 		}
 	}
+
+	private function add_control_pagination_type( $element ) {
+		if ( ! $this->maybe_call_pro_method( '\WprAddonsPro\Extensions\Wpr_Column_Slider_Pro', 'add_control_pagination_type', [ $element ] ) ) {
+			$element->add_control(
+				'wpr_cs_pag_type',
+				[
+					'label' => esc_html__( 'Pagination Type', 'wpr-addons' ),
+					'type' => Controls_Manager::SELECT,
+					'default' => 'fraction',
+					'options' => [
+						'fraction' => esc_html__( 'Fraction', 'wpr-addons' ),
+						'pro-bullets' => esc_html__( 'Bullets (Pro)', 'wpr-addons' ),
+						'pro-progressbar' => esc_html__( 'Progressbar (Pro)', 'wpr-addons' ),
+					],
+					'condition' => [
+						'wpr_enable_column_slider' => 'yes',
+						'wpr_enable_cs_pag' => 'yes',
+					],
+				]
+			);
+
+			Utilities::upgrade_pro_notice(
+				$element,
+				Controls_Manager::RAW_HTML,
+				'column-slider',
+				'wpr_cs_pag_type',
+				[ 'pro-bullets', 'pro-progressbar' ]
+			);
+		}
+	}
     
     public function register_controls( $element ) {
 
@@ -534,23 +564,7 @@ class Wpr_Column_Slider extends Wpr_Extensions_Base {
 			]
 		);
 
-		$element->add_control(
-			'wpr_cs_pag_type',
-			[
-				'label' => esc_html__( 'Pagination Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'bullets',
-				'options' => [
-					'bullets' => esc_html__( 'Bullets', 'wpr-addons' ),
-					'fraction' => esc_html__( 'Fraction', 'wpr-addons' ),
-					'progressbar' => esc_html__( 'Progressbar', 'wpr-addons' ),
-				],
-				'condition' => [
-					'wpr_enable_column_slider' => 'yes',
-					'wpr_enable_cs_pag' => 'yes',
-				]
-			]
-		);
+		$this->add_control_pagination_type( $element );
 
 		$element->add_control(
 			'wpr_cs_pag_color',
@@ -767,6 +781,10 @@ class Wpr_Column_Slider extends Wpr_Extensions_Base {
 			if ( ! $this->has_active_pro_license() ) {
 				$autoplay = '';
 				$delay = '';
+
+				if ( in_array( $pagination_type, [ 'bullets', 'progressbar', 'pro-bullets', 'pro-progressbar' ], true ) ) {
+					$pagination_type = 'fraction';
+				}
 			}
 
 			$column_slider_settings = [
@@ -858,6 +876,10 @@ class Wpr_Column_Slider extends Wpr_Extensions_Base {
 			var space_between_mobile = settings.wpr_column_slider_space_between_mobile ? settings.wpr_column_slider_space_between_mobile : space_between_mobile_extra;
 			var delay = hasProColumnSlider && settings.wpr_column_slider_delay ? settings.wpr_column_slider_delay : '';
 			var speed = settings.wpr_column_slider_speed;
+
+			if ( ! hasProColumnSlider && ( pagination_type === 'bullets' || pagination_type === 'progressbar' || pagination_type === 'pro-bullets' || pagination_type === 'pro-progressbar' ) ) {
+				pagination_type = 'fraction';
+			}
 
 				columnSliderSettings = {
 					'wpr_cs_navigation': navigation,
