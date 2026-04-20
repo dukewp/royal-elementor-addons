@@ -470,6 +470,30 @@ button.lg-icon {
     display: none !important;
 }
 
+.wpr-grid-image-wrap {
+    position: relative;
+}
+
+.wpr-grid-featured-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.wpr-grid-featured-video video,
+.wpr-grid-featured-video iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    object-fit: cover;
+    background: #000;
+}
+
 .wpr-hidden-item {
     display: none !important;
     max-height: 0;

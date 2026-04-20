@@ -204,6 +204,9 @@ class Plugin {
 			// Secondary Image
 			require WPR_ADDONS_PATH . 'admin/metabox/wpr-secondary-image.php';
 
+			// Featured Video (Woo Grid)
+			require WPR_ADDONS_PATH . 'admin/metabox/wpr-featured-video.php';
+
 			// Dropdown Category Filter for Wpr Templates
 			require WPR_ADDONS_PATH . 'admin/includes/wpr-templates-category-filter.php';
 
