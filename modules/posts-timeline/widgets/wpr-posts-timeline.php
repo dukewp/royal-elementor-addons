@@ -5917,8 +5917,11 @@ class Wpr_Posts_Timeline extends Widget_Base {
 			return;
 		}
 
+		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
+		$title_tag = Utilities::validate_html_tags_wl( $settings['title_tag'], 'span', $tags_whitelist );
+
 		if ( $settings['timeline_content'] === 'dynamic' ) {
-			echo '<div class="wpr-title-wrap"><a href="'. esc_url(get_the_permalink()) .'"><'. esc_attr($settings['title_tag']) .' class="wpr-title">'. esc_html__(get_the_title()) .'</'. esc_attr($settings['title_tag']) .'></a></div>';
+			echo '<div class="wpr-title-wrap"><a href="'. esc_url(get_the_permalink()) .'"><'. esc_attr($title_tag) .' class="wpr-title">'. esc_html__(get_the_title()) .'</'. esc_attr($title_tag) .'></a></div>';
 		} else {
 			if ( 'horizontal' === $settings['timeline_layout'] || 'horizontal-bottom' === $settings['timeline_layout'] ) {
 				if ( empty($this->timeline_story_title) ) {
@@ -5927,15 +5930,15 @@ class Wpr_Posts_Timeline extends Widget_Base {
 
 				if ( '' !== $repeater_title_link ) {
 					echo '<div class="wpr-title-wrap"><a ' . 
-						$this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) . '><'. esc_attr($settings['title_tag']) .' ' . 
+						$this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) . '><'. esc_attr($title_tag) .' ' . 
 						$this->get_render_attribute_string( $this->title_key ) . '>' . 
 						esc_html__($this->timeline_story_title) . 
-						'</'. esc_attr($settings['title_tag']) .'></a></div>';
+						'</'. esc_attr($title_tag) .'></a></div>';
 				} else {
-					echo '<div class="wpr-title-wrap"><'. esc_attr($settings['title_tag']) .' ' . 
+					echo '<div class="wpr-title-wrap"><'. esc_attr($title_tag) .' ' . 
 						$this->get_render_attribute_string( $this->title_key ) . '>' . 
 						esc_html__($this->timeline_story_title) . 
-						'</'. esc_attr($settings['title_tag']) .'></div>';
+						'</'. esc_attr($title_tag) .'></div>';
 				}
 			} else {
 				if ( empty($content['repeater_story_title']) ) {
@@ -5943,9 +5946,9 @@ class Wpr_Posts_Timeline extends Widget_Base {
 				}
 
 				if ( '' !== $repeater_title_link ) {
-					echo '<div class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .'><'. esc_attr($settings['title_tag']) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</'. esc_attr($settings['title_tag']) .'></a></div>';
+					echo '<div class="wpr-title-wrap"><a '. $this->get_render_attribute_string( 'repeater_title_link'. $this->item_url_count ) .'><'. esc_attr($title_tag) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</'. esc_attr($title_tag) .'></a></div>';
 				} else {
-					echo '<div class="wpr-title-wrap"><'. esc_attr($settings['title_tag']) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</'. esc_attr($settings['title_tag']) .'></div>';
+					echo '<div class="wpr-title-wrap"><'. esc_attr($title_tag) .' class="wpr-title">'. esc_html__($content['repeater_story_title']) .'</'. esc_attr($title_tag) .'></div>';
 				}
 			}
 		}
