@@ -1189,6 +1189,39 @@ class Wpr_Icon_Box extends Widget_Base {
 					'{{WRAPPER}} .wpr-icon-box-media-wrap i' => 'font-size: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .wpr-icon-box-media-wrap svg' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
 				],
+				'condition' => [
+					'icon_box_media_type' => 'icon',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'icon_box_image_width',
+			[
+				'label' => esc_html__( 'Image Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'vw'],
+				'range' => [
+					'px' => [
+						'min' => 5,
+						'max' => 600,
+					],
+					'%' => [
+						'min' => 1,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'unit' => 'px',
+					'size' => 100,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-icon-box-media-wrap img' => 'width: {{SIZE}}{{UNIT}}; height: auto;',
+				],
+				'condition' => [
+					'icon_box_media_type' => 'image',
+				],
 				'separator' => 'before',
 			]
 		);

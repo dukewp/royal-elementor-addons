@@ -2669,9 +2669,9 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control_featured_video();
-
 		$this->add_control_image_effects();
+
+		$this->add_control_featured_video();
 
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'image_effects', ['pro-zi', 'pro-zo', 'pro-go', 'pro-bo'] );
