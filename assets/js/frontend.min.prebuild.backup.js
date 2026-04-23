@@ -85,8 +85,8 @@
 				window.elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, callback );
 			});
 
-			// window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.initColumnSlider );
-			// window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.initColumnSlider );
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.initColumnSlider );
+			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.initColumnSlider );
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.equalHeight );
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/container', WprElements.equalHeight );
 			window.elementorFrontend.hooks.addAction( 'frontend/element_ready/section', WprElements.widgetSection );
@@ -958,6 +958,7 @@
 						} : false,
 						loop: sliderSettings.wpr_cs_loop === 'yes' ? true : false,
 						slidesPerView: +sliderSettings.wpr_cs_slides_to_show,
+						slidesPerGroup: +sliderSettings.wpr_cs_slides_to_scroll || 1,
 						spaceBetween: +sliderSettings.wpr_cs_space_between,
 						speed: +sliderSettings.wpr_cs_speed,
 						autoHeight: true,
@@ -13591,6 +13592,56 @@
 			return $( 'body' ).hasClass( 'elementor-editor-active' ) ? true : false;
 		},
 
+		// Featured Video - ensure self-hosted <video> elements autoplay reliably
+		// and pause when scrolled out of view (saves battery / bandwidth).
+		// YouTube / Vimeo iframes rely on their own embed params for autoplay
+		// but are still wired up to lazy-inject if the markup was deferred.
+		initFeaturedVideos: function( $scope ) {
+			var $videos = $scope.find('.wpr-grid-featured-video video');
+			if ( ! $videos.length ) {
+				return;
+			}
+
+			// Attempt an immediate play for each <video> (the `autoplay` attribute
+			// already triggers this, but mobile Safari sometimes requires an
+			// explicit play() after the element is attached to the DOM).
+			$videos.each(function() {
+				var videoEl = this;
+				try {
+					var p = videoEl.play();
+					if ( p && typeof p.catch === 'function' ) {
+						p.catch(function() {});
+					}
+				} catch (e) {}
+			});
+
+			if ( 'undefined' === typeof IntersectionObserver ) {
+				return;
+			}
+
+			var observer = new IntersectionObserver(function( entries ) {
+				entries.forEach(function( entry ) {
+					var videoEl = entry.target;
+					if ( entry.isIntersecting ) {
+						try {
+							var p = videoEl.play();
+							if ( p && typeof p.catch === 'function' ) {
+								p.catch(function() {});
+							}
+						} catch (e) {}
+					} else {
+						try {
+							videoEl.pause();
+						} catch (e) {}
+					}
+				});
+			}, { threshold: 0.15 });
+
+			$videos.each(function() {
+				observer.observe( this );
+			});
+		},
+
 		// Edith with Elementor - Admin Bar Menu
 		changeAdminBarMenu: function() {
 			let editLinks = $('#wp-admin-bar-elementor_edit_page-default');
@@ -13987,6 +14038,12 @@
 					}
 				}
 			});
+
+			// Featured Video - kick off autoplay on self-hosted videos once they
+			// enter the viewport (mobile Safari & data-saver modes sometimes
+			// skip initial autoplay). Iframes (YouTube/Vimeo) handle this
+			// themselves via their embed parameters.
+			WprElements.initFeaturedVideos( iGrid );
 
 			if ( 'yes' === iGrid.find( '.wpr-grid-media-wrap' ).attr( 'data-overlay-link' ) && ! WprElements.editorCheck() ) {
 				iGrid.find( '.wpr-grid-media-wrap' ).css('cursor', 'pointer');
