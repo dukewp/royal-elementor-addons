@@ -2671,8 +2671,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 
 		$this->add_control_image_effects();
 
-		$this->add_control_featured_video();
-
 		// Upgrade to Pro Notice
 		Utilities::upgrade_pro_notice( $this, Controls_Manager::RAW_HTML, 'woo-grid', 'image_effects', ['pro-zi', 'pro-zo', 'pro-go', 'pro-bo'] );
 
@@ -2763,6 +2761,23 @@ class Wpr_Woo_Grid extends Widget_Base {
 				]
 			]
 		);
+
+		$this->end_controls_section(); // End Controls Section
+
+		// Tab: Content ==============
+		// Section: Featured Video ----
+		$this->start_controls_section(
+			'section_featured_video',
+			[
+				'label' => esc_html__( 'Featured Video', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'secondary_img_on_hover!' => 'yes',
+				],
+			]
+		);
+
+		$this->add_control_featured_video();
 
 		$this->end_controls_section(); // End Controls Section
 
