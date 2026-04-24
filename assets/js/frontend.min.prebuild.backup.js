@@ -143,8 +143,23 @@
 				return;
 			}
 
-			$tabContent.find( '.elementor-element' ).each( function() {
+			var supportedTabWidgetTypes = {
+					'wpr-grid.default': true,
+					'wpr-magazine-grid.default': true,
+					'wpr-woo-grid.default': true,
+					'wpr-media-grid.default': true
+				},
+				hasGridTabWidgets = false;
+
+			$tabContent.find( '.elementor-element[data-widget_type]' ).each( function() {
 				var $element = $( this );
+				var widgetType = $element.attr( 'data-widget_type' );
+
+				if ( ! supportedTabWidgetTypes[ widgetType ] ) {
+					return;
+				}
+
+				hasGridTabWidgets = true;
 
 				if ( $element.attr( 'data-wpr-tab-ready' ) === 'yes' ) {
 					return;
@@ -153,6 +168,10 @@
 				window.elementorFrontend.elementsHandler.runReadyTrigger( $element );
 				$element.attr( 'data-wpr-tab-ready', 'yes' );
 			} );
+
+			if ( ! hasGridTabWidgets ) {
+				return;
+			}
 
 			setTimeout( function() {
 				$( window ).trigger( 'resize' );
