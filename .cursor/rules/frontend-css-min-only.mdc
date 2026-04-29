@@ -1,0 +1,10 @@
+# Royal Elementor Addons - Frontend CSS
+
+`assets/css/frontend.min.css` is the editable frontend stylesheet for runtime widget styling updates.
+
+When adding or updating frontend widget styles:
+
+- Edit **`assets/css/frontend.min.css`** directly.
+- Keep additions minified and scoped to REA selectors (e.g. `.wpr-*`).
+- Do not inject widget styles inline in PHP render methods.
+

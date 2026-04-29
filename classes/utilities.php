@@ -546,13 +546,13 @@ class Utilities {
 		$elementor = \Elementor\Plugin::instance();
 
 		// Ensure Elementor frontend style handle exists for nested/AJAX renders.
-		if ( isset( $elementor->frontend ) && ! wp_style_is( 'elementor-frontend', 'registered' ) ) {
-			$elementor->frontend->register_styles();
-		}
+		// if ( isset( $elementor->frontend ) && ! wp_style_is( 'elementor-frontend', 'registered' ) ) {
+		// 	$elementor->frontend->register_styles();
+		// }
 
-		if ( wp_style_is( 'elementor-frontend', 'registered' ) && ! wp_style_is( 'elementor-frontend', 'enqueued' ) ) {
-			wp_enqueue_style( 'elementor-frontend' );
-		}
+		// if ( wp_style_is( 'elementor-frontend', 'registered' ) && ! wp_style_is( 'elementor-frontend', 'enqueued' ) ) {
+		// 	wp_enqueue_style( 'elementor-frontend' );
+		// }
 
 		// Enable widget-level asset dependencies (icon fonts, widget CSS files)
 		// stored in the template's post meta by Elementor's asset system.

@@ -20698,3 +20698,130 @@ input.wpr-date-filter-end {
 .wpr-unfold-btn .wpr-unfold-collapse-icon {
     display: none;
 }
+
+/* Weather */
+.wpr-weather-wrap {
+    padding: 23px;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.wpr-weather-header {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #f84643;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.wpr-weather-info-wrap {
+    margin-bottom: 25px;
+}
+
+.wpr-weather-info {
+    display: flex;
+}
+
+.wpr-weather-temp {
+    font-weight: 700;
+    margin: 0;
+}
+
+.wpr-weather-location {
+    margin: 5px 0;
+}
+
+.wpr-weather-location,
+.wpr-weather-condition {
+    display: block;
+}
+
+.wpr-weather-icon {
+    margin-right: 10px;
+    width: 80px;
+    height: 80px;
+}
+
+.wpr-weather-info:nth-child(1) {
+    justify-content: center;
+    align-items: center;
+}
+
+.wpr-weather-info:nth-child(2) {
+    padding: 10px 15px 0;
+    gap: 10px;
+}
+
+.wpr-weather-info:nth-child(2) > div {
+    width: 50%;
+}
+
+.wpr-weather-condition {
+    text-transform: capitalize;
+}
+
+.wpr-weather-extra-info > div {
+    display: flex;
+}
+
+.wpr-weather-extra-info svg {
+    width: 30px;
+    height: 30px;
+}
+
+.wpr-weather-extra-info span {
+    display: block;
+    margin: 5px 0;
+}
+
+.wpr-weather-extra-info {
+    text-align: left;
+}
+
+.wpr-weather-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wpr-weather-forecast {
+    text-align: center;
+}
+
+.wpr-weather-svg {
+    width: 50px;
+    height: 50px;
+    display: block;
+}
+
+.wpr-weather-icon .wpr-weather-svg {
+    width: 80px;
+    height: 80px;
+}
+
+.wpr-weather-error {
+    padding: 10px;
+    border: 1px solid #dc2626;
+    color: #dc2626;
+    border-radius: 6px;
+}
+
+@media (max-width: 767px) {
+    .wpr-weather-info-wrap {
+        flex-direction: column;
+    }
+
+    .wpr-weather-info:nth-child(2) > div {
+        width: 100%;
+    }
+
+    .wpr-weather-footer {
+        flex-wrap: nowrap;
+    }
+
+    .wpr-weather-forecast {
+        flex: 0 0 auto;
+    }
+}
