@@ -20701,16 +20701,27 @@ input.wpr-date-filter-end {
 
 /* Weather */
 .wpr-weather-wrap {
+    --wpr-weather-icon-warm: #f59e0b;
+    --wpr-weather-icon-cloud: #d1d5db;
+    --wpr-weather-icon-cloud-secondary: #9ca3af;
+    --wpr-weather-icon-rain: #0284c7;
+    --wpr-weather-icon-night: #64748b;
+    --wpr-weather-icon-snow: #7dd3fc;
+    --wpr-weather-icon-thermo-bulb: #dc2626;
+    --wpr-weather-icon-thermo-tube: #a3a3a3;
+    --wpr-weather-icon-wind: #94a3b8;
+    --wpr-weather-icon-fog-lines: #cbd5e1;
     padding: 23px;
     border: 1px solid #e8e8e8;
     border-radius: 10px;
     background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .wpr-weather-header {
     display: inline-block;
     padding: 5px 10px;
-    background: #f84643;
+    background: #605be5;
     color: #fff;
     font-weight: 700;
     text-align: center;
