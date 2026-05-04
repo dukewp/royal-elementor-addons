@@ -6792,7 +6792,8 @@
 					adjustMiddleLineHeight(middleLine, timelineFill, lastIcon, firstIcon, element);
 				});
 	
-				if ( 'load-more' !== iScrollTarget.attr('data-pagination') ) {
+				var paginationType = iScrollTarget.attr('data-pagination');
+				if ( 'load-more' !== paginationType && 'infinite-scroll' !== paginationType ) {
 					$scope.find('.wpr-grid-pagination').css('visibility', 'hidden');
 				}
 
@@ -6836,12 +6837,15 @@
 						
 						// get posts from response
 						var items = $( response ).find(scopeClass).find( '.wpr-timeline-entry' );
+						var existingItemsCount = $scope.find('.wpr-timeline-entry').length;
 						iScrollTarget.infiniteScroll( 'appendItems', items );
 
 						if ( !$scope.find('.wpr-one-sided-timeline').length && !$scope.find('.wpr-one-sided-timeline-left').length ) {
-							$scope.find('.wpr-timeline-entry').each(function(index, value){
+							items.each(function(index, value){
 								$(this).removeClass('wpr-right-aligned wpr-left-aligned');
-								if ( 0 == index % 2 ) {
+								var timelineIndex = existingItemsCount + index;
+
+								if ( 0 == timelineIndex % 2 ) {
 									$(this).addClass('wpr-left-aligned');
 									$(this).find('.wpr-story-info-vertical').attr('data-aos', $(this).find('.wpr-story-info-vertical').attr('data-aos-left'));
 								} else {
@@ -9844,6 +9848,7 @@
 				  formDataForFile.append('triggering_event', eventType);
 				  formDataForFile.append('wpr_addons_nonce', WprConfig.nonce);
 				  formDataForFile.append('form_field_id', thisId);
+				  formDataForFile.append('upload_token', thisInput.attr('data-wpr-upload-token') || '');
 			  
 				  if ('click' == eventType) {
 					if (!fileUrl[thisId]) {
