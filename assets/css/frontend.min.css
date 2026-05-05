@@ -15182,7 +15182,8 @@ flex-grow: 0; */
 
 /* Mini Wishlist */
 
-.wpr-wishlist-empty {
+.wpr-wishlist-empty,
+.wpr-wishlist-empty-shop-link {
     margin: 0;
     text-align: center;
 }
