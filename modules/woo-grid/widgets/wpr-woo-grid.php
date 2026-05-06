@@ -2771,9 +2771,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 			[
 				'label' => esc_html__( 'Featured Video', 'wpr-addons' ),
 				'tab' => Controls_Manager::TAB_CONTENT,
-				'condition' => [
-					'secondary_img_on_hover!' => 'yes',
-				],
 			]
 		);
 
