@@ -8742,16 +8742,16 @@
 							$scope.find('.wpr-wishlist-products').removeClass('wpr-wishlist-empty-hidden');
 						}
 
-						if ( !$scope.find('.wpr-wishlist-empty').hasClass('wpr-wishlist-empty-hidden') ) {
-							$scope.find('.wpr-wishlist-empty').addClass('wpr-wishlist-empty-hidden');
+						if ( !$scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').hasClass('wpr-wishlist-empty-hidden') ) {
+							$scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').addClass('wpr-wishlist-empty-hidden');
 						}
 					} else {
 						if ( !$scope.find('.wpr-wishlist-products').hasClass('wpr-wishlist-empty-hidden') ) {
 							$scope.find('.wpr-wishlist-products').addClass('wpr-wishlist-empty-hidden');
 						}
 
-						if ( $scope.find('.wpr-wishlist-empty').hasClass('wpr-wishlist-empty-hidden') ) {
-							$scope.find('.wpr-wishlist-empty').removeClass('wpr-wishlist-empty-hidden');
+						if ( $scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').hasClass('wpr-wishlist-empty-hidden') ) {
+							$scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').removeClass('wpr-wishlist-empty-hidden');
 						}
 					}
 				},
@@ -8778,8 +8778,8 @@
 								$scope.find('.wpr-wishlist-products').addClass('wpr-wishlist-empty-hidden');
 							}
 
-							if ( $scope.find('.wpr-wishlist-empty').hasClass('wpr-wishlist-empty-hidden') ) {
-								$scope.find('.wpr-wishlist-empty').removeClass('wpr-wishlist-empty-hidden');
+							if ( $scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').hasClass('wpr-wishlist-empty-hidden') ) {
+								$scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').removeClass('wpr-wishlist-empty-hidden');
 							}
 						}
 
@@ -10823,10 +10823,10 @@
 				});
 
 				if ( $scope.find('.wpr-wishlist-product').length !== 0 ) {
-					$scope.find('.wpr-wishlist-empty').addClass('wpr-wishlist-empty-hidden');
+					$scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').addClass('wpr-wishlist-empty-hidden');
 					$scope.find('.wpr-view-wishlist').removeClass('wpr-hidden-element');
 				} else {
-					$scope.find('.wpr-wishlist-empty').removeClass('wpr-wishlist-empty-hidden');
+					$scope.find('.wpr-wishlist-empty, .wpr-wishlist-empty-shop-link').removeClass('wpr-wishlist-empty-hidden');
 					$scope.find('.wpr-view-wishlist').addClass('wpr-hidden-element');
 				}
 			});
@@ -14044,6 +14044,7 @@
 						// $(this).find('img:nth-of-type(2)').fadeIn(500).removeClass('wpr-hidden-img');
 						$(this).find('img:first-of-type').addClass('wpr-hidden-img');
 						$(this).find('img:nth-of-type(2)').removeClass('wpr-hidden-img');
+						$(this).find('.wpr-grid-featured-video').addClass('wpr-hidden-img');
 					}
 				}
 			});
@@ -14059,6 +14060,7 @@
 						// $(this).find('img:first-of-type').fadeIn(500).removeClass('wpr-hidden-img');
 						$(this).find('img:nth-of-type(2)').addClass('wpr-hidden-img');
 						$(this).find('img:first-of-type').removeClass('wpr-hidden-img');
+						$(this).find('.wpr-grid-featured-video').removeClass('wpr-hidden-img');
 					}
 				}
 			});
