@@ -1095,6 +1095,12 @@ class Plugin {
 					'icon' => 'wpr-icon eicon-product-breadcrumbs',
 					'categories' => '["'. $category .'"]',
 				],
+				[
+					'name' => 'wpr-weather',
+					'title' => __('Weather', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-cloud-check',
+					'categories' => '["'. $category .'"]',
+				],
 			];
 			
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
