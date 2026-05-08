@@ -309,6 +309,7 @@ function wpr_addons_settings_page() {
 			'Category Grid' => ['category-grid-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-catgrid-widgets-upgrade-pro#purchasepro', '', 'expert'],
 			'Advanced Filters' => ['advanced-filters-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-advancedfilters-widgets-upgrade-pro#purchasepro', '', 'expert'],
 			'Weather' => ['weather-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-weather-widgets-upgrade-pro#purchasepro', '', 'pro'],
+			'Google Reviews' => ['google-reviews-pro', 'https://royal-elementor-addons.com/?ref=rea-plugin-backend-elements-google-reviews-widgets-upgrade-pro#purchasepro', '', 'pro'],
         ];
 
         foreach ( array_merge($modules, $premium_modules) as $title => $data ) {

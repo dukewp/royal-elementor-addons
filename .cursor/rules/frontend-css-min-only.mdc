@@ -11,6 +11,7 @@ alwaysApply: true
 When adding or updating frontend widget styles:
 
 - Edit **`assets/css/frontend.min.css`** directly.
-- Keep additions minified and scoped to REA selectors (e.g. `.wpr-*`).
+- Keep additions readable (non-minified) and scoped to REA selectors (e.g. `.wpr-*`).
+- Do not minify CSS manually in chat edits; minification is handled afterward by the maintainer.
 - Do not inject widget styles inline in PHP render methods.
 

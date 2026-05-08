@@ -1101,6 +1101,12 @@ class Plugin {
 					'icon' => 'wpr-icon eicon-cloud-check',
 					'categories' => '["'. $category .'"]',
 				],
+				[
+					'name' => 'wpr-google-reviews',
+					'title' => __('Google Reviews', 'wpr-addons'),
+					'icon' => 'wpr-icon eicon-star',
+					'categories' => '["'. $category .'"]',
+				],
 			];
 			
 			$config['promotionWidgets'] = array_merge( $config['promotionWidgets'], $promotion_widgets );
