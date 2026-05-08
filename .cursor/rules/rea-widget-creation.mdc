@@ -1,0 +1,33 @@
+---
+description: REA widget creation and maintenance conventions
+globs: "**/*.php"
+alwaysApply: true
+---
+
+# Royal Elementor Addons Widget Guidance
+
+When creating or changing REA widgets, inspect nearby free/pro widgets first and keep the implementation aligned with the current module system unless a cleaner approach clearly improves maintainability.
+
+## Structure and Registration
+
+- Free widgets live in `royal-elementor-addons/modules/<slug>/widgets/`; Pro widgets live in `royal-elementor-addons-pro/modules/<slug>-pro/widgets/` or the matching theme-builder path.
+- Each widget module normally has `module.php` with namespace `WprAddons\Modules\<StudlySlug>` or `WprAddonsPro\Modules\<StudlySlug>`, extends the matching `Module_Base`, returns the widget class name from `get_widgets()`, and returns the widget slug from `get_name()`.
+- Module managers derive namespaces from slugs by converting kebab-case to StudlyCase, so folder slug, module namespace, widget namespace, class name, and `get_name()` must stay in sync.
+- Register new free widgets in `WprAddons\Classes\Utilities::get_registered_modules()` or the relevant theme/Woo module list. Register Pro widgets in `WprAddonsPro\Classes\Pro_Modules` and add the free-side premium/admin toggle or promotion entry when the widget should appear before Pro is active.
+- Use Elementor categories already registered by REA: `wpr-widgets`, `wpr-premium-widgets`, `wpr-theme-builder-widgets`, or `wpr-woocommerce-builder-widgets`.
+
+## Widget Class Conventions
+
+- Widgets extend `Elementor\Widget_Base`; class names usually use `Wpr_Foo_Bar` or `Wpr_Foo_Bar_Pro`, with slugs like `wpr-foo-bar` or `wpr-foo-bar-pro`.
+- Provide `get_name()`, `get_title()`, `get_icon()`, `get_categories()`, and useful `get_keywords()`. Use text domain `wpr-addons` for both free and pro.
+- Prefer `esc_html__()` for plain labels, `esc_html_e()` for direct output, `esc_attr()` for attributes, `esc_url()` for URLs, and `wp_kses_post()` or narrow `wp_kses()` only when HTML is intentionally allowed.
+- For Elementor optimized markup support, follow nearby widgets that implement `has_widget_inner_wrapper()` and adjust selectors when wrapper markup changes.
+- Keep controls grouped by Elementor tabs/sections, use `selectors`/CSS variables for styling controls, and prefer REA helpers such as `Utilities::wpr_library_buttons()`, `upgrade_pro_notice()`, and `pro_features_list_section()` where the existing widget family uses them.
+
+## Assets, Output, and Quality
+
+- Runtime frontend CSS belongs in `assets/css/frontend.min.css`; runtime frontend JS belongs in `assets/js/frontend.min.js`. Do not edit ignored unminified frontend bundles.
+- Add `get_script_depends()` / `get_style_depends()` only when a widget needs registered dependencies; reuse handles registered in `plugin.php` before adding new assets.
+- In `render()`, use `$this->get_settings_for_display()`, escape every dynamic output, sanitize request/API inputs, cache remote API responses with transients where appropriate, and render editor-friendly demo/error states when external data is missing.
+- Avoid inline styles/scripts in PHP render methods except tiny values that must be dynamic and cannot be expressed through Elementor selectors or CSS variables.
+- Use existing patterns as the baseline, but recommend or implement better abstractions when they reduce real duplication, clarify free/pro behavior, or make a new widget safer without widening the task unnecessarily.

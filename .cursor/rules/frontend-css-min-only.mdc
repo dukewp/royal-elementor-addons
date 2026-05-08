@@ -1,3 +1,9 @@
+---
+description: Edit only minified frontend CSS for runtime widget styles
+globs: assets/css/frontend*.css
+alwaysApply: true
+---
+
 # Royal Elementor Addons - Frontend CSS
 
 `assets/css/frontend.min.css` is the editable frontend stylesheet for runtime widget styling updates.
