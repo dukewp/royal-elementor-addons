@@ -172,6 +172,9 @@ function wpr_register_addons_settings() {
         }
     }
 
+    // Featured Video Metabox (WooCommerce products only)
+    register_setting( 'wpr-settings', 'wpr_meta_featured_video_product', [ 'default' => 'on' ] );
+
 }
 
 function wpr_addons_settings_page() {
@@ -762,6 +765,17 @@ function wpr_addons_settings_page() {
                 }
             ?>
             <p class="wpr-settings-group-description"><?php esc_html_e( 'Add secondary Featured image metabox to post types.', 'wpr-addons' ); ?></p>
+
+            <?php if ( class_exists( 'WooCommerce' ) ) : ?>
+                <div class="wpr-woo-template-info">
+                    <div class="wpr-woo-template-title">
+                        <h4><?php esc_html_e( 'Product: Featured Video', 'wpr-addons' ); ?></h4>
+                    </div>
+                    <input type="checkbox" name="wpr_meta_featured_video_product" id="wpr_meta_featured_video_product" <?php echo checked( get_option( 'wpr_meta_featured_video_product', 'on' ), 'on', false ); ?>>
+                    <label for="wpr_meta_featured_video_product"></label>
+                </div>
+                <p class="wpr-settings-group-description"><?php esc_html_e( 'Add Featured Video metabox to WooCommerce products.', 'wpr-addons' ); ?></p>
+            <?php endif; ?>
             
             <!-- <div class="wpr-settings-group-inner"> -->
 
