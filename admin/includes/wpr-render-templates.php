@@ -131,9 +131,16 @@ class WPR_Render_Templates {
 				$current_language_code = apply_filters('wpml_current_language', null);
 
 				if ( $current_language_code && $current_language_code !== $default_language_code ) {
+					// Prefer current-language translation if one exists
 					$translated_id = apply_filters('wpml_object_id', $template_id, 'wpr_templates', true, $current_language_code);
 					if ( $translated_id && (int) $translated_id !== (int) $template_id ) {
 						$template_id = $translated_id;
+					} else {
+						// No per-language translation; force default-language version (works for sites that share one template across languages)
+						$default_id = apply_filters('wpml_object_id', $template_id, 'wpr_templates', true, $default_language_code);
+						if ( $default_id ) {
+							$template_id = $default_id;
+						}
 					}
 				}
 			}
@@ -180,9 +187,16 @@ class WPR_Render_Templates {
 				$current_language_code = apply_filters('wpml_current_language', null);
 
 				if ( $current_language_code && $current_language_code !== $default_language_code ) {
+					// Prefer current-language translation if one exists
 					$translated_id = apply_filters('wpml_object_id', $template_id, 'wpr_templates', true, $current_language_code);
 					if ( $translated_id && (int) $translated_id !== (int) $template_id ) {
 						$template_id = $translated_id;
+					} else {
+						// No per-language translation; force default-language version (works for sites that share one template across languages)
+						$default_id = apply_filters('wpml_object_id', $template_id, 'wpr_templates', true, $default_language_code);
+						if ( $default_id ) {
+							$template_id = $default_id;
+						}
 					}
 				}
 			}
