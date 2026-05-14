@@ -129,6 +129,9 @@ class Plugin {
 		// Meta Keys
 		require WPR_ADDONS_PATH . 'classes/wpr-custom-meta-keys.php';
 
+		// WordPress 7.0 Abilities API / MCP integration (no-op on older WP).
+		require WPR_ADDONS_PATH . 'classes/wpr-ai-abilities.php';
+
 		// Grid
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-grid-helpers.php';
 		
@@ -191,6 +194,9 @@ class Plugin {
 
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
+
+			// AI Abilities debug page (calls Abilities API or falls back to static methods).
+			require WPR_ADDONS_PATH . 'admin/ai-abilities-debug.php';
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/theme-builder.php';

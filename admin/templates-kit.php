@@ -911,7 +911,7 @@ function wpr_fix_elementor_images() {
             // Elementor Data
             $data = get_post_meta( get_the_ID(), '_elementor_data', true );
 
-            if ( ! empty( $data ) ) {
+            if ( ! empty( $data ) && is_string( $data ) ) {
                 $data = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $data);
                 $data = str_replace( $demo_site_url, $site_url, $data );
                 $data = json_decode( $data, true );
@@ -921,9 +921,9 @@ function wpr_fix_elementor_images() {
 
             // Elementor Page Settings
             $page_settings = get_post_meta( get_the_ID(), '_elementor_page_settings', true );
-            $page_settings = json_encode($page_settings);
 
             if ( ! empty( $page_settings ) ) {
+                $page_settings = is_string( $page_settings ) ? $page_settings : json_encode( $page_settings );
                 $page_settings = preg_replace('/\\\{1}\/sites\\\{1}\/\d+/', '', $page_settings);
                 $page_settings = str_replace( $demo_site_url, $site_url, $page_settings );
                 $page_settings = json_decode( $page_settings, true );
