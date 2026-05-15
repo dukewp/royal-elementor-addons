@@ -195,8 +195,13 @@ class Plugin {
 			// Templates Kit
 			require WPR_ADDONS_PATH . 'admin/templates-kit.php';
 
-			// AI Abilities debug page (calls Abilities API or falls back to static methods).
-			require WPR_ADDONS_PATH . 'admin/ai-abilities-debug.php';
+			// AI & MCP settings (tool allowlist, audit, connection hints).
+			require WPR_ADDONS_PATH . 'admin/ai-mcp-settings.php';
+
+			// AI Abilities debug page — only when explicitly enabled (avoid extra admin surface).
+			if ( defined( 'WPR_AI_DEBUG' ) && WPR_AI_DEBUG ) {
+				require WPR_ADDONS_PATH . 'admin/ai-abilities-debug.php';
+			}
 
 			// Theme Builder
 			require WPR_ADDONS_PATH . 'admin/theme-builder.php';

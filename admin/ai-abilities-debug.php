@@ -80,6 +80,14 @@ function wpr_ai_abilities_debug_map() {
 				'switch_theme'      => [ 'label' => 'Switch to royal-elementor-kit theme (1/0)', 'type' => 'text', 'default' => '1' ],
 				'fix_compatibility' => [ 'label' => 'Fix compatibility / deactivate extras (1/0)', 'type' => 'text', 'default' => '1' ],
 				'plugins'           => [ 'label' => 'Activate plugins (CSV: woocommerce,contact-form-7,...)', 'type' => 'text', 'default' => '' ],
+				'async'             => [ 'label' => 'Async / queue job (1=default MCP behavior, 0=run synchronously here)', 'type' => 'text', 'default' => '0' ],
+			],
+		],
+		'get-install-job-status' => [
+			'ability' => 'wpr-addons/get-install-job-status',
+			'method'  => 'execute_get_install_job_status',
+			'inputs'  => [
+				'job_id' => [ 'label' => 'job_id from install-kit async response', 'type' => 'text' ],
 			],
 		],
 		'list-widgets' => [
@@ -91,6 +99,23 @@ function wpr_ai_abilities_debug_map() {
 			'ability' => 'wpr-addons/list-extensions',
 			'method'  => 'execute_list_extensions',
 			'inputs'  => [],
+		],
+		'list-rea-widgets-on-page' => [
+			'ability' => 'wpr-addons/list-rea-widgets-on-page',
+			'method'  => 'execute_list_rea_widgets_on_page',
+			'inputs'  => [
+				'post_id' => [ 'label' => 'Post ID (Elementor page)', 'type' => 'number', 'default' => '' ],
+			],
+		],
+		'patch-rea-widget-text-settings' => [
+			'ability' => 'wpr-addons/patch-rea-widget-text-settings',
+			'method'  => 'execute_patch_rea_widget_text_settings',
+			'danger'  => true,
+			'inputs'  => [
+				'post_id'    => [ 'label' => 'Post ID', 'type' => 'number', 'default' => '' ],
+				'element_id' => [ 'label' => 'Elementor element id', 'type' => 'text' ],
+				'patches'    => [ 'label' => 'Patches JSON object as compact JSON string', 'type' => 'text', 'default' => '{"title":"Hello"}' ],
+			],
 		],
 		'toggle-extension' => [
 			'ability' => 'wpr-addons/toggle-extension',
@@ -208,7 +233,6 @@ function wpr_ai_abilities_debug_selftest() {
 	$auth_user = isset( $_GET['wpr_selftest_user'] ) ? sanitize_user( wp_unslash( $_GET['wpr_selftest_user'] ) ) : '';
 	$auth_pw   = isset( $_GET['wpr_selftest_pw'] )   ? wp_unslash( $_GET['wpr_selftest_pw'] )                : '';
 	$auth_hdr  = ( '' !== $auth_user && '' !== $auth_pw ) ? 'Basic ' . base64_encode( $auth_user . ':' . $auth_pw ) : '';
-	$no_tools  = ! empty( $_GET['wpr_mcp_no_tools'] );
 
 	$trace_log = function_exists( '\\WprAddons\\Classes\\WPR_AI_Abilities::trace_log_path' )
 		? \WprAddons\Classes\WPR_AI_Abilities::trace_log_path()
@@ -227,7 +251,7 @@ function wpr_ai_abilities_debug_selftest() {
 		return $out;
 	};
 
-	$probe = static function ( $url ) use ( $payload, $auth_hdr, $no_tools, $trace_log, $read_trace ) {
+	$probe = static function ( $url ) use ( $payload, $auth_hdr, $trace_log, $read_trace ) {
 		if ( '' !== $trace_log ) {
 			@file_put_contents( $trace_log, '' );
 		}
@@ -240,7 +264,7 @@ function wpr_ai_abilities_debug_selftest() {
 			$headers['Authorization'] = $auth_hdr;
 		}
 
-		$probe_url = $no_tools ? add_query_arg( 'wpr_mcp_no_tools', '1', $url ) : $url;
+		$probe_url = $url;
 
 		$t0   = microtime( true );
 		$resp = wp_remote_post( $probe_url, [
@@ -268,7 +292,6 @@ function wpr_ai_abilities_debug_selftest() {
 	};
 
 	$out['auth_in_use']         = '' !== $auth_hdr ? ( 'Basic ' . $auth_user . ':***' ) : 'none';
-	$out['no_tools_override']   = $no_tools;
 	$out['trace_log']           = $trace_log;
 	$out['post_wpr_addons_mcp'] = $probe( rest_url( 'wpr-addons-mcp/mcp' ) );
 	$out['post_default_mcp']    = $probe( rest_url( 'mcp/mcp-adapter-default-server' ) );
@@ -329,12 +352,17 @@ function wpr_ai_abilities_debug_handle_post() {
 		}
 		if ( 'number' === ( $meta['type'] ?? 'text' ) ) {
 			$input[ $field ] = (int) $value;
-		} elseif ( in_array( $field, [ 'enabled', 'reset', 'switch_theme', 'fix_compatibility' ], true ) ) {
+		} elseif ( in_array( $field, [ 'enabled', 'reset', 'switch_theme', 'fix_compatibility', 'async' ], true ) ) {
 			$input[ $field ] = in_array( strtolower( $value ), [ '1', 'true', 'yes', 'on' ], true );
 		} elseif ( 'plugins' === $field ) {
 			$arr = array_filter( array_map( 'trim', explode( ',', $value ) ) );
 			if ( ! empty( $arr ) ) {
 				$input[ $field ] = array_values( array_map( 'sanitize_key', $arr ) );
+			}
+		} elseif ( 'patches' === $field ) {
+			$decoded = json_decode( $value, true );
+			if ( is_array( $decoded ) ) {
+				$input['patches'] = $decoded;
 			}
 		} else {
 			$input[ $field ] = sanitize_text_field( $value );
@@ -442,10 +470,10 @@ function wpr_ai_abilities_debug_page() {
 	echo '<pre style="background:#1d2327;color:#e6e7e9;padding:10px 12px;border-radius:4px;font-size:12px;overflow:auto;">';
 	echo esc_html( wp_json_encode( $selftest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
 	echo '</pre>';
-	echo '<p style="margin:6px 0 0;color:#646970;font-size:12px;">If <code>index_status</code> is 200 but the MCP endpoints return 404 here, the adapter is not registering routes. If they return 401, the route exists but auth blocks anonymous access (expected — the real client uses an Application Password). Each probe also records a <code>trace</code> log (per-request entries written to <code>wp-content/wpr-mcp-trace.log</code>) so we can see how far the request got. Add <code>&amp;wpr_mcp_no_tools=1</code> to the page URL to register the REA MCP server with zero tools, which isolates ability-to-tool conversion as a suspect.</p>';
+	echo '<p style="margin:6px 0 0;color:#646970;font-size:12px;">If <code>index_status</code> is 200 but the MCP endpoints return 404 here, the adapter is not registering routes. If they return 401, the route exists but auth blocks anonymous access (expected — the real client uses an Application Password). When <code>WPR_AI_DEBUG</code> is enabled, each probe can also record a <code>trace</code> log (entries in <code>wp-content/wpr-mcp-trace.log</code>) so you can see how far the request got.</p>';
 
 	$self_url = admin_url( 'admin.php?page=wpr-ai-abilities-debug' );
-	echo '<p style="margin:8px 0 0;font-size:12px;">To probe with auth, append <code>&amp;wpr_selftest_user=ADMIN&amp;wpr_selftest_pw=APP+PASSWORD</code> to the page URL (encode spaces as <code>+</code>). Example with no-tools mode on: <code>' . esc_html( $self_url . '&wpr_selftest_user=admin&wpr_selftest_pw=wqef+jgBp+wMCu+agpz+bWlb+gC9F&wpr_mcp_no_tools=1' ) . '</code></p>';
+	echo '<p style="margin:8px 0 0;font-size:12px;">To probe with auth, append <code>&amp;wpr_selftest_user=ADMIN&amp;wpr_selftest_pw=APP+PASSWORD</code> to the page URL (encode spaces as <code>+</code>). Example pattern: <code>' . esc_html( $self_url . '&wpr_selftest_user=YOURUSER&wpr_selftest_pw=YOUR_APP_PASSWORD' ) . '</code></p>';
 
 	echo '</div>';
 
