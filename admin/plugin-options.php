@@ -77,6 +77,7 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_google_map_language' );
     register_setting( 'wpr-settings', 'wpr_serpapi_key' );
+    register_setting( 'wpr-settings', 'wpr_openweather_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_secret_key' );
@@ -824,6 +825,17 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="text" name="wpr_serpapi_key" id="wpr_serpapi_key" value="<?php echo esc_attr( get_option( 'wpr_serpapi_key' ) ); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'OpenWeather API Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://openweathermap.org/appid" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'How to get OpenWeather API Key?', 'wpr-addons' ); ?></a>
+                    <p class="wpr-settings-group-description"><?php esc_html_e( 'Used by the Weather widget.', 'wpr-addons' ); ?></p>
+                </h4>
+
+                <input type="text" name="wpr_openweather_api_key" id="wpr_openweather_api_key" value="<?php echo esc_attr( get_option( 'wpr_openweather_api_key' ) ); ?>">
             </div>
 
             <div class="wpr-setting">
