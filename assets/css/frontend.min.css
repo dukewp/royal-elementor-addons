@@ -20841,13 +20841,91 @@ input.wpr-date-filter-end {
     position: relative;
 }
 
-.wpr-google-reviews-title {
+.wpr-google-place-summary {
     margin: 0 0 16px;
+}
+
+.wpr-google-place-summary-brand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 8px;
+    line-height: 1;
+}
+
+.wpr-google-wordmark {
+    display: inline-flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.wpr-google-letter-g {
+    color: #4285f4;
+}
+
+.wpr-google-letter-o1 {
+    color: #ea4335;
+}
+
+.wpr-google-letter-o2 {
+    color: #fbbc04;
+}
+
+.wpr-google-letter-g2 {
+    color: #4285f4;
+}
+
+.wpr-google-letter-l {
+    color: #34a853;
+}
+
+.wpr-google-letter-e {
+    color: #ea4335;
+}
+
+.wpr-google-brand-label {
+    font-size: 20px;
+    font-weight: 500;
+    color: #202124;
+}
+
+.wpr-google-place-summary-rating {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+a.wpr-google-place-summary-rating:hover {
+    color: inherit;
+}
+
+.wpr-google-place-summary-score {
+    font-size: 16px;
+    font-weight: 500;
+    color: #3c4043;
+    line-height: 1;
+}
+
+.wpr-google-place-summary-stars {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.wpr-google-place-summary-count {
+    font-size: 14px;
+    color: #70757a;
+    line-height: 1;
 }
 
 .wpr-google-reviews-place-link {
     display: inline-flex;
-    margin: -6px 0 16px;
+    margin: 0 0 16px;
     font-size: 13px;
     color: #605be5;
 }

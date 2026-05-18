@@ -76,6 +76,7 @@ function wpr_register_addons_settings() {
     // Integrations
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_google_map_language' );
+    register_setting( 'wpr-settings', 'wpr_serpapi_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_secret_key' );
@@ -794,6 +795,7 @@ function wpr_addons_settings_page() {
                 </h4>
 
                 <input type="text" name="wpr_google_map_api_key" id="wpr_google_map_api_key" value="<?php echo esc_attr(get_option('wpr_google_map_api_key')); ?>">
+                <p class="wpr-settings-group-description"><?php esc_html_e( 'Also used by the Google Reviews widget when Data Source is Google Places API.', 'wpr-addons' ); ?></p>
 
                 <h4>
                     <span><?php esc_html_e( 'Google Map Language', 'wpr-addons' ); ?></span>
@@ -811,6 +813,17 @@ function wpr_addons_settings_page() {
                     <option value="hi" <?php selected(get_option('wpr_google_map_language'), 'hi'); ?>><?php esc_html_e('Hindi', 'wpr-addons'); ?></option>
                     <option value="ar" <?php selected(get_option('wpr_google_map_language'), 'ar'); ?>><?php esc_html_e('Arabic', 'wpr-addons'); ?></option>
                 </select>
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'SerpApi Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://serpapi.com/google-maps-reviews-api" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'How to get SerpApi Key?', 'wpr-addons' ); ?></a>
+                    <p class="wpr-settings-group-description"><?php esc_html_e( 'Used by the Google Reviews widget when Data Source is SerpApi.', 'wpr-addons' ); ?></p>
+                </h4>
+
+                <input type="text" name="wpr_serpapi_key" id="wpr_serpapi_key" value="<?php echo esc_attr( get_option( 'wpr_serpapi_key' ) ); ?>">
             </div>
 
             <div class="wpr-setting">
