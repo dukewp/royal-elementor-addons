@@ -20841,8 +20841,20 @@ input.wpr-date-filter-end {
     position: relative;
 }
 
-.wpr-google-place-summary {
+.wpr-google-reviews-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
     margin: 0 0 16px;
+}
+
+.wpr-google-place-summary {
+    margin: 0;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .wpr-google-place-summary-brand {
@@ -20925,9 +20937,24 @@ a.wpr-google-place-summary-rating:hover {
 
 .wpr-google-reviews-place-link {
     display: inline-flex;
-    margin: 0 0 16px;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 10px 20px;
     font-size: 13px;
-    color: #605be5;
+    font-weight: 500;
+    line-height: 1;
+    color: #ffffff;
+    background-color: #605be5;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.wpr-google-reviews-place-link:hover {
+    color: #ffffff;
+    opacity: 0.9;
 }
 
 .wpr-google-reviews-slider {
@@ -21050,7 +21077,7 @@ a.wpr-google-place-summary-rating:hover {
     border-radius: 0;
     background-color: transparent;
     box-shadow: none;
-    color: #2a2a2a;
+    color: #605be5;
     font-size: 24px;
     line-height: 1;
     cursor: pointer;
