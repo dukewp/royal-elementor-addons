@@ -20839,6 +20839,12 @@ input.wpr-date-filter-end {
 }
 .wpr-google-reviews-wrap {
     position: relative;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.elementor-editor-active .elementor-widget-wpr-google-reviews-pro .wpr-google-reviews-wrap {
+    opacity: 1;
 }
 
 .wpr-google-reviews-header {
