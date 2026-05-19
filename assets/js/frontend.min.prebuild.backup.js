@@ -76,6 +76,7 @@
 				'wpr-separator.default': WprElements.widgetSeparator,
 				'wpr-circle-menu.default': WprElements.widgetCircleMenu,
 				'wpr-unfold.default': WprElements.widgetUnfold,
+				'wpr-google-reviews-pro.default' : WprElements.widgetGoogleReviews,
 
 				// Single
 				'wpr-post-media.default' : WprElements.widgetPostMedia,
@@ -7053,6 +7054,87 @@
 				timelineFill !== '' ? timelineFill.css('top', middleLineTop) : '';
 		  }
 		}, // end widgetPostsTimeline
+
+		widgetGoogleReviews: function($scope) {
+			var $wrap = $scope.find('.wpr-google-reviews-wrap');
+
+			if ( !$wrap.length ) {
+				return;
+			}
+
+			var revealWidget = function revealWidget() {
+				$wrap.css('opacity', 1);
+			};
+
+			if ( WprElements.editorCheck() ) {
+				revealWidget();
+			}
+
+			if ( !$scope.find('.wpr-google-reviews-slider.swiper').length ) {
+				revealWidget();
+				return;
+			}
+
+			var swiperLoader = function swiperLoader(swiperElement, swiperConfig) {
+				var asyncSwiper = elementorFrontend.utils.swiper;
+				return new asyncSwiper(swiperElement, swiperConfig).then( function (newSwiperInstance) {
+					return newSwiperInstance;
+				});
+			};
+
+			var swiperPromises = [];
+
+			$scope.find('.wpr-google-reviews-slider.swiper').each(function() {
+				var swiperSlider = $(this);
+				var slidestoshow = +swiperSlider.data('slidestoshow') || 1;
+				var showNavigation = swiperSlider.data('show-navigation') === 'yes';
+				var showPagination = swiperSlider.data('show-pagination') === 'yes';
+				var paginationEl = showPagination ? swiperSlider.find('.wpr-swiper-pagination')[0] : false;
+				var prevEl = showNavigation ? swiperSlider.find('.wpr-button-prev')[0] : false;
+				var nextEl = showNavigation ? swiperSlider.find('.wpr-button-next')[0] : false;
+
+				swiperPromises.push(
+					swiperLoader(swiperSlider, {
+						spaceBetween: +swiperSlider.data('swiper-space-between') || 0,
+						loop: swiperSlider.data('loop') === 'yes',
+						autoplay: swiperSlider.data('autoplay') !== 'yes' ? false : {
+							delay: +swiperSlider.attr('data-swiper-delay'),
+							disableOnInteraction: false,
+							pauseOnMouseEnter: swiperSlider.data('swiper-poh') === 'yes',
+						},
+						speed: +swiperSlider.attr('data-swiper-speed') || 500,
+						slidesPerView: slidestoshow,
+						direction: 'horizontal',
+						pagination: showPagination ? {
+							el: paginationEl,
+							type: 'progressbar',
+						} : false,
+						navigation: showNavigation ? {
+							nextEl: nextEl,
+							prevEl: prevEl,
+						} : false,
+						breakpoints: {
+							320: {
+								slidesPerView: 1,
+							},
+							480: {
+								slidesPerView: Math.min(2, slidestoshow),
+							},
+							769: {
+								slidesPerView: slidestoshow,
+							}
+						},
+					})
+				);
+			});
+
+			if ( !swiperPromises.length ) {
+				revealWidget();
+				return;
+			}
+
+			Promise.all(swiperPromises).then(revealWidget).catch(revealWidget);
+		}, // end widgetGoogleReviews
 
         widgetSharingButtons: function($scope) {
 			$scope.find('.wpr-sharing-print').on('click', function(e) {

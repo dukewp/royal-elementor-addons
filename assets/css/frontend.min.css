@@ -490,7 +490,8 @@ button.lg-icon {
     height: 100%;
     display: block;
     border: 0;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 
 .wpr-hidden-item {
@@ -20719,7 +20720,8 @@ input.wpr-date-filter-end {
     border: 1px solid #e8e8e8;
     border-radius: 10px;
     background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .wpr-weather-header {
@@ -20737,6 +20739,8 @@ input.wpr-date-filter-end {
 }
 
 .wpr-weather-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -20761,8 +20765,12 @@ input.wpr-date-filter-end {
 }
 
 .wpr-weather-info:nth-child(1) {
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .wpr-weather-info:nth-child(2) {
@@ -20779,31 +20787,49 @@ input.wpr-date-filter-end {
 }
 
 .wpr-weather-extra-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     gap: var(--wpr-weather-extra-info-row-gap);
     text-align: left;
 }
 
 .wpr-weather-extra-info-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: var(--wpr-weather-extra-info-icon-gap);
 }
 
 .wpr-weather-extra-info-icon {
-    flex: 0 0 var(--wpr-weather-extra-info-icon-size);
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 var(--wpr-weather-extra-info-icon-size);
+            flex: 0 0 var(--wpr-weather-extra-info-icon-size);
     width: var(--wpr-weather-extra-info-icon-size);
     height: var(--wpr-weather-extra-info-icon-size);
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .wpr-weather-extra-info-icon .wpr-weather-svg {
     width: var(--wpr-weather-extra-info-icon-size);
     height: var(--wpr-weather-extra-info-icon-size);
-    flex-shrink: 0;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
 }
 
 .wpr-weather-extra-info-icon .wpr-weather-svg-windy {
@@ -20819,8 +20845,12 @@ input.wpr-date-filter-end {
 }
 
 .wpr-weather-footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 
 .wpr-weather-forecast {
@@ -20847,7 +20877,10 @@ input.wpr-date-filter-end {
 
 @media (max-width: 767px) {
     .wpr-weather-info-wrap {
-        flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
     }
 
     .wpr-weather-info:nth-child(2) > div {
@@ -20855,16 +20888,21 @@ input.wpr-date-filter-end {
     }
 
     .wpr-weather-footer {
-        flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
     }
 
     .wpr-weather-forecast {
-        flex: 0 0 auto;
+        -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+                flex: 0 0 auto;
     }
 }
 .wpr-google-reviews-wrap {
     position: relative;
     opacity: 0;
+    -webkit-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
     transition: opacity 0.3s ease;
 }
 
@@ -20873,32 +20911,52 @@ input.wpr-date-filter-end {
 }
 
 .wpr-google-reviews-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     gap: 16px;
     margin: 0 0 16px;
 }
 
 .wpr-google-place-summary {
     margin: 0;
-    flex: 1 1 auto;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
     min-width: 0;
 }
 
 .wpr-google-place-summary-brand {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 6px;
     margin: 0 0 8px;
     line-height: 1;
 }
 
 .wpr-google-wordmark {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     font-size: 20px;
     font-weight: 500;
     letter-spacing: -0.02em;
@@ -20935,9 +20993,14 @@ input.wpr-date-filter-end {
 }
 
 .wpr-google-place-summary-rating {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
-    flex-wrap: wrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     gap: 8px;
     text-decoration: none;
     color: inherit;
@@ -20955,8 +21018,12 @@ a.wpr-google-place-summary-rating:hover {
 }
 
 .wpr-google-place-summary-stars {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     line-height: 1;
 }
 
@@ -20967,10 +21034,18 @@ a.wpr-google-place-summary-rating:hover {
 }
 
 .wpr-google-reviews-place-link {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
     margin: 0;
     padding: 10px 20px;
     font-size: 13px;
@@ -20980,6 +21055,8 @@ a.wpr-google-place-summary-rating:hover {
     background-color: #605be5;
     border-radius: 50px;
     text-decoration: none;
+    -webkit-transition: opacity 0.3s ease;
+    -o-transition: opacity 0.3s ease;
     transition: opacity 0.3s ease;
 }
 
@@ -21004,11 +21081,15 @@ a.wpr-google-place-summary-rating:hover {
 }
 
 .wpr-google-reviews-slider .swiper-wrapper {
-    align-items: stretch;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
 }
 
 .wpr-google-reviews-slider .swiper-slide {
     height: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -21019,14 +21100,23 @@ a.wpr-google-place-summary-rating:hover {
     background: #fff;
     border: 1px solid #e8e8e8;
     border-radius: 8px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     gap: 12px;
 }
 
 .wpr-google-review-head {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 10px;
 }
 
@@ -21034,12 +21124,18 @@ a.wpr-google-place-summary-rating:hover {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 
 .wpr-google-review-meta {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
 }
 
 .wpr-google-review-author {
@@ -21073,6 +21169,8 @@ a.wpr-google-place-summary-rating:hover {
 
 .wpr-google-review-link {
     margin-top: auto;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
     font-size: 13px;
     color: #605be5;
@@ -21098,16 +21196,25 @@ a.wpr-google-place-summary-rating:hover {
     position: absolute;
     top: auto;
     bottom: 6px;
-    transform: translateY(50%);
+    -webkit-transform: translateY(50%);
+        -ms-transform: translateY(50%);
+            transform: translateY(50%);
     z-index: 2;
     width: 24px;
     height: 24px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     border-radius: 0;
     background-color: transparent;
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
     color: #605be5;
     font-size: 24px;
     line-height: 1;
@@ -21123,7 +21230,9 @@ a.wpr-google-place-summary-rating:hover {
 }
 
 .wpr-google-reviews-slider .wpr-timeline-next-arrow {
-    transform: translateY(50%) rotate(180deg);
+    -webkit-transform: translateY(50%) rotate(180deg);
+        -ms-transform: translateY(50%) rotate(180deg);
+            transform: translateY(50%) rotate(180deg);
 }
 
 .wpr-google-reviews-slider .wpr-button-prev.swiper-button-disabled,
