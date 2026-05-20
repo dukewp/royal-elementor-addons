@@ -7088,8 +7088,6 @@
 				var swiperSlider = $(this);
 				var slidestoshow = +swiperSlider.data('slidestoshow') || 1;
 				var showNavigation = swiperSlider.data('show-navigation') === 'yes';
-				var showPagination = swiperSlider.data('show-pagination') === 'yes';
-				var paginationEl = showPagination ? swiperSlider.find('.wpr-swiper-pagination')[0] : false;
 				var prevEl = showNavigation ? swiperSlider.find('.wpr-button-prev')[0] : false;
 				var nextEl = showNavigation ? swiperSlider.find('.wpr-button-next')[0] : false;
 
@@ -7105,10 +7103,6 @@
 						speed: +swiperSlider.attr('data-swiper-speed') || 500,
 						slidesPerView: slidestoshow,
 						direction: 'horizontal',
-						pagination: showPagination ? {
-							el: paginationEl,
-							type: 'progressbar',
-						} : false,
 						navigation: showNavigation ? {
 							nextEl: nextEl,
 							prevEl: prevEl,
