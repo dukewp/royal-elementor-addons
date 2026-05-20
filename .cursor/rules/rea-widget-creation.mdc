@@ -26,7 +26,7 @@ When creating or changing REA widgets, inspect nearby free/pro widgets first and
 
 ## Assets, Output, and Quality
 
-- Runtime frontend CSS belongs in `assets/css/frontend.min.css`; runtime frontend JS belongs in `assets/js/frontend.min.js`. Do not edit ignored unminified frontend bundles.
+- Runtime frontend CSS belongs in `assets/css/frontend.min.css` only (`frontend.css` is ignored—see `frontend-css-min-only.mdc`). Runtime frontend JS belongs in `assets/js/frontend.min.js` only. Do not edit the unminified bundles.
 - For layout-dependent widgets (sliders, grids, carousels, masonry, async API output), hide the main wrapper with `opacity: 0` in `frontend.min.css` until frontend JS finishes layout/init, then set `opacity: 1` (see `.wpr-grid`, `.wpr-advanced-slider`, `.wpr-google-reviews-wrap`). Use a short `transition: opacity 0.3s ease` when fading in. In Elementor editor, keep the widget visible with `.elementor-editor-active .elementor-widget-<slug> .<wrapper>` so the panel preview is not blank before JS runs. Always reveal on init failure too (`Promise.all(...).catch(reveal)` or an equivalent fallback) so errors/messages are not permanently hidden.
 - Add `get_script_depends()` / `get_style_depends()` only when a widget needs registered dependencies; reuse handles registered in `plugin.php` before adding new assets.
 - In `render()`, use `$this->get_settings_for_display()`, escape every dynamic output, sanitize request/API inputs, cache remote API responses with transients where appropriate, and render editor-friendly demo/error states when external data is missing.
