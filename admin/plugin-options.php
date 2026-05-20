@@ -74,6 +74,7 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_wishlist_page' );
 
     // Integrations
+    register_setting( 'wpr-settings', 'wpr_google_api_key' );
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_google_map_language' );
     register_setting( 'wpr-settings', 'wpr_serpapi_key' );
@@ -787,6 +788,17 @@ function wpr_addons_settings_page() {
 
         <div class="wpr-settings-group">
             <h3 id="integrations-tab" class="wpr-settings-group-title"><?php esc_html_e( 'Integrations', 'wpr-addons' ); ?></h3>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'Google API Key (REA)', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://www.youtube.com/watch?v=hsNlz7-abd0" target="_blank"><?php esc_html_e( 'How to get Google API Key?', 'wpr-addons' ); ?></a>
+                </h4>
+
+                <input type="text" name="wpr_google_api_key" id="wpr_google_api_key" value="<?php echo esc_attr( get_option( 'wpr_google_api_key' ) ); ?>">
+                <p class="wpr-settings-group-description"><?php esc_html_e( 'Primary key used by Google Reviews (Google Places API). If empty, it falls back to Google Map API Key below.', 'wpr-addons' ); ?></p>
+            </div>
 
             <div class="wpr-setting">
                 <h4>
