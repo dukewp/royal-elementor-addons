@@ -87,6 +87,10 @@
   padding: 5px 22px;
 }
 
+.wp-core-ui .wpr-preview-buttons .button.wpr-options-button .dashicons {
+  color: inherit !important;
+}
+
 .wpr-preview-buttons a.wpr-how-to-use-woo-builder {
   background-color: transparent !important;
   border: 2px solid #96588a !important;
