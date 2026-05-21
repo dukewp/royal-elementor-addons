@@ -20943,9 +20943,6 @@ input.wpr-date-filter-end {
     display: flex;
     width: auto;
     max-width: 100%;
-    -webkit-align-self: flex-start;
-        -ms-flex-item-align: start;
-            align-self: flex-start;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
@@ -21144,6 +21141,35 @@ a.wpr-google-place-summary-rating:hover {
             flex-direction: column;
 }
 
+.wpr-google-review-card-icon {
+    margin-left: auto;
+    margin-top: 2px;
+    line-height: 0;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-item-align: start;
+        align-self: flex-start;
+}
+
+.wpr-google-review-card-icon svg {
+    width: 18px;
+    height: 18px;
+    max-width: none;
+    -ms-flex-negative: 0;
+        flex-shrink: 0;
+    display: block;
+}
+
 .wpr-google-review-author {
     line-height: 1.2;
 }
@@ -21198,8 +21224,8 @@ a.wpr-google-place-summary-rating:hover {
 .wpr-google-reviews-slider .wpr-button-prev,
 .wpr-google-reviews-slider .wpr-button-next {
     position: absolute;
-    top: auto;
-    bottom: 6px;
+    top: clamp(calc(var(--wpr-google-nav-size, 24px) / 2), var(--wpr-google-nav-y, 50%), calc(100% - (var(--wpr-google-nav-size, 24px) / 2)));
+    bottom: auto;
     z-index: 2;
     width: 24px;
     height: 24px;
@@ -21223,23 +21249,23 @@ a.wpr-google-place-summary-rating:hover {
 }
 
 .wpr-google-reviews-slider .wpr-button-prev {
-    left: 10px;
-    -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+    left: clamp(0px, var(--wpr-google-nav-x, 10px), calc(100% - var(--wpr-google-nav-size, 24px)));
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
 }
 
 .wpr-google-reviews-slider .wpr-button-next {
-    right: 10px;
-    -webkit-transform: translate(50%, -50%);
-        -ms-transform: translate(50%, -50%);
-            transform: translate(50%, -50%);
+    right: clamp(0px, var(--wpr-google-nav-x, 10px), calc(100% - var(--wpr-google-nav-size, 24px)));
+    -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
 }
 
-.wpr-google-reviews-slider .wpr-timeline-next-arrow {
-    -webkit-transform: translate(50%, -50%) rotate(180deg);
-        -ms-transform: translate(50%, -50%) rotate(180deg);
-            transform: translate(50%, -50%) rotate(180deg);
+.wpr-google-reviews-slider .wpr-next-arrow {
+    -webkit-transform: translateY(-50%) rotate(180deg);
+        -ms-transform: translateY(-50%) rotate(180deg);
+            transform: translateY(-50%) rotate(180deg);
 }
 
 .wpr-google-reviews-slider .wpr-button-prev.swiper-button-disabled,
@@ -21256,10 +21282,6 @@ a.wpr-google-place-summary-rating:hover {
 }
 
 @media (max-width: 767px) {
-    .wpr-google-reviews-slider {
-        padding-bottom: 18px;
-    }
-
     .wpr-google-reviews-slider.wpr-google-reviews-no-nav {
         padding-bottom: 0;
     }
@@ -21269,7 +21291,7 @@ a.wpr-google-place-summary-rating:hover {
         width: 22px;
         height: 22px;
         font-size: 18px;
-        bottom: 4px;
+        bottom: auto;
     }
 
     .wpr-google-reviews-slider .wpr-button-prev {

@@ -7087,6 +7087,7 @@
 			$scope.find('.wpr-google-reviews-slider.swiper').each(function() {
 				var swiperSlider = $(this);
 				var slidestoshow = +swiperSlider.data('slidestoshow') || 1;
+				var slidestoscroll = +swiperSlider.data('slidestoscroll') || 1;
 				var showNavigation = swiperSlider.data('show-navigation') === 'yes';
 				var prevEl = showNavigation ? swiperSlider.find('.wpr-button-prev')[0] : false;
 				var nextEl = showNavigation ? swiperSlider.find('.wpr-button-next')[0] : false;
@@ -7102,6 +7103,7 @@
 						},
 						speed: +swiperSlider.attr('data-swiper-speed') || 500,
 						slidesPerView: slidestoshow,
+						slidesPerGroup: Math.min(slidestoscroll, slidestoshow),
 						direction: 'horizontal',
 						navigation: showNavigation ? {
 							nextEl: nextEl,
@@ -7110,12 +7112,15 @@
 						breakpoints: {
 							320: {
 								slidesPerView: 1,
+								slidesPerGroup: 1,
 							},
 							480: {
 								slidesPerView: Math.min(2, slidestoshow),
+								slidesPerGroup: Math.min(slidestoscroll, Math.min(2, slidestoshow)),
 							},
 							769: {
 								slidesPerView: slidestoshow,
+								slidesPerGroup: Math.min(slidestoscroll, slidestoshow),
 							}
 						},
 					})
