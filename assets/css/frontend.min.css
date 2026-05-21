@@ -20943,9 +20943,6 @@ input.wpr-date-filter-end {
     display: flex;
     width: auto;
     max-width: 100%;
-    -webkit-align-self: flex-start;
-        -ms-flex-item-align: start;
-            align-self: flex-start;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
