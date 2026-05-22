@@ -21074,6 +21074,15 @@ a.wpr-google-place-summary-rating:hover {
     opacity: 0.9;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .wpr-google-reviews-wrap,
+    .wpr-google-reviews-place-link {
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+}
+
 .wpr-google-reviews-slider {
     position: relative;
     overflow: hidden;
