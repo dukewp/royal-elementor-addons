@@ -1911,8 +1911,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 
 		if ( 'yes' === $settings['show_icon'] ) {
-			$add_to_compare_content .= '<i class="fas fa-exchange-alt"></i>';
-			$remove_from_compare_content .= '<i class="fas fa-exchange-alt"></i>';
+			$compare_icon = ! empty( $settings['compare_icon'] ) ? $settings['compare_icon'] : [
+				'value' => 'fas fa-exchange-alt',
+				'library' => 'fa-solid',
+			];
+
+			ob_start();
+			\Elementor\Icons_Manager::render_icon( $compare_icon, [ 'aria-hidden' => 'true' ] );
+			$compare_icon_html = ob_get_clean();
+
+			if ( '' === $compare_icon_html ) {
+				$compare_icon_html = '<i class="fas fa-exchange-alt"></i>';
+			}
+
+			$add_to_compare_content .= $compare_icon_html;
+			$remove_from_compare_content .= $compare_icon_html;
 		}
 
 		if ( 'yes' === $settings['show_text'] ) {

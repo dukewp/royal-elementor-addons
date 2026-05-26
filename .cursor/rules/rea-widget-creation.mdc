@@ -23,6 +23,7 @@ When creating or changing REA widgets, inspect nearby free/pro widgets first and
 - Prefer `esc_html__()` for plain labels, `esc_html_e()` for direct output, `esc_attr()` for attributes, `esc_url()` for URLs, and `wp_kses_post()` or narrow `wp_kses()` only when HTML is intentionally allowed.
 - For Elementor optimized markup support, follow nearby widgets that implement `has_widget_inner_wrapper()` and adjust selectors when wrapper markup changes.
 - Keep controls grouped by Elementor tabs/sections, use `selectors`/CSS variables for styling controls, and prefer REA helpers such as `Utilities::wpr_library_buttons()`, `upgrade_pro_notice()`, and `pro_features_list_section()` where the existing widget family uses them.
+- **Library buttons:** Call `Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );` at the top of the first content section when the widget should show Widget Preview / Predefined Styles in the panel. The helper outputs a wrapper `div` with class equal to `get_name()` (e.g. `wpr-unfold`). If the widget has no predefined styles library (preview only), hide the second link in `assets/css/admin/editor.min.css` by adding `.elementor-control-wpr_library_buttons .<widget-slug> a:last-child` to the existing hide rule block (same list as `wpr-forms`, `wpr-phone-call`, etc.).
 
 ## Assets, Output, and Quality
 
