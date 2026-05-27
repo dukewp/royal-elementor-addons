@@ -2214,10 +2214,6 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'type' => Controls_Manager::ICONS,
 				'skin' => 'inline',
 				'label_block' => false,
-				'default' => [
-					'value' => 'fas fa-exchange-alt',
-					'library' => 'fa-solid',
-				],
 				'condition' => [
 					'element_select' => [
 						'compare-button'
