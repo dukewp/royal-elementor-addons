@@ -138,7 +138,7 @@ function wpr_register_addons_settings() {
 
     // Pro widgets that appear in Elements tab (so their toggles are saved)
     if ( defined( 'WPR_ADDONS_PRO_VERSION' ) && wpr_fs()->can_use_premium_code() ) {
-        $pro_element_slugs = [ 'breadcrumbs-pro' ];
+        $pro_element_slugs = [ 'breadcrumbs-pro', 'weather-pro', 'google-reviews-pro' ];
         if ( wpr_fs()->is_plan( 'expert' ) ) {
             $pro_element_slugs = array_merge( $pro_element_slugs, [ 'category-grid-pro', 'advanced-filters-pro' ] );
         }
@@ -355,7 +355,7 @@ function wpr_addons_settings_page() {
                     echo '<h3>'. esc_html($title) .'</h3>';
                     echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, $default_value), 'on', false ) .'>';
                     echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
-                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. $link_text .'</a>' : '';
+                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html( $link_text ) .'</a>' : '';
                 echo '</div>';
             echo '</div>';
         }
@@ -658,8 +658,7 @@ function wpr_addons_settings_page() {
                     echo '<select name="wpr_compare_page" id="wpr_compare_page" >';
                     
                     foreach ( $pages as $page ) {
-                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
-                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                        echo '<option value="' . esc_attr( $page->ID ) . '" ' . selected( $current_page, $page->ID, false ) . '>' . esc_html( $page->post_title ) . '</option>';
                     }
                     
                     echo '</select>';
@@ -674,8 +673,7 @@ function wpr_addons_settings_page() {
                     echo '<select name="wpr_wishlist_page" id="wpr_wishlist_page" >';
                     
                     foreach ( $pages as $page ) {
-                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
-                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                        echo '<option value="' . esc_attr( $page->ID ) . '" ' . selected( $current_page, $page->ID, false ) . '>' . esc_html( $page->post_title ) . '</option>';
                     }
                     
                     echo '</select>';
@@ -726,7 +724,7 @@ function wpr_addons_settings_page() {
                             </h4>
 
     
-                                <input type="text" name="wpr_cpt_ppp_<?php echo $key ?>" id="wpr_cpt_ppp_<?php echo $key ?>" value="<?php echo esc_attr(get_option('wpr_cpt_ppp_'. $key, 10)); ?>">
+                                <input type="text" name="wpr_cpt_ppp_<?php echo esc_attr( $key ); ?>" id="wpr_cpt_ppp_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr(get_option('wpr_cpt_ppp_'. $key, 10)); ?>">
                             </div>
                         <?php
                     }
@@ -759,10 +757,10 @@ function wpr_addons_settings_page() {
                     ?>
                         <div class="wpr-woo-template-info">
                             <div class="wpr-woo-template-title">
-                                <h4><?php echo $value; ?></h4>
+                                <h4><?php echo esc_html( $value ); ?></h4>
                             </div>
-                            <input type="checkbox" name="wpr_meta_secondary_image_<?php echo $key ?>" id="wpr_meta_secondary_image_<?php echo $key ?>" <?php echo checked( get_option('wpr_meta_secondary_image_'. $key, 'on'), 'on', false ); ?>>
-                            <label for="wpr_meta_secondary_image_<?php echo $key ?>"></label>
+                            <input type="checkbox" name="wpr_meta_secondary_image_<?php echo esc_attr( $key ); ?>" id="wpr_meta_secondary_image_<?php echo esc_attr( $key ); ?>" <?php echo checked( get_option('wpr_meta_secondary_image_'. $key, 'on'), 'on', false ); ?>>
+                            <label for="wpr_meta_secondary_image_<?php echo esc_attr( $key ); ?>"></label>
                         </div>
                     <?php
                 }
