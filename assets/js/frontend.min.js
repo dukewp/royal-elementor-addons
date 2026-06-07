@@ -1520,6 +1520,9 @@
 			} else {
 				// Mouse Over
 				subMenuFirst.on( 'mouseenter', function() {
+					if ( $(this).hasClass('wpr-mega-menu-width-stretch') ) {
+						megaMenuStretchWidth( $(this) );
+					}
 					subMenuAnimation( $(this).children('.wpr-sub-menu, .wpr-sub-mega-menu'), true );
 				});
 
@@ -1698,6 +1701,64 @@
 				fullWidthMobileDropdown();
 			});
 
+			// Fit to Section (wpr-mega-menu-width-stretch) — recalc for replace-header / fixed positioning
+			function megaMenuStretchWidth( $megaItem ) {
+				let megaSubMenu = $megaItem.find('.wpr-sub-mega-menu');
+
+				if ( !megaSubMenu.length || !$megaItem.is(':visible') || $scope.closest('.wpr-visibility-hidden').length ) {
+					return;
+				}
+
+				// Sections (Old)
+				if ( 0 === $megaItem.closest('.e-con').length ) {
+					var elContainer = $megaItem.closest('.elementor-section');
+						elContainer = elContainer.hasClass('elementor-inner-section') ? elContainer : elContainer.children('.elementor-container');
+
+					var elWidgetGap = !elContainer.hasClass('elementor-inner-section') ? elContainer.find('.elementor-element-populated').css('padding') : '0';
+						elWidgetGap = parseInt(elWidgetGap.replace('px', ''), 10);
+
+				// Container (New)
+				} else {
+					var elContainer = $megaItem.closest('.e-con-inner');
+
+					var elWidgetGap = elContainer.find('.elementor-element.e-con').css('padding'),
+						elWidgetGap = parseInt(elWidgetGap, 10);
+				}
+
+				if ( isNaN( elWidgetGap ) ) {
+					elWidgetGap = 0;
+				}
+
+				if ( elContainer.length === 0 ) {
+					return;
+				}
+
+				let menuContainer = $scope.find('.wpr-nav-menu-container'),
+					menuOffsetEl = menuContainer.length ? menuContainer : $scope,
+					useViewportRects = $scope.closest('.wpr-hidden-header, .wpr-hidden-header-flex').length,
+					elContainerWidth, offsetLeft;
+
+				if ( useViewportRects ) {
+					let containerRect = elContainer[0].getBoundingClientRect(),
+						menuRect = menuOffsetEl[0].getBoundingClientRect();
+
+					elContainerWidth = containerRect.width - (elWidgetGap * 2);
+					offsetLeft = containerRect.left - menuRect.left + elWidgetGap;
+				} else {
+					elContainerWidth = elContainer.outerWidth() - (elWidgetGap * 2);
+					offsetLeft = -($scope.offset().left - elContainer.offset().left) + elWidgetGap;
+				}
+
+				if ( elContainerWidth <= 0 ) {
+					return;
+				}
+
+				megaSubMenu.css({
+					'width' : elContainerWidth +'px',
+					'left' : offsetLeft +'px'
+				});
+			}
+
 			// Mega Menu Full or Custom Width
 			function MegaMenuCustomWidth() {
 				let megaItem = $scope.find('.wpr-mega-menu-true');
@@ -1709,35 +1770,9 @@
 						megaSubMenu.css({
 							'max-width' : $(window).width() +'px',
 							'left' : - $scope.find('.wpr-nav-menu-container').offset().left +'px'
-						});	// conditions for sticky replace needed
-					} else if ( $(this).hasClass('wpr-mega-menu-width-stretch') ) {
-						// Sections (Old)
-						if ( 0 === $(this).closest('.e-con').length ) {
-							var elContainer = $(this).closest('.elementor-section');
-								elContainer = elContainer.hasClass('elementor-inner-section') ? elContainer : elContainer.children('.elementor-container');
-
-							var elWidgetGap = !elContainer.hasClass('elementor-inner-section') ? elContainer.find('.elementor-element-populated').css('padding') : '0';
-								elWidgetGap = parseInt(elWidgetGap.replace('px', ''), 10);
-
-						// Container (New)
-						} else {
-							var elContainer = $(this).closest('.e-con-inner');
-
-							var elWidgetGap = elContainer.find('.elementor-element.e-con').css('padding'),
-								elWidgetGap = parseInt(elWidgetGap, 10);
-						}
-						
-						if ( elContainer.length === 0 ) {
-							return;
-						}
-
-						var elContainerWidth = elContainer.outerWidth() - (elWidgetGap * 2),
-							offsetLeft = -($scope.offset().left - elContainer.offset().left) + elWidgetGap;
-
-						megaSubMenu.css({
-							'width' : elContainerWidth +'px',
-							'left' : offsetLeft +'px'
 						});
+					} else if ( $(this).hasClass('wpr-mega-menu-width-stretch') ) {
+						megaMenuStretchWidth( $(this) );
 					} else if ( $(this).hasClass('wpr-mega-menu-width-custom') ) {
 						megaSubMenu.css({
 							'width' : $(this).data('custom-width') +'px',

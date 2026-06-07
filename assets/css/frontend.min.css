@@ -15412,6 +15412,20 @@ flex-grow: 0; */
     font-weight: 600 !important;
 }
 
+.wpr-compare-add svg,
+.wpr-compare-remove svg {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+}
+
+.wpr-compare-add svg path,
+.wpr-compare-remove svg path {
+    fill: currentColor;
+}
+
 /* == Compare Count */
 @-webkit-keyframes compare-popup-grow-in-align-middle {
     0% {-webkit-transform: scale(0) translateX(-50%) translateY(-50%);transform: scale(0) translateX(-50%) translateY(-50%); -webkit-transform-origin: top left; transform-origin: top left;}

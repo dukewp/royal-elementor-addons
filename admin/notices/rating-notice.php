@@ -90,7 +90,7 @@ class WprRatingNotice {
 
             echo '<div class="notice wpr-rating-notice is-dismissible" style="border-left-color: #7A75FF!important; display: flex; align-items: center; position: relative;">
                         <div class="wpr-rating-notice-logo">
-                            <img src="' . WPR_ADDONS_ASSETS_URL . '/img/logo-128x128.png">
+                            <img src="' . esc_url( WPR_ADDONS_ASSETS_URL ) . '/img/logo-128x128.png">
                         </div>
                         <div>
                             <h3>Thank you for using Royal Elementor Addons to build this website!</h3>
@@ -217,7 +217,7 @@ class WprRatingNotice {
                         type: 'POST',
                         data: {
                             action: 'wpr_rating_dismiss_notice',
-                            nonce: '" . wp_create_nonce('wpr-plugin-notice-js') . "'
+                            nonce: '" . esc_js( wp_create_nonce( 'wpr-plugin-notice-js' ) ) . "'
                         },
                         success: function() {
                             $('.wpr-rating-notice').fadeOut();
