@@ -14943,6 +14943,10 @@ flex-grow: 0; */
 }
 
 /* == Compare */
+.elementor-widget-wpr-compare-pro {
+    overflow: hidden;
+}
+
 .wpr-compare-placeholder {
     opacity: 0;
 }
@@ -15154,6 +15158,10 @@ flex-grow: 0; */
 
 .wpr-wishlist-table tbody tr:last-child td {
     border-bottom-style: none !Important;
+}
+
+.elementor-widget-wpr-wishlist-pro {
+    overflow: hidden;
 }
 
 .elementor-widget-wpr-wishlist-pro .wpr-wishlist-remove {
