@@ -14979,7 +14979,10 @@ flex-grow: 0; */
 }
 
 .wpr-compare-table th {
-     position: sticky; left: 0; z-index: 1; background-color: #FFF; 
+     /* position: sticky; 
+     left: 0; 
+     z-index: 1;  */
+     background-color: #FFF; 
 }
 
 .wpr-compare-table th:first-child {
