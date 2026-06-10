@@ -933,7 +933,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( has_post_thumbnail() ) {
 			echo '<div class="wpr-grid-image-wrap" data-src="'. esc_url( $src ) .'" data-img-on-hover="'. esc_attr( $settings['secondary_img_on_hover'] ) .'"  data-src-secondary="'. esc_url( $src2 ) .'">';
 				if ( 'yes' == $settings['grid_lazy_loading'] ) {
-					echo '<img data-no-lazy="1" src="'. WPR_ADDONS_ASSETS_URL . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
+					echo '<img data-no-lazy="1" src="'. esc_url( WPR_ADDONS_ASSETS_URL ) . 'img/icon-256x256.png" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-image wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					if ( 'yes' == $settings['secondary_img_on_hover'] ) {
 						echo '<img data-no-lazy="1" src="'. esc_url( $src2 ) . '" alt="'. esc_attr( $alt ) .'" class="wpr-hidden-img wpr-anim-timing-'. esc_attr($settings[ 'image_effects_animation_timing']) .'">';
 					}
@@ -965,7 +965,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public static function render_post_title( $settings, $class, $general_settings = '' ) {
 		$title_pointer = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'none' : $general_settings['title_pointer'];
 		$title_pointer_animation = !defined('WPR_ADDONS_PRO_VERSION') || !wpr_fs()->can_use_premium_code() ? 'fade' : $general_settings['title_pointer_animation'];
-		$pointer_item_class = (isset($general_settings['title_pointer']) && 'none' !==$general_settings['title_pointer']) ? 'class="wpr-pointer-item"' : '';
+		$pointer_item_class = (isset($general_settings['title_pointer']) && 'none' !==$general_settings['title_pointer']) ? 'wpr-pointer-item' : '';
 		$open_links_in_new_tab = 'yes' === $general_settings['open_links_in_new_tab'] ? '_blank' : '_self';
 
 		$class .= ' wpr-pointer-'. $title_pointer;
@@ -977,7 +977,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '<'. esc_attr($element_title_tag) .' class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				$title_link_url = is_array( $general_settings ) ? self::get_grid_item_link_url( $general_settings ) : get_the_permalink();
-				echo '<a target="'. $open_links_in_new_tab .'" '. $pointer_item_class .' href="'. esc_url( $title_link_url ) .'">';
+				echo '<a target="'. esc_attr( $open_links_in_new_tab ) .'"' . ( '' !== $pointer_item_class ? ' class="'. esc_attr( $pointer_item_class ) .'"' : '' ) . ' href="'. esc_url( $title_link_url ) .'">';
 					if ( 'word_count' === $settings['element_trim_text_by'] ) {
 						echo esc_html(wp_trim_words( get_the_title(), $settings['element_word_count'] ));
 					} else {
@@ -1053,7 +1053,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-left">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 
@@ -1071,7 +1071,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-right">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 				// Text: After
@@ -1099,7 +1099,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-left">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 
@@ -1113,7 +1113,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-right">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 				// Text: After
@@ -1146,7 +1146,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-left">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 					if ( 'yes' === $settings['element_show_avatar'] ) {
@@ -1162,7 +1162,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-right">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 				echo '</a>';
@@ -1205,7 +1205,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$extra_icon = ob_get_clean();
 		
 						echo '<span class="wpr-grid-extra-icon-left">';
-							echo $extra_icon;
+							echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 						echo '</span>';
 					}
 
@@ -1218,7 +1218,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$extra_icon = ob_get_clean();
 			
 						echo '<span class="wpr-grid-extra-icon-right">';
-							echo $extra_icon;
+							echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 						echo '</span>';
 					}
 
@@ -1240,7 +1240,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
-				echo '<a target="'. $open_links_in_new_tab .'" href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
+				echo '<a target="'. esc_attr( $open_links_in_new_tab ) .'" href="'. esc_url( get_the_permalink() ) .'" class="wpr-button-effect '. esc_attr($read_more_animation) .'">';
 
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
@@ -1249,7 +1249,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-left">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 
@@ -1263,7 +1263,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-right">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 
@@ -1505,7 +1505,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-left">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 
@@ -1537,7 +1537,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-right">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 				// Text: After
@@ -1594,7 +1594,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 		
 					echo '<span class="wpr-grid-extra-icon-left">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 
@@ -1636,7 +1636,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$extra_icon = ob_get_clean();
 
 					echo '<span class="wpr-grid-extra-icon-right">';
-						echo $extra_icon;
+						echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 					echo '</span>';
 				}
 				// Text: After
