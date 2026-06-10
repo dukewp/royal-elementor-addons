@@ -725,7 +725,7 @@ class Plugin {
 			[
 				'jquery',
 			],
-			'',
+			'1.0.0',
 			true
 		);
 
@@ -763,7 +763,7 @@ class Plugin {
 			'wpr-google-maps',
 			'https://maps.googleapis.com/maps/api/js?key='. esc_attr(get_option('wpr_google_map_api_key')) . '&language='. esc_attr(get_option('wpr_google_map_language')),
 			[],
-			'',
+			'1.0.0',
 			true
 		);
 
