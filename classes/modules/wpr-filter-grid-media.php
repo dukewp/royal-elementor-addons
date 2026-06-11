@@ -465,7 +465,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
 				}
 
-				echo wp_kses_post( $post_likes->get_button( $post_id, $settings ) );
+				echo $post_likes->get_button( $post_id, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WPR_Post_Likes::get_button() returns pre-escaped HTML.
 
 				// Text: After
 				if ( 'after' === $settings['element_extra_text_pos'] ) {

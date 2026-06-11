@@ -20,7 +20,7 @@ When creating or changing REA widgets, inspect nearby free/pro widgets first and
 
 - Widgets extend `Elementor\Widget_Base`; class names usually use `Wpr_Foo_Bar` or `Wpr_Foo_Bar_Pro`, with slugs like `wpr-foo-bar` or `wpr-foo-bar-pro`.
 - Provide `get_name()`, `get_title()`, `get_icon()`, `get_categories()`, and useful `get_keywords()`. Use text domain `wpr-addons` for both free and pro.
-- Prefer `esc_html__()` for plain labels, `esc_html_e()` for direct output, `esc_attr()` for attributes, `esc_url()` for URLs, and `wp_kses_post()` or narrow `wp_kses()` only when HTML is intentionally allowed.
+- Prefer `esc_html__()` for plain labels, `esc_html_e()` for direct output, `esc_attr()` for attributes, `esc_url()` for URLs, and `wp_kses_post()` or narrow `wp_kses()` only when HTML is intentionally allowed. **Exception:** Elementor/REA icon markup — see **Icon and trusted HTML output** below; do not use `wp_kses_post()` there.
 - For Elementor optimized markup support, follow nearby widgets that implement `has_widget_inner_wrapper()` and adjust selectors when wrapper markup changes.
 - Keep controls grouped by Elementor tabs/sections, use `selectors`/CSS variables for styling controls, and prefer REA helpers such as `Utilities::wpr_library_buttons()`, `upgrade_pro_notice()`, and `pro_features_list_section()` where the existing widget family uses them.
 - **Library buttons:** Call `Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );` at the top of the first content section when the widget should show Widget Preview / Predefined Styles in the panel. The helper outputs a wrapper `div` with class equal to `get_name()` (e.g. `wpr-unfold`). If the widget has no predefined styles library (preview only), hide the second link in `assets/css/admin/editor.min.css` by adding `.elementor-control-wpr_library_buttons .<widget-slug> a:last-child` to the existing hide rule block (same list as `wpr-forms`, `wpr-phone-call`, etc.).
@@ -33,3 +33,40 @@ When creating or changing REA widgets, inspect nearby free/pro widgets first and
 - In `render()`, use `$this->get_settings_for_display()`, escape every dynamic output, sanitize request/API inputs, cache remote API responses with transients where appropriate, and render editor-friendly demo/error states when external data is missing.
 - Avoid inline styles/scripts in PHP render methods except tiny values that must be dynamic and cannot be expressed through Elementor selectors or CSS variables.
 - Use existing patterns as the baseline, but recommend or implement better abstractions when they reduce real duplication, clarify free/pro behavior, or make a new widget safer without widening the task unnecessarily.
+
+## Icon and trusted HTML output
+
+When fixing PHPCS `WordPress.Security.EscapeOutput.OutputNotEscaped`, **do not wrap Elementor or REA icon HTML in `wp_kses_post()`**. It strips the markup icons need and they disappear on the frontend.
+
+**Why `wp_kses_post()` breaks icons**
+
+- Font Awesome / Elementor font icons: `<i class="fas fa-star" aria-hidden="true"></i>` — the post allowlist keeps `<i>` but **removes `class`**, so the glyph does not render.
+- Inline SVG (`e_font_icon_svg`) and uploaded SVG icons: `<svg>`, `<path>`, and related attributes are **not** in the post allowlist, so the whole icon is removed.
+
+**Applies to**
+
+- Output buffered from `\Elementor\Icons_Manager::render_icon()` (e.g. `$extra_icon` via `ob_start()` / `ob_get_clean()`).
+- `Utilities::get_wpr_icon()` and `Utilities::get_post_sharing_icon()` when echoed as HTML (SVG or `<i>`).
+
+**Correct pattern (PHPCS-safe, icons still work)**
+
+```php
+ob_start();
+\Elementor\Icons_Manager::render_icon( $settings['element_extra_icon'], [ 'aria-hidden' => 'true' ] );
+$extra_icon = ob_get_clean();
+
+echo '<span class="wpr-grid-extra-icon-left">';
+echo $extra_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
+echo '</span>';
+```
+
+Same `phpcs:ignore` approach for `Utilities::get_wpr_icon()` / `get_post_sharing_icon()` — see `wpr-grid-helpers.php` pagination and `wpr-popup-trigger.php` for existing examples.
+
+**Alternatives**
+
+- Render inline without a buffer (Elementor’s own widgets call `Icons_Manager::render_icon()` directly in the template).
+- A custom `wp_kses()` allowlist that permits `i[class]`, `svg`, `path`, etc. — only if a project-wide helper is added; do not reach for `wp_kses_post()` as a shortcut.
+
+**Plugin asset URLs**
+
+- Constants such as `WPR_ADDONS_ASSETS_URL` (from `plugins_url()`) are trusted; still prefer `esc_url( WPR_ADDONS_ASSETS_URL . 'img/...' )` in `src`/`href` for consistency and PHPCS, but missing `esc_url()` there is not a practical XSS risk.

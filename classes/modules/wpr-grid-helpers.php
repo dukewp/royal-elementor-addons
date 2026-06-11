@@ -1288,7 +1288,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					echo '<span class="wpr-grid-extra-text-left">'. esc_html( $settings['element_extra_text'] ) .'</span>';
 				}
 
-				echo $post_likes->get_button( $post_id, $settings );
+				echo $post_likes->get_button( $post_id, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WPR_Post_Likes::get_button() returns pre-escaped HTML.
 
 				// Text: After
 				if ( 'after' === $settings['element_extra_text_pos'] ) {
@@ -1335,17 +1335,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 								echo '<span class="wpr-sharing-tooltip wpr-tooltip">'. esc_html__( 'Share', 'wpr-addons' ) .'</span>';
 							}
 
-							echo Utilities::get_wpr_icon( $settings['element_sharing_trigger_icon'], '' );
+							echo Utilities::get_wpr_icon( $settings['element_sharing_trigger_icon'], '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo '</a>';
 					}
 
 
-					echo '<span class="wpr-post-sharing-inner'. $hidden_class .'">';
+					echo '<span class="wpr-post-sharing-inner' . esc_attr( $hidden_class ) . '">';
 
 					for ( $i = 1; $i < 7; $i++ ) {
 						$args['network'] = $settings['element_sharing_icon_'. $i];
 
-						echo Utilities::get_post_sharing_icon( $args );
+						echo Utilities::get_post_sharing_icon( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 
 					echo '</span>';
@@ -1485,7 +1485,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			return;
 		}
 
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_custom_field_style'] .'">';
+		echo '<div class="'. esc_attr( trim( $class . ' ' . $settings['element_custom_field_style'] ) ) .'">';
 			echo '<div class="inner-block">';
 				if ( 'yes' === $settings['element_custom_field_btn_link'] ) {
 					$target = 'yes' === $settings['element_custom_field_new_tab'] ? '_blank' : '_self';
@@ -1522,9 +1522,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						echo '<'. esc_attr($element_cf_tag) .'>';
 							if ( 'yes' === $settings['element_custom_field_wrapper'] ) {
-								echo str_replace( '*cf_value*', $custom_field_value, $custom_field_html );
+								echo wp_kses_post( str_replace( '*cf_value*', esc_html( $custom_field_value ), $custom_field_html ) );
 							} else {
-								echo $custom_field_value;
+								echo esc_html( $custom_field_value );
 							}
 						echo '</'. esc_attr($element_cf_tag) .'>';
 					}
@@ -1622,7 +1622,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						echo '<style>'. esc_html($custom_tax_styles) .'</style>'; // TODO: take out of loop if possible
 					}
 
-					echo '<a class="'. $pointer_item_class .' wpr-tax-id-'. esc_attr($term->term_id) .'" href="'. esc_url( $term_link ) .'">'. esc_html( $term->name );
+					echo '<a class="'. esc_attr( trim( $pointer_item_class . ' wpr-tax-id-' . $term->term_id ) ) .'" href="'. esc_url( $term_link ) .'">'. esc_html( $term->name );
 						if ( ++$count !== count( $terms ) ) {
 							echo '<span class="tax-sep">'. esc_html($settings['element_tax_sep']) .'</span>';
 						}
