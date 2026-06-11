@@ -13648,6 +13648,13 @@ select.wpr-category-select {
     cursor: pointer;
 }
 
+svg[class*="wpr-insta-feed-extra-icon"],
+.wpr-insta-feed-item-lightbox .inner-block > span > svg {
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+}
+
 .wpr-insta-feed-lightbox-overlay {
     position: absolute;
     top: 0;
