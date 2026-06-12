@@ -1260,6 +1260,7 @@ li.wpr-mega-menu-pos-default {
     font-size: 11px;
     padding: 2px 5px;
     line-height: 1;
+    /* border-style: none; */
 }
 
 .wpr-nav-menu-horizontal .wpr-mega-menu-badge {
@@ -20651,7 +20652,7 @@ input.wpr-date-filter-end {
     background: -o-linear-gradient(rgba(255, 255, 255, 0), #fff);
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
     background: linear-gradient(rgba(255, 255, 255, 0), #fff);
-    z-index: 11;
+    z-index: 1;
     height: 100%;
 }
 
