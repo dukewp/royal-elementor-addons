@@ -2050,66 +2050,14 @@
 					filtersExperiment();
 				}
 
-				isotopeFilters( settings );
-
 				WprElements.changeInitialItems(0, scopeId);
 
-				// Filtering Transitions
+				// Filtering Transitions (register before isotopeFilters so deep-link arrangeComplete is not missed)
 				iGrid.on( 'arrangeComplete', function( event, filteredItems ) {
-					var deepLinkStager = 0,
-						filterStager = 0,
-						initStager = 0,
-						duration = settings.animation_duration,
-						filterDuration = settings.filters_animation_duration;
-
-					if ( iGrid.hasClass( 'grid-images-loaded' ) ) {
-						initStager = 0;
-					} else {
-						iGrid.css( 'opacity', '1' );
-
-						// Default Animation
-						if ( 'default' === settings.animation && 'default' === settings.filters_animation ) {
-							return;
-						}
-					}
-
-					for ( var key in filteredItems ) {
-						if ( WprElements.getInitialItems(scopeId) == 0 || key > WprElements.getInitialItems(scopeId) - 1 ) {
-							initStager += settings.animation_delay;
-							$scope.find( filteredItems[key]['element'] ).find( '.wpr-grid-item-inner' ).css({
-								'opacity' : '1',
-								'top' : '0',
-								'transform' : 'scale(1)',
-								'transition' : 'all '+ duration +'s ease-in '+ initStager +'s',
-							});
-						}
-
-						filterStager += settings.filters_animation_delay;
-						if ( iGrid.hasClass( 'grid-images-loaded' ) ) {
-							$scope.find( filteredItems[key]['element'] ).find( '.wpr-grid-item-inner' ).css({
-								'transition' : 'all '+ filterDuration +'s ease-in '+ filterStager +'s',
-							});
-						}
-
-						// DeepLinking
-						var deepLink = window.location.hash;
-
-						if ( deepLink.indexOf( '#filter:' ) >= 0 && deepLink.indexOf( '#filter:*' ) < 0 ) {
-							deepLink = deepLink.replace( '#filter:', '' );
-
-							$scope.find( filteredItems[key]['element'] ).filter(function() {
-								if ( $(this).hasClass( deepLink ) ) {
-									deepLinkStager += settings.filters_animation_delay;
-									return $(this);
-								}
-							}).find( '.wpr-grid-item-inner' ).css({
-								'transition-delay' : deepLinkStager +'s'
-							});
-						}
-					}
-
-					WprElements.changeInitialItems(filteredItems.length, scopeId);
+					applyGridFilterTransitions( filteredItems );
 				});
+
+				isotopeFilters( settings );
 
 				// iGrid.imagesLoaded().progress( function( instance, image ) {
 				// });
@@ -2753,6 +2701,67 @@
 
 			lazyLoadObserver();
 
+			function applyGridFilterTransitions( filteredItems ) {
+				var reduceMotion = WprElements.prefersReducedMotion(),
+					deepLinkStager = 0,
+					filterStager = 0,
+					initStager = 0,
+					duration = reduceMotion ? 0 : settings.animation_duration,
+					filterDuration = reduceMotion ? 0 : settings.filters_animation_duration;
+
+				if ( iGrid.hasClass( 'grid-images-loaded' ) ) {
+					initStager = 0;
+				} else {
+					iGrid.css( 'opacity', '1' );
+
+					// Default Animation
+					if ( 'default' === settings.animation && 'default' === settings.filters_animation ) {
+						return;
+					}
+				}
+
+				for ( var key in filteredItems ) {
+					if ( WprElements.getInitialItems(scopeId) == 0 || key > WprElements.getInitialItems(scopeId) - 1 ) {
+						if ( ! reduceMotion ) {
+							initStager += settings.animation_delay;
+						}
+						$scope.find( filteredItems[key]['element'] ).find( '.wpr-grid-item-inner' ).css({
+							'opacity' : '1',
+							'top' : '0',
+							'transform' : 'scale(1)',
+							'transition' : reduceMotion ? 'none' : 'all '+ duration +'s ease-in '+ initStager +'s',
+						});
+					}
+
+					if ( ! reduceMotion ) {
+						filterStager += settings.filters_animation_delay;
+					}
+					if ( iGrid.hasClass( 'grid-images-loaded' ) ) {
+						$scope.find( filteredItems[key]['element'] ).find( '.wpr-grid-item-inner' ).css({
+							'transition' : reduceMotion ? 'none' : 'all '+ filterDuration +'s ease-in '+ filterStager +'s',
+						});
+					}
+
+					// DeepLinking
+					var deepLink = window.location.hash;
+
+					if ( ! reduceMotion && deepLink.indexOf( '#filter:' ) >= 0 && deepLink.indexOf( '#filter:*' ) < 0 ) {
+						deepLink = deepLink.replace( '#filter:', '' );
+
+						$scope.find( filteredItems[key]['element'] ).filter(function() {
+							if ( $(this).hasClass( deepLink ) ) {
+								deepLinkStager += settings.filters_animation_delay;
+								return true;
+							}
+						}).find( '.wpr-grid-item-inner' ).css({
+							'transition-delay' : deepLinkStager +'s'
+						});
+					}
+				}
+
+				WprElements.changeInitialItems(filteredItems.length, scopeId);
+			}
+
 			// Isotope Filters
 			function isotopeFilters( settings, event = 'load' ) { // GOGA: event listener parameter to determine load or other event
 
@@ -2831,6 +2840,17 @@
 
 					$scope.find( '.wpr-grid' ).isotopewpr({ filter: deepLink });
 
+					// Fallback when arrangeComplete never fires (e.g. prefers-reduced-motion / Windows animations off)
+					if ( WprElements.prefersReducedMotion() ) {
+						setTimeout( function() {
+							var isoInstance = $scope.find( '.wpr-grid' ).data( 'isotope' );
+
+							if ( isoInstance && isoInstance.filteredItems ) {
+								applyGridFilterTransitions( isoInstance.filteredItems );
+							}
+						}, 0 );
+					}
+
 					// Fix Lightbox
 					if ( '*' !== deepLink ) {
 						settings.lightbox.selector = deepLink +' .wpr-grid-image-wrap';
@@ -2860,8 +2880,11 @@
 				if ( !$scope.hasClass('elementor-widget-wpr-woo-category-grid-pro') && !$scope.hasClass('elementor-widget-wpr-category-grid-pro') ) {
 					if ( '' !== settings.filters_default_filter ) {
 						setTimeout(function() {
-							$scope.find( '.wpr-grid-filters' ).find('span[data-filter*="-'+ settings.filters_default_filter +'"]')[0].click();
-						}, 100)
+							var $defaultFilter = $scope.find( '.wpr-grid-filters' ).find('span[data-filter*="-'+ settings.filters_default_filter +'"]');
+							if ( $defaultFilter.length ) {
+								$defaultFilter.eq(0).click();
+							}
+						}, 100);
 					}
 				}
 
@@ -7105,7 +7128,9 @@
 				revealWidget();
 			}
 
-			if ( !$scope.find('.wpr-google-reviews-slider.swiper').length ) {
+			var $sliders = $scope.find('.wpr-google-reviews-slider.swiper');
+
+			if ( !$sliders.length ) {
 				revealWidget();
 				return;
 			}
@@ -7119,7 +7144,7 @@
 
 			var swiperPromises = [];
 
-			$scope.find('.wpr-google-reviews-slider.swiper').each(function() {
+			$sliders.each(function() {
 				var swiperSlider = $(this);
 				var slidestoshow = +swiperSlider.data('slidestoshow') || 1;
 				var slidestoscroll = +swiperSlider.data('slidestoscroll') || 1;
@@ -7132,11 +7157,11 @@
 						spaceBetween: +swiperSlider.data('swiper-space-between') || 0,
 						loop: swiperSlider.data('loop') === 'yes',
 						autoplay: swiperSlider.data('autoplay') !== 'yes' ? false : {
-							delay: +swiperSlider.attr('data-swiper-delay'),
+							delay: +swiperSlider.data('swiper-delay'),
 							disableOnInteraction: false,
 							pauseOnMouseEnter: swiperSlider.data('swiper-poh') === 'yes',
 						},
-						speed: +swiperSlider.attr('data-swiper-speed') || 500,
+						speed: +swiperSlider.data('swiper-speed') || 500,
 						slidesPerView: slidestoshow,
 						slidesPerGroup: Math.min(slidestoscroll, slidestoshow),
 						direction: 'horizontal',
@@ -7179,19 +7204,29 @@
 
 		widgetTwitterFeed: function($scope) {
 
-			if ($scope.find('.wpr-twitter-feed').attr( 'data-settings' )) {
-				var settings = JSON.parse( $scope.find('.wpr-twitter-feed').attr( 'data-settings' ) );
-			} else {
+			let twitterFeed = $scope.find('.wpr-twitter-feed');
+			var twitterFeedSettings = twitterFeed.attr( 'data-settings' );
+
+			if ( !twitterFeedSettings ) {
 				return;
 			}
 
-			let twitterFeed = $scope.find('.wpr-twitter-feed');
-			
-			var settings = JSON.parse( twitterFeed.attr( 'data-settings' ) );
+			var settings = JSON.parse( twitterFeedSettings );
 			var loadMoreSettings = settings.twitter_load_more_settings;
 
 			var nextPostsIndex = loadMoreSettings.number_of_posts;
 			var pagination = $scope.find( '.wpr-grid-pagination' );
+			var $window = $(window);
+			var scopeId = $scope.attr('data-id') || '0';
+			var twitterLayoutNamespace = '.wprTwitterFeedLayout' + scopeId;
+			var twitterResizeTimer = null;
+			var responsiveBreakpoints = elementorFrontend.config.responsive.breakpoints;
+			var mobileResp = +responsiveBreakpoints.mobile.value;
+			var mobileExtraResp = +responsiveBreakpoints.mobile_extra.value;
+			var tabletResp = +responsiveBreakpoints.tablet.value;
+			var tabletExtraResp = +responsiveBreakpoints.tablet_extra.value;
+			var laptopResp = +responsiveBreakpoints.laptop.value;
+			var widescreenResp = +responsiveBreakpoints.widescreen.value;
 
 			if ( $scope.hasClass('wpr-twitter-feed-masonry') ) {
 				// Init Functions
@@ -7209,60 +7244,53 @@
 					}, 1000 );
 				}
 
-				$( window ).on( 'load', function() {
+				$window.off( 'load' + twitterLayoutNamespace ).on( 'load' + twitterLayoutNamespace, function() {
 					setTimeout(function() {
 						isotopeLayout( settings );
 					}, 100 );
 				});
 
-				$(window).smartresize(function(){
-					setTimeout(function() {
+				$window.off( 'resize' + twitterLayoutNamespace ).on( 'resize' + twitterLayoutNamespace, function(){
+					clearTimeout( twitterResizeTimer );
+					twitterResizeTimer = setTimeout(function() {
 						isotopeLayout( settings );
 					}, 200 );
 				});
 			}
 
 			function isotopeLayout( settings ) {
-				var twitterFeed = $scope.find( '.wpr-twitter-feed' ),
-					item = twitterFeed.find( '.wpr-tweet' ),
+				var item = twitterFeed.find( '.wpr-tweet' ),
 					layout = settings.layout_select,
 					columns = 3,
 					gutterHr = settings.gutter_hr,
 					gutterVr = settings.gutter_vr,
 					contWidth = twitterFeed.width() + gutterHr - 0.3,
-					viewportWidth = $(window).outerWidth(),
+					viewportWidth = $window.outerWidth(),
 					transDuration = 400;
 
-					var MobileResp = +elementorFrontend.config.responsive.breakpoints.mobile.value;
-					var MobileExtraResp = +elementorFrontend.config.responsive.breakpoints.mobile_extra.value;
-					var TabletResp = +elementorFrontend.config.responsive.breakpoints.tablet.value;
-					var TabletExtraResp = +elementorFrontend.config.responsive.breakpoints.tablet_extra.value;
-					var LaptopResp = +elementorFrontend.config.responsive.breakpoints.laptop.value;
-					var wideScreenResp = +elementorFrontend.config.responsive.breakpoints.widescreen.value;
-
 				// Mobile
-				if (MobileResp >= viewportWidth ) {
+				if (mobileResp >= viewportWidth ) {
 					columns = (settings.columns_mobile) ? (settings.columns_mobile) : 1;
 				// Mobile Extra
-				} else if ( MobileExtraResp >= viewportWidth ) {
+				} else if ( mobileExtraResp >= viewportWidth ) {
 					columns = (settings.columns_mobile_extra) ? settings.columns_mobile_extra : settings.columns_tablet ? settings.columns_tablet : settings.columns;
 				// Tablet
-				} else if ( TabletResp >= viewportWidth ) {
+				} else if ( tabletResp >= viewportWidth ) {
 					columns = (settings.columns_tablet) ? settings.columns_tablet : 2;
 				// Tablet Extra
-				} else if ( TabletExtraResp >= viewportWidth ) {
+				} else if ( tabletExtraResp >= viewportWidth ) {
 					columns = (settings.columns_tablet_extra) ? settings.columns_tablet_extra : settings.columns_tablet ? settings.columns_tablet : settings.columns;
 
 				// Laptop
-				} else if (  LaptopResp >= viewportWidth ) {
+				} else if (  laptopResp >= viewportWidth ) {
 					columns = (settings.columns_laptop) ? settings.columns_laptop : settings.columns;
 
 				// Desktop
-				} else if ( wideScreenResp - 1 >= viewportWidth ) {
+				} else if ( widescreenResp - 1 >= viewportWidth ) {
 					columns = settings.columns;
 
 				// Larger Screens
-				} else if ( wideScreenResp <= viewportWidth ) {
+				} else if ( widescreenResp <= viewportWidth ) {
 					columns = (settings.columns_widescreen) ? settings.columns_widescreen : settings.columns;
 				} else {
 					columns = settings.columns
@@ -7290,9 +7318,6 @@
 					item.last().css( 'margin-bottom', '0' );
 				}
 
-				// add last row & make all post equal height
-				var maxTop = -1;
-
 				// Run Isotope
 				var twitterFeedMasonry = twitterFeed.isotopewpr({
 					layoutMode: layout,
@@ -7312,7 +7337,7 @@
 			}
 
 			if ( !WprElements.editorCheck() ) {
-				$scope.find('.wpr-load-more-twitter-posts').on('click', function() {
+				$scope.find('.wpr-load-more-twitter-posts').off('click' + twitterLayoutNamespace).on('click' + twitterLayoutNamespace, function() {
 					pagination.find( '.wpr-load-more-btn' ).hide();
 					pagination.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
 					// pagination.find( '.wpr-pagination-finish' ).fadeIn(  );
@@ -7487,16 +7512,30 @@
             }
 
             let instaFeed = $scope.find('.wpr-instagram-feed');
-        
-            if ( instaFeed.attr( 'data-settings' ) ) {
-                var settings = JSON.parse( instaFeed.attr( 'data-settings' ) );
-                var loadMoreSettings = settings.insta_load_more_settings;
+            var instaFeedSettings = instaFeed.attr( 'data-settings' );
+
+            if ( !instaFeedSettings ) {
+                return;
             }
+
+            var settings = JSON.parse( instaFeedSettings );
+            var loadMoreSettings = settings.insta_load_more_settings;
             
             var widgetID = $scope.attr('data-id');
 			
             var nextPostsIndex = loadMoreSettings.limit;
-            var pagination = $scope.find( '.wpr-grid-pagination' ); // Isotope Layout
+            var pagination = $scope.find('.wpr-grid-pagination'); // Isotope Layout
+            var $window = $(window);
+            var instagramLayoutNamespace = '.wprInstagramFeedLayout' + ( widgetID || '0' );
+            var instagramMasonryResizeTimer = null;
+            var instagramListResizeTimer = null;
+            var responsiveBreakpoints = elementorFrontend.config.responsive.breakpoints;
+            var mobileResp = +responsiveBreakpoints.mobile.value;
+            var mobileExtraResp = +responsiveBreakpoints.mobile_extra.value;
+            var tabletResp = +responsiveBreakpoints.tablet.value;
+            var tabletExtraResp = +responsiveBreakpoints.tablet_extra.value;
+            var laptopResp = +responsiveBreakpoints.laptop.value;
+            var widescreenResp = +responsiveBreakpoints.widescreen.value;
 
             if ( $scope.hasClass('wpr-insta-feed-layout-full-width') ) {
                 if ( loadMoreSettings.limit > $scope.find('.wpr-insta-feed-content-wrap').length ) {
@@ -7520,14 +7559,15 @@
                     }, 1000 );
                 }
 
-                $( window ).on( 'load', function() {
+                $window.off( 'load' + instagramLayoutNamespace ).on( 'load' + instagramLayoutNamespace, function() {
                     setTimeout(function() {
                         isotopeLayout( settings );
                     }, 100 );
                 });
 
-                $(window).smartresize(function(){
-                    setTimeout(function() {
+                $window.off( 'resize' + instagramLayoutNamespace ).on( 'resize' + instagramLayoutNamespace, function(){
+                    clearTimeout( instagramMasonryResizeTimer );
+                    instagramMasonryResizeTimer = setTimeout(function() {
                         isotopeLayout( settings );
                     }, 200 );
                 });
@@ -7542,7 +7582,9 @@
                     'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
                 });
 
-                $(window).smartresize(function() {
+                $window.off( 'resize' + instagramLayoutNamespace + 'List' ).on( 'resize' + instagramLayoutNamespace + 'List', function() {
+                    clearTimeout( instagramListResizeTimer );
+                    instagramListResizeTimer = setTimeout(function() {
                     mediaAlign = settings.media_align,
                     mediaWidth = settings.media_width,
                     mediaDistance = settings.media_distance;
@@ -7550,50 +7592,43 @@
                         'float' : mediaAlign,
                         'width' : 'calc((100% - '+ mediaWidth +'%) - '+ mediaDistance +'px)',
                     });
+                    }, 200 );
                 });
             }
 
             function isotopeLayout( settings ) {
-                var instaFeed = $scope.find( '.wpr-instagram-feed' ),
-                    item = instaFeed.find( '.wpr-insta-feed-content-wrap' ),
+                var item = instaFeed.find( '.wpr-insta-feed-content-wrap' ),
                     layout = settings.insta_layout_select,
                     columns = 3,
                     gutterHr = settings.gutter_hr,
                     gutterVr = settings.gutter_vr,
                     contWidth = instaFeed.width() + gutterHr - 0.3,
-                    viewportWidth = $(window).outerWidth(),
+                    viewportWidth = $window.outerWidth(),
                     transDuration = 400;
 
-                    var MobileResp = +elementorFrontend.config.responsive.breakpoints.mobile.value;
-                    var MobileExtraResp = +elementorFrontend.config.responsive.breakpoints.mobile_extra.value;
-                    var TabletResp = +elementorFrontend.config.responsive.breakpoints.tablet.value;
-                    var TabletExtraResp = +elementorFrontend.config.responsive.breakpoints.tablet_extra.value;
-                    var LaptopResp = +elementorFrontend.config.responsive.breakpoints.laptop.value;
-                    var wideScreenResp = +elementorFrontend.config.responsive.breakpoints.widescreen.value;
-
                 // Mobile
-                if (MobileResp >= viewportWidth ) {
+                if (mobileResp >= viewportWidth ) {
                     columns = (settings.columns_mobile) ? (settings.columns_mobile) : 1;
                 // Mobile Extra
-                } else if ( MobileExtraResp >= viewportWidth ) {
+                } else if ( mobileExtraResp >= viewportWidth ) {
                     columns = (settings.columns_mobile_extra) ? settings.columns_mobile_extra : settings.columns_tablet ? settings.columns_tablet : settings.columns;
                 // Tablet
-                } else if ( TabletResp >= viewportWidth ) {
+                } else if ( tabletResp >= viewportWidth ) {
                     columns = (settings.columns_tablet) ? settings.columns_tablet : 2;
                 // Tablet Extra
-                } else if ( TabletExtraResp >= viewportWidth ) {
+                } else if ( tabletExtraResp >= viewportWidth ) {
                     columns = (settings.columns_tablet_extra) ? settings.columns_tablet_extra : settings.columns_tablet ? settings.columns_tablet : settings.columns;
 
                 // Laptop
-                } else if (  LaptopResp >= viewportWidth ) {
+                } else if (  laptopResp >= viewportWidth ) {
                     columns = (settings.columns_laptop) ? settings.columns_laptop : settings.columns;
 
                 // Desktop
-                } else if ( wideScreenResp - 1 >= viewportWidth ) {
+                } else if ( widescreenResp - 1 >= viewportWidth ) {
                     columns = settings.columns;
 
                 // Larger Screens
-                } else if ( wideScreenResp <= viewportWidth ) {
+                } else if ( widescreenResp <= viewportWidth ) {
                     columns = (settings.columns_widescreen) ? settings.columns_widescreen : settings.columns;
                 } else {
                     columns = settings.columns
@@ -7635,8 +7670,11 @@
 
             if ( !WprElements.editorCheck() ) {
                 $scope.find('.wpr-load-more-insta-posts').on('click', function() {
-                    pagination.find( '.wpr-load-more-btn' ).hide();
-                    pagination.find( '.wpr-pagination-loading' ).css( 'display', 'inline-block' );
+                    var $loadMoreBtn = pagination.find( '.wpr-load-more-btn' );
+                    var $paginationLoading = pagination.find( '.wpr-pagination-loading' );
+
+                    $loadMoreBtn.stop( true, true ).hide();
+                    $paginationLoading.stop( true, true ).css( 'display', 'inline-block' );
                     // pagination.find( '.wpr-pagination-finish' ).fadeIn(  );
                     // pagination.delay( 2000 ).fadeOut( 1000 );
                     // setTimeout(function() {
@@ -7690,17 +7728,18 @@
                                     });
     
                                     // Loading
-                                    pagination.find( '.wpr-pagination-loading' ).hide();
+                                    $paginationLoading.stop( true, true ).hide();
     
                                     if (data.includes('wpr-insta-feed-content-wrap')) {
                                         setTimeout(function() {
-                                            pagination.find( '.wpr-load-more-btn' ).fadeIn();
+                                            pagination.find( '.wpr-load-more-btn' ).show();
                                         }, 400);
                                     } else {
+                                        $loadMoreBtn.stop( true, true ).hide();
                                         pagination.find( '.wpr-pagination-finish' ).fadeIn( 1000 );
                                         pagination.delay( 2000 ).fadeOut( 1000 );
                                         setTimeout(function() {
-                                            pagination.find( '.wpr-pagination-loading' ).hide();
+                                            $paginationLoading.stop( true, true ).hide();
                                         }, 500 );
                                     }
 
@@ -7719,6 +7758,7 @@
                                 }
     
                                 mediaHoverLink();
+                                postSharing();
                             },
                             error: function(error) {
                                 console.log(error);
@@ -7728,20 +7768,16 @@
                 });
             }
 
-            if ( $scope.find('.wpr-layout-carousel') ) {
+            if ( $scope.find('.wpr-layout-carousel').length ) {
                 instaFeedCarousel();
             }
-            
-            $(document).ready(function() {
-                $scope.find('.wpr-grid-pagination').removeClass('wpr-pagination-hidden'); 
-            });
 
-            $(document).ready(function() {
-                // Handler when all assets (including images) are loaded
-                if ( instaFeed.length ) {
-                    instaFeed.css('opacity', 1);
-                }
-            });
+            pagination.removeClass('wpr-pagination-hidden');
+
+            // Handler when all assets (including images) are loaded
+            if ( instaFeed.length ) {
+                instaFeed.css('opacity', 1);
+            }
 
             if ( WprElements.editorCheck() ) {
                 // Handler when all assets (including images) are loaded
@@ -7764,6 +7800,7 @@
                 mediaHoverLink();
 
                 lightboxPopup( settings );
+                postSharing();
             });
 
             mutationObserver.observe($scope[0], {
@@ -7776,7 +7813,8 @@
                 if ( $scope.find( '.wpr-sharing-trigger' ).length ) {
                     var sharingTrigger = $scope.find( '.wpr-sharing-trigger' ),
                         sharingInner = $scope.find( '.wpr-post-sharing-inner' ),
-                        sharingWidth = 5;
+                        sharingWidth = 5,
+                        sharingAction = sharingTrigger.first().attr( 'data-action' );
 
                     // Calculate Width
                     sharingInner.first().find( 'a' ).each(function() {
@@ -7838,8 +7876,12 @@
                         });
                     }
 
-                    if ( 'click' === sharingTrigger.attr( 'data-action' ) ) {
-                        sharingTrigger.on( 'click', function() {
+                    $scope.off( 'click.wprInstaShare', '.wpr-sharing-trigger' );
+                    $scope.off( 'mouseenter.wprInstaShare', '.wpr-sharing-trigger' );
+                    $scope.off( 'mouseleave.wprInstaShare', '.wpr-insta-feed-item-sharing' );
+
+                    if ( 'click' === sharingAction ) {
+                        $scope.on( 'click.wprInstaShare', '.wpr-sharing-trigger', function() {
                             var sharingInner = $(this).next();
 
                             if ( 'hidden' === sharingInner.css( 'visibility' ) ) {
@@ -7865,7 +7907,7 @@
                             }
                         });
                     } else {
-                        sharingTrigger.on( 'mouseenter', function() {
+                        $scope.on( 'mouseenter.wprInstaShare', '.wpr-sharing-trigger', function() {
                             var sharingInner = $(this).next();
 
                             sharingInner.css( 'visibility', 'visible' );
@@ -7878,7 +7920,7 @@
                                 sharingInner.find( 'a' ).addClass( 'wpr-no-transition-delay' );
                             }, sharingInner.find( 'a' ).length * 100 );
                         });
-                        $scope.find( '.wpr-insta-feed-item-sharing' ).on( 'mouseleave', function() {
+                        $scope.on( 'mouseleave.wprInstaShare', '.wpr-insta-feed-item-sharing', function() {
                             var sharingInner = $(this).find( '.wpr-post-sharing-inner' );
 
                             sharingInner.find( 'a' ).removeClass( 'wpr-no-transition-delay' );
@@ -13804,6 +13846,10 @@
 			finalURL = url;
 		},
 
+		prefersReducedMotion: function() {
+			return window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+		},
+
 		changeInitialItems: function(items, scopeId) {
 			if (scopeId) {
 				WprElements.gridInitialItems[scopeId] = items;
@@ -14119,6 +14165,10 @@
 
 			// No Transition
 			if ( 'default' !== settings.filters_animation ) {
+				transDuration = 0;
+			}
+
+			if ( WprElements.prefersReducedMotion() ) {
 				transDuration = 0;
 			}
 
