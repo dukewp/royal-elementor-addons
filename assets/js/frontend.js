@@ -2050,17 +2050,13 @@
 					filtersExperiment();
 				}
 
-				isotopeFilters( settings );
-
-				WprElements.changeInitialItems(0, scopeId);
-
-				// Filtering Transitions
-				iGrid.on( 'arrangeComplete', function( event, filteredItems ) {
-					var deepLinkStager = 0,
+				function applyGridFilterTransitions( filteredItems, gridSettings ) {
+					var reduceMotion = WprElements.prefersReducedMotion(),
+						deepLinkStager = 0,
 						filterStager = 0,
 						initStager = 0,
-						duration = settings.animation_duration,
-						filterDuration = settings.filters_animation_duration;
+						duration = reduceMotion ? 0 : gridSettings.animation_duration,
+						filterDuration = reduceMotion ? 0 : gridSettings.filters_animation_duration;
 
 					if ( iGrid.hasClass( 'grid-images-loaded' ) ) {
 						initStager = 0;
@@ -2068,39 +2064,43 @@
 						iGrid.css( 'opacity', '1' );
 
 						// Default Animation
-						if ( 'default' === settings.animation && 'default' === settings.filters_animation ) {
+						if ( 'default' === gridSettings.animation && 'default' === gridSettings.filters_animation ) {
 							return;
 						}
 					}
 
 					for ( var key in filteredItems ) {
 						if ( WprElements.getInitialItems(scopeId) == 0 || key > WprElements.getInitialItems(scopeId) - 1 ) {
-							initStager += settings.animation_delay;
+							if ( ! reduceMotion ) {
+								initStager += gridSettings.animation_delay;
+							}
 							$scope.find( filteredItems[key]['element'] ).find( '.wpr-grid-item-inner' ).css({
 								'opacity' : '1',
 								'top' : '0',
 								'transform' : 'scale(1)',
-								'transition' : 'all '+ duration +'s ease-in '+ initStager +'s',
+								'transition' : reduceMotion ? 'none' : 'all '+ duration +'s ease-in '+ initStager +'s',
 							});
 						}
 
-						filterStager += settings.filters_animation_delay;
+						if ( ! reduceMotion ) {
+							filterStager += gridSettings.filters_animation_delay;
+						}
 						if ( iGrid.hasClass( 'grid-images-loaded' ) ) {
 							$scope.find( filteredItems[key]['element'] ).find( '.wpr-grid-item-inner' ).css({
-								'transition' : 'all '+ filterDuration +'s ease-in '+ filterStager +'s',
+								'transition' : reduceMotion ? 'none' : 'all '+ filterDuration +'s ease-in '+ filterStager +'s',
 							});
 						}
 
 						// DeepLinking
 						var deepLink = window.location.hash;
 
-						if ( deepLink.indexOf( '#filter:' ) >= 0 && deepLink.indexOf( '#filter:*' ) < 0 ) {
+						if ( ! reduceMotion && deepLink.indexOf( '#filter:' ) >= 0 && deepLink.indexOf( '#filter:*' ) < 0 ) {
 							deepLink = deepLink.replace( '#filter:', '' );
 
 							$scope.find( filteredItems[key]['element'] ).filter(function() {
 								if ( $(this).hasClass( deepLink ) ) {
-									deepLinkStager += settings.filters_animation_delay;
-									return $(this);
+									deepLinkStager += gridSettings.filters_animation_delay;
+									return true;
 								}
 							}).find( '.wpr-grid-item-inner' ).css({
 								'transition-delay' : deepLinkStager +'s'
@@ -2109,7 +2109,16 @@
 					}
 
 					WprElements.changeInitialItems(filteredItems.length, scopeId);
+				}
+
+				WprElements.changeInitialItems(0, scopeId);
+
+				// Filtering Transitions (register before isotopeFilters so deep-link arrangeComplete is not missed)
+				iGrid.on( 'arrangeComplete', function( event, filteredItems ) {
+					applyGridFilterTransitions( filteredItems, settings );
 				});
+
+				isotopeFilters( settings );
 
 				// iGrid.imagesLoaded().progress( function( instance, image ) {
 				// });
@@ -2831,6 +2840,17 @@
 
 					$scope.find( '.wpr-grid' ).isotopewpr({ filter: deepLink });
 
+					// Fallback when arrangeComplete never fires (e.g. prefers-reduced-motion / Windows animations off)
+					if ( WprElements.prefersReducedMotion() ) {
+						setTimeout( function() {
+							var isoInstance = $scope.find( '.wpr-grid' ).data( 'isotope' );
+
+							if ( isoInstance && isoInstance.filteredItems ) {
+								applyGridFilterTransitions( isoInstance.filteredItems, settings );
+							}
+						}, 0 );
+					}
+
 					// Fix Lightbox
 					if ( '*' !== deepLink ) {
 						settings.lightbox.selector = deepLink +' .wpr-grid-image-wrap';
@@ -2860,8 +2880,11 @@
 				if ( !$scope.hasClass('elementor-widget-wpr-woo-category-grid-pro') && !$scope.hasClass('elementor-widget-wpr-category-grid-pro') ) {
 					if ( '' !== settings.filters_default_filter ) {
 						setTimeout(function() {
-							$scope.find( '.wpr-grid-filters' ).find('span[data-filter*="-'+ settings.filters_default_filter +'"]')[0].click();
-						}, 100)
+							var $defaultFilter = $scope.find( '.wpr-grid-filters' ).find('span[data-filter*="-'+ settings.filters_default_filter +'"]');
+							if ( $defaultFilter.length ) {
+								$defaultFilter.eq(0).click();
+							}
+						}, 100);
 					}
 				}
 
@@ -13823,6 +13846,10 @@
 			finalURL = url;
 		},
 
+		prefersReducedMotion: function() {
+			return window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+		},
+
 		changeInitialItems: function(items, scopeId) {
 			if (scopeId) {
 				WprElements.gridInitialItems[scopeId] = items;
@@ -14138,6 +14165,10 @@
 
 			// No Transition
 			if ( 'default' !== settings.filters_animation ) {
+				transDuration = 0;
+			}
+
+			if ( WprElements.prefersReducedMotion() ) {
 				transDuration = 0;
 			}
 
