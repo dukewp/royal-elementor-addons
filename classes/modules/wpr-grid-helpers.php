@@ -1522,9 +1522,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						echo '<'. esc_attr($element_cf_tag) .'>';
 							if ( 'yes' === $settings['element_custom_field_wrapper'] ) {
-								echo wp_kses_post( str_replace( '*cf_value*', esc_html( $custom_field_value ), $custom_field_html ) );
+								echo wp_kses_post( str_replace( '*cf_value*', $custom_field_value, $custom_field_html ) );
 							} else {
-								echo esc_html( $custom_field_value );
+								echo wp_kses_post( $custom_field_value );
 							}
 						echo '</'. esc_attr($element_cf_tag) .'>';
 					}
