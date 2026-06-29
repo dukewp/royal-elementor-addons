@@ -179,11 +179,50 @@ class WPR_Post_Likes {
 
 		// Output
 		$output  = '<a '. $attributes .'>';
-		$output .= '<i class="'. esc_attr($icon_class) .'"></i>';
+
+		$unliked_icon_class = $settings['element_like_icon'];
+		$liked_icon_class = str_replace( 'far', 'fas', $settings['element_like_icon'] );
+
+		$output .= $this->render_like_icon( $unliked_icon_class, 'unliked' );
+		$output .= $this->render_like_icon( $liked_icon_class, 'liked' );
 		$output .= $this->get_like_count( $like_count, $button_text );
 		$output .= '</a>';
 
 		return $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	** Utility: Render Like Icon
+	*/
+	private function render_like_icon( $icon_class, $state ) {
+		if ( empty( $icon_class ) || ! class_exists( '\Elementor\Icons_Manager' ) ) {
+			return '';
+		}
+
+		ob_start();
+		echo '<span class="wpr-post-like-icon wpr-post-like-icon-' . esc_attr( $state ) . '">';
+		\Elementor\Icons_Manager::render_icon( $this->get_like_icon_data( $icon_class ), [ 'aria-hidden' => 'true' ] );
+		echo '</span>';
+
+		return ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
+	}
+
+	/**
+	** Utility: Like Icon Data
+	*/
+	private function get_like_icon_data( $icon_class ) {
+		if ( 0 === strpos( $icon_class, 'fab ' ) ) {
+			$library = 'fa-brands';
+		} elseif ( 0 === strpos( $icon_class, 'far ' ) ) {
+			$library = 'fa-regular';
+		} else {
+			$library = 'fa-solid';
+		}
+
+		return [
+			'value' => $icon_class,
+			'library' => $library,
+		];
 	}
 
 	/**

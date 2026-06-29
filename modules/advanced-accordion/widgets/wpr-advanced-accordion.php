@@ -48,7 +48,15 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
+		$depends = [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css', 'wpr-lightgallery-css' ];
+
+		if ( ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			$depends[] = 'elementor-icons-fa-solid';
+			$depends[] = 'elementor-icons-fa-regular';
+			$depends[] = 'elementor-icons-fa-brands';
+		}
+
+		return $depends;
 	}
 
     public function get_custom_help_url() {
@@ -157,7 +165,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				'separator' => 'before',
 				'default' => [
 					'value' => 'far fa-edit',
-					'library' => 'regular'
+					'library' => 'fa-regular',
 				]
 			]
 		);
@@ -173,7 +181,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'accordion_title' => esc_html__( 'Title #1', 'wpr-addons' ),
 						'accordion_icon' => [
 							'value' => 'fas fa-desktop',
-							'library' => 'solid'
+							'library' => 'fa-solid',
 						],
 						'accordion_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
 					],
@@ -181,7 +189,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'accordion_title' => esc_html__( 'Title #2', 'wpr-addons' ),
 						'accordion_icon' => [
 							'value' => 'fab fa-telegram-plane',
-							'library' => 'brands'
+							'library' => 'fa-brands',
 						],
 						'accordion_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
 					],
@@ -189,7 +197,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 						'accordion_title' => esc_html__( 'Title #3', 'wpr-addons' ),
 						'accordion_icon' => [
 							'value' => 'fas fa-layer-group',
-							'library' => 'solid'
+							'library' => 'fa-solid',
 						],
 						'accordion_content' => esc_html__( 'Item content. Click the edit button to change this text.', 'wpr-addons' ),
 					]
@@ -1021,7 +1029,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-title-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 				'separator' => 'before',
 			]
@@ -1045,7 +1053,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 				],
 				'selectors' => [
 					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .wpr-advanced-accordion .wpr-acc-button .wpr-toggle-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				]
 			]
 		);
@@ -1245,6 +1253,24 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
+	private function normalize_icon_library( $icon ) {
+		if ( empty( $icon['library'] ) ) {
+			return $icon;
+		}
+
+		$library_map = [
+			'solid' => 'fa-solid',
+			'regular' => 'fa-regular',
+			'brands' => 'fa-brands',
+		];
+
+		if ( isset( $library_map[ $icon['library'] ] ) ) {
+			$icon['library'] = $library_map[ $icon['library'] ];
+		}
+
+		return $icon;
+	}
+
 	public function render_first_icon($settings, $acc) {
 		if ( $settings['change_icons_position'] == 'reverse' ) :
 			if (!empty($settings['toggle_icon'])) : ?>
@@ -1254,7 +1280,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		else :
 			if (!empty($acc['accordion_icon'])) : ?>
 				<span class="wpr-title-icon">
-					<?php \Elementor\Icons_Manager::render_icon( $acc['accordion_icon'], [ 'aria-hidden' => 'true' ] ); ?>
+					<?php \Elementor\Icons_Manager::render_icon( $this->normalize_icon_library( $acc['accordion_icon'] ), [ 'aria-hidden' => 'true' ] ); ?>
 				</span>
 			<?php	endif ;
 		endif;
@@ -1264,7 +1290,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		if ( $settings['change_icons_position'] == 'reverse' ) :
 			if (!empty($acc['accordion_icon'])) : ?>
 				<span class="wpr-title-icon">
-					<?php \Elementor\Icons_Manager::render_icon( $acc['accordion_icon'], [ 'aria-hidden' => 'true' ] ); ?>
+					<?php \Elementor\Icons_Manager::render_icon( $this->normalize_icon_library( $acc['accordion_icon'] ), [ 'aria-hidden' => 'true' ] ); ?>
 				</span>
 			<?php	endif ;
 		else :

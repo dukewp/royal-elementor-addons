@@ -50,7 +50,15 @@ class Wpr_Magazine_Grid extends Widget_Base {
 	}
 
 	public function get_style_depends() {
-		return [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css' ];
+		$depends = [ 'wpr-animations-css', 'wpr-link-animations-css', 'wpr-button-animations-css', 'wpr-loading-animations-css' ];
+
+		if ( ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			$depends[] = 'elementor-icons-fa-solid';
+			$depends[] = 'elementor-icons-fa-regular';
+			$depends[] = 'elementor-icons-fa-brands';
+		}
+
+		return $depends;
 	}
 
     public function get_custom_help_url() {

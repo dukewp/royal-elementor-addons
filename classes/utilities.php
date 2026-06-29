@@ -719,17 +719,26 @@ class Utilities {
 			$output .= '<a href="'. $sharing_url .'" class="wpr-sharing-icon wpr-sharing-'. esc_attr( $args['network'] ) .'" title="" target="_blank">';
 				// Tooltip
 				$output .= 'yes' === $args['tooltip'] ? '<span class="wpr-sharing-tooltip wpr-tooltip">'. esc_html( $network_title ) .'</span>' : '';
-				
-				// Category
-				if ( 'envelope' === $args['network'] || 'print' === $args['network'] ) {
-					$category = 'fas';
-				} else {
-					$category = 'fab';
-				}
 
 				// Icon
 				if ( 'yes' === $args['icons'] ) {
-					$output .= '<i class="'. esc_attr($category) .' fa-'. esc_attr( $args['network'] ) .'"></i>';
+					if ( 'envelope' === $args['network'] || 'print' === $args['network'] ) {
+						$category = 'fas';
+						$library = 'fa-solid';
+					} else {
+						$category = 'fab';
+						$library = 'fa-brands';
+					}
+
+					ob_start();
+					\Elementor\Icons_Manager::render_icon(
+						[
+							'value' => $category . ' fa-' . $args['network'],
+							'library' => $library,
+						],
+						[ 'aria-hidden' => 'true' ]
+					);
+					$output .= ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 				}
 
 				// Label
