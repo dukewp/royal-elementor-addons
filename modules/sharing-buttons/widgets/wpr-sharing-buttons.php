@@ -40,6 +40,14 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
+	public function get_style_depends() {
+		if ( \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			return [];
+		}
+
+		return [ 'elementor-icons-fa-solid', 'elementor-icons-fa-brands' ];
+	}
+
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-social-sharing-buttons-help-btn';

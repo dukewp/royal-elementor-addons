@@ -2919,6 +2919,14 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     cursor: pointer;
 }
 
+.wpr-grid-item-sharing .wpr-sharing-trigger svg,
+.wpr-insta-feed-item-sharing .wpr-sharing-trigger svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    vertical-align: middle;
+}
+
 .wpr-grid-item-sharing .wpr-tooltip,
 .wpr-insta-feed-item-sharing .wpr-tooltip {
     display: block;
@@ -3683,6 +3691,13 @@ i[class*="wpr-rating-icon-"] {
     vertical-align: middle;
 }
 
+.wpr-grid-pagination svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    display: inline-block;
+}
+
 .wpr-grid-pagination .wpr-disabled-arrow {
     cursor: not-allowed;
     opacity: 0.4;
@@ -3860,9 +3875,10 @@ i[class*="wpr-rating-icon-"] {
 
 
 /* GOGA - it was display block for some reason, change it back if necessary */
-.wpr-grid-slider-arrow i {    
-    display: -webkit-box;    
-    display: -ms-flexbox;    
+.wpr-grid-slider-arrow i,
+.wpr-grid-slider-arrow svg {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -3872,6 +3888,12 @@ i[class*="wpr-rating-icon-"] {
             align-items: center;
     width: 100%;
     height: 100%;
+}
+
+.wpr-grid-slider-arrow svg {
+    fill: currentColor;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
 }
 
 .wpr-adjust-slider-prev-arrow {

@@ -1253,7 +1253,7 @@ class Wpr_Advanced_Accordion extends Widget_Base {
 		return Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $id, $has_css ) . $edit_link;
 	}
 
-	private function normalize_icon_library( $icon ) {
+	protected function normalize_icon_library( $icon ) {
 		if ( empty( $icon['library'] ) ) {
 			return $icon;
 		}

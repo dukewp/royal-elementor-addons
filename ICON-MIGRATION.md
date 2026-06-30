@@ -37,8 +37,32 @@ Track progress for moving REA off global Font Awesome and aligning with Elemento
 
 ### `modules/grid/widgets/wpr-grid.php`
 
-- **`get_style_depends()`** — when inline SVG off: `elementor-icons-fa-solid`, `elementor-icons-fa-brands`.
+- **`get_style_depends()`** — when inline SVG off: `elementor-icons-fa-solid`, `elementor-icons-fa-regular`, `elementor-icons-fa-brands`.
 - Inherited by `Wpr_Grid_Pro`.
+
+### `modules/woo-grid`, `media-grid`, `magazine-grid`
+
+- Same **`get_style_depends()`** pattern as Grid (includes `fa-regular` for likes).
+
+### `classes/utilities.php` — `get_wpr_icon()`
+
+- When `e_font_icon_svg` **on** → `Icons_Manager::render_icon()` for `fa-*` strings (pagination, slider arrows, sharing triggers, etc.).
+- When **off** → original `<i class="…">` (widgets must declare `elementor-icons-fa-*` deps).
+- Custom `svg-*` icons unchanged.
+
+### `classes/modules/wpr-post-likes.php`
+
+- `Icons_Manager` + dual liked/unliked icon wrappers + AJAX/JS toggle (no icon HTML rebuild).
+
+### `modules/sharing-buttons/widgets/wpr-sharing-buttons.php`
+
+- **`get_style_depends()`** — when inline SVG off: `elementor-icons-fa-solid`, `elementor-icons-fa-brands`.
+
+### `assets/css/frontend.min.css` — icon SVG sizing
+
+- Grid pagination `svg`: `1em`, `fill: currentColor`.
+- Grid slider arrows: `svg` alongside `i` selectors.
+- Sharing + likes + accordion (see earlier entries).
 
 ### `modules/advanced-accordion/widgets/wpr-advanced-accordion.php`
 
@@ -68,10 +92,7 @@ Track progress for moving REA off global Font Awesome and aligning with Elemento
 
 ## Reverted / not kept
 
-### `get_wpr_icon()` (`classes/utilities.php`)
-
-- Tried routing FA through `Icons_Manager` (full + conditional `e_font_icon_svg` branches).
-- **Reverted to original** — still outputs raw `<i>` for `fa-*` strings. To be migrated later widget-by-widget or via shared helper.
+_None currently — `get_wpr_icon()` migration is active (inline SVG branch only)._
 
 ---
 
@@ -87,9 +108,10 @@ Track progress for moving REA off global Font Awesome and aligning with Elemento
 
 ## Widgets not yet migrated
 
-- All widgets except **Grid** and **Advanced Accordion** (partial — see above).
-- **Woo Grid**, **Media Grid**, **Magazine Grid**, **Sharing Buttons** (widget-level `get_style_depends` if not covered by grid helpers only).
-- **Pro search** — done for accordion; pattern reusable elsewhere.
+- **Grid family** — helpers done (`get_wpr_icon`, sharing, likes); test pagination/arrows/sharing per layout.
+- **Advanced Accordion** — done.
+- **Sharing Buttons** — deps done; test standalone widget.
+- **All other widgets** — mega menu, offcanvas, popup, advanced slider (video JS), taxonomy list, feeds, etc.
 
 ---
 

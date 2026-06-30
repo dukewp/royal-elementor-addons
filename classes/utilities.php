@@ -928,21 +928,52 @@ class Utilities {
 	** Get WPR Icon
 	*/
 	public static function get_wpr_icon( $icon, $dir ) {
-		if ( !empty($icon) ) {
-			if ( false !== strpos( $icon, 'svg-' ) ) {
-				return Utilities::get_svg_icon( $icon, $dir );
-	
-			} elseif ( false !== strpos( $icon, 'fa-' ) ) {
-				$dir = '' !== $dir ? '-'. $dir : '';
-				return wp_kses('<i class="'. esc_attr($icon . $dir) .'"></i>', [
-					'i' => [
-						'class' => []
-					]
-				]);
+		if ( empty( $icon ) ) {
+			return '';
+		}
+
+		if ( false !== strpos( $icon, 'svg-' ) ) {
+			return self::get_svg_icon( $icon, $dir );
+		}
+
+		if ( false === strpos( $icon, 'fa-' ) ) {
+			return '';
+		}
+
+		$dir_suffix = '' !== $dir ? '-' . $dir : '';
+		$icon_class = $icon . $dir_suffix;
+
+		if ( class_exists( '\Elementor\Plugin' ) && \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_font_icon_svg' ) ) {
+			if ( preg_match( '/^fa\s+fa-/', $icon_class ) ) {
+				$icon_data = \Elementor\Icons_Manager::fa4_to_fa5_value_migration( $icon_class );
 			} else {
+				$library_map = [
+					'fas' => 'fa-solid',
+					'far' => 'fa-regular',
+					'fab' => 'fa-brands',
+				];
+				$prefix = strtok( $icon_class, ' ' );
+				$icon_data = [
+					'value' => $icon_class,
+					'library' => isset( $library_map[ $prefix ] ) ? $library_map[ $prefix ] : 'fa-solid',
+				];
+			}
+
+			if ( empty( $icon_data['library'] ) || empty( $icon_data['value'] ) ) {
 				return '';
 			}
+
+			ob_start();
+			\Elementor\Icons_Manager::render_icon( $icon_data, [ 'aria-hidden' => 'true' ] );
+
+			return ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Icons_Manager trusted markup.
 		}
+
+		return wp_kses( '<i class="' . esc_attr( $icon_class ) . '"></i>', [
+			'i' => [
+				'class' => [],
+			],
+		] );
 	}
 
 	
