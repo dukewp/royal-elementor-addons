@@ -1373,7 +1373,7 @@ class WPR_Templates_Data {
 					'name' => 'Car Rent',
 					'pages' => 'home,cars,car-details,about,contact,',
 					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
-					'tags' => 'expert car rental service driver rent car delivery jorney luxary airport transfer car booking car hire',
+					'tags' => 'expert car rental service driver rent car delivery journey luxury airport transfer car booking car hire',
 					'theme-builder' => true,
 					'woo-builder' => true,
 					'off-canvas' => false,
