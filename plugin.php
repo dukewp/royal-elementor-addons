@@ -136,7 +136,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-woo-grid-helpers.php';
 
 		// Media Grid
-		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-media.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-media-grid-helpers.php';
 
 		// Extensions Base
 		require WPR_ADDONS_PATH . 'extensions/wpr-extensions-base.php';
