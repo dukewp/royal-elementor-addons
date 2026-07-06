@@ -847,6 +847,14 @@ class Plugin {
 			'6.0.3',
 			true
 		);
+
+		wp_register_script(
+			'wpr-gsap',
+			WPR_ADDONS_URL . 'assets/js/lib/gsap/gsap.min.js',
+			[],
+			'3.12.7',
+			true
+		);
 	}
 
 	public function enqueue_panel_scripts() {

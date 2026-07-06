@@ -1,0 +1,102 @@
+---
+description: Common Elementor / REA widget mistakes to avoid
+globs: "**/*.php"
+alwaysApply: true
+---
+
+# REA Elementor Pitfalls
+
+Known mistakes when building or editing REA Elementor widgets. Check these before finishing widget control or asset work.
+
+## 1. Unclosed control sections (nested sections)
+
+**Error:** `Elementor: You can't start a section before the end of the previous section "section_content".`
+
+**Cause:** Calling `start_controls_section()` for a new section before `end_controls_section()` on the previous one.
+
+**Wrong:**
+
+```php
+$this->start_controls_section( 'section_content', [ ... ] );
+
+$this->add_control( 'some_control', [ ... ] );
+
+$this->start_controls_section( 'section_icon_animation', [ ... ] ); // section_content still open
+```
+
+**Correct:**
+
+```php
+$this->start_controls_section( 'section_content', [ ... ] );
+
+$this->add_control( 'some_control', [ ... ] );
+
+$this->end_controls_section(); // close section_content first
+
+$this->start_controls_section( 'section_icon_animation', [ ... ] );
+
+// ... controls ...
+
+$this->end_controls_section();
+```
+
+**Rule:** Every `start_controls_section()` must have exactly one matching `end_controls_section()` before the next section starts. Count section pairs when adding new panel groups.
+
+---
+
+## 2. `get_settings_for_display()` in `get_script_depends()`
+
+**Cause:** Elementor resolves script/style dependencies before widget display settings are available. Conditional enqueues based on `$this->get_settings_for_display()` in `get_script_depends()` (or `get_style_depends()`) are unreliable and may not reflect saved panel values.
+
+**Wrong:**
+
+```php
+public function get_script_depends() {
+    $settings = $this->get_settings_for_display();
+
+    if ( 'yes' === ( $settings['gsap_animation'] ?? '' ) ) {
+        return [ 'wpr-gsap' ];
+    }
+
+    return [];
+}
+```
+
+**Correct:**
+
+```php
+public function get_script_depends() {
+    return [ 'wpr-gsap' ];
+}
+```
+
+**Alternatives when conditional loading is required:**
+
+- Register the script globally in `plugin.php` but only initialize it in `frontend.min.js` when the widget markup/settings indicate it is needed (e.g. `data-settings`, a CSS class on the wrapper).
+- Use a shared REA helper pattern only if the project already has a proven conditional-enqueue approach for widgets.
+
+**Rule:** In REA widgets, treat `get_script_depends()` / `get_style_depends()` as static dependency lists for the widget type, not as a place to read live control values.
+
+---
+
+## 3. GSAP `from()` after setting opacity to 0
+
+**Symptom:** Element stays invisible after a GSAP entrance animation (CSS hides it with `opacity: 0`, JS runs, but opacity never reaches 1).
+
+**Cause:** Calling `gsap.set(el, { opacity: 0 })` and then `gsap.from(el, { opacity: 0, ... })`. `gsap.from()` animates **to the values captured before the tween**, which are already `opacity: 0` — so opacity animates from 0 to 0.
+
+**Wrong:**
+
+```javascript
+gsap.set( el, { opacity: 0, scale: 0 } );
+gsap.from( el, { opacity: 0, scale: 0, duration: 0.9 } ); // opacity never changes
+```
+
+**Correct:**
+
+```javascript
+gsap.set( el, { opacity: 0, scale: 0, transformOrigin: '50% 50%' } );
+gsap.to( el, { opacity: 1, scale: 1, duration: 0.9, ease: 'back.out(1.7)' } );
+```
+
+**Rule:** For entrance animations on elements pre-hidden in CSS, use explicit `gsap.set()` for the initial state and `gsap.to()` (or `gsap.fromTo()`) for the visible end state. Always add a JS fallback to restore `opacity: 1` if GSAP fails or is unavailable.
