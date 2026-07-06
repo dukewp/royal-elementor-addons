@@ -301,6 +301,36 @@ class Wpr_Icon_Box extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'icon_box_media_align',
+			[
+				'label' => esc_html__( 'Icon/Image Align', 'wpr-addons' ),
+				'type' => Controls_Manager::CHOOSE,
+				'label_block' => false,
+				'default' => 'center',
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__( 'Left', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'flex-end' => [
+						'title' => esc_html__( 'Right', 'wpr-addons' ),
+						'icon' => 'eicon-text-align-right',
+					]
+				],
+				'selectors' => [
+					'{{WRAPPER}}.wpr-icon-box-center .wpr-icon-box-icon-inner-wrap' => 'justify-content: {{VALUE}}',
+				],
+                'condition' => [
+                    'icon_box_alignment' => 'center'
+                ]
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section
 
         // Tab: Content ==============
