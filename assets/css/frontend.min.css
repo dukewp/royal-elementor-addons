@@ -5422,12 +5422,17 @@ i[class*="wpr-rating-icon-"] {
     padding: 0 !important;
 }
 
+.wpr-google-map .gm-style-iw-tc {
+    filter: none !important;
+}
+
 .wpr-google-map .gm-style-iw-c>button {
     top: 0 !important;
     right: 0 !important;
 }
 
 .wpr-google-map .gm-style-iw-c .wpr-gm-iwindow h3 {
+    margin-top: 0;
     margin-bottom: 7px;
 }
 
