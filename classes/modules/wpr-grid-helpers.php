@@ -562,44 +562,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 													];
 												}
 											} else {
-												if ( isset($meta_query) ) {
-													if ( isset($_POST['wpr_afr_' . $cleanedKey]) && !empty(explode(',', $_POST['wpr_afr_'. $cleanedKey])[0]) ) {
-														$meta_relation = explode(',', $_POST['wpr_afr_'. $cleanedKey])[0];
-													} else if ( isset($wpr_url_params['wpr_afr_'. $cleanedKey]) && !empty(explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0]) ) {
-														$meta_relation = explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0];
-													} else {
-														$meta_relation = '';
-													}
-													
-													$for_meta_query = [ // needs check if overrides somethings
-														'relation' => $meta_relation,
-													];
-				
-													foreach ($filtervalues as $filtervalue) {
-														$filtervalue = sanitize_text_field($filtervalue);
-													
-														array_push($for_meta_query, [
-															[
-																'key'     => $cleanedKey,
-																'value'   => $filtervalue
-															],
-														]);
-													}
-				
-													array_push( $meta_query, $for_meta_query );
-												} else {
-													$meta_query = [ // needs check if overrides something
-														'relation' => explode(',', $_POST['wpr_afr_'. $cleanedKey])[0] ? explode(',', $_POST['wpr_afr_'. $cleanedKey])[0] : explode(',', $wpr_url_params['wpr_afr_'. $cleanedKey])[0],
-													];
-		
-													if (is_array($filtervalues)) {
-														foreach ($filtervalues as $filtervalue) {
-															$meta_query[] = [
+												$meta_relation = 'OR';
+												if ( isset( $wpr_url_params[ 'wpr_afr_' . $cleanedKey ] ) && ! empty( explode( ',', $wpr_url_params[ 'wpr_afr_' . $cleanedKey ] )[0] ) ) {
+													$meta_relation = strtoupper( sanitize_text_field( explode( ',', $wpr_url_params[ 'wpr_afr_' . $cleanedKey ] )[0] ) );
+												} elseif ( isset( $_POST[ 'wpr_afr_' . $cleanedKey ] ) && ! empty( explode( ',', $_POST[ 'wpr_afr_' . $cleanedKey ] )[0] ) ) {
+													$meta_relation = strtoupper( sanitize_text_field( explode( ',', $_POST[ 'wpr_afr_' . $cleanedKey ] )[0] ) );
+												}
+
+												$values = array_values( array_filter( array_map( 'sanitize_text_field', $filtervalues ), 'strlen' ) );
+
+												if ( ! empty( $values ) ) {
+													if ( 'AND' === $meta_relation ) {
+														$for_meta_query = [ 'relation' => 'AND' ];
+														foreach ( $values as $filtervalue ) {
+															$for_meta_query[] = [
 																'key'     => $cleanedKey,
 																'value'   => $filtervalue,
 																'compare' => '=',
 															];
 														}
+														$meta_query[] = $for_meta_query;
+													} elseif ( 1 === count( $values ) ) {
+														$meta_query[] = [
+															'key'     => $cleanedKey,
+															'value'   => $values[0],
+															'compare' => '=',
+														];
+													} else {
+														$meta_query[] = [
+															'key'     => $cleanedKey,
+															'value'   => $values,
+															'compare' => 'IN',
+														];
 													}
 												}
 											}
@@ -630,25 +624,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 										$filtervalues = sanitize_text_field($wpr_url_params[$key]);
 		
 										if ( $key_type == 'meta_field' || $key_type == 'custom_field' ) {
-											if ( isset($meta_query) ) {
-												array_push($meta_query, [
-													[
-														'key'     => $cleanedKey,
-														'value'   => [$filtervalues],
-														// 'type'    => 'NUMERIC',
-														// 'compare' => 'BETWEEN',
-													],
-												]);
-											} else {
-												$meta_query = [
-													[
-														'key'     => $cleanedKey,
-														'value'   => [$filtervalues],
-														// 'type'    => 'NUMERIC',
-														// 'compare' => 'BETWEEN',
-													],
-												];
-											}
+											$meta_query[] = [
+												'key'     => $cleanedKey,
+												'value'   => $filtervalues,
+												'compare' => '=',
+											];
 										} else {
 											if (isset($wpr_url_params[$key])) {
 						
@@ -676,7 +656,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				if ( !empty($meta_query) )  {
 					if ( !empty($args['meta_query']) ) {
-						$args['tax_query'] = array_merge( $args['tax_query'], $tax_query );
+						$args['meta_query'] = array_merge( $args['meta_query'], $meta_query );
 					} else {
 						$args['meta_query'] = $meta_query;
 					}

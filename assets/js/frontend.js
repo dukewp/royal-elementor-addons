@@ -74,6 +74,7 @@
 				'wpr-password-protected-content.default': WprElements.widgetPasswordProtectedContent,
 				'wpr-icon-box.default': WprElements.widgetIconBox,		
 				'wpr-separator.default': WprElements.widgetSeparator,
+				'wpr-dual-color-heading.default': WprElements.widgetDualColorHeading,
 				'wpr-circle-menu.default': WprElements.widgetCircleMenu,
 				'wpr-unfold.default': WprElements.widgetUnfold,
 				'wpr-google-reviews-pro.default' : WprElements.widgetGoogleReviews,
@@ -4621,6 +4622,17 @@
 				sliderSlidesToScroll = +(sliderClass.match(/wpr-adv-slides-to-scroll-\d/).join().slice(-1)),
 				dataSlideEffect = $advancedSlider.attr('data-slide-effect');
 
+			$advancedSlider.on( 'init', function() {
+				$( this ).css( 'opacity', 1 );
+				$scope.find( '.slick-current' ).addClass( 'wpr-slick-visible' );
+
+				if ( $scope.find( '.wpr-slider-img' ).length !== 0 ) {
+					$scope.find( '.wpr-advanced-slider' ).css( 'height', $scope.find( '.slick-current' ).outerHeight() );
+				}
+
+				autoplayVideo();
+			} );
+
 			$advancedSlider.slick({
 				appendArrows :  $scope.find('.wpr-slider-controls'),
 				appendDots :  $scope.find('.wpr-slider-dots'),
@@ -4690,36 +4702,15 @@
 				],
 			});
 
-			$(document).ready(function() {
-                
-                $scope.find('.slick-current').addClass('wpr-slick-visible');
+			if ( $scope.find( '.wpr-slider-img' ).length !== 0 ) {
+				$scope.find( '.wpr-slider-arrow' ).on( 'click', function() {
+					$scope.find( '.wpr-advanced-slider' ).css( 'height', $scope.find( '.slick-current' ).outerHeight() );
+				} );
 
-				var maxHeight = -1;
-				// $scope.find('.slick-slide').each(function() {
-				// if ($(this).height() > maxHeight) {
-				// 	maxHeight = $(this).height();
-				// }
-				// });
-				// $scope.find('.slick-slide').each(function() {
-				// if ($(this).height() < maxHeight) {
-				// 	$(this).css('margin', Math.ceil((maxHeight-$(this).height())/2) + 'px 0');
-				// 	// $(this).css('transform', 'translateY(-50%)');
-				// }
-				// });
-
-				// GOGA - needs condition check if there are any images
-				if ( $scope.find('.wpr-slider-img').length !== 0 ) {
-					$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
-				
-					$scope.find('.wpr-slider-arrow').on('click', function() {
-						$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
-					});
-		
-					$(window).smartresize(function() {
-						$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
-					});
-				}
-			});
+				$( window ).smartresize( function() {
+					$scope.find( '.wpr-advanced-slider' ).css( 'height', $scope.find( '.slick-current' ).outerHeight() );
+				} );
+			}
 			
 			function sliderVideoSize(){
 				  
@@ -4803,14 +4794,6 @@
 
 			$(window).on('load resize', function(){
 				sliderVideoSize();
-			});
-
-			$(document).ready(function () {
-				// Handler when all assets (including images) are loaded
-				if ( $scope.find('.wpr-advanced-slider').length ) {
-					$scope.find('.wpr-advanced-slider').css('opacity', 1);
-					autoplayVideo();
-				}
 			});
 
 			function autoplayVideo() {
@@ -12393,46 +12376,55 @@
 			
 				$('.wpr-advanced-filters-wrap').each(function () {
 					const $wrap = $(this);
+					const emptyAction = $wrap.attr('data-empty-action') || '';
+					const shouldUpdateCounts = $wrap.attr('data-show-count') === 'yes' && $wrap.attr('data-change-counter') !== '';
+					const shouldHandleEmpty = emptyAction === 'hide' || emptyAction === 'disable';
+					const isSelfFilterWrap = $wrap.attr('data-change-counter') === 'other_filters'
+						&& $wrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope);
+
+					if (!shouldUpdateCounts && !shouldHandleEmpty) {
+						return true;
+					}
+
+					// Self-filter: do not re-run counts or empty actions on the widget that triggered the change.
+					if (isSelfFilterWrap) {
+						return true;
+					}
 			
-					if ( $wrap.attr('data-show-count') === 'yes' && $wrap.attr('data-change-counter') !== '') {
-						if ( $wrap.attr('data-change-counter') === 'other_filters' && $wrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope) ) {
-							return true; // skip this wrap
-						}
+					const $inputs = $wrap.find('input[type="checkbox"], input[type="radio"], option, li.wpr-woo-rating');
 			
-						const $inputs = $wrap.find('input[type="checkbox"], input[type="radio"], option, li.wpr-woo-rating');
+					$inputs.each(function () {
+						const $input = $(this);
+						const isOption = $input.prop('tagName') === 'OPTION';
+						const selectedName = isOption ? $input.closest('select').attr('name') : $input.attr('name');
+						const selectedValue = $input.val() || $input.data('rating');
 			
-						$inputs.each(function () {
-							const $input = $(this);
-							const isOption = $input.prop('tagName') === 'OPTION';
-							const selectedName = isOption ? $input.closest('select').attr('name') : $input.attr('name');
-							const selectedValue = $input.val() || $input.data('rating');
+						if (!selectedName || selectedValue === '') return;
 			
-							if (!selectedName || selectedValue === '') return;
-			
-							// Clone the current state
-							let paramsObjTemp = { ...paramsObj };
-			
-							// Get current values for this key if exist
-							let existingValues = paramsObjTemp[selectedName] ? paramsObjTemp[selectedName].split(',') : [];
-			
-							// Ensure selectedValue is included
+						let paramsObjTemp = { ...paramsObj };
+						let existingValues = paramsObjTemp[selectedName] ? paramsObjTemp[selectedName].split(',') : [];
+
+						if (shouldHandleEmpty && !shouldUpdateCounts) {
+							// Empty-only: candidate term + other active filters (not merged with siblings).
+							paramsObjTemp[selectedName] = selectedValue;
+						} else {
 							if (!existingValues.includes(selectedValue)) {
 								existingValues.push(selectedValue);
 							}
-			
+
 							paramsObjTemp[selectedName] = existingValues.join(',');
+						}
 			
-							// Store the element and its key info to update later
-							elementsToUpdate.push({
-								element: $input,
-								name: selectedName,
-								value: selectedValue
-							});
-			
-							// Store for AJAX batch call
-							paramsArray.push(paramsObjTemp);
+						elementsToUpdate.push({
+							element: $input,
+							name: selectedName,
+							value: selectedValue,
+							updateCount: shouldUpdateCounts,
+							emptyAction: emptyAction
 						});
-					}
+			
+						paramsArray.push(paramsObjTemp);
+					});
 				});
 			
 				if (paramsArray.length === 0) {
@@ -12440,7 +12432,6 @@
 					return;
 				}
 			
-				// Make a single AJAX request with all hypothetical filter states
 				$.ajax({
 					type: 'POST',
 					url: WprConfig.ajaxurl,
@@ -12459,74 +12450,57 @@
 						setTimeout(() => {
 							response.data.forEach((dataEntry, index) => {
 								const countText = `(${dataEntry.found_posts})`;
-								const { element, value } = elementsToUpdate[index];
+								const { element, updateCount, emptyAction } = elementsToUpdate[index];
 			
 								const $el = $(element);
+								const $afWrap = $el.closest('.wpr-advanced-filters-wrap');
 
-								if ($el.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation') == 'or') {
-									if ( $el.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope) ) {
-										return true;
-									}
+								if ($afWrap.attr('data-wpr-relation') == 'or' && $afWrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope)) {
+									return true;
 								}
 
-								if ( $el.hasClass('wpr-woo-rating') ) {
-									$el.find('.wpr-af-count').text(countText);
-								} else if ($el.prop('tagName') === 'OPTION') {
-									if ( $el.attr('value') != 0 ) {
-										const cleanText = $el.text().replace(/\(\d+\)/, '');
-										$el.text(cleanText + countText);
-									}
-								} else {
-									$el.closest('.wpr-af-input-wrap').find('.wpr-af-count').text(countText);
-			
-									// // Also update active filters area if it exists
-									// let $filterTag = $('.wpr-af-active-filters').find(`span[data-value="${value}"]`),
-									// 	removeIcon = '<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>';
-
-									// if (
-									// 	$filterTag.length > 0 &&
-									// 	$filterTag.parent().attr('data-wpr-af-type') === $el.closest('.wpr-advanced-filters-wrap').data('wpr-filter-type')
-									// ) {
-									// 	// Only update the filterTag that matches the data-rf-id of the current filter element
-									// 	const elDataId = $el.closest('[data-id]').data('id');
-									// 	$filterTag.each(function () {
-									// 		if ($(this).attr('data-rf-id') == elDataId) {
-									// 			let baseText = $(this).text().replace(/\(\d+\)/, '');
-									// 			$(this).html(baseText + countText + removeIcon);
-									// 		}
-									// 	});
-									// }
-								}
-
-								// Disable element if count is 0 and data-empty-action is set to disable
-								if (dataEntry.found_posts === 0) {
-									if ($el.closest('.wpr-advanced-filters-wrap').attr('data-empty-action') === 'hide') {
+								if (updateCount) {
+									if ( $el.hasClass('wpr-woo-rating') ) {
+										$el.find('.wpr-af-count').text(countText);
+									} else if ($el.prop('tagName') === 'OPTION') {
 										if ( $el.attr('value') != 0 ) {
-											$el.hide();
-											if ($el.is(':checkbox') || $el.is(':radio')) {
-												$el.closest('.wpr-af-input-wrap').hide();
-												if ( $el.closest('.wpr-af-visual-wrap') ) {
-													$el.closest('.wpr-af-visual-wrap').hide();
+											const cleanText = $el.text().replace(/\(\d+\)/, '');
+											$el.text(cleanText + countText);
+										}
+									} else {
+										$el.closest('.wpr-af-input-wrap').find('.wpr-af-count').text(countText);
+									}
+								}
+
+								if (emptyAction === 'hide' || emptyAction === 'disable') {
+									if (dataEntry.found_posts === 0) {
+										if (emptyAction === 'hide') {
+											if ( $el.attr('value') != 0 ) {
+												$el.hide();
+												if ($el.is(':checkbox') || $el.is(':radio')) {
+													$el.closest('.wpr-af-input-wrap').hide();
+													if ( $el.closest('.wpr-af-visual-wrap') ) {
+														$el.closest('.wpr-af-visual-wrap').hide();
+													}
 												}
 											}
+										} else {
+											$el.prop('disabled', true);
 										}
-									} else if ($el.closest('.wpr-advanced-filters-wrap').attr('data-empty-action') === 'disable') {
-										$el.prop('disabled', true);
-									}
-								} else {
-									$el.prop('disabled', false);
-									$el.show();
-									if ($el.is(':checkbox') || $el.is(':radio')) {
-										$el.closest('.wpr-af-input-wrap').show();
-										$el.closest('.wpr-af-visual-wrap').show();
+									} else {
+										$el.prop('disabled', false);
+										$el.show();
+										if ($el.is(':checkbox') || $el.is(':radio')) {
+											$el.closest('.wpr-af-input-wrap').show();
+											$el.closest('.wpr-af-visual-wrap').show();
+										}
 									}
 								}
 
-								const $wrap = $el.closest('.wpr-advanced-filters-wrap');
-								if ( $wrap.find('.wpr-advanced-filters-inner').children(':visible').length === 0 ) {
-									$wrap.find('.wpr-af-filters-label').hide();
+								if ( $afWrap.find('.wpr-advanced-filters-inner').children(':visible').length === 0 ) {
+									$afWrap.find('.wpr-af-filters-label').hide();
 								} else {
-									$wrap.find('.wpr-af-filters-label').show();
+									$afWrap.find('.wpr-af-filters-label').show();
 								}
 							});
 						}, 800);
@@ -13674,6 +13648,300 @@
 			  autoplay: 'yes' === lottieJSON.autoplay ? true : false
 			});
 		}, // end widgetSeparator
+
+		widgetDualColorHeading: function( $scope ) {
+			var $wrap = $scope.find( '.wpr-dual-heading-wrap.wpr-dual-heading-gsap' );
+
+			if ( ! $wrap.length || $wrap.attr( 'data-gsap-init' ) === 'yes' ) {
+				return;
+			}
+
+			var settingsRaw = $wrap.attr( 'data-settings' );
+
+			if ( ! settingsRaw ) {
+				return;
+			}
+
+			var $icon = $wrap.find( '.wpr-dual-heading-icon-wrap' );
+
+			var revealWrap = function() {
+				$wrap.css( 'opacity', 1 );
+			};
+
+			var revealIcon = function() {
+				if ( $icon.length ) {
+					$icon.css( 'opacity', 1 );
+				}
+			};
+
+			var settings;
+
+			try {
+				settings = JSON.parse( settingsRaw );
+			} catch ( e ) {
+				revealWrap();
+				revealIcon();
+				return;
+			}
+
+			if ( 'undefined' === typeof gsap ) {
+				revealWrap();
+				revealIcon();
+				return;
+			}
+
+			var hasTextAnim = 'yes' === settings.animation;
+			var hasIconAnim = 'yes' === settings.iconAnimation;
+
+			if ( ! hasTextAnim && ! hasIconAnim ) {
+				revealWrap();
+				revealIcon();
+				return;
+			}
+
+			var $first = $wrap.find( '.first' ),
+				$second = $wrap.find( '.second' ),
+				$desc = $wrap.find( '.wpr-dual-heading-description' ),
+				textTargets = [],
+				reducedMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+
+			if ( $first.length ) {
+				textTargets.push( $first[0] );
+			}
+			if ( $second.length ) {
+				textTargets.push( $second[0] );
+			}
+			if ( $desc.length ) {
+				textTargets.push( $desc[0] );
+			}
+
+			var getIconDelay = function() {
+				var iconDelay = settings.delay || 0;
+
+				if ( hasTextAnim && textTargets.length ) {
+					iconDelay += ( settings.duration || 0.8 ) + ( textTargets.length - 1 ) * ( settings.stagger || 0.15 );
+				}
+
+				return iconDelay;
+			};
+
+			var playTextAnimation = function() {
+				if ( ! hasTextAnim || ! textTargets.length ) {
+					return;
+				}
+
+				if ( reducedMotion ) {
+					gsap.set( textTargets, { opacity: 1, x: 0, y: 0 } );
+					return;
+				}
+
+				var fromVars = {
+					opacity: 0,
+					duration: settings.duration || 0.8,
+					stagger: settings.stagger || 0.15,
+					delay: settings.delay || 0,
+					ease: 'power2.out'
+				};
+
+				if ( 'fade-up' === settings.type ) {
+					fromVars.y = 30;
+				} else if ( 'slide-left' === settings.type ) {
+					fromVars.x = -40;
+				} else if ( 'slide-right' === settings.type ) {
+					fromVars.x = 40;
+				}
+
+				gsap.set( textTargets, { opacity: 0 } );
+
+				if ( fromVars.y ) {
+					gsap.set( textTargets, { y: fromVars.y } );
+				}
+
+				if ( fromVars.x ) {
+					gsap.set( textTargets, { x: fromVars.x } );
+				}
+
+				gsap.to( textTargets, {
+					opacity: 1,
+					x: 0,
+					y: 0,
+					duration: fromVars.duration,
+					stagger: fromVars.stagger,
+					delay: fromVars.delay,
+					ease: fromVars.ease
+				} );
+			};
+
+			var playIconAnimation = function() {
+				if ( ! hasIconAnim || ! $icon.length ) {
+					return;
+				}
+
+				var el = $icon[0],
+					iconDelay = getIconDelay(),
+					iconDuration = settings.iconDuration || 0.9,
+					iconEntrance = settings.iconEntrance || 'bounce-in',
+					iconLoop = settings.iconLoop || 'none',
+					iconLoopSpeed = settings.iconLoopSpeed || 1.5,
+					iconHover = settings.iconHover || 'none',
+					initial = {
+						opacity: 0,
+						x: 0,
+						y: 0,
+						scale: 1,
+						rotation: 0,
+						rotationX: 0,
+						transformOrigin: '50% 50%',
+						transformPerspective: 600
+					},
+					target = {
+						opacity: 1,
+						x: 0,
+						y: 0,
+						scale: 1,
+						rotation: 0,
+						rotationX: 0,
+						duration: iconDuration,
+						delay: iconDelay,
+						ease: 'power2.out',
+						transformOrigin: '50% 50%'
+					};
+
+				if ( reducedMotion ) {
+					gsap.set( el, { opacity: 1, scale: 1, rotation: 0, rotationX: 0, x: 0, y: 0 } );
+					revealIcon();
+					return;
+				}
+
+				if ( 'bounce-in' === iconEntrance ) {
+					initial.scale = 0;
+					target.ease = 'back.out(1.7)';
+				} else if ( 'rotate-in' === iconEntrance ) {
+					initial.scale = 0.4;
+					initial.rotation = -180;
+					target.ease = 'back.out(1.4)';
+				} else if ( 'pop-in' === iconEntrance ) {
+					initial.scale = 0.2;
+					target.ease = 'elastic.out(1, 0.6)';
+				} else if ( 'flip-in' === iconEntrance ) {
+					initial.rotationX = -90;
+				}
+
+				gsap.set( el, initial );
+				gsap.to( el, target );
+
+				if ( 'none' !== iconLoop ) {
+					var loopDelay = iconDelay + iconDuration + 0.15;
+
+					if ( 'float' === iconLoop ) {
+						gsap.to( el, {
+							y: -10,
+							duration: iconLoopSpeed,
+							repeat: -1,
+							yoyo: true,
+							ease: 'sine.inOut',
+							delay: loopDelay
+						} );
+					} else if ( 'pulse' === iconLoop ) {
+						gsap.to( el, {
+							scale: 1.12,
+							duration: iconLoopSpeed,
+							repeat: -1,
+							yoyo: true,
+							ease: 'sine.inOut',
+							delay: loopDelay,
+							transformOrigin: '50% 50%'
+						} );
+					} else if ( 'wiggle' === iconLoop ) {
+						gsap.to( el, {
+							rotation: 12,
+							duration: iconLoopSpeed * 0.35,
+							repeat: -1,
+							yoyo: true,
+							ease: 'sine.inOut',
+							delay: loopDelay,
+							transformOrigin: '50% 50%'
+						} );
+					}
+				}
+
+				if ( 'none' !== iconHover && ! WprElements.editorCheck() ) {
+					$icon.off( 'mouseenter.wprDualIconHover mouseleave.wprDualIconHover' )
+						.on( 'mouseenter.wprDualIconHover', function() {
+							if ( 'bounce' === iconHover ) {
+								gsap.to( el, { scale: 1.2, duration: 0.35, ease: 'back.out(2)', overwrite: 'auto' } );
+							} else if ( 'rotate' === iconHover ) {
+								gsap.to( el, { rotation: 15, duration: 0.35, ease: 'power2.out', overwrite: 'auto' } );
+							}
+						} )
+						.on( 'mouseleave.wprDualIconHover', function() {
+							gsap.to( el, { scale: 1, rotation: 0, duration: 0.35, ease: 'power2.out', overwrite: 'auto' } );
+						} );
+				}
+			};
+
+			var playAnimations = function() {
+				revealWrap();
+				playTextAnimation();
+				playIconAnimation();
+			};
+
+			var animationsPlayed = false;
+
+			var playAnimationsOnce = function() {
+				if ( animationsPlayed ) {
+					return;
+				}
+
+				animationsPlayed = true;
+				playAnimations();
+			};
+
+			if ( reducedMotion ) {
+				if ( textTargets.length ) {
+					gsap.set( textTargets, { opacity: 1, x: 0, y: 0 } );
+				}
+				if ( hasIconAnim && $icon.length ) {
+					gsap.set( $icon[0], { opacity: 1, scale: 1, rotation: 0, rotationX: 0, x: 0, y: 0 } );
+				}
+				revealWrap();
+				revealIcon();
+				$wrap.attr( 'data-gsap-init', 'yes' );
+				return;
+			}
+
+			if ( hasTextAnim ) {
+				gsap.set( textTargets, { opacity: 0 } );
+			}
+
+			var trigger = settings.trigger || 'scroll';
+
+			if ( 'scroll' === trigger && 'undefined' !== typeof IntersectionObserver ) {
+				var observer = new IntersectionObserver( function( entries, obs ) {
+					entries.forEach( function( entry ) {
+						if ( entry.isIntersecting ) {
+							playAnimationsOnce();
+							obs.unobserve( entry.target );
+						}
+					} );
+				}, {
+					threshold: 0.15,
+					rootMargin: '0px 0px -5% 0px'
+				} );
+
+				observer.observe( $scope[0] );
+
+				var rect = $scope[0].getBoundingClientRect();
+
+				if ( rect.top < window.innerHeight && rect.bottom > 0 ) {
+					playAnimationsOnce();
+				}
+			} else {
+				playAnimationsOnce();
+			}
+
+			$wrap.attr( 'data-gsap-init', 'yes' );
+		}, // End widgetDualColorHeading
 		
 		widgetCircleMenu: function( $scope ) {
 			var $wrapper = $scope.find( '.wpr-circle-menu-wrapper' ),

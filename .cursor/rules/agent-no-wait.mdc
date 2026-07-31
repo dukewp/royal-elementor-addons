@@ -1,0 +1,11 @@
+---
+description: Run autonomously — prefer Read/Grep/StrReplace over Shell; do not pause for user Accept on routine investigation.
+alwaysApply: true
+---
+
+# Agent execution preference
+
+- Proceed without asking the user to approve routine investigation steps.
+- Prefer **Read**, **Grep**, and **StrReplace** over **Shell** when they answer the question.
+- Only use **Shell** when necessary (git, builds, wp-cli, one-off scripts).
+- Do not stop mid-task waiting for confirmation unless blocked on a product decision or destructive action the user must choose.
