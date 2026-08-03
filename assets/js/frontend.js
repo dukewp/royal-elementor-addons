@@ -74,7 +74,6 @@
 				'wpr-password-protected-content.default': WprElements.widgetPasswordProtectedContent,
 				'wpr-icon-box.default': WprElements.widgetIconBox,		
 				'wpr-separator.default': WprElements.widgetSeparator,
-				'wpr-dual-color-heading.default': WprElements.widgetDualColorHeading,
 				'wpr-circle-menu.default': WprElements.widgetCircleMenu,
 				'wpr-unfold.default': WprElements.widgetUnfold,
 				'wpr-google-reviews-pro.default' : WprElements.widgetGoogleReviews,
@@ -2152,8 +2151,8 @@
 							navClass = scopeClass +' .wpr-load-more-btn';
 						}
 
-						// Advanced Filters + infinite-scroll: grid uses same AJAX as load more (handled in widgetAdvancedFilters)
-						var skipPathInfiniteScroll = ( 'infinite-scroll' === settings.pagination_type && iGrid.attr( 'data-advanced-filters' ) === 'yes' );
+						// Advanced Filters + load-more/infinite-scroll: AF handles pagination via ajaxFilters (avoid double load)
+						var skipPathInfiniteScroll = ( ( 'infinite-scroll' === settings.pagination_type || 'load-more' === settings.pagination_type ) && iGrid.attr( 'data-advanced-filters' ) === 'yes' );
 						if ( ! skipPathInfiniteScroll ) {
 						iGrid.infiniteScroll({
 							path: scopeClass +' .wpr-grid-pagination a',
@@ -11265,17 +11264,32 @@
 								var paramsObj = {};
 								(new URL(finalURL)).searchParams.forEach( function( value, key ) { paramsObj[key] = value; } );
 								settings.grid_settings = settings.grid_settings || {};
-								settings.grid_settings.query_offset = currentCount;
+
+								if ( typeof settings.grid_settings._base_query_offset === 'undefined' ) {
+									settings.grid_settings._base_query_offset = +settings.grid_settings.query_offset || 0;
+								}
+								settings.grid_settings.query_offset = +settings.grid_settings._base_query_offset + currentCount;
+
 								widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
 								var orderby = widgetSelector.find( 'select.orderby' ).length > 0 ? widgetSelector.find( 'select.orderby' ).val() : '';
+
+								var excludeIds = [];
+								actionSelector.find('.wpr-grid-item').each(function() {
+									var m = ( this.className || '' ).match( /(?:^|\s)post-(\d+)(?:\s|$)/ );
+									if ( m && m[1] ) {
+										excludeIds.push( parseInt( m[1], 10 ) );
+									}
+								});
+								
 								$.ajax( {
 									type: 'POST',
 									url: WprConfig.ajaxurl,
 									data: {
 										action: experimentActionContent,
 										nonce: WprConfig.nonce,
-										wpr_offset: currentCount,
+										wpr_offset: +settings.grid_settings._base_query_offset,
 										wpr_item_length: currentCount,
+										wpr_exclude_ids: excludeIds,
 										grid_settings: settings.grid_settings,
 										wpr_url_params: paramsObj,
 										orderby: orderby,
@@ -11283,8 +11297,12 @@
 									success: function( response ) {
 										var rawItems = response.data && response.data.output ? $( response.data.output ) : $();
 										var items = rawItems.filter ? rawItems.filter( '.wpr-grid-item' ) : rawItems;
+										var returnedCount = ( response.data && response.data.post_count != null )
+											? +response.data.post_count
+											: items.length;
+										// found_posts is REMAINING (post__not_in excludes already shown) — convert to absolute total
 										if ( response.data && response.data.found_posts != null ) {
-											afInfiniteScrollFoundPosts = response.data.found_posts;
+											afInfiniteScrollFoundPosts = currentCount + ( +response.data.found_posts );
 										} else if ( items.length === 0 ) {
 											afInfiniteScrollFoundPosts = currentCount;
 										} else if ( items.length < perPage ) {
@@ -11308,7 +11326,9 @@
 											WprElements.mediaHoverLink( widgetSelector, actionSelector );
 										}
 										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
-										if ( ! response.data || response.data.found_posts <= widgetSelector.find( '.wpr-grid-item' ).length ) {
+										// Stop when this page exhausted remaining matches (not when remaining <= DOM count)
+										var remaining = response.data && response.data.found_posts != null ? +response.data.found_posts : 0;
+										if ( ! response.data || remaining <= returnedCount ) {
 											widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
 											widgetSelector.find( '.wpr-grid-pagination' ).delay( 1000 ).fadeOut( 500 );
 										}
@@ -12987,7 +13007,21 @@
 					if ( triggerElement.hasClass('wpr-load-more-btn') ) {
 						widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
 
-						settings.grid_settings.query_offset = +settings.grid_settings.query_offset + targetGrid.find('.wpr-grid-item').length;
+						// Preserve widget base offset; skip via post__not_in of rendered IDs (avoids OOS/offset duplicates)
+						if ( typeof settings.grid_settings._base_query_offset === 'undefined' ) {
+							settings.grid_settings._base_query_offset = +settings.grid_settings.query_offset || 0;
+						}
+						var loadMoreItemCount = targetGrid.find('.wpr-grid-item').length;
+						settings.grid_settings.query_offset = +settings.grid_settings._base_query_offset + loadMoreItemCount;
+
+						// Collect already-rendered product IDs (post-{ID} class)
+						var excludeIds = [];
+						targetGrid.find('.wpr-grid-item').each(function() {
+							var m = ( this.className || '' ).match( /(?:^|\s)post-(\d+)(?:\s|$)/ );
+							if ( m && m[1] ) {
+								excludeIds.push( parseInt( m[1], 10 ) );
+							}
+						});
 
 						$.ajax({
 							type: 'POST',
@@ -12995,8 +13029,10 @@
 							data: {
 								action: experimentActionContent,
 								nonce: WprConfig.nonce,
-								wpr_offset: +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length,
-								wpr_item_length: targetGrid.find('.wpr-grid-item').length,
+								// Base offset only — already-shown products are excluded by ID (do not also OFFSET by count)
+								wpr_offset: +settings.grid_settings._base_query_offset,
+								wpr_item_length: loadMoreItemCount,
+								wpr_exclude_ids: excludeIds,
 								grid_settings: settings.grid_settings,
 								wpr_url_params: paramsObj,
 								orderby: orderby,
@@ -13004,13 +13040,25 @@
 							success: function(response) {
 								pagesLoadedExperiment++;
 								// iGrid.css('opacity', 0);
-								var items = $(response.data.output)
+								var rawItems = $(response.data.output);
+								var items = rawItems.filter ? rawItems.filter( '.wpr-grid-item' ) : rawItems;
+								var returnedCount = ( response.data && response.data.post_count != null )
+									? +response.data.post_count
+									: items.length;
+								// found_posts is REMAINING after wpr_exclude_ids — has more if remaining > this page
+								var remaining = response.data && response.data.found_posts != null ? +response.data.found_posts : 0;
+								var hasMore = remaining > returnedCount;
 	
 								// $data.each(function() {
 								// 	$(this).addClass('wpr-grid-hidden-item');
 								// });
 						
-								targetGrid.infiniteScroll( 'appendItems', items );
+								// AF path skips InfiniteScroll init — append directly (same as AF infinite-scroll)
+								if ( targetGrid.data('infiniteScroll') ) {
+									targetGrid.infiniteScroll( 'appendItems', items );
+								} else {
+									targetGrid.append( items );
+								}
 								targetGrid.isotopewpr( 'appended', items );
 								// isotopeFilters( settings ); // GOGA - if not images loaded
 	
@@ -13028,7 +13076,7 @@
 									}, 500 );
 								});
 								
-								if ( response.data.found_posts > 0 && response.data.found_posts > widgetSelector.find('.wpr-grid-item').length ) {
+								if ( hasMore ) {
 									if ( 'load-more' === settings.pagination_type ) {
 										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
 										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).delay(500).show();
@@ -13080,6 +13128,12 @@
 							}
 						});
 					} else {
+						// Filter change replaces grid — reset offset to widget base (not accumulated load-more skip)
+						if ( typeof settings.grid_settings._base_query_offset === 'undefined' ) {
+							settings.grid_settings._base_query_offset = +settings.grid_settings.query_offset || 0;
+						}
+						settings.grid_settings.query_offset = +settings.grid_settings._base_query_offset;
+
 						$.ajax({
 							type: 'POST',
 							url: WprConfig.ajaxurl,
@@ -13648,300 +13702,6 @@
 			  autoplay: 'yes' === lottieJSON.autoplay ? true : false
 			});
 		}, // end widgetSeparator
-
-		widgetDualColorHeading: function( $scope ) {
-			var $wrap = $scope.find( '.wpr-dual-heading-wrap.wpr-dual-heading-gsap' );
-
-			if ( ! $wrap.length || $wrap.attr( 'data-gsap-init' ) === 'yes' ) {
-				return;
-			}
-
-			var settingsRaw = $wrap.attr( 'data-settings' );
-
-			if ( ! settingsRaw ) {
-				return;
-			}
-
-			var $icon = $wrap.find( '.wpr-dual-heading-icon-wrap' );
-
-			var revealWrap = function() {
-				$wrap.css( 'opacity', 1 );
-			};
-
-			var revealIcon = function() {
-				if ( $icon.length ) {
-					$icon.css( 'opacity', 1 );
-				}
-			};
-
-			var settings;
-
-			try {
-				settings = JSON.parse( settingsRaw );
-			} catch ( e ) {
-				revealWrap();
-				revealIcon();
-				return;
-			}
-
-			if ( 'undefined' === typeof gsap ) {
-				revealWrap();
-				revealIcon();
-				return;
-			}
-
-			var hasTextAnim = 'yes' === settings.animation;
-			var hasIconAnim = 'yes' === settings.iconAnimation;
-
-			if ( ! hasTextAnim && ! hasIconAnim ) {
-				revealWrap();
-				revealIcon();
-				return;
-			}
-
-			var $first = $wrap.find( '.first' ),
-				$second = $wrap.find( '.second' ),
-				$desc = $wrap.find( '.wpr-dual-heading-description' ),
-				textTargets = [],
-				reducedMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
-
-			if ( $first.length ) {
-				textTargets.push( $first[0] );
-			}
-			if ( $second.length ) {
-				textTargets.push( $second[0] );
-			}
-			if ( $desc.length ) {
-				textTargets.push( $desc[0] );
-			}
-
-			var getIconDelay = function() {
-				var iconDelay = settings.delay || 0;
-
-				if ( hasTextAnim && textTargets.length ) {
-					iconDelay += ( settings.duration || 0.8 ) + ( textTargets.length - 1 ) * ( settings.stagger || 0.15 );
-				}
-
-				return iconDelay;
-			};
-
-			var playTextAnimation = function() {
-				if ( ! hasTextAnim || ! textTargets.length ) {
-					return;
-				}
-
-				if ( reducedMotion ) {
-					gsap.set( textTargets, { opacity: 1, x: 0, y: 0 } );
-					return;
-				}
-
-				var fromVars = {
-					opacity: 0,
-					duration: settings.duration || 0.8,
-					stagger: settings.stagger || 0.15,
-					delay: settings.delay || 0,
-					ease: 'power2.out'
-				};
-
-				if ( 'fade-up' === settings.type ) {
-					fromVars.y = 30;
-				} else if ( 'slide-left' === settings.type ) {
-					fromVars.x = -40;
-				} else if ( 'slide-right' === settings.type ) {
-					fromVars.x = 40;
-				}
-
-				gsap.set( textTargets, { opacity: 0 } );
-
-				if ( fromVars.y ) {
-					gsap.set( textTargets, { y: fromVars.y } );
-				}
-
-				if ( fromVars.x ) {
-					gsap.set( textTargets, { x: fromVars.x } );
-				}
-
-				gsap.to( textTargets, {
-					opacity: 1,
-					x: 0,
-					y: 0,
-					duration: fromVars.duration,
-					stagger: fromVars.stagger,
-					delay: fromVars.delay,
-					ease: fromVars.ease
-				} );
-			};
-
-			var playIconAnimation = function() {
-				if ( ! hasIconAnim || ! $icon.length ) {
-					return;
-				}
-
-				var el = $icon[0],
-					iconDelay = getIconDelay(),
-					iconDuration = settings.iconDuration || 0.9,
-					iconEntrance = settings.iconEntrance || 'bounce-in',
-					iconLoop = settings.iconLoop || 'none',
-					iconLoopSpeed = settings.iconLoopSpeed || 1.5,
-					iconHover = settings.iconHover || 'none',
-					initial = {
-						opacity: 0,
-						x: 0,
-						y: 0,
-						scale: 1,
-						rotation: 0,
-						rotationX: 0,
-						transformOrigin: '50% 50%',
-						transformPerspective: 600
-					},
-					target = {
-						opacity: 1,
-						x: 0,
-						y: 0,
-						scale: 1,
-						rotation: 0,
-						rotationX: 0,
-						duration: iconDuration,
-						delay: iconDelay,
-						ease: 'power2.out',
-						transformOrigin: '50% 50%'
-					};
-
-				if ( reducedMotion ) {
-					gsap.set( el, { opacity: 1, scale: 1, rotation: 0, rotationX: 0, x: 0, y: 0 } );
-					revealIcon();
-					return;
-				}
-
-				if ( 'bounce-in' === iconEntrance ) {
-					initial.scale = 0;
-					target.ease = 'back.out(1.7)';
-				} else if ( 'rotate-in' === iconEntrance ) {
-					initial.scale = 0.4;
-					initial.rotation = -180;
-					target.ease = 'back.out(1.4)';
-				} else if ( 'pop-in' === iconEntrance ) {
-					initial.scale = 0.2;
-					target.ease = 'elastic.out(1, 0.6)';
-				} else if ( 'flip-in' === iconEntrance ) {
-					initial.rotationX = -90;
-				}
-
-				gsap.set( el, initial );
-				gsap.to( el, target );
-
-				if ( 'none' !== iconLoop ) {
-					var loopDelay = iconDelay + iconDuration + 0.15;
-
-					if ( 'float' === iconLoop ) {
-						gsap.to( el, {
-							y: -10,
-							duration: iconLoopSpeed,
-							repeat: -1,
-							yoyo: true,
-							ease: 'sine.inOut',
-							delay: loopDelay
-						} );
-					} else if ( 'pulse' === iconLoop ) {
-						gsap.to( el, {
-							scale: 1.12,
-							duration: iconLoopSpeed,
-							repeat: -1,
-							yoyo: true,
-							ease: 'sine.inOut',
-							delay: loopDelay,
-							transformOrigin: '50% 50%'
-						} );
-					} else if ( 'wiggle' === iconLoop ) {
-						gsap.to( el, {
-							rotation: 12,
-							duration: iconLoopSpeed * 0.35,
-							repeat: -1,
-							yoyo: true,
-							ease: 'sine.inOut',
-							delay: loopDelay,
-							transformOrigin: '50% 50%'
-						} );
-					}
-				}
-
-				if ( 'none' !== iconHover && ! WprElements.editorCheck() ) {
-					$icon.off( 'mouseenter.wprDualIconHover mouseleave.wprDualIconHover' )
-						.on( 'mouseenter.wprDualIconHover', function() {
-							if ( 'bounce' === iconHover ) {
-								gsap.to( el, { scale: 1.2, duration: 0.35, ease: 'back.out(2)', overwrite: 'auto' } );
-							} else if ( 'rotate' === iconHover ) {
-								gsap.to( el, { rotation: 15, duration: 0.35, ease: 'power2.out', overwrite: 'auto' } );
-							}
-						} )
-						.on( 'mouseleave.wprDualIconHover', function() {
-							gsap.to( el, { scale: 1, rotation: 0, duration: 0.35, ease: 'power2.out', overwrite: 'auto' } );
-						} );
-				}
-			};
-
-			var playAnimations = function() {
-				revealWrap();
-				playTextAnimation();
-				playIconAnimation();
-			};
-
-			var animationsPlayed = false;
-
-			var playAnimationsOnce = function() {
-				if ( animationsPlayed ) {
-					return;
-				}
-
-				animationsPlayed = true;
-				playAnimations();
-			};
-
-			if ( reducedMotion ) {
-				if ( textTargets.length ) {
-					gsap.set( textTargets, { opacity: 1, x: 0, y: 0 } );
-				}
-				if ( hasIconAnim && $icon.length ) {
-					gsap.set( $icon[0], { opacity: 1, scale: 1, rotation: 0, rotationX: 0, x: 0, y: 0 } );
-				}
-				revealWrap();
-				revealIcon();
-				$wrap.attr( 'data-gsap-init', 'yes' );
-				return;
-			}
-
-			if ( hasTextAnim ) {
-				gsap.set( textTargets, { opacity: 0 } );
-			}
-
-			var trigger = settings.trigger || 'scroll';
-
-			if ( 'scroll' === trigger && 'undefined' !== typeof IntersectionObserver ) {
-				var observer = new IntersectionObserver( function( entries, obs ) {
-					entries.forEach( function( entry ) {
-						if ( entry.isIntersecting ) {
-							playAnimationsOnce();
-							obs.unobserve( entry.target );
-						}
-					} );
-				}, {
-					threshold: 0.15,
-					rootMargin: '0px 0px -5% 0px'
-				} );
-
-				observer.observe( $scope[0] );
-
-				var rect = $scope[0].getBoundingClientRect();
-
-				if ( rect.top < window.innerHeight && rect.bottom > 0 ) {
-					playAnimationsOnce();
-				}
-			} else {
-				playAnimationsOnce();
-			}
-
-			$wrap.attr( 'data-gsap-init', 'yes' );
-		}, // End widgetDualColorHeading
 		
 		widgetCircleMenu: function( $scope ) {
 			var $wrapper = $scope.find( '.wpr-circle-menu-wrapper' ),
