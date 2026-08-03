@@ -44,10 +44,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		return ! \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_optimized_markup' );
 	}
 
-	public function get_script_depends() {
-		return [ 'wpr-gsap' ];
-	}
-
     public function get_custom_help_url() {
     	if ( empty(get_option('wpr_wl_plugin_links')) )
         // return 'https://royal-elementor-addons.com/contact/?ref=rea-plugin-panel-grid-help-btn';
@@ -223,257 +219,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				'condition' => [
 					'show_icon' => 'yes'
 				]
-			]
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_icon_animation',
-			[
-				'label' => esc_html__( 'Icon Animation', 'wpr-addons' ),
-				'condition' => [
-					'show_icon' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_icon_animation',
-			[
-				'label' => esc_html__( 'Enable Icon Animation', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'wpr-addons' ),
-				'label_off' => esc_html__( 'No', 'wpr-addons' ),
-				'return_value' => 'yes',
-				'default' => '',
-			]
-		);
-
-		$this->add_control(
-			'gsap_icon_entrance',
-			[
-				'label' => esc_html__( 'Entrance Effect', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'bounce-in',
-				'options' => [
-					'bounce-in' => esc_html__( 'Bounce In', 'wpr-addons' ),
-					'rotate-in' => esc_html__( 'Rotate In', 'wpr-addons' ),
-					'pop-in' => esc_html__( 'Elastic Pop', 'wpr-addons' ),
-					'flip-in' => esc_html__( '3D Flip', 'wpr-addons' ),
-				],
-				'condition' => [
-					'gsap_icon_animation' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_icon_loop',
-			[
-				'label' => esc_html__( 'Loop Effect', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'float',
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'float' => esc_html__( 'Float', 'wpr-addons' ),
-					'pulse' => esc_html__( 'Pulse', 'wpr-addons' ),
-					'wiggle' => esc_html__( 'Wiggle', 'wpr-addons' ),
-				],
-				'condition' => [
-					'gsap_icon_animation' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_icon_loop_speed',
-			[
-				'label' => esc_html__( 'Loop Speed (s)', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0.4,
-						'max' => 4,
-						'step' => 0.1,
-					],
-				],
-				'default' => [
-					'size' => 1.5,
-				],
-				'condition' => [
-					'gsap_icon_animation' => 'yes',
-					'gsap_icon_loop!' => 'none',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_icon_hover',
-			[
-				'label' => esc_html__( 'Hover Effect', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'bounce',
-				'options' => [
-					'none' => esc_html__( 'None', 'wpr-addons' ),
-					'bounce' => esc_html__( 'Bounce Scale', 'wpr-addons' ),
-					'rotate' => esc_html__( 'Tilt Rotate', 'wpr-addons' ),
-				],
-				'condition' => [
-					'gsap_icon_animation' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_icon_duration',
-			[
-				'label' => esc_html__( 'Entrance Duration (s)', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0.3,
-						'max' => 2,
-						'step' => 0.1,
-					],
-				],
-				'default' => [
-					'size' => 0.9,
-				],
-				'condition' => [
-					'gsap_icon_animation' => 'yes',
-				],
-			]
-		);
-
-		$this->end_controls_section();
-
-		$this->start_controls_section(
-			'section_gsap_animation',
-			[
-				'label' => esc_html__( 'Entrance Animation', 'wpr-addons' ),
-			]
-		);
-
-		$this->add_control(
-			'gsap_animation',
-			[
-				'label' => esc_html__( 'Enable Animation', 'wpr-addons' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'wpr-addons' ),
-				'label_off' => esc_html__( 'No', 'wpr-addons' ),
-				'return_value' => 'yes',
-				'default' => '',
-			]
-		);
-
-		$this->add_control(
-			'gsap_animation_type',
-			[
-				'label' => esc_html__( 'Animation Type', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'fade-up',
-				'options' => [
-					'fade-in' => esc_html__( 'Fade In', 'wpr-addons' ),
-					'fade-up' => esc_html__( 'Fade Up', 'wpr-addons' ),
-					'slide-left' => esc_html__( 'Slide Left', 'wpr-addons' ),
-					'slide-right' => esc_html__( 'Slide Right', 'wpr-addons' ),
-				],
-				'condition' => [
-					'gsap_animation' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_animation_trigger',
-			[
-				'label' => esc_html__( 'Trigger', 'wpr-addons' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'scroll',
-				'options' => [
-					'scroll' => esc_html__( 'On Scroll Into View', 'wpr-addons' ),
-					'load' => esc_html__( 'On Page Load', 'wpr-addons' ),
-				],
-				'conditions' => [
-					'relation' => 'or',
-					'terms' => [
-						[
-							'name' => 'gsap_animation',
-							'operator' => '==',
-							'value' => 'yes',
-						],
-						[
-							'name' => 'gsap_icon_animation',
-							'operator' => '==',
-							'value' => 'yes',
-						],
-					],
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_animation_duration',
-			[
-				'label' => esc_html__( 'Duration (s)', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0.2,
-						'max' => 2,
-						'step' => 0.1,
-					],
-				],
-				'default' => [
-					'size' => 0.8,
-				],
-				'condition' => [
-					'gsap_animation' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_animation_delay',
-			[
-				'label' => esc_html__( 'Delay (s)', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 2,
-						'step' => 0.1,
-					],
-				],
-				'default' => [
-					'size' => 0,
-				],
-				'condition' => [
-					'gsap_animation' => 'yes',
-				],
-			]
-		);
-
-		$this->add_control(
-			'gsap_animation_stagger',
-			[
-				'label' => esc_html__( 'Stagger (s)', 'wpr-addons' ),
-				'type' => Controls_Manager::SLIDER,
-				'description' => esc_html__( 'Delay between primary, secondary and description parts.', 'wpr-addons' ),
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 0.5,
-						'step' => 0.05,
-					],
-				],
-				'default' => [
-					'size' => 0.15,
-				],
-				'condition' => [
-					'gsap_animation' => 'yes',
-				],
 			]
 		);
 
@@ -1076,42 +821,6 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		if ( 'long' === $settings['text_shadow_type'] ) {
 			$this->add_render_attribute( 'dual_title', 'class', 'wpr-shadow-long' );
 		}
-
-		$this->add_render_attribute( 'dual_heading_wrap', 'class', 'wpr-dual-heading-wrap' );
-
-		$has_text_anim = 'yes' === ( $settings['gsap_animation'] ?? '' );
-		$has_icon_anim = 'yes' === ( $settings['show_icon'] ?? '' ) && 'yes' === ( $settings['gsap_icon_animation'] ?? '' );
-
-		if ( $has_text_anim || $has_icon_anim ) {
-			$gsap_settings = [
-				'animation' => $has_text_anim ? 'yes' : '',
-				'type' => ! empty( $settings['gsap_animation_type'] ) ? $settings['gsap_animation_type'] : 'fade-up',
-				'trigger' => ! empty( $settings['gsap_animation_trigger'] ) ? $settings['gsap_animation_trigger'] : 'scroll',
-				'duration' => isset( $settings['gsap_animation_duration']['size'] ) ? (float) $settings['gsap_animation_duration']['size'] : 0.8,
-				'delay' => isset( $settings['gsap_animation_delay']['size'] ) ? (float) $settings['gsap_animation_delay']['size'] : 0,
-				'stagger' => isset( $settings['gsap_animation_stagger']['size'] ) ? (float) $settings['gsap_animation_stagger']['size'] : 0.15,
-				'iconAnimation' => $has_icon_anim ? 'yes' : '',
-				'iconEntrance' => ! empty( $settings['gsap_icon_entrance'] ) ? $settings['gsap_icon_entrance'] : 'bounce-in',
-				'iconLoop' => ! empty( $settings['gsap_icon_loop'] ) ? $settings['gsap_icon_loop'] : 'none',
-				'iconLoopSpeed' => isset( $settings['gsap_icon_loop_speed']['size'] ) ? (float) $settings['gsap_icon_loop_speed']['size'] : 1.5,
-				'iconHover' => ! empty( $settings['gsap_icon_hover'] ) ? $settings['gsap_icon_hover'] : 'none',
-				'iconDuration' => isset( $settings['gsap_icon_duration']['size'] ) ? (float) $settings['gsap_icon_duration']['size'] : 0.9,
-			];
-
-			$this->add_render_attribute( 'dual_heading_wrap', 'class', 'wpr-dual-heading-gsap' );
-
-			if ( $has_text_anim ) {
-				$this->add_render_attribute( 'dual_heading_wrap', 'class', 'wpr-dual-heading-text-gsap' );
-			}
-
-			$this->add_render_attribute( 'dual_heading_wrap', 'data-settings', wp_json_encode( $gsap_settings ) );
-		}
-
-		$this->add_render_attribute( 'dual_heading_icon', 'class', 'wpr-dual-heading-icon-wrap' );
-
-		if ( $has_icon_anim ) {
-			$this->add_render_attribute( 'dual_heading_icon', 'class', 'wpr-dual-heading-icon-gsap' );
-		}
 		
 		$tags_whitelist = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p'];
 
@@ -1122,7 +831,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 		}
 
         ?>
-			<div <?php echo $this->get_render_attribute_string( 'dual_heading_wrap' ); ?>>
+			<div class="wpr-dual-heading-wrap">
 				<div class="wpr-dual-title-wrap">
 					<<?php echo esc_attr( $dual_heading_tag ); ?> <?php echo $this->get_render_attribute_string( 'dual_title' ); ?>>
 					<?php if (!empty($settings['primary_heading'])) : ?>
@@ -1140,7 +849,7 @@ class Wpr_Dual_Color_Heading extends Widget_Base {
 				<?php } ?>
 
 				<?php if ('yes' == $settings['show_icon']) { ?>
-					<div <?php echo $this->get_render_attribute_string( 'dual_heading_icon' ); ?>>
+					<div class="wpr-dual-heading-icon-wrap">
 						<?php \Elementor\Icons_Manager::render_icon($settings['feature_list_icon'], ['aria-hidden' => 'true']); ?>
 					</div>
 				<?php } ?>

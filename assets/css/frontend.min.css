@@ -13864,35 +13864,6 @@ svg[class*="wpr-insta-feed-extra-icon"],
     display: inline-block;
 }
 
-.wpr-dual-heading-wrap.wpr-dual-heading-text-gsap {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.wpr-dual-heading-wrap.wpr-dual-heading-text-gsap .first,
-.wpr-dual-heading-wrap.wpr-dual-heading-text-gsap .second,
-.wpr-dual-heading-wrap.wpr-dual-heading-text-gsap .wpr-dual-heading-description {
-    will-change: transform, opacity;
-}
-
-.wpr-dual-heading-icon-wrap.wpr-dual-heading-icon-gsap {
-    opacity: 0;
-    will-change: transform, opacity;
-    display: inline-block;
-}
-
-.elementor-editor-active .elementor-widget-wpr-dual-color-heading .wpr-dual-heading-wrap.wpr-dual-heading-text-gsap {
-    opacity: 1 !important;
-}
-
-.elementor-editor-active .elementor-widget-wpr-dual-color-heading .wpr-dual-heading-wrap.wpr-dual-heading-text-gsap .first,
-.elementor-editor-active .elementor-widget-wpr-dual-color-heading .wpr-dual-heading-wrap.wpr-dual-heading-text-gsap .second,
-.elementor-editor-active .elementor-widget-wpr-dual-color-heading .wpr-dual-heading-wrap.wpr-dual-heading-text-gsap .wpr-dual-heading-description,
-.elementor-editor-active .elementor-widget-wpr-dual-color-heading .wpr-dual-heading-icon-wrap.wpr-dual-heading-icon-gsap {
-    opacity: 1 !important;
-    transform: none !important;
-}
-
 /* For Long Shadow */
 .wpr-dual-title {
   --wpr-ls-color: #e8e8e8;
