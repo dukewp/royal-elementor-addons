@@ -5174,6 +5174,7 @@
 							nonce: WprConfig.nonce,
 							wpr_keyword: $scope.find('.wpr-search-form-input').val(),
 							wpr_meta_query: $scope.find('.wpr-search-form-input').attr('meta-query'),
+							wpr_meta_keys: $scope.find('.wpr-search-form-input').attr('meta-keys') || '',
 							wpr_query_type: $scope.find('.wpr-search-form-input').attr('wpr-query-type'),
 							wpr_option_post_type: optionPostType ? $scope.find('.wpr-category-select').find('option:selected').data('post-type') : '',
 							wpr_taxonomy_type: wprTaxonomyType,
