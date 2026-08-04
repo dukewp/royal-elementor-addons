@@ -2151,8 +2151,8 @@
 							navClass = scopeClass +' .wpr-load-more-btn';
 						}
 
-						// Advanced Filters + infinite-scroll: grid uses same AJAX as load more (handled in widgetAdvancedFilters)
-						var skipPathInfiniteScroll = ( 'infinite-scroll' === settings.pagination_type && iGrid.attr( 'data-advanced-filters' ) === 'yes' );
+						// Advanced Filters + load-more/infinite-scroll: AF handles pagination via ajaxFilters (avoid double load)
+						var skipPathInfiniteScroll = ( ( 'infinite-scroll' === settings.pagination_type || 'load-more' === settings.pagination_type ) && iGrid.attr( 'data-advanced-filters' ) === 'yes' );
 						if ( ! skipPathInfiniteScroll ) {
 						iGrid.infiniteScroll({
 							path: scopeClass +' .wpr-grid-pagination a',
@@ -4621,6 +4621,17 @@
 				sliderSlidesToScroll = +(sliderClass.match(/wpr-adv-slides-to-scroll-\d/).join().slice(-1)),
 				dataSlideEffect = $advancedSlider.attr('data-slide-effect');
 
+			$advancedSlider.on( 'init', function() {
+				$( this ).css( 'opacity', 1 );
+				$scope.find( '.slick-current' ).addClass( 'wpr-slick-visible' );
+
+				if ( $scope.find( '.wpr-slider-img' ).length !== 0 ) {
+					$scope.find( '.wpr-advanced-slider' ).css( 'height', $scope.find( '.slick-current' ).outerHeight() );
+				}
+
+				autoplayVideo();
+			} );
+
 			$advancedSlider.slick({
 				appendArrows :  $scope.find('.wpr-slider-controls'),
 				appendDots :  $scope.find('.wpr-slider-dots'),
@@ -4690,36 +4701,15 @@
 				],
 			});
 
-			$(document).ready(function() {
-                
-                $scope.find('.slick-current').addClass('wpr-slick-visible');
+			if ( $scope.find( '.wpr-slider-img' ).length !== 0 ) {
+				$scope.find( '.wpr-slider-arrow' ).on( 'click', function() {
+					$scope.find( '.wpr-advanced-slider' ).css( 'height', $scope.find( '.slick-current' ).outerHeight() );
+				} );
 
-				var maxHeight = -1;
-				// $scope.find('.slick-slide').each(function() {
-				// if ($(this).height() > maxHeight) {
-				// 	maxHeight = $(this).height();
-				// }
-				// });
-				// $scope.find('.slick-slide').each(function() {
-				// if ($(this).height() < maxHeight) {
-				// 	$(this).css('margin', Math.ceil((maxHeight-$(this).height())/2) + 'px 0');
-				// 	// $(this).css('transform', 'translateY(-50%)');
-				// }
-				// });
-
-				// GOGA - needs condition check if there are any images
-				if ( $scope.find('.wpr-slider-img').length !== 0 ) {
-					$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
-				
-					$scope.find('.wpr-slider-arrow').on('click', function() {
-						$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
-					});
-		
-					$(window).smartresize(function() {
-						$scope.find('.wpr-advanced-slider').css('height', $scope.find('.slick-current').outerHeight());
-					});
-				}
-			});
+				$( window ).smartresize( function() {
+					$scope.find( '.wpr-advanced-slider' ).css( 'height', $scope.find( '.slick-current' ).outerHeight() );
+				} );
+			}
 			
 			function sliderVideoSize(){
 				  
@@ -4803,14 +4793,6 @@
 
 			$(window).on('load resize', function(){
 				sliderVideoSize();
-			});
-
-			$(document).ready(function () {
-				// Handler when all assets (including images) are loaded
-				if ( $scope.find('.wpr-advanced-slider').length ) {
-					$scope.find('.wpr-advanced-slider').css('opacity', 1);
-					autoplayVideo();
-				}
 			});
 
 			function autoplayVideo() {
@@ -5192,6 +5174,7 @@
 							nonce: WprConfig.nonce,
 							wpr_keyword: $scope.find('.wpr-search-form-input').val(),
 							wpr_meta_query: $scope.find('.wpr-search-form-input').attr('meta-query'),
+							wpr_meta_keys: $scope.find('.wpr-search-form-input').attr('meta-keys') || '',
 							wpr_query_type: $scope.find('.wpr-search-form-input').attr('wpr-query-type'),
 							wpr_option_post_type: optionPostType ? $scope.find('.wpr-category-select').find('option:selected').data('post-type') : '',
 							wpr_taxonomy_type: wprTaxonomyType,
@@ -11282,17 +11265,32 @@
 								var paramsObj = {};
 								(new URL(finalURL)).searchParams.forEach( function( value, key ) { paramsObj[key] = value; } );
 								settings.grid_settings = settings.grid_settings || {};
-								settings.grid_settings.query_offset = currentCount;
+
+								if ( typeof settings.grid_settings._base_query_offset === 'undefined' ) {
+									settings.grid_settings._base_query_offset = +settings.grid_settings.query_offset || 0;
+								}
+								settings.grid_settings.query_offset = +settings.grid_settings._base_query_offset + currentCount;
+
 								widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
 								var orderby = widgetSelector.find( 'select.orderby' ).length > 0 ? widgetSelector.find( 'select.orderby' ).val() : '';
+
+								var excludeIds = [];
+								actionSelector.find('.wpr-grid-item').each(function() {
+									var m = ( this.className || '' ).match( /(?:^|\s)post-(\d+)(?:\s|$)/ );
+									if ( m && m[1] ) {
+										excludeIds.push( parseInt( m[1], 10 ) );
+									}
+								});
+								
 								$.ajax( {
 									type: 'POST',
 									url: WprConfig.ajaxurl,
 									data: {
 										action: experimentActionContent,
 										nonce: WprConfig.nonce,
-										wpr_offset: currentCount,
+										wpr_offset: +settings.grid_settings._base_query_offset,
 										wpr_item_length: currentCount,
+										wpr_exclude_ids: excludeIds,
 										grid_settings: settings.grid_settings,
 										wpr_url_params: paramsObj,
 										orderby: orderby,
@@ -11300,8 +11298,12 @@
 									success: function( response ) {
 										var rawItems = response.data && response.data.output ? $( response.data.output ) : $();
 										var items = rawItems.filter ? rawItems.filter( '.wpr-grid-item' ) : rawItems;
+										var returnedCount = ( response.data && response.data.post_count != null )
+											? +response.data.post_count
+											: items.length;
+										// found_posts is REMAINING (post__not_in excludes already shown) — convert to absolute total
 										if ( response.data && response.data.found_posts != null ) {
-											afInfiniteScrollFoundPosts = response.data.found_posts;
+											afInfiniteScrollFoundPosts = currentCount + ( +response.data.found_posts );
 										} else if ( items.length === 0 ) {
 											afInfiniteScrollFoundPosts = currentCount;
 										} else if ( items.length < perPage ) {
@@ -11325,7 +11327,9 @@
 											WprElements.mediaHoverLink( widgetSelector, actionSelector );
 										}
 										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
-										if ( ! response.data || response.data.found_posts <= widgetSelector.find( '.wpr-grid-item' ).length ) {
+										// Stop when this page exhausted remaining matches (not when remaining <= DOM count)
+										var remaining = response.data && response.data.found_posts != null ? +response.data.found_posts : 0;
+										if ( ! response.data || remaining <= returnedCount ) {
 											widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-finish' ).fadeIn( 1000 );
 											widgetSelector.find( '.wpr-grid-pagination' ).delay( 1000 ).fadeOut( 500 );
 										}
@@ -12393,46 +12397,55 @@
 			
 				$('.wpr-advanced-filters-wrap').each(function () {
 					const $wrap = $(this);
+					const emptyAction = $wrap.attr('data-empty-action') || '';
+					const shouldUpdateCounts = $wrap.attr('data-show-count') === 'yes' && $wrap.attr('data-change-counter') !== '';
+					const shouldHandleEmpty = emptyAction === 'hide' || emptyAction === 'disable';
+					const isSelfFilterWrap = $wrap.attr('data-change-counter') === 'other_filters'
+						&& $wrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope);
+
+					if (!shouldUpdateCounts && !shouldHandleEmpty) {
+						return true;
+					}
+
+					// Self-filter: do not re-run counts or empty actions on the widget that triggered the change.
+					if (isSelfFilterWrap) {
+						return true;
+					}
 			
-					if ( $wrap.attr('data-show-count') === 'yes' && $wrap.attr('data-change-counter') !== '') {
-						if ( $wrap.attr('data-change-counter') === 'other_filters' && $wrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope) ) {
-							return true; // skip this wrap
-						}
+					const $inputs = $wrap.find('input[type="checkbox"], input[type="radio"], option, li.wpr-woo-rating');
 			
-						const $inputs = $wrap.find('input[type="checkbox"], input[type="radio"], option, li.wpr-woo-rating');
+					$inputs.each(function () {
+						const $input = $(this);
+						const isOption = $input.prop('tagName') === 'OPTION';
+						const selectedName = isOption ? $input.closest('select').attr('name') : $input.attr('name');
+						const selectedValue = $input.val() || $input.data('rating');
 			
-						$inputs.each(function () {
-							const $input = $(this);
-							const isOption = $input.prop('tagName') === 'OPTION';
-							const selectedName = isOption ? $input.closest('select').attr('name') : $input.attr('name');
-							const selectedValue = $input.val() || $input.data('rating');
+						if (!selectedName || selectedValue === '') return;
 			
-							if (!selectedName || selectedValue === '') return;
-			
-							// Clone the current state
-							let paramsObjTemp = { ...paramsObj };
-			
-							// Get current values for this key if exist
-							let existingValues = paramsObjTemp[selectedName] ? paramsObjTemp[selectedName].split(',') : [];
-			
-							// Ensure selectedValue is included
+						let paramsObjTemp = { ...paramsObj };
+						let existingValues = paramsObjTemp[selectedName] ? paramsObjTemp[selectedName].split(',') : [];
+
+						if (shouldHandleEmpty && !shouldUpdateCounts) {
+							// Empty-only: candidate term + other active filters (not merged with siblings).
+							paramsObjTemp[selectedName] = selectedValue;
+						} else {
 							if (!existingValues.includes(selectedValue)) {
 								existingValues.push(selectedValue);
 							}
-			
+
 							paramsObjTemp[selectedName] = existingValues.join(',');
+						}
 			
-							// Store the element and its key info to update later
-							elementsToUpdate.push({
-								element: $input,
-								name: selectedName,
-								value: selectedValue
-							});
-			
-							// Store for AJAX batch call
-							paramsArray.push(paramsObjTemp);
+						elementsToUpdate.push({
+							element: $input,
+							name: selectedName,
+							value: selectedValue,
+							updateCount: shouldUpdateCounts,
+							emptyAction: emptyAction
 						});
-					}
+			
+						paramsArray.push(paramsObjTemp);
+					});
 				});
 			
 				if (paramsArray.length === 0) {
@@ -12440,7 +12453,6 @@
 					return;
 				}
 			
-				// Make a single AJAX request with all hypothetical filter states
 				$.ajax({
 					type: 'POST',
 					url: WprConfig.ajaxurl,
@@ -12459,74 +12471,57 @@
 						setTimeout(() => {
 							response.data.forEach((dataEntry, index) => {
 								const countText = `(${dataEntry.found_posts})`;
-								const { element, value } = elementsToUpdate[index];
+								const { element, updateCount, emptyAction } = elementsToUpdate[index];
 			
 								const $el = $(element);
+								const $afWrap = $el.closest('.wpr-advanced-filters-wrap');
 
-								if ($el.closest('.wpr-advanced-filters-wrap').attr('data-wpr-relation') == 'or') {
-									if ( $el.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope) ) {
-										return true;
-									}
+								if ($afWrap.attr('data-wpr-relation') == 'or' && $afWrap.closest('.elementor-widget-wpr-advanced-filters-pro').is($scope)) {
+									return true;
 								}
 
-								if ( $el.hasClass('wpr-woo-rating') ) {
-									$el.find('.wpr-af-count').text(countText);
-								} else if ($el.prop('tagName') === 'OPTION') {
-									if ( $el.attr('value') != 0 ) {
-										const cleanText = $el.text().replace(/\(\d+\)/, '');
-										$el.text(cleanText + countText);
-									}
-								} else {
-									$el.closest('.wpr-af-input-wrap').find('.wpr-af-count').text(countText);
-			
-									// // Also update active filters area if it exists
-									// let $filterTag = $('.wpr-af-active-filters').find(`span[data-value="${value}"]`),
-									// 	removeIcon = '<span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path></svg></span>';
-
-									// if (
-									// 	$filterTag.length > 0 &&
-									// 	$filterTag.parent().attr('data-wpr-af-type') === $el.closest('.wpr-advanced-filters-wrap').data('wpr-filter-type')
-									// ) {
-									// 	// Only update the filterTag that matches the data-rf-id of the current filter element
-									// 	const elDataId = $el.closest('[data-id]').data('id');
-									// 	$filterTag.each(function () {
-									// 		if ($(this).attr('data-rf-id') == elDataId) {
-									// 			let baseText = $(this).text().replace(/\(\d+\)/, '');
-									// 			$(this).html(baseText + countText + removeIcon);
-									// 		}
-									// 	});
-									// }
-								}
-
-								// Disable element if count is 0 and data-empty-action is set to disable
-								if (dataEntry.found_posts === 0) {
-									if ($el.closest('.wpr-advanced-filters-wrap').attr('data-empty-action') === 'hide') {
+								if (updateCount) {
+									if ( $el.hasClass('wpr-woo-rating') ) {
+										$el.find('.wpr-af-count').text(countText);
+									} else if ($el.prop('tagName') === 'OPTION') {
 										if ( $el.attr('value') != 0 ) {
-											$el.hide();
-											if ($el.is(':checkbox') || $el.is(':radio')) {
-												$el.closest('.wpr-af-input-wrap').hide();
-												if ( $el.closest('.wpr-af-visual-wrap') ) {
-													$el.closest('.wpr-af-visual-wrap').hide();
+											const cleanText = $el.text().replace(/\(\d+\)/, '');
+											$el.text(cleanText + countText);
+										}
+									} else {
+										$el.closest('.wpr-af-input-wrap').find('.wpr-af-count').text(countText);
+									}
+								}
+
+								if (emptyAction === 'hide' || emptyAction === 'disable') {
+									if (dataEntry.found_posts === 0) {
+										if (emptyAction === 'hide') {
+											if ( $el.attr('value') != 0 ) {
+												$el.hide();
+												if ($el.is(':checkbox') || $el.is(':radio')) {
+													$el.closest('.wpr-af-input-wrap').hide();
+													if ( $el.closest('.wpr-af-visual-wrap') ) {
+														$el.closest('.wpr-af-visual-wrap').hide();
+													}
 												}
 											}
+										} else {
+											$el.prop('disabled', true);
 										}
-									} else if ($el.closest('.wpr-advanced-filters-wrap').attr('data-empty-action') === 'disable') {
-										$el.prop('disabled', true);
-									}
-								} else {
-									$el.prop('disabled', false);
-									$el.show();
-									if ($el.is(':checkbox') || $el.is(':radio')) {
-										$el.closest('.wpr-af-input-wrap').show();
-										$el.closest('.wpr-af-visual-wrap').show();
+									} else {
+										$el.prop('disabled', false);
+										$el.show();
+										if ($el.is(':checkbox') || $el.is(':radio')) {
+											$el.closest('.wpr-af-input-wrap').show();
+											$el.closest('.wpr-af-visual-wrap').show();
+										}
 									}
 								}
 
-								const $wrap = $el.closest('.wpr-advanced-filters-wrap');
-								if ( $wrap.find('.wpr-advanced-filters-inner').children(':visible').length === 0 ) {
-									$wrap.find('.wpr-af-filters-label').hide();
+								if ( $afWrap.find('.wpr-advanced-filters-inner').children(':visible').length === 0 ) {
+									$afWrap.find('.wpr-af-filters-label').hide();
 								} else {
-									$wrap.find('.wpr-af-filters-label').show();
+									$afWrap.find('.wpr-af-filters-label').show();
 								}
 							});
 						}, 800);
@@ -13013,7 +13008,21 @@
 					if ( triggerElement.hasClass('wpr-load-more-btn') ) {
 						widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).show();
 
-						settings.grid_settings.query_offset = +settings.grid_settings.query_offset + targetGrid.find('.wpr-grid-item').length;
+						// Preserve widget base offset; skip via post__not_in of rendered IDs (avoids OOS/offset duplicates)
+						if ( typeof settings.grid_settings._base_query_offset === 'undefined' ) {
+							settings.grid_settings._base_query_offset = +settings.grid_settings.query_offset || 0;
+						}
+						var loadMoreItemCount = targetGrid.find('.wpr-grid-item').length;
+						settings.grid_settings.query_offset = +settings.grid_settings._base_query_offset + loadMoreItemCount;
+
+						// Collect already-rendered product IDs (post-{ID} class)
+						var excludeIds = [];
+						targetGrid.find('.wpr-grid-item').each(function() {
+							var m = ( this.className || '' ).match( /(?:^|\s)post-(\d+)(?:\s|$)/ );
+							if ( m && m[1] ) {
+								excludeIds.push( parseInt( m[1], 10 ) );
+							}
+						});
 
 						$.ajax({
 							type: 'POST',
@@ -13021,8 +13030,10 @@
 							data: {
 								action: experimentActionContent,
 								nonce: WprConfig.nonce,
-								wpr_offset: +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length,
-								wpr_item_length: targetGrid.find('.wpr-grid-item').length,
+								// Base offset only — already-shown products are excluded by ID (do not also OFFSET by count)
+								wpr_offset: +settings.grid_settings._base_query_offset,
+								wpr_item_length: loadMoreItemCount,
+								wpr_exclude_ids: excludeIds,
 								grid_settings: settings.grid_settings,
 								wpr_url_params: paramsObj,
 								orderby: orderby,
@@ -13030,13 +13041,25 @@
 							success: function(response) {
 								pagesLoadedExperiment++;
 								// iGrid.css('opacity', 0);
-								var items = $(response.data.output)
+								var rawItems = $(response.data.output);
+								var items = rawItems.filter ? rawItems.filter( '.wpr-grid-item' ) : rawItems;
+								var returnedCount = ( response.data && response.data.post_count != null )
+									? +response.data.post_count
+									: items.length;
+								// found_posts is REMAINING after wpr_exclude_ids — has more if remaining > this page
+								var remaining = response.data && response.data.found_posts != null ? +response.data.found_posts : 0;
+								var hasMore = remaining > returnedCount;
 	
 								// $data.each(function() {
 								// 	$(this).addClass('wpr-grid-hidden-item');
 								// });
 						
-								targetGrid.infiniteScroll( 'appendItems', items );
+								// AF path skips InfiniteScroll init — append directly (same as AF infinite-scroll)
+								if ( targetGrid.data('infiniteScroll') ) {
+									targetGrid.infiniteScroll( 'appendItems', items );
+								} else {
+									targetGrid.append( items );
+								}
 								targetGrid.isotopewpr( 'appended', items );
 								// isotopeFilters( settings ); // GOGA - if not images loaded
 	
@@ -13054,7 +13077,7 @@
 									}, 500 );
 								});
 								
-								if ( response.data.found_posts > 0 && response.data.found_posts > widgetSelector.find('.wpr-grid-item').length ) {
+								if ( hasMore ) {
 									if ( 'load-more' === settings.pagination_type ) {
 										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-pagination-loading' ).hide();
 										widgetSelector.find( '.wpr-grid-pagination' ).find( '.wpr-load-more-btn' ).delay(500).show();
@@ -13106,6 +13129,12 @@
 							}
 						});
 					} else {
+						// Filter change replaces grid — reset offset to widget base (not accumulated load-more skip)
+						if ( typeof settings.grid_settings._base_query_offset === 'undefined' ) {
+							settings.grid_settings._base_query_offset = +settings.grid_settings.query_offset || 0;
+						}
+						settings.grid_settings.query_offset = +settings.grid_settings._base_query_offset;
+
 						$.ajax({
 							type: 'POST',
 							url: WprConfig.ajaxurl,
