@@ -28,6 +28,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public static $my_upsells;
 	public static $crossell_ids;
 
+	/**
+	 * Archive Products Per Page for Current Query (Theme Builder options).
+	 * Only meaningful when query_selection is "current".
+	 */
+	public static function get_current_query_posts_per_page( $settings = [] ) {
+		$tax = isset( $settings['current_query_tax'] ) ? $settings['current_query_tax'] : '';
+
+		if ( 'product_cat' === $tax || ( ! wp_doing_ajax() && function_exists( 'is_product_category' ) && is_product_category() ) ) {
+			return intval( get_option( 'wpr_woo_shop_cat_ppp', 9 ) );
+		}
+
+		if ( 'product_tag' === $tax || ( ! wp_doing_ajax() && function_exists( 'is_product_tag' ) && is_product_tag() ) ) {
+			return intval( get_option( 'wpr_woo_shop_tag_ppp', 9 ) );
+		}
+
+		return intval( get_option( 'wpr_woo_shop_ppp', 9 ) );
+	}
+
 	// Get Max Pages
 	public static function get_max_num_pages( $settings ) {
 		if ( isset($_POST['wpr_url_params']) ) {
@@ -272,18 +290,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Get Post Type
 		if ( 'current' === $settings[ 'query_selection' ] && true !== \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$tax = isset( $settings['current_query_tax'] ) ? $settings['current_query_tax'] : '';
-
-			// Prefer widget PPP when present so AJAX offset matches first-paint page size
-			if ( ! empty( $settings['query_posts_per_page'] ) && intval( $settings['query_posts_per_page'] ) > 0 ) {
-				$posts_per_page = intval( $settings['query_posts_per_page'] );
-			} elseif ( 'product_cat' === $tax || ( ! wp_doing_ajax() && is_product_category() ) ) {
-				$posts_per_page = intval(get_option('wpr_woo_shop_cat_ppp', 9));
-			} elseif ( 'product_tag' === $tax || ( ! wp_doing_ajax() && is_product_tag() ) ) {
-				$posts_per_page = intval(get_option('wpr_woo_shop_tag_ppp', 9));
-			} else {
-				$posts_per_page = intval(get_option('wpr_woo_shop_ppp', 9));
-			}
+			// Current Query only — Dynamic/Manual/Featured/etc. keep query_posts_per_page.
+			$posts_per_page = WPR_Woo_Grid_Helpers::get_current_query_posts_per_page( $settings );
 
 			// admin-ajax.php has no shop archive $wp_query — rebuild from grid_settings
 			if ( wp_doing_ajax() ) {
