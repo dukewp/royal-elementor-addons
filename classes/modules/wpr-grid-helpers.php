@@ -418,8 +418,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$args['order'] = $settings['order_direction'];
 		}
 
-		if ( isset($_POST['wpr_offset']) ) { // Check if causes issues with grid itself
-			$args['offset'] = $_POST['wpr_offset'];
+		if ( isset( $_POST['wpr_offset'] ) ) {
+			// Absolute skip from AF load-more — keep paged at 1 so WP does not combine pagination + offset
+			$args['offset'] = absint( $_POST['wpr_offset'] );
+			$args['paged']  = 1;
+		}
+
+		// Already-rendered items (load more) — matches shop AF JS (base offset + post__not_in)
+		if ( isset( $_POST['wpr_exclude_ids'] ) && ! empty( $_POST['wpr_exclude_ids'] ) ) {
+			$exclude_ids = array_filter( array_map( 'absint', (array) $_POST['wpr_exclude_ids'] ) );
+			if ( ! empty( $exclude_ids ) ) {
+				$existing_not_in = isset( $args['post__not_in'] ) ? (array) $args['post__not_in'] : [];
+				$args['post__not_in'] = array_values( array_unique( array_merge( $existing_not_in, $exclude_ids ) ) );
+			}
 		}
 
 		if ( !isset($args['tax_query']) ) {
@@ -447,8 +458,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$args['tax_query'] = $tax_query;
 			}
 
-			if ( isset($_POST['wpr_offset']) ) {
-				$args['offset'] = $_POST['wpr_offset'];
+			if ( isset( $_POST['wpr_offset'] ) ) {
+				$args['offset'] = absint( $_POST['wpr_offset'] );
+				$args['paged']  = 1;
 			}
 
 			return $args;
