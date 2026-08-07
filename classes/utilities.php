@@ -1433,6 +1433,27 @@ class Utilities {
 		return $value;
 	}
 
+	/**
+	 * Strip PHP open/close tags iteratively.
+	 *
+	 * A single-pass str_replace() can leave overlapping doubled tokens that
+	 * recombine into executable tags (e.g. <<??php ... ??>>).
+	 *
+	 * @param mixed $value Raw user-supplied string.
+	 * @return string
+	 */
+	public static function strip_php_tags( $value ) {
+		$value = (string) $value;
+		$previous = null;
+
+		while ( $previous !== $value ) {
+			$previous = $value;
+			$value    = preg_replace( '/<\?(?:php|=)?|\?>/i', '', $value );
+		}
+
+		return $value;
+	}
+
 	public static function get_all_breakpoints( $type = 'assoc' ) {
 		$devices = array(
 			'desktop' => __( 'Desktop', 'elementor' ),
