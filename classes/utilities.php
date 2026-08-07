@@ -1408,6 +1408,31 @@ class Utilities {
 		return $value;
 	}
 
+	/**
+	 * Validate a submitted control value against an allowlist.
+	 *
+	 * Elementor SELECT/CHOOSE controls are not server-validated on save, so
+	 * dropdown values used in HTML attributes must be checked before output.
+	 *
+	 * @param mixed  $value   Submitted setting value.
+	 * @param array  $allowed Allowed option keys.
+	 * @param mixed  $default Fallback when the value is not allowed.
+	 * @return mixed
+	 */
+	public static function validate_option( $value, $allowed, $default = '' ) {
+		if ( ! is_scalar( $value ) ) {
+			return $default;
+		}
+
+		$value = (string) $value;
+
+		if ( ! in_array( $value, $allowed, true ) ) {
+			return $default;
+		}
+
+		return $value;
+	}
+
 	public static function get_all_breakpoints( $type = 'assoc' ) {
 		$devices = array(
 			'desktop' => __( 'Desktop', 'elementor' ),
