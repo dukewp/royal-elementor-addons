@@ -70,3 +70,10 @@ Same `phpcs:ignore` approach for `Utilities::get_wpr_icon()` / `get_post_sharing
 **Plugin asset URLs**
 
 - Constants such as `WPR_ADDONS_ASSETS_URL` (from `plugins_url()`) are trusted; still prefer `esc_url( WPR_ADDONS_ASSETS_URL . 'img/...' )` in `src`/`href` for consistency and PHPCS, but missing `esc_url()` there is not a practical XSS risk.
+
+## Preserve comments and phpcs ignores
+
+- Do **not** remove `phpcs:ignore`, `phpcs:disable` / `phpcs:enable`, or similar lint suppressions unless the user explicitly asks.
+- Do **not** delete existing comments, TODOs, or explanatory notes while editing nearby code, unless the user asks or the comment is clearly wrong for the change you just made (then update it, don’t silently drop it).
+- When touching a line that already has a `phpcs:ignore` (or inline ignore comment), keep that ignore on the line after your edit.
+- Do not “clean up” ignores/comments as drive-by refactors. Only add, remove, or rewrite them when required by the task.
