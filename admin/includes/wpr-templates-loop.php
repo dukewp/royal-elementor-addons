@@ -227,7 +227,7 @@ class WPR_Templates_Loop {
 										<?php // Custom Taxonomies
 											$custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
 											foreach ($custom_taxonomies as $key => $value) {
-												if ( 'product_cat' === $key || 'product_tag' === $key ) {
+												if ( Utilities::is_product_related_taxonomy( $key ) ) {
 													continue;
 												}
 
@@ -373,7 +373,7 @@ class WPR_Templates_Loop {
 										<?php // Custom Taxonomies
 											$custom_taxonomies = Utilities::get_custom_types_of( 'tax', true );
 											foreach ($custom_taxonomies as $key => $value) {
-												if ( 'product_cat' === $key || 'product_tag' === $key ) {
+												if ( Utilities::is_product_related_taxonomy( $key ) ) {
 													continue;
 												}
 

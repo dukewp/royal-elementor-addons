@@ -255,6 +255,33 @@ class Utilities {
 
 
 	/**
+	 * Whether a taxonomy is attached only to WooCommerce products.
+	 * Shared taxonomies (e.g. post + product) return false.
+	 */
+	public static function is_product_related_taxonomy( $taxonomy_slug ) {
+		if ( ! is_string( $taxonomy_slug ) || '' === $taxonomy_slug ) {
+			return false;
+		}
+
+		$taxonomy = get_taxonomy( $taxonomy_slug );
+
+		if ( ! $taxonomy || empty( $taxonomy->object_type ) ) {
+			return false;
+		}
+
+		$product_object_types = [ 'product', 'product_variation' ];
+
+		foreach ( (array) $taxonomy->object_type as $object_type ) {
+			if ( ! in_array( $object_type, $product_object_types, true ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+
+	/**
 	** Get All Users
 	*/
 	public static function get_users() {
