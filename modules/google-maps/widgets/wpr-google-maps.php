@@ -785,7 +785,7 @@ class Wpr_Google_Maps extends Widget_Base {
 			echo '<iframe 
 					src="' . esc_url($map_src) . '" 
 					width="100%"
-					height="'. $settings['gm_height']['size'] .'"
+					height="'. esc_attr( $settings['gm_height']['size'] ) .'"
 					style="border:0;" 
 					allowfullscreen="" 
 					loading="lazy"

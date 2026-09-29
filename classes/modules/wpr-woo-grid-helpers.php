@@ -1605,7 +1605,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						if ( !empty($settings['element_sale_dates_sep']) && 'inline' == $settings['element_sale_dates_layout'] ) {
 							if ( !empty($sale_price_dates_from) && !empty($sale_price_dates_to) ) {
-								echo $settings['element_sale_dates_sep'];
+								echo esc_html( $settings['element_sale_dates_sep'] );
 							}
 						}
 
@@ -2225,7 +2225,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			return;
 		}
 
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_custom_field_style'] .'">';
+		echo '<div class="'. esc_attr( trim( $class . ' ' . $settings['element_custom_field_style'] ) ) .'">';
 			echo '<div class="inner-block">';
 				if ( 'yes' === $settings['element_custom_field_btn_link'] ) {
 					$target = 'yes' === $settings['element_custom_field_new_tab'] ? '_blank' : '_self';
