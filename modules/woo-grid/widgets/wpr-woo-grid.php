@@ -440,6 +440,13 @@ class Wpr_Woo_Grid extends Widget_Base {
 		];
 	}
 
+	public function add_repeater_args_element_addcart_quantity() {
+		return [
+			'type' => Controls_Manager::HIDDEN,
+			'default' => ''
+		];
+	}
+
 	public function add_repeater_args_element_show_added_tc_popup() {
 		return [
 			'type' => Controls_Manager::HIDDEN,
@@ -616,6 +623,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 	public function add_control_add_to_cart_animation() {}
 	
 	public function add_control_add_to_cart_animation_height() {}
+
+	public function add_control_add_to_cart_quantity_styles() {}
 	
 	public function add_control_filters_pointer_color_hr() {}
 	
@@ -830,7 +839,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'advanced_filters',
 			[
 				'label' => esc_html__( 'Enable Advanced Filters', 'wpr-addons' ),
-				'description' => esc_html__( 'Turn on Only with Advanced Filters widget. Works with Load More Pagination for now (Other Pagination Types will be applied in next updates as well).', 'wpr-addons' ),
+				'description' => esc_html__( 'Turn on Only with Advanced Filters widget. Works with Load More and Infinite Scroll Pagination for now (Other Pagination Types will be applied in next updates as well).', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
 				'default' => 'no',
 				'return_value' => 'yes',
@@ -2001,6 +2010,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control( 'element_addcart_quantity', $this->add_repeater_args_element_addcart_quantity() );
+
 		$repeater->add_control( 'element_show_added_tc_popup', $this->add_repeater_args_element_show_added_tc_popup() );
 
 		$repeater->add_control( 'element_show_added_to_wishlist_popup', $this->add_repeater_args_element_show_added_to_wishlist_popup() );
@@ -2203,6 +2214,22 @@ class Wpr_Woo_Grid extends Widget_Base {
 						'wishlist-button',
 						'compare-button'
 					]
+				]
+			]
+		);
+
+		$repeater->add_control(
+			'compare_icon',
+			[
+				'label' => esc_html__( 'Compare Icon', 'wpr-addons' ),
+				'type' => Controls_Manager::ICONS,
+				'skin' => 'inline',
+				'label_block' => false,
+				'condition' => [
+					'element_select' => [
+						'compare-button'
+					],
+					'show_icon' => 'yes',
 				]
 			]
 		);
@@ -3006,7 +3033,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 										],
 									]
 								],
-								[	
+								[
 									'name' => 'layout_pagination',
 									'operator' => '==',
 									'value' => '',
@@ -3508,6 +3535,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			'Grid Item Even/Odd Background Color',
 			'Title, Category, Read More Advanced Link Hover Animation',
 			'Open Links in New Tab',
+			'Add to Cart Quantity Buttons',
 			'Custom Fields/Attributes Support (Expert)',
 			'Wishlist & Compare Buttons (Expert)'
 		] );
@@ -6195,6 +6223,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
+		$this->add_control_add_to_cart_quantity_styles();
+
 		$this->end_controls_section();
 
 		// Tab: Style ==============
@@ -6545,7 +6575,8 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-add i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-compare-add svg' => 'fill: {{VALUE}}'
+					'{{WRAPPER}} .wpr-compare-add svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-add svg path' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -6586,7 +6617,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			Group_Control_Typography::get_type(),
 			[
 				'name'     => 'comp_btn_typography',
-				'selector' => '{{WRAPPER}} .wpr-compare-add span, {{WRAPPER}} .wpr-compare-add i, .wpr-compare-remove span, {{WRAPPER}} .wpr-compare-remove i',
+				'selector' => '{{WRAPPER}} .wpr-compare-add span, {{WRAPPER}} .wpr-compare-add i, {{WRAPPER}} .wpr-compare-add svg, {{WRAPPER}} .wpr-compare-remove span, {{WRAPPER}} .wpr-compare-remove i, {{WRAPPER}} .wpr-compare-remove svg',
 				'fields_options' => [
 					'typography' => [
 						'default' => 'custom',
@@ -6614,9 +6645,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-compare-add' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-compare-add span' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-compare-add i' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-compare-add svg' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-compare-remove' => 'transition-duration: {{VALUE}}s',
 					'{{WRAPPER}} .wpr-compare-remove span' => 'transition-duration: {{VALUE}}s',
-					'{{WRAPPER}} .wpr-compare-remove i' => 'transition-duration: {{VALUE}}s'
+					'{{WRAPPER}} .wpr-compare-remove i' => 'transition-duration: {{VALUE}}s',
+					'{{WRAPPER}} .wpr-compare-remove svg' => 'transition-duration: {{VALUE}}s'
 				],
 			]
 		);
@@ -6639,6 +6672,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-compare-add:hover i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-add:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-add:hover svg path' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-add:hover span' => 'color: {{VALUE}}'
 				]
 			]
@@ -6695,9 +6729,11 @@ class Wpr_Woo_Grid extends Widget_Base {
 					'{{WRAPPER}} .wpr-compare-remove span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove i' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove svg path' => 'fill: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove:hover span' => 'color: {{VALUE}}',
 					'{{WRAPPER}} .wpr-compare-remove:hover i' => 'color: {{VALUE}}',
-					'{{WRAPPER}} .wpr-compare-remove:hover svg' => 'fill: {{VALUE}}'
+					'{{WRAPPER}} .wpr-compare-remove:hover svg' => 'fill: {{VALUE}}',
+					'{{WRAPPER}} .wpr-compare-remove:hover svg path' => 'fill: {{VALUE}}'
 				]
 			]
 		);
@@ -9122,6 +9158,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 				'query_orderby' => isset($settings['query_orderby']) ? $settings['query_orderby'] : null,
 				'order_direction' => isset($settings['order_direction']) ? $settings['order_direction'] : null,
 				'query_exclude_no_images' => isset($settings['query_exclude_no_images']) ? $settings['query_exclude_no_images'] : null,
+				'query_exclude_out_of_stock' => isset($settings['query_exclude_out_of_stock']) ? $settings['query_exclude_out_of_stock'] : null,
 				'query_selection' => isset($settings['query_selection']) ? $settings['query_selection'] : null,
 				'query_tax_selection' => isset($settings['query_tax_selection']) ? $settings['query_tax_selection'] : null,
 				'query_manual' => isset($settings['query_manual_' . 'product']) ? $settings['query_manual_' . 'product'] : null,

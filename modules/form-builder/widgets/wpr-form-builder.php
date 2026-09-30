@@ -3781,11 +3781,13 @@ class Wpr_Form_Builder extends Widget_Base {
 		update_option('wpr_email_from_name_'. $this->get_id(), $instance['email_from_name']);
 		update_option('wpr_reply_to_'. $this->get_id(), $instance['email_reply_to']);
 		update_option('wpr_meta_keys_'. $this->get_id(), $instance['form_metadata']);
-		update_option('wpr_referrer_'. $this->get_id(), home_url( $_SERVER['REQUEST_URI'] ));
-		if ($post && $post->ID) {
-			update_option('wpr_referrer_title_'. $this->get_id(), get_the_title($post->ID));
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '/'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		update_option( 'wpr_referrer_' . $this->get_id(), esc_url_raw( home_url( $request_uri ) ) );
+		if ( $post && $post->ID ) {
+			update_option( 'wpr_referrer_title_' . $this->get_id(), sanitize_text_field( get_the_title( $post->ID ) ) );
 		}
-		update_option('wpr_webhook_url_'. $this->get_id(), $instance['webhook_url']);
+
+		$this->wpr_persist_webhook_url( isset( $instance['webhook_url'] ) ? $instance['webhook_url'] : '' );
 
 		$emailField      = isset($instance['email_field']) ? $instance['email_field'] : '';
 		$firstNameField  = isset($instance['first_name_field']) ? $instance['first_name_field'] : '';
@@ -4134,5 +4136,61 @@ class Wpr_Form_Builder extends Widget_Base {
 			</div>
 		</form>
 	  <?php
+	}
+
+	/**
+	 * Persist webhook URL only from trusted contexts, after SSRF validation.
+	 *
+	 * Preview/draft renders must not mutate the stored option — that was the
+	 * Contributor plant vector for SSRF via wpr_form_builder_webhook.
+	 *
+	 * @param string $webhook_url Raw webhook URL from widget settings.
+	 */
+	protected function wpr_persist_webhook_url( $webhook_url ) {
+		if ( ! $this->wpr_should_persist_webhook_url() ) {
+			return;
+		}
+
+		$validated = Utilities::wpr_validate_webhook_url( $webhook_url );
+
+		if ( is_wp_error( $validated ) ) {
+			// Refuse to store unsafe targets; clear any previous value for this widget.
+			update_option( 'wpr_webhook_url_' . $this->get_id(), '' );
+			return;
+		}
+
+		update_option( 'wpr_webhook_url_' . $this->get_id(), $validated );
+	}
+
+	/**
+	 * Whether the current request may write the webhook option.
+	 *
+	 * @return bool
+	 */
+	protected function wpr_should_persist_webhook_url() {
+		if ( class_exists( '\Elementor\Plugin' ) ) {
+			$plugin = \Elementor\Plugin::$instance;
+
+			if ( isset( $plugin->preview ) && $plugin->preview->is_preview_mode() ) {
+				return false;
+			}
+
+			// Editor canvas: only roles that can publish may refresh the option.
+			if ( isset( $plugin->editor ) && $plugin->editor->is_edit_mode() ) {
+				return current_user_can( 'publish_posts' );
+			}
+		}
+
+		if ( is_preview() ) {
+			return false;
+		}
+
+		global $post;
+		if ( $post instanceof \WP_Post ) {
+			return 'publish' === $post->post_status;
+		}
+
+		// Theme Builder / non-singular contexts: require a trusted editor.
+		return current_user_can( 'publish_posts' );
 	}
 }

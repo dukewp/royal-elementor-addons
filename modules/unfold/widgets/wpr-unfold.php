@@ -92,6 +92,8 @@ class Wpr_Unfold extends Widget_Base {
 			]
 		);
 
+		Utilities::wpr_library_buttons( $this, Controls_Manager::RAW_HTML );
+
 		$this->add_control_unfold_content_type();
 
 		// Upgrade to Pro Notice
@@ -372,8 +374,13 @@ class Wpr_Unfold extends Widget_Base {
 						'icon' => 'eicon-text-align-right',
 					],
 				],
+				'selectors_dictionary' => [
+					'flex-start' => 'align-self: flex-start; text-align: left;',
+					'center' => 'align-self: center; text-align: center;',
+					'flex-end' => 'align-self: flex-end; text-align: right;',
+				],
 				'selectors' => [
-					'{{WRAPPER}} .wpr-unfold-heading' => 'align-self: {{VALUE}};',
+					'{{WRAPPER}} .wpr-unfold-heading' => '{{VALUE}}',
 				],
 				'default' => 'flex-start',
 				'separator' => 'before',

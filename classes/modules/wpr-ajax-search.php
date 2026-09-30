@@ -23,6 +23,106 @@ if ( ! defined( 'ABSPATH' ) ) {
         add_action('wp_ajax_nopriv_wpr_data_fetch',[$this, 'data_fetch']);
     }
 
+    /**
+     * Sanitize meta keys for ajax search. Rejects empty and underscore-prefixed (private) keys.
+     *
+     * @param string|array $raw_keys Comma-separated string or array of meta keys.
+     * @return string[]
+     */
+    private static function sanitize_search_meta_keys( $raw_keys ) {
+        if ( is_string( $raw_keys ) ) {
+            $raw_keys = preg_split( '/\s*,\s*/', $raw_keys, -1, PREG_SPLIT_NO_EMPTY );
+        }
+
+        if ( ! is_array( $raw_keys ) ) {
+            return [];
+        }
+
+        $keys = [];
+
+        foreach ( $raw_keys as $key ) {
+            $key = sanitize_text_field( (string) $key );
+
+            // Allow only safe public meta key characters; reject private (_*) keys.
+            if ( '' === $key || '_' === $key[0] || ! preg_match( '/^[A-Za-z0-9_\-]+$/', $key ) ) {
+                continue;
+            }
+
+            $keys[] = $key;
+        }
+
+        return array_values( array_unique( $keys ) );
+    }
+
+    /**
+     * Load Search widget meta-query settings from saved Elementor data.
+     * Keys are never taken from the request body.
+     *
+     * @param int    $document_id Elementor document ID.
+     * @param string $widget_id   Elementor widget ID.
+     * @return array{enabled: bool, keys: string[]}
+     */
+    private static function get_saved_search_meta_settings( $document_id, $widget_id ) {
+        $empty = [
+            'enabled' => false,
+            'keys'    => [],
+        ];
+
+        $document_id = absint( $document_id );
+        $widget_id   = sanitize_text_field( (string) $widget_id );
+
+        if ( $document_id < 1 || '' === $widget_id || ! preg_match( '/^[A-Za-z0-9]+$/', $widget_id ) ) {
+            return $empty;
+        }
+
+        $post_status = get_post_status( $document_id );
+        if ( ! $post_status ) {
+            return $empty;
+        }
+
+        if ( 'publish' !== $post_status && ! current_user_can( 'read_post', $document_id ) ) {
+            return $empty;
+        }
+
+        $elements = [];
+        $document = \Elementor\Plugin::$instance->documents->get( $document_id );
+
+        if ( $document ) {
+            $elements = $document->get_elements_data();
+        }
+
+        if ( empty( $elements ) || ! is_array( $elements ) ) {
+            $raw = get_post_meta( $document_id, '_elementor_data', true );
+
+            if ( is_string( $raw ) && '' !== $raw ) {
+                $decoded = json_decode( wp_unslash( $raw ), true );
+                $elements = is_array( $decoded ) ? $decoded : [];
+            } elseif ( is_array( $raw ) ) {
+                $elements = $raw;
+            }
+        }
+
+        if ( empty( $elements ) || ! is_array( $elements ) ) {
+            return $empty;
+        }
+
+        $widget_data = Utilities::find_widget_in_elements( $elements, $widget_id );
+        if ( ! $widget_data || 'wpr-search' !== ( $widget_data['widgetType'] ?? '' ) ) {
+            return $empty;
+        }
+
+        $settings = isset( $widget_data['settings'] ) && is_array( $widget_data['settings'] ) ? $widget_data['settings'] : [];
+
+        if ( 'yes' !== ( $settings['enable_meta_query'] ?? '' ) ) {
+            return $empty;
+        }
+
+        return [
+            'enabled' => true,
+            'keys'    => self::sanitize_search_meta_keys( $settings['query_meta_keys'] ?? [] ),
+        ];
+    }
+
     public function data_fetch() {
 
         $nonce = $_POST['nonce'];
@@ -112,7 +212,6 @@ if ( ! defined( 'ABSPATH' ) ) {
             } 
         }
 
-        $keyword = sanitize_text_field( $_POST['wpr_keyword'] );
         $can_view_protected_posts = current_user_can('read_private_posts');
         $meta_query = [];
 
@@ -149,19 +248,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         $the_query = new \WP_Query( $args );
 
-        if ( !$the_query->have_posts() && $keyword !== '' && 'yes' === sanitize_text_field( $_POST['wpr_meta_query'] ) ) {
-            $fallback_args = $args;
-            $fallback_args['s'] = ''; // disable default search
-            $fallback_args['meta_query'] = [
-                [
-                    'value'   => $keyword,
-                    'compare' => 'LIKE'
-                ]
-            ];
+        // Fallback: search public meta keys saved on this Search widget (never from $_POST).
+        if ( ! $the_query->have_posts() ) {
+            $keyword = sanitize_text_field( wp_unslash( $_POST['wpr_keyword'] ?? '' ) );
+            $saved_meta = self::get_saved_search_meta_settings(
+                wp_unslash( $_POST['wpr_document_id'] ?? 0 ),
+                wp_unslash( $_POST['wpr_widget_id'] ?? '' )
+            );
+            $meta_keys = $saved_meta['keys'];
 
-            $the_query = new \WP_Query($fallback_args);
+            if ( $saved_meta['enabled'] && '' !== $keyword && mb_strlen( $keyword ) >= 3 && ! empty( $meta_keys ) ) {
+                $meta_query_or = [ 'relation' => 'OR' ];
+
+                foreach ( $meta_keys as $meta_key ) {
+                    $meta_query_or[] = [
+                        'key'     => $meta_key,
+                        'value'   => $keyword,
+                        'compare' => 'LIKE',
+                    ];
+                }
+
+                if ( 'yes' === sanitize_text_field( wp_unslash( $_POST['wpr_exclude_without_thumb'] ?? '' ) ) ) {
+                    $meta_query_or = [
+                        'relation' => 'AND',
+                        [ 'key' => '_thumbnail_id' ],
+                        $meta_query_or,
+                    ];
+                }
+
+                $args['s'] = '';
+                $args['meta_query'] = $meta_query_or;
+
+                $the_query = new \WP_Query( $args );
+            }
         }
-        
+
         if( $the_query->have_posts() ) :
             $number_of_queried_posts = $the_query->found_posts;
             $post_count = 0;
@@ -178,24 +299,24 @@ if ( ! defined( 'ABSPATH' ) ) {
                 $post_thumb = ob_get_clean();
                 ?>
 
-                <li data-number-of-results = <?php echo $the_query->found_posts ?>>
+                <li data-number-of-results="<?php echo esc_attr( (string) $the_query->found_posts ); ?>">
                     
                     <?php if ( !post_password_required() || $can_view_protected_posts ) : ?>
 
                         <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_ajax_thumbnail']) ) :
                             if ( has_post_thumbnail() ) :
-                                echo '<a class="wpr-ajax-img-wrap" target="'. esc_attr($_POST['wpr_ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  $post_thumb .'</a>';
+                                echo '<a class="wpr-ajax-img-wrap" target="' . esc_attr( sanitize_text_field( wp_unslash( $_POST['wpr_ajax_search_link_target'] ) ) ) . '" href="' . esc_url( get_the_permalink() ) . '">' . wp_kses_post( $post_thumb ) . '</a>';
                                 // echo '<a class="wpr-ajax-img-wrap" target="'. sanitize_text_field($_POST['ajax_search_link_target']) .'" href="'. esc_url( get_the_permalink() ) .'">'.  '<img src="'. Group_Control_Image_Size::get_attachment_image_src( get_post_thumbnail_id(), 'ajax_search_image', [$_POST['ajax_search_image_size']] ) .'"/>' .'</a>';
                             else :
-                                echo '<a class="wpr-ajax-img-wrap" target="'. esc_attr($_POST['wpr_ajax_search_link_target']) .'" href='. esc_url( get_the_permalink() ) .'><img src='.Utils::get_placeholder_image_src().'></a>';
+                                echo '<a class="wpr-ajax-img-wrap" target="' . esc_attr( sanitize_text_field( wp_unslash( $_POST['wpr_ajax_search_link_target'] ) ) ) . '" href="' . esc_url( get_the_permalink() ) . '"><img src="' . esc_url( Utils::get_placeholder_image_src() ) . '" alt=""></a>';
                             endif ;
                         endif ; ?>
 
                         <div class="wpr-ajax-search-content">
-                            <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php the_title();?></a>
+                            <a target="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_POST['wpr_ajax_search_link_target'] ) ) ); ?>" class="wpr-ajax-title" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php the_title(); ?></a>
 
                             <?php if ( sanitize_text_field($_POST['wpr_show_description']) == 'yes' ) : ?>
-                                <p class="wpr-ajax-desc"><a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php echo wp_trim_words(get_the_content(), sanitize_text_field($_POST['wpr_number_of_words'])); ?></a></p>
+                                <p class="wpr-ajax-desc"><a target="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_POST['wpr_ajax_search_link_target'] ) ) ); ?>" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php echo esc_html( wp_trim_words( get_the_content(), (int) sanitize_text_field( wp_unslash( $_POST['wpr_number_of_words'] ) ) ) ); ?></a></p>
                             <?php endif; ?>
 
                             <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_product_price']) && 
@@ -205,23 +326,23 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 if ($product) {
                                     $price_html = '<div class="wpr-search-product-price">'. $product->get_price_html() .'</div>';
 
-                                    echo $price_html;
+                                    echo wp_kses_post( $price_html );
                                 }
                             endif; ?>
 
                             <?php if ( sanitize_text_field($_POST['wpr_show_view_result_btn']) ) : ?>
-                                <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-view-result" href="<?php echo esc_url( the_permalink() ); ?>"><?php echo sanitize_text_field($_POST['wpr_view_result_text']) ?></a>
+                                <a target="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_POST['wpr_ajax_search_link_target'] ) ) ); ?>" class="wpr-view-result" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php echo esc_html( sanitize_text_field( wp_unslash( $_POST['wpr_view_result_text'] ) ) ); ?></a>
                             <?php endif; ?>
                         </div>
                     
                     <?php else: ?>
 
                         <?php if ( 'yes' === sanitize_text_field($_POST['wpr_show_ajax_thumbnail']) ) :
-                            echo '<a class="wpr-ajax-img-wrap" target="'. esc_attr($_POST['wpr_ajax_search_link_target']) .'" href='. esc_url( get_the_permalink() ) .'><img src='.Utils::get_placeholder_image_src().'></a>';
+                            echo '<a class="wpr-ajax-img-wrap" target="' . esc_attr( sanitize_text_field( wp_unslash( $_POST['wpr_ajax_search_link_target'] ) ) ) . '" href="' . esc_url( get_the_permalink() ) . '"><img src="' . esc_url( Utils::get_placeholder_image_src() ) . '" alt=""></a>';
                         endif ; ?>
 
                         <div class="wpr-ajax-search-content">
-                            <a target="<?php echo esc_attr($_POST['wpr_ajax_search_link_target']) ?>" class="wpr-ajax-title" href="<?php echo esc_url( the_permalink() ); ?>"><?php the_title();?></a>
+                            <a target="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_POST['wpr_ajax_search_link_target'] ) ) ); ?>" class="wpr-ajax-title" href="<?php echo esc_url( get_the_permalink() ); ?>"><?php the_title(); ?></a>
                         </div>
                     
                     <?php endif; ?>
@@ -236,7 +357,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         else :
             if (0 < sanitize_text_field($_POST['wpr_search_results_offset'])) {
             } else {
-                echo '<p class="wpr-no-results">'. sanitize_text_field($_POST['wpr_no_results']) .'</p>';
+                echo '<p class="wpr-no-results">' . esc_html( sanitize_text_field( wp_unslash( $_POST['wpr_no_results'] ) ) ) . '</p>';
             }
 
         endif;

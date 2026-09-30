@@ -58,6 +58,13 @@ function wpr_register_addons_settings() {
     register_setting ('wpr-settings', 'wpr_hide_banners');
     register_setting ('wpr-settings', 'wpr_hide_head_foot_on_maintenenace');
 
+    // Bundled ACF (Expert / Pro)
+    $bundled_acf_args = [ 'default' => 'on' ];
+    if ( function_exists( 'wpr_sanitize_bundled_acf_option' ) ) {
+        $bundled_acf_args['sanitize_callback'] = 'wpr_sanitize_bundled_acf_option';
+    }
+    register_setting( 'wpr-settings', 'wpr-bundled-acf', $bundled_acf_args );
+
     // WooCommerce
     register_setting( 'wpr-settings', 'wpr_override_woo_templates' );
     register_setting( 'wpr-settings', 'wpr_override_woo_cart' );
@@ -74,8 +81,11 @@ function wpr_register_addons_settings() {
     register_setting( 'wpr-settings', 'wpr_wishlist_page' );
 
     // Integrations
+    register_setting( 'wpr-settings', 'wpr_google_api_key' );
     register_setting( 'wpr-settings', 'wpr_google_map_api_key' );
     register_setting( 'wpr-settings', 'wpr_google_map_language' );
+    register_setting( 'wpr-settings', 'wpr_serpapi_key' );
+    register_setting( 'wpr-settings', 'wpr_openweather_api_key' );
     register_setting( 'wpr-settings', 'wpr_mailchimp_api_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_site_key' );
     register_setting( 'wpr-settings', 'wpr_recaptcha_v3_secret_key' );
@@ -135,7 +145,7 @@ function wpr_register_addons_settings() {
 
     // Pro widgets that appear in Elements tab (so their toggles are saved)
     if ( defined( 'WPR_ADDONS_PRO_VERSION' ) && wpr_fs()->can_use_premium_code() ) {
-        $pro_element_slugs = [ 'breadcrumbs-pro' ];
+        $pro_element_slugs = [ 'breadcrumbs-pro', 'weather-pro', 'google-reviews-pro' ];
         if ( wpr_fs()->is_plan( 'expert' ) ) {
             $pro_element_slugs = array_merge( $pro_element_slugs, [ 'category-grid-pro', 'advanced-filters-pro' ] );
         }
@@ -352,7 +362,7 @@ function wpr_addons_settings_page() {
                     echo '<h3>'. esc_html($title) .'</h3>';
                     echo '<input type="checkbox" name="wpr-element-'. esc_attr($slug) .'" id="wpr-element-'. esc_attr($slug) .'" '. checked( get_option('wpr-element-'. $slug, $default_value), 'on', false ) .'>';
                     echo '<label for="wpr-element-'. esc_attr($slug) .'"></label>';
-                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. $link_text .'</a>' : '';
+                    echo ( '' !== $url && empty(get_option('wpr_wl_plugin_links')) ) ? '<a href="'. esc_url($url . $reff) .'" target="_blank">'. esc_html( $link_text ) .'</a>' : '';
                 echo '</div>';
             echo '</div>';
         }
@@ -503,6 +513,17 @@ function wpr_addons_settings_page() {
                 <input type="checkbox" name="wpr_hide_head_foot_on_maintenenace" id="wpr_hide_head_foot_on_maintenenace" <?php echo checked( get_option('wpr_hide_head_foot_on_maintenenace', 'on'), 'on', true ); ?>>
                 <label for="wpr_hide_head_foot_on_maintenenace"></label>
             </div>
+
+            <?php if ( defined( 'WPR_ADDONS_PRO_VERSION' ) && function_exists( 'wpr_fs' ) && wpr_fs()->is_plan( 'expert' ) ) : ?>
+            <div class="wpr-woo-template-info">
+                <div class="wpr-woo-template-title">
+                    <h4><?php esc_html_e( 'Bundled ACF', 'wpr-addons' ); ?></h4>
+                    <span><?php esc_html_e( 'Load bundled Advanced Custom Fields from Royal Addons Pro. Disable when using a standalone ACF / ACF Pro plugin.', 'wpr-addons' ); ?></span>
+                </div>
+                <input type="checkbox" name="wpr-bundled-acf" id="wpr-bundled-acf" value="on" <?php echo checked( get_option( 'wpr-bundled-acf', 'on' ), 'on', false ); ?>>
+                <label for="wpr-bundled-acf"></label>
+            </div>
+            <?php endif; ?>
         </div>
 
         <div class="wpr-settings-group wpr-settings-group-optimizers">
@@ -655,8 +676,7 @@ function wpr_addons_settings_page() {
                     echo '<select name="wpr_compare_page" id="wpr_compare_page" >';
                     
                     foreach ( $pages as $page ) {
-                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
-                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                        echo '<option value="' . esc_attr( $page->ID ) . '" ' . selected( $current_page, $page->ID, false ) . '>' . esc_html( $page->post_title ) . '</option>';
                     }
                     
                     echo '</select>';
@@ -671,8 +691,7 @@ function wpr_addons_settings_page() {
                     echo '<select name="wpr_wishlist_page" id="wpr_wishlist_page" >';
                     
                     foreach ( $pages as $page ) {
-                        $selected = ( $current_page == $page->ID ) ? 'selected="selected"' : '';
-                        echo '<option value="' . $page->ID . '" ' . $selected . '>' . $page->post_title . '</option>';
+                        echo '<option value="' . esc_attr( $page->ID ) . '" ' . selected( $current_page, $page->ID, false ) . '>' . esc_html( $page->post_title ) . '</option>';
                     }
                     
                     echo '</select>';
@@ -723,7 +742,7 @@ function wpr_addons_settings_page() {
                             </h4>
 
     
-                                <input type="text" name="wpr_cpt_ppp_<?php echo $key ?>" id="wpr_cpt_ppp_<?php echo $key ?>" value="<?php echo esc_attr(get_option('wpr_cpt_ppp_'. $key, 10)); ?>">
+                                <input type="text" name="wpr_cpt_ppp_<?php echo esc_attr( $key ); ?>" id="wpr_cpt_ppp_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr(get_option('wpr_cpt_ppp_'. $key, 10)); ?>">
                             </div>
                         <?php
                     }
@@ -756,10 +775,10 @@ function wpr_addons_settings_page() {
                     ?>
                         <div class="wpr-woo-template-info">
                             <div class="wpr-woo-template-title">
-                                <h4><?php echo $value; ?></h4>
+                                <h4><?php echo esc_html( $value ); ?></h4>
                             </div>
-                            <input type="checkbox" name="wpr_meta_secondary_image_<?php echo $key ?>" id="wpr_meta_secondary_image_<?php echo $key ?>" <?php echo checked( get_option('wpr_meta_secondary_image_'. $key, 'on'), 'on', false ); ?>>
-                            <label for="wpr_meta_secondary_image_<?php echo $key ?>"></label>
+                            <input type="checkbox" name="wpr_meta_secondary_image_<?php echo esc_attr( $key ); ?>" id="wpr_meta_secondary_image_<?php echo esc_attr( $key ); ?>" <?php echo checked( get_option('wpr_meta_secondary_image_'. $key, 'on'), 'on', false ); ?>>
+                            <label for="wpr_meta_secondary_image_<?php echo esc_attr( $key ); ?>"></label>
                         </div>
                     <?php
                 }
@@ -788,12 +807,24 @@ function wpr_addons_settings_page() {
 
             <div class="wpr-setting">
                 <h4>
+                    <span><?php esc_html_e( 'Google Reviews API Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://www.youtube.com/watch?v=hsNlz7-abd0" target="_blank"><?php esc_html_e( 'How to get Google API Key?', 'wpr-addons' ); ?></a>
+                </h4>
+
+                <input type="text" name="wpr_google_api_key" id="wpr_google_api_key" value="<?php echo esc_attr( get_option( 'wpr_google_api_key' ) ); ?>">
+                <p class="wpr-settings-group-description"><?php esc_html_e( 'Primary key used by Google Reviews (Google Places API). If empty, it falls back to Google Map API Key below.', 'wpr-addons' ); ?></p>
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
                     <span><?php esc_html_e( 'Google Map API Key', 'wpr-addons' ); ?></span>
                     <br>
                     <a href="https://www.youtube.com/watch?v=hsNlz7-abd0" target="_blank"><?php esc_html_e( 'How to get Google Map API Key?', 'wpr-addons' ); ?></a>
                 </h4>
 
                 <input type="text" name="wpr_google_map_api_key" id="wpr_google_map_api_key" value="<?php echo esc_attr(get_option('wpr_google_map_api_key')); ?>">
+                <p class="wpr-settings-group-description"><?php esc_html_e( 'Also used by the Google Reviews widget when Data Source is Google Places API.', 'wpr-addons' ); ?></p>
 
                 <h4>
                     <span><?php esc_html_e( 'Google Map Language', 'wpr-addons' ); ?></span>
@@ -811,6 +842,28 @@ function wpr_addons_settings_page() {
                     <option value="hi" <?php selected(get_option('wpr_google_map_language'), 'hi'); ?>><?php esc_html_e('Hindi', 'wpr-addons'); ?></option>
                     <option value="ar" <?php selected(get_option('wpr_google_map_language'), 'ar'); ?>><?php esc_html_e('Arabic', 'wpr-addons'); ?></option>
                 </select>
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'SerpApi Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://serpapi.com/google-maps-reviews-api" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'How to get SerpApi Key?', 'wpr-addons' ); ?></a>
+                    <p class="wpr-settings-group-description"><?php esc_html_e( 'Used by the Google Reviews widget when Data Source is SerpApi.', 'wpr-addons' ); ?></p>
+                </h4>
+
+                <input type="text" name="wpr_serpapi_key" id="wpr_serpapi_key" value="<?php echo esc_attr( get_option( 'wpr_serpapi_key' ) ); ?>">
+            </div>
+
+            <div class="wpr-setting">
+                <h4>
+                    <span><?php esc_html_e( 'OpenWeather API Key', 'wpr-addons' ); ?></span>
+                    <br>
+                    <a href="https://openweathermap.org/appid" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'How to get OpenWeather API Key?', 'wpr-addons' ); ?></a>
+                    <p class="wpr-settings-group-description"><?php esc_html_e( 'Used by the Weather widget.', 'wpr-addons' ); ?></p>
+                </h4>
+
+                <input type="text" name="wpr_openweather_api_key" id="wpr_openweather_api_key" value="<?php echo esc_attr( get_option( 'wpr_openweather_api_key' ) ); ?>">
             </div>
 
             <div class="wpr-setting">

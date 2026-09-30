@@ -3094,6 +3094,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => '#9C9C9C',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-insta-feed-item-date .inner-block i[class*="wpr-insta-feed-extra-icon"]' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-date .inner-block svg[class*="wpr-insta-feed-extra-icon"]' => 'fill: {{VALUE}}',
 				],
 				'separator' => 'after',
 			]
@@ -3543,6 +3544,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => '#D60EC8',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-insta-feed-item-lightbox .inner-block > span' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-lightbox .inner-block > span svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -3574,7 +3576,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'lightbox_shadow',
-				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-lightbox i',
+				'selector' => '{{WRAPPER}} .wpr-insta-feed-item-lightbox i, {{WRAPPER}} .wpr-insta-feed-item-lightbox svg',
 			]
 		);
 
@@ -3595,6 +3597,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				'default' => '#605BE5',
 				'selectors' => [
 					'{{WRAPPER}} .wpr-insta-feed-item-lightbox .inner-block > span:hover' => 'color: {{VALUE}}',
+					'{{WRAPPER}} .wpr-insta-feed-item-lightbox .inner-block > span:hover svg' => 'fill: {{VALUE}}',
 				],
 			]
 		);
@@ -4950,16 +4953,27 @@ class Wpr_Instagram_Feed extends Widget_Base {
 		$access_token = rawurlencode( (string) $access_token );
 		$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token='.$access_token.'';
 		$response = wp_remote_get($url);
-		if(!isset($body)) {
-			$body = json_decode($response['body']);
-			if ($body && $body->error) {
-				$this->reauthorization_needed = true;
-			} else {
-				set_transient('wpr_instagram_access_token'. $this->get_ID(), $body->access_token, $body->expires_in);
-				set_transient('wpr_instagram_access_token_expires_in'. $this->get_ID(), $body->expires_in, $body->expires_in);
-				set_transient('wpr_instagram_access_token_generation_date'. $this->get_ID(), date('Y-m-d'), $body->expires_in);
-			}
+
+		if ( is_wp_error( $response ) ) {
+			$this->reauthorization_needed = true;
+			return;
 		}
+
+		if ( 200 !== (int) wp_remote_retrieve_response_code( $response ) ) {
+			$this->reauthorization_needed = true;
+			return;
+		}
+
+		$body = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( ! $body || ! empty( $body->error ) || empty( $body->access_token ) || empty( $body->expires_in ) ) {
+			$this->reauthorization_needed = true;
+			return;
+		}
+
+		set_transient( 'wpr_instagram_access_token' . $this->get_ID(), $body->access_token, $body->expires_in );
+		set_transient( 'wpr_instagram_access_token_expires_in' . $this->get_ID(), $body->expires_in, $body->expires_in );
+		set_transient( 'wpr_instagram_access_token_generation_date' . $this->get_ID(), date( 'Y-m-d' ), $body->expires_in );
 	}
 
 	// Get Animation Class
@@ -5064,7 +5078,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 				}
 				// Icon: Before
 				if ( 'before' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-insta-feed-extra-icon-left '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					\Elementor\Icons_Manager::render_icon( $settings['element_extra_icon'], [
+						'aria-hidden' => 'true',
+						'class' => 'wpr-insta-feed-extra-icon-left',
+					] );
 				}
 
 				// Date
@@ -5076,7 +5093,10 @@ class Wpr_Instagram_Feed extends Widget_Base {
 
 				// Icon: After
 				if ( 'after' === $settings['element_extra_icon_pos'] ) {
-					echo '<i class="wpr-insta-feed-extra-icon-right '. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					\Elementor\Icons_Manager::render_icon( $settings['element_extra_icon'], [
+						'aria-hidden' => 'true',
+						'class'       => 'wpr-insta-feed-extra-icon-right',
+					] );
 				}
 
 				// Text: After
@@ -5119,7 +5139,7 @@ class Wpr_Instagram_Feed extends Widget_Base {
 					}
 
 					// Lightbox Icon
-					echo '<i class="'. esc_attr( $settings['element_extra_icon']['value'] ) .'"></i>';
+					\Elementor\Icons_Manager::render_icon( $settings['element_extra_icon'], [ 'aria-hidden' => 'true' ] );
 
 					// Text: After
 					if ( 'after' === $settings['element_extra_text_pos'] ) {

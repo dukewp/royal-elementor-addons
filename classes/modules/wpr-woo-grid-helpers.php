@@ -28,6 +28,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	public static $my_upsells;
 	public static $crossell_ids;
 
+	/**
+	 * Archive Products Per Page for Current Query (Theme Builder options).
+	 * Only meaningful when query_selection is "current".
+	 */
+	public static function get_current_query_posts_per_page( $settings = [] ) {
+		$tax = isset( $settings['current_query_tax'] ) ? $settings['current_query_tax'] : '';
+
+		if ( 'product_cat' === $tax || ( ! wp_doing_ajax() && function_exists( 'is_product_category' ) && is_product_category() ) ) {
+			return intval( get_option( 'wpr_woo_shop_cat_ppp', 9 ) );
+		}
+
+		if ( 'product_tag' === $tax || ( ! wp_doing_ajax() && function_exists( 'is_product_tag' ) && is_product_tag() ) ) {
+			return intval( get_option( 'wpr_woo_shop_tag_ppp', 9 ) );
+		}
+
+		return intval( get_option( 'wpr_woo_shop_ppp', 9 ) );
+	}
+
 	// Get Max Pages
 	public static function get_max_num_pages( $settings ) {
 		if ( isset($_POST['wpr_url_params']) ) {
@@ -240,14 +258,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$args['meta_key'] = '_thumbnail_id';
 		}
 
-		// Exclude Out Of Stock
-		if ( 'yes' === $settings['query_exclude_out_of_stock'] ) {
-			$args['meta_query'] = [
-				[
-					'key'     => '_stock_status',
-					'value'   => 'outofstock',
-					'compare' => 'NOT LIKE',
-				]
+		// Exclude Out Of Stock — applied again after query_selection rebuilds $args (see below)
+		$exclude_out_of_stock = ( 'yes' === ( $settings['query_exclude_out_of_stock'] ?? '' ) );
+		if ( $exclude_out_of_stock ) {
+			if ( empty( $args['meta_query'] ) || ! is_array( $args['meta_query'] ) ) {
+				$args['meta_query'] = [ 'relation' => 'AND' ];
+			}
+			$args['meta_query'][] = [
+				'key'     => '_stock_status',
+				'value'   => 'outofstock',
+				'compare' => 'NOT LIKE',
 			];
 		}
 
@@ -270,27 +290,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		// Get Post Type
 		if ( 'current' === $settings[ 'query_selection' ] && true !== \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			global $wp_query;
+			// Current Query only — Dynamic/Manual/Featured/etc. keep query_posts_per_page.
+			$posts_per_page = WPR_Woo_Grid_Helpers::get_current_query_posts_per_page( $settings );
 
-			// Products Per Page
-			if ( is_product_category() ) {
-				$posts_per_page = intval(get_option('wpr_woo_shop_cat_ppp', 9));
-			} elseif ( is_product_tag() ) {
-				$posts_per_page = intval(get_option('wpr_woo_shop_tag_ppp', 9));
+			// admin-ajax.php has no shop archive $wp_query — rebuild from grid_settings
+			if ( wp_doing_ajax() ) {
+				$args = [
+					'post_type' => 'product',
+					'tax_query' => WPR_Woo_Grid_Helpers::get_tax_query_args($settings),
+					'meta_query' => WPR_Woo_Grid_Helpers::get_meta_query_args(),
+					'posts_per_page' => $posts_per_page,
+					'paged' => 1,
+				];
 			} else {
-				$posts_per_page = intval(get_option('wpr_woo_shop_ppp', 9));
+				global $wp_query;
+				$args = $wp_query->query_vars;
+				$args['tax_query'] = WPR_Woo_Grid_Helpers::get_tax_query_args($settings);
+				$args['meta_query'] = WPR_Woo_Grid_Helpers::get_meta_query_args();
+				$args['posts_per_page'] = $posts_per_page;
+				$args['post_type'] = 'product';
 			}
-			$args = $wp_query->query_vars;
-			$args['tax_query'] = WPR_Woo_Grid_Helpers::get_tax_query_args($settings);
-			$args['meta_query'] = WPR_Woo_Grid_Helpers::get_meta_query_args();
-			$args['posts_per_page'] = $posts_per_page;
+
 			if (!empty($settings['query_randomize'])) {
 				$args['orderby'] = $settings['query_randomize'];
 			} else {
-				$args['orderby'] = get_query_var('orderby') ? get_query_var('orderby') : $settings['current_query_orderby'];
-				$args['order'] = $settings['order_direction'] ? $settings['order_direction'] : $settings['current_query_order'];
+				$orderby = '';
+				if ( ! wp_doing_ajax() && get_query_var('orderby') ) {
+					$orderby = get_query_var('orderby');
+				} elseif ( ! empty( $settings['current_query_orderby'] ) ) {
+					$orderby = $settings['current_query_orderby'];
+				} else {
+					$orderby = 'menu_order title';
+				}
+				$args['orderby'] = $orderby;
+				$args['order'] = ! empty( $settings['order_direction'] )
+					? $settings['order_direction']
+					: ( ! empty( $settings['current_query_order'] ) ? $settings['current_query_order'] : 'ASC' );
 			}
 			$args['post_type'] = 'product'; // GOGA: needs check
+
+			// Re-apply after Current Query rebuild (AJAX replaces $args and would drop OOS meta)
+			if ( $exclude_out_of_stock ) {
+				if ( empty( $args['meta_query'] ) || ! is_array( $args['meta_query'] ) ) {
+					$args['meta_query'] = [ 'relation' => 'AND' ];
+				}
+				$args['meta_query'][] = [
+					'key'     => '_stock_status',
+					'value'   => 'outofstock',
+					'compare' => 'NOT LIKE',
+				];
+			}
 		}
 
 		// Sorting
@@ -338,7 +387,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 		if ( isset($_POST['wpr_offset']) ) {
-			$args['offset'] = $_POST['wpr_offset'];
+			// Absolute skip from AF load-more — keep paged at 1 so WP does not combine pagination + offset
+			$args['offset'] = absint( $_POST['wpr_offset'] );
+			$args['paged']  = 1;
+		}
+
+		// Already-rendered items (load more) — prevents duplicates when OOS/visibility shifts the offset window
+		if ( isset( $_POST['wpr_exclude_ids'] ) && ! empty( $_POST['wpr_exclude_ids'] ) ) {
+			$exclude_ids = array_filter( array_map( 'absint', (array) $_POST['wpr_exclude_ids'] ) );
+			if ( ! empty( $exclude_ids ) ) {
+				$existing_not_in = isset( $args['post__not_in'] ) ? (array) $args['post__not_in'] : [];
+				$args['post__not_in'] = array_values( array_unique( array_merge( $existing_not_in, $exclude_ids ) ) );
+			}
 		}
 
 		if ( isset($_POST['wpr_taxonomy']) ) {
@@ -598,7 +658,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 				}
 
-				if ( !empty($tax_query) ) {
+				if ( !empty($tax_query) && count($tax_query) > 1 ) {
 					if ( !empty($args['tax_query']) ) {
 						$args['tax_query'] = array_merge( $args['tax_query'], $tax_query );
 					} else {
@@ -606,9 +666,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					}
 				}
 
-				if ( !empty($meta_query) )  {
+				if ( !empty($meta_query) && count($meta_query) > 1 )  {
 					if ( !empty($args['meta_query']) ) {
-						$args['tax_query'] = array_merge( $args['tax_query'], $tax_query );
+						$args['meta_query'] = array_merge( (array) $args['meta_query'], $meta_query );
 					} else {
 						$args['meta_query'] = $meta_query;
 					}
@@ -667,6 +727,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// Taxonomy Query Args
 	public static function get_tax_query_args($settings) {
 		$tax_query = [];
+
+		// Match WC catalog visibility (exclude-from-catalog + hide out of stock) on every custom/AJAX query
+		if ( function_exists( 'WC' ) && WC()->query ) {
+			$wc_tax_query = WC()->query->get_tax_query( [], false );
+			if ( ! empty( $wc_tax_query ) ) {
+				foreach ( $wc_tax_query as $clause ) {
+					if ( is_array( $clause ) && isset( $clause['taxonomy'] ) ) {
+						$tax_query[] = $clause;
+					}
+				}
+			}
+		}
 
 		// Filters Query
 		if ( isset($_GET['wprfilters']) ) {
@@ -1323,7 +1395,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$attributes  = ' data-action="'. esc_attr( $settings['element_sharing_trigger_action'] ) .'"';
 						$attributes .= ' data-direction="'. esc_attr( $settings['element_sharing_trigger_direction'] ) .'"';
 
-						echo '<a class="wpr-sharing-trigger wpr-sharing-icon"'. $attributes .'>';
+						echo '<a class="wpr-sharing-trigger wpr-sharing-icon"'. $attributes .'>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							if ( 'yes' === $settings['element_sharing_tooltip'] ) {
 								echo '<span class="wpr-sharing-tooltip wpr-tooltip">'. esc_html__( 'Share', 'wpr-addons' ) .'</span>';
 							}
@@ -1533,7 +1605,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						if ( !empty($settings['element_sale_dates_sep']) && 'inline' == $settings['element_sale_dates_layout'] ) {
 							if ( !empty($sale_price_dates_from) && !empty($sale_price_dates_to) ) {
-								echo $settings['element_sale_dates_sep'];
+								echo esc_html( $settings['element_sale_dates_sep'] );
 							}
 						}
 
@@ -1654,6 +1726,93 @@ if ( ! defined( 'ABSPATH' ) ) {
 		echo '</div>';
 	}
 
+	public static function product_supports_grid_quantity( $product ) {
+		if ( is_null( $product ) ) {
+			return false;
+		}
+
+		if ( $product->is_sold_individually() || ! $product->is_purchasable() || ! $product->is_in_stock() ) {
+			return false;
+		}
+
+		if ( $product->is_type( [ 'variable', 'grouped', 'external' ] ) ) {
+			return false;
+		}
+
+		if ( in_array( $product->get_type(), [ 'pw-gift-card', 'ywf_deposit', 'stm_lms_product', 'redq_rental' ], true ) ) {
+			return false;
+		}
+
+		if ( is_callable( [ $product, 'get_product_url' ] ) && ! $product->is_type( 'simple' ) ) {
+			return false;
+		}
+
+		return $product->is_type( 'simple' ) || $product->supports( 'ajax_add_to_cart' );
+	}
+
+	public static function get_grid_quantity_args( $product ) {
+		$defaults = [
+			'input_id'     => 'wpr_grid_qty_' . $product->get_id(),
+			'input_name'   => 'quantity',
+			'input_value'  => $product->get_min_purchase_quantity(),
+			'classes'      => [ 'input-text', 'qty', 'text', 'wpr-grid-qty-input' ],
+			'max_value'    => $product->get_max_purchase_quantity(),
+			'min_value'    => $product->get_min_purchase_quantity(),
+			'step'         => 1,
+			'placeholder'  => '',
+			'inputmode'    => 'numeric',
+			'autocomplete' => 'off',
+			'product_name' => $product->get_name(),
+		];
+
+		$args = apply_filters( 'woocommerce_quantity_input_args', $defaults, $product );
+
+		$min  = isset( $args['min_value'] ) ? $args['min_value'] : 1;
+		$max  = isset( $args['max_value'] ) ? $args['max_value'] : -1;
+		$step = isset( $args['step'] ) ? $args['step'] : 1;
+		$val  = isset( $args['input_value'] ) ? $args['input_value'] : $min;
+
+		$min  = apply_filters( 'woocommerce_quantity_input_min', $min, $product );
+		$max  = apply_filters( 'woocommerce_quantity_input_max', $max, $product );
+		$step = apply_filters( 'woocommerce_quantity_input_step', $step, $product );
+
+		if ( '' === $val || false === $val ) {
+			$val = $min;
+		}
+
+		return [
+			'input_value' => $val,
+			'min_value'   => $min,
+			'max_value'   => $max,
+			'step'        => $step,
+		];
+	}
+
+	public static function render_grid_quantity( $product, $qty_args ) {
+		$min   = $qty_args['min_value'];
+		$max   = $qty_args['max_value'];
+		$step  = $qty_args['step'];
+		$value = $qty_args['input_value'];
+		$max_attr = ( '' !== $max && false !== $max && (float) $max > 0 ) ? ' max="'. esc_attr( $max ) .'"' : '';
+
+		$minus_class = 'wpr-grid-qty-btn wpr-grid-qty-minus';
+		$plus_class  = 'wpr-grid-qty-btn wpr-grid-qty-plus';
+
+		if ( (float) $value <= (float) $min ) {
+			$minus_class .= ' wpr-grid-qty-disabled';
+		}
+
+		if ( '' !== $max && false !== $max && (float) $max > 0 && (float) $value >= (float) $max ) {
+			$plus_class .= ' wpr-grid-qty-disabled';
+		}
+
+		echo '<div class="wpr-grid-qty">';
+			echo '<span class="'. esc_attr( $minus_class ) .'" role="button" tabindex="0" aria-label="'. esc_attr__( 'Decrease quantity', 'wpr-addons' ) .'">&minus;</span>';
+			echo '<input type="text" class="wpr-grid-qty-input" value="'. esc_attr( $value ) .'" min="'. esc_attr( $min ) .'"'. $max_attr .' step="'. esc_attr( $step ) .'" inputmode="numeric" autocomplete="off" aria-label="'. esc_attr__( 'Product quantity', 'wpr-addons' ) .'">';
+			echo '<span class="'. esc_attr( $plus_class ) .'" role="button" tabindex="0" aria-label="'. esc_attr__( 'Increase quantity', 'wpr-addons' ) .'">+</span>';
+		echo '</div>';
+	}
+
 	// Render Add To Cart
 	public static function render_product_add_to_cart( $settings, $class, $general_settings ) {
 		global $product;
@@ -1661,6 +1820,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// If NOT a Product
 		if ( is_null( $product ) ) {
 			return;
+		}
+
+		$show_qty = defined( 'WPR_ADDONS_PRO_VERSION' )
+			&& wpr_fs()->can_use_premium_code()
+			&& ! empty( $settings['element_addcart_quantity'] )
+			&& 'yes' === $settings['element_addcart_quantity']
+			&& WPR_Woo_Grid_Helpers::product_supports_grid_quantity( $product );
+
+		$qty_args  = $show_qty ? WPR_Woo_Grid_Helpers::get_grid_quantity_args( $product ) : [];
+		$qty_value = $show_qty ? $qty_args['input_value'] : 1;
+
+		if ( $show_qty && (float) $qty_args['max_value'] > 0 && (float) $qty_args['max_value'] <= (float) $qty_args['min_value'] && (float) $qty_args['max_value'] <= 1 ) {
+			$show_qty = false;
 		}
 
 		// Get Button Class
@@ -1688,6 +1860,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'data-atc-animation-time="'. esc_attr($popup_notification_animation_duration)  .'"'
 		];
 
+		if ( $show_qty ) {
+			$attributes[] = 'data-quantity="'. esc_attr( $qty_value ) .'"';
+		}
+
 		$button_HTML = '';
 		$page_id = get_queried_object_id();
 
@@ -1705,7 +1881,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$button_HTML .= $settings['element_addcart_simple_txt'];
 
 			if ( 'yes' === get_option('woocommerce_enable_ajax_add_to_cart') ) {
-				array_push( $attributes, 'href="'. esc_url( get_permalink( $page_id ) .'/?add-to-cart='. get_the_ID() ) .'"' );
+				if ( $show_qty ) {
+					$atc_url = add_query_arg( [
+						'add-to-cart' => get_the_ID(),
+						'quantity'    => $qty_value,
+					], get_permalink( $page_id ) );
+					array_push( $attributes, 'href="'. esc_url( $atc_url ) .'"' );
+				} else {
+					array_push( $attributes, 'href="'. esc_url( get_permalink( $page_id ) .'/?add-to-cart='. get_the_ID() ) .'"' );
+				}
 			} else {
 				array_push( $attributes, 'href="'. esc_url( get_permalink() ) .'"' );
 			}
@@ -1746,15 +1930,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$button_HTML .= '<span class="wpr-grid-extra-icon-right">'. $extra_icon .'</span>';
 		}
 
+		$filtered_link = apply_filters( 'woocommerce_loop_add_to_cart_link', $button_HTML, $product );
+		$uses_custom_link = ( $button_HTML != $filtered_link );
+		$inner_class = ( $show_qty && ! $uses_custom_link ) ? 'inner-block wpr-grid-atc-has-qty' : 'inner-block';
+
 		echo '<div class="'. esc_attr($class) .'">';
-			echo '<div class="inner-block">';
+			echo '<div class="'. esc_attr( $inner_class ) .'">';
 			
 			// WooCommerce Hook: Before Add to Cart Button
 			// do_action('woocommerce_before_shop_loop_item');
 
-			if ( $button_HTML != apply_filters( 'woocommerce_loop_add_to_cart_link', $button_HTML, $product ) ) {
-				echo apply_filters( 'woocommerce_loop_add_to_cart_link', $button_HTML, $product );
+			if ( $uses_custom_link ) {
+				echo $filtered_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Third-party woocommerce_loop_add_to_cart_link markup.
 			} else {
+				if ( $show_qty ) {
+					WPR_Woo_Grid_Helpers::render_grid_quantity( $product, $qty_args );
+				}
+
 				// Button HTML
 				echo '<a '. implode( ' ', $attributes ) .'><span>'. $button_HTML .'</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
@@ -1911,8 +2103,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 
 		if ( 'yes' === $settings['show_icon'] ) {
-			$add_to_compare_content .= '<i class="fas fa-exchange-alt"></i>';
-			$remove_from_compare_content .= '<i class="fas fa-exchange-alt"></i>';
+			if ( ! empty( $settings['compare_icon']['value'] ) ) {
+				ob_start();
+				\Elementor\Icons_Manager::render_icon( $settings['compare_icon'], [ 'aria-hidden' => 'true' ] );
+				$compare_icon_html = ob_get_clean();
+			} else {
+				$compare_icon_html = '<i class="fas fa-exchange-alt"></i>';
+			}
+
+			$add_to_compare_content .= $compare_icon_html;
+			$remove_from_compare_content .= $compare_icon_html;
 		}
 
 		if ( 'yes' === $settings['show_text'] ) {
@@ -2025,7 +2225,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			return;
 		}
 
-		echo '<div class="'. esc_attr($class) .' '. $settings['element_custom_field_style'] .'">';
+		echo '<div class="'. esc_attr( trim( $class . ' ' . $settings['element_custom_field_style'] ) ) .'">';
 			echo '<div class="inner-block">';
 				if ( 'yes' === $settings['element_custom_field_btn_link'] ) {
 					$target = 'yes' === $settings['element_custom_field_new_tab'] ? '_blank' : '_self';

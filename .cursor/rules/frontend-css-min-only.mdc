@@ -1,17 +1,18 @@
 ---
-description: Edit only minified frontend CSS for runtime widget styles
+description: Never edit frontend.css; only frontend.min.css for frontend CSS
 globs: assets/css/frontend*.css
 alwaysApply: true
 ---
 
-# Royal Elementor Addons - Frontend CSS
+# Royal Elementor Addons – Frontend CSS
 
-`assets/css/frontend.min.css` is the editable frontend stylesheet for runtime widget styling updates.
+`assets/css/frontend.css` is listed in **`.cursorignore`** so it stays out of Cursor indexing—treat it as if it does not exist.
 
-When adding or updating frontend widget styles:
+**Do not open, edit, refactor, or search-replace `assets/css/frontend.css`.**
 
-- Edit **`assets/css/frontend.min.css`** directly.
+- The only editable frontend stylesheet is **`assets/css/frontend.min.css`**.
+- Enqueued style path in PHP may say `frontend.css` or `frontend.min.css` per build; still edit **`frontend.min.css`** when the task is “change frontend CSS.”
+- If something appears to require both files, **only change `frontend.min.css`**.
 - Keep additions readable (non-minified) and scoped to REA selectors (e.g. `.wpr-*`).
 - Do not minify CSS manually in chat edits; minification is handled afterward by the maintainer.
 - Do not inject widget styles inline in PHP render methods.
-

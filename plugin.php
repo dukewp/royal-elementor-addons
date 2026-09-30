@@ -139,7 +139,7 @@ class Plugin {
 		require WPR_ADDONS_PATH . 'classes/modules/wpr-woo-grid-helpers.php';
 
 		// Media Grid
-		require WPR_ADDONS_PATH . 'classes/modules/wpr-filter-grid-media.php';
+		require WPR_ADDONS_PATH . 'classes/modules/wpr-media-grid-helpers.php';
 
 		// Extensions Base
 		require WPR_ADDONS_PATH . 'extensions/wpr-extensions-base.php';
@@ -320,14 +320,23 @@ class Plugin {
 		if ( ! $item_post || $item_post->post_type !== 'nav_menu_item' ) {
 			return new \WP_REST_Response( '', 403 );
 		}
+		$item_status = get_post_status( $item_post );
+		if ( 'publish' !== $item_status && ! current_user_can( 'read_post', $item_id ) ) {
+			return new \WP_REST_Response( '', 403 );
+		}
 		$mega_id = get_post_meta( $item_id, 'wpr-mega-menu-item', true );
-		if ( ! $mega_id || ! get_post( $mega_id ) ) {
+		$mega_post = $mega_id ? get_post( $mega_id ) : false;
+		if ( ! $mega_post ) {
 			return new \WP_REST_Response( '', 404 );
 		}
+		$mega_status = get_post_status( $mega_post );
+		if ( 'publish' !== $mega_status && ! current_user_can( 'read_post', $mega_post->ID ) ) {
+			return new \WP_REST_Response( '', 403 );
+		}
 		$elementor = \Elementor\Plugin::instance();
-		$type = get_post_meta( get_the_ID(), '_wpr_template_type', true ) || get_post_meta( $mega_id, '_elementor_template_type', true );
+		$type = get_post_meta( get_the_ID(), '_wpr_template_type', true ) || get_post_meta( $mega_post->ID, '_elementor_template_type', true );
 		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
-		$content = $elementor->frontend->get_builder_content_for_display( (int) $mega_id, $has_css );
+		$content = $elementor->frontend->get_builder_content_for_display( (int) $mega_post->ID, $has_css );
 		return new \WP_REST_Response( $content, 200 );
 	}
 
@@ -727,7 +736,7 @@ class Plugin {
 			[
 				'jquery',
 			],
-			'',
+			'1.0.0',
 			true
 		);
 
@@ -765,7 +774,7 @@ class Plugin {
 			'wpr-google-maps',
 			'https://maps.googleapis.com/maps/api/js?key='. esc_attr(get_option('wpr_google_map_api_key')) . '&language='. esc_attr(get_option('wpr_google_map_language')),
 			[],
-			'',
+			'1.0.0',
 			true
 		);
 
@@ -847,6 +856,14 @@ class Plugin {
 				'jquery',
 			],
 			'6.0.3',
+			true
+		);
+
+		wp_register_script(
+			'wpr-gsap',
+			WPR_ADDONS_URL . 'assets/js/lib/gsap/gsap.min.js',
+			[],
+			'3.12.7',
 			true
 		);
 	}

@@ -37,6 +37,7 @@ if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
 ** Render Templates Kit Page
 */
 function wpr_addons_templates_kit_page() {
+    $has_pro_access = defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code();
 
 ?>
 
@@ -69,16 +70,6 @@ function wpr_addons_templates_kit_page() {
             </ul>
         </div>
 
-        <div class="wpr-templates-kit-filters">
-            <div>Filter: All</div>
-            <ul>
-                <li data-filter="all">Blog</li>
-                <li data-filter="blog">Blog</li>
-                <li data-filter="business">Business</li>
-                <li data-filter="ecommerce">eCommerce</li>
-                <li data-filter="beauty">Beauty</li>
-            </ul>
-        </div>
     </header>
 
     <div class="wpr-templates-kit-page-title">
@@ -91,6 +82,35 @@ function wpr_addons_templates_kit_page() {
             </a>
         </p>
     </div>
+
+    <?php
+    // TEMP: set to true to re-enable Templates Kit category filters UI.
+    $wpr_enable_templates_kit_category_filters = false;
+
+    if ( $wpr_enable_templates_kit_category_filters ) :
+        $kit_category_filters = [
+            [ 'all', '', __( 'All Templates', 'wpr-addons' ) ],
+            [ 'shop', 'shop,woocommerce,estore,ecommerce', __( 'Shop', 'wpr-addons' ) ],
+            [ 'portfolio', 'portfolio', __( 'Portfolio', 'wpr-addons' ) ],
+            [ 'news-magazine', 'magazine,newspaper,news magazine', __( 'News/Magazine', 'wpr-addons' ) ],
+            [ 'landing-page', 'landing page,landingpage,onepage,one page', __( 'Landing Page', 'wpr-addons' ) ],
+            [ 'dynamic', 'dynamic,acf', __( 'Dynamic', 'wpr-addons' ) ],
+            [ 'digital-agency', 'digital agency', __( 'Digital Agency', 'wpr-addons' ) ],
+            [ 'business', 'business,corporate', __( 'Business', 'wpr-addons' ) ],
+            [ 'blog', 'blog,blogger', __( 'Blog', 'wpr-addons' ) ],
+            [ 'ai', 'artificial intelligence,ai website,ai templates,ai agency,ai saas,chatgpt,chat gpt,ai automation', __( 'AI', 'wpr-addons' ) ],
+        ];
+        ?>
+        <ul class="wpr-templates-kit-category-filters">
+            <?php foreach ( $kit_category_filters as $index => $filter ) : ?>
+                <li
+                    data-filter="<?php echo esc_attr( $filter[0] ); ?>"
+                    <?php echo '' !== $filter[1] ? 'data-filter-tags="' . esc_attr( $filter[1] ) . '"' : ''; ?>
+                    <?php echo 0 === $index ? 'class="wpr-active-filter"' : ''; ?>
+                ><?php echo esc_html( $filter[2] ); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 
     <div class="wpr-templates-kit-grid main-grid" data-theme-status="<?php echo esc_attr(get_theme_status()); ?>">
         <?php
@@ -111,9 +131,11 @@ function wpr_addons_templates_kit_page() {
 
             // Loop
             foreach ($sorted_kits as $kit_id => $data) {
+                $is_pro_kit = isset($data['price']) && 'pro' === $data['price'];
+                $can_import = $is_pro_kit ? $has_pro_access : true;
                 $is_expert = isset($data['expert']) && 'expert' === $data['expert'] ? 'true' : 'false';
 
-                echo '<div class="grid-item" data-kit-id="'. esc_attr($kit_id) .'" data-title="'. esc_attr(strtolower($data['name'])) .'" data-tags="'. esc_attr($data['tags']) .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. esc_attr($data['pages']) .'" data-price="'. esc_attr($data['price']) .'" data-expert="'. esc_attr($is_expert) .'">';
+                echo '<div class="grid-item" data-kit-id="'. esc_attr($kit_id) .'" data-title="'. esc_attr(strtolower($data['name'])) .'" data-tags="'. esc_attr($data['tags']) .'" data-plugins="'. esc_attr($data['plugins']) .'" data-pages="'. esc_attr($data['pages']) .'" data-price="'. esc_attr($data['price']) .'" data-can-import="'. esc_attr($can_import ? 'true' : 'false') .'" data-expert="'. esc_attr($is_expert) .'">';
                     echo '' !== $data['label'] ? '<span class="label label-'. esc_attr($data['label']) .'">'. esc_html($data['label']) .'</span>' : '';
                     echo '<div class="image-wrap">';
                         echo '<img class="lazy" src="'. esc_url(WPR_ADDONS_ASSETS_URL .'img/icon-256x256.png') .'" data-src="'. esc_url('https://royal-elementor-addons.com/library/templates-kit/'. $kit_id .'/home.jpg') .'" alt="'. esc_attr($data['name']) .'">';

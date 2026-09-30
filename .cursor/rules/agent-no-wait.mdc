@@ -1,0 +1,26 @@
+---
+description: Run autonomously — prefer Read/Grep/StrReplace over Shell; stash for GitHub Desktop; do not pause for user Accept on routine investigation.
+alwaysApply: true
+---
+
+# Agent execution preference
+
+- Proceed without asking the user to approve routine investigation steps.
+- Prefer **Read**, **Grep**, and **StrReplace** over **Shell** when they answer the question.
+- Only use **Shell** when necessary (git, builds, wp-cli, one-off scripts).
+- Do not stop mid-task waiting for confirmation unless blocked on a product decision or destructive action the user must choose.
+
+# GitHub Desktop stashes
+
+When the user says **stash** (or asks to stash changes), stash so GitHub Desktop can see it. Desktop ignores CLI stashes unless the message matches its format.
+
+```powershell
+git stash push -m "!!GitHub_Desktop<BRANCH>"
+```
+
+- `BRANCH` is `git branch --show-current` (keep the `<` `>` characters).
+- Quote the message so PowerShell does not treat `<>` as redirection.
+- Do not use a custom stash message.
+- Stash **each git repo** that has changes (free and Pro are separate repos).
+- Confirm with `git stash list` — it must look like `On BRANCH: !!GitHub_Desktop<BRANCH>`.
+- Leave the working tree clean unless the user asked to keep files unstashed.

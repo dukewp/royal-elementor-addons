@@ -1,0 +1,51 @@
+---
+description: Advanced Filters Pro architecture — read before changing filter widgets, grid filter AJAX, or widgetAdvancedFilters JS.
+globs:
+  - "**/advanced-filters-pro/**"
+  - "**/wpr-grid-helpers.php"
+  - "**/wpr-woo-grid-helpers.php"
+  - "**/wpr-filter-grid-media.php"
+alwaysApply: false
+---
+
+# Advanced Filters Pro
+
+**Full reference:** `royal-elementor-addons/ADVANCED-FILTERS.md` (dev-only; excluded from release zip)
+
+Read that document before tasks involving Advanced Filters, grid `data-advanced-filters`, `wpr_af_*` URL params, or `widgetAdvancedFilters` in `frontend.min.js`.
+
+## Quick facts
+
+- **Pro widget:** `modules/advanced-filters-pro/widgets/wpr-advanced-filters-pro.php` (~5.6k lines).
+- **Free integration:** `wpr-grid-helpers.php`, `wpr-woo-grid-helpers.php`, `wpr-grid.php`, `wpr-woo-grid.php`, `frontend.min.js` (`widgetAdvancedFilters`).
+- **Not the same as** built-in Grid Filters (`wpr_taxonomy` / `filters_experiment`) or Product Filters Pro theme-builder widget.
+
+## Data attributes on `.wpr-advanced-filters-wrap`
+
+| Attribute | When set |
+|-----------|----------|
+| `data-show-count` | `show_count` |
+| `data-change-counter` | `enable_dependency` + saved `change_counter` (self-filter skip) |
+| `data-empty-action` | `handle_empty` + `empty_actions` (`hide`/`disable`; empty = off) |
+
+Do **not** add `data-handle-empty` — `data-empty-action` is sufficient.
+
+## Critical JS rules (`updateResultsCount`)
+
+1. **Counters** and **empty actions** are separate; both may use the count AJAX endpoint.
+2. **`other_filters` + triggering `$scope`:** skip the **entire wrap** (counts + empty) — prevents hidden items reappearing on self-click.
+3. **OR relation + `$scope`:** skip per-option updates in success callback.
+4. **Empty-only** (show_count off): hypothetical params use **replace** (`term only + other filters`), not merge with siblings.
+5. Edit **only** `assets/js/frontend.min.js` for frontend JS changes.
+
+## URL params
+
+- `wpr_af_{key}` — filter values
+- `wpr_afr_{key}` — `{relation},{filter_type}`
+- `wpr_aft_{key}` — `range` for BETWEEN queries
+
+Parsed in `WPR_Grid_Helpers::get_main_query_args()` / Woo equivalent.
+
+## Before shipping filter changes
+
+Test self-filter click (hidden items stay hidden with `other_filters`), cross-filter updates (counts + empty on other widgets), apply-button mode, and Woo vs post grids.

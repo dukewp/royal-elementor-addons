@@ -70,15 +70,15 @@ class Utilities {
 			'Template' => ['elementor-template', '', '', ''],
 			'Reading Progress Bar' => ['reading-progress-bar', 'https://royal-elementor-addons.com/elementor-reading-progress-bar-widget/', '', ''],
 			'Twitter Feed' => ['twitter-feed', 'https://royal-elementor-addons.com/elementor-twitter-feed-widget/', '', ''],
-			'Image Scroll' => ['image-scroll', 'https://royal-elementor-addons.com/elementor-image-scroll-widget/', '', ''],
+			'Image Scroll' => ['image-scroll', 'https://royal-elementor-addons.com/image-scroll/', '', ''],
 			'Date' => ['date', 'https://royal-elementor-addons.com/elementor-date-widget/', '', ''],
-			'Video Playlist' => ['video-playlist', '', '', 'new'],
-			'Password Protected Content' => ['password-protected-content', '', '', 'new'],
+			'Video Playlist' => ['video-playlist', 'https://royal-elementor-addons.com/video-playlist/', '', 'new'],
+			'Password Protected Content' => ['password-protected-content', 'https://royal-elementor-addons.com/password-protected-content/', '', 'new'],
 			'Icon Box' => ['icon-box', '', '', 'new'],
 			'Separator' => ['separator', '', '', 'new'],
 			// 'Random Image' => ['random-image', '', '', 'new'],
-			'Circle Menu' => ['circle-menu', '', '', 'new'],
-			'Unfold' => ['unfold', '', '', 'new'],
+			'Circle Menu' => ['circle-menu', 'https://royal-elementor-addons.com/circle-menu/', '', 'new'],
+			'Unfold' => ['unfold', 'https://royal-elementor-addons.com/unfold-widget/', '', 'new'],
 		];
 	}
 
@@ -251,6 +251,33 @@ class Utilities {
 		}
 
 		return $taxonomy_list;
+	}
+
+
+	/**
+	 * Whether a taxonomy is attached only to WooCommerce products.
+	 * Shared taxonomies (e.g. post + product) return false.
+	 */
+	public static function is_product_related_taxonomy( $taxonomy_slug ) {
+		if ( ! is_string( $taxonomy_slug ) || '' === $taxonomy_slug ) {
+			return false;
+		}
+
+		$taxonomy = get_taxonomy( $taxonomy_slug );
+
+		if ( ! $taxonomy || empty( $taxonomy->object_type ) ) {
+			return false;
+		}
+
+		$product_object_types = [ 'product', 'product_variation' ];
+
+		foreach ( (array) $taxonomy->object_type as $object_type ) {
+			if ( ! in_array( $object_type, $product_object_types, true ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 
@@ -1408,6 +1435,52 @@ class Utilities {
 		return $value;
 	}
 
+	/**
+	 * Validate a submitted control value against an allowlist.
+	 *
+	 * Elementor SELECT/CHOOSE controls are not server-validated on save, so
+	 * dropdown values used in HTML attributes must be checked before output.
+	 *
+	 * @param mixed  $value   Submitted setting value.
+	 * @param array  $allowed Allowed option keys.
+	 * @param mixed  $default Fallback when the value is not allowed.
+	 * @return mixed
+	 */
+	public static function validate_option( $value, $allowed, $default = '' ) {
+		if ( ! is_scalar( $value ) ) {
+			return $default;
+		}
+
+		$value = (string) $value;
+
+		if ( ! in_array( $value, $allowed, true ) ) {
+			return $default;
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Strip PHP open/close tags iteratively.
+	 *
+	 * A single-pass str_replace() can leave overlapping doubled tokens that
+	 * recombine into executable tags (e.g. <<??php ... ??>>).
+	 *
+	 * @param mixed $value Raw user-supplied string.
+	 * @return string
+	 */
+	public static function strip_php_tags( $value ) {
+		$value = (string) $value;
+		$previous = null;
+
+		while ( $previous !== $value ) {
+			$previous = $value;
+			$value    = preg_replace( '/<\?(?:php|=)?|\?>/i', '', $value );
+		}
+
+		return $value;
+	}
+
 	public static function get_all_breakpoints( $type = 'assoc' ) {
 		$devices = array(
 			'desktop' => __( 'Desktop', 'elementor' ),
@@ -1474,5 +1547,152 @@ class Utilities {
 		}
 	
 		return ( 'keys' === $type ) ? array_keys( $ordered_devices ) : $ordered_devices;
+	}
+
+	/**
+	 * Validate a Form Builder webhook URL against SSRF-prone targets.
+	 *
+	 * @param string $url Raw webhook URL.
+	 * @return string|\WP_Error Sanitized URL on success, WP_Error on failure.
+	 */
+	public static function wpr_validate_webhook_url( $url ) {
+		if ( ! is_string( $url ) || '' === trim( $url ) ) {
+			return '';
+		}
+
+		$url = esc_url_raw( trim( $url ) );
+		if ( '' === $url ) {
+			return new \WP_Error( 'wpr_webhook_invalid_url', esc_html__( 'Please provide a valid webhook URL.', 'wpr-addons' ) );
+		}
+
+		$parsed_url = wp_parse_url( $url );
+		if ( ! is_array( $parsed_url ) || empty( $parsed_url['host'] ) ) {
+			return new \WP_Error( 'wpr_webhook_invalid_url', esc_html__( 'Please provide a valid webhook URL.', 'wpr-addons' ) );
+		}
+
+		$scheme = isset( $parsed_url['scheme'] ) ? strtolower( $parsed_url['scheme'] ) : '';
+		if ( ! in_array( $scheme, [ 'http', 'https' ], true ) ) {
+			return new \WP_Error( 'wpr_webhook_invalid_scheme', esc_html__( 'Only HTTP(S) webhook URLs are allowed.', 'wpr-addons' ) );
+		}
+
+		// Align with wp_safe_remote_* / wp_http_validate_url checks.
+		if ( function_exists( 'wp_http_validate_url' ) && false === wp_http_validate_url( $url ) ) {
+			return new \WP_Error( 'wpr_webhook_unsafe_url', esc_html__( 'This webhook URL is not allowed.', 'wpr-addons' ) );
+		}
+
+		$host = strtolower( $parsed_url['host'] );
+		$allowed_hosts = apply_filters( 'wpr_form_builder_allowed_webhook_hosts', [] );
+		$allowed_hosts = array_filter( array_map( 'strtolower', (array) $allowed_hosts ) );
+
+		if ( ! empty( $allowed_hosts ) ) {
+			$is_allowed_host = false;
+			foreach ( $allowed_hosts as $allowed_host ) {
+				if ( $host === $allowed_host || ( function_exists( 'str_ends_with' ) && str_ends_with( $host, '.' . $allowed_host ) ) ) {
+					$is_allowed_host = true;
+					break;
+				}
+			}
+
+			if ( ! $is_allowed_host ) {
+				return new \WP_Error( 'wpr_webhook_host_not_allowed', esc_html__( 'This webhook host is not allowed.', 'wpr-addons' ) );
+			}
+		}
+
+		if ( self::wpr_is_blocked_remote_host( $host ) ) {
+			return new \WP_Error( 'wpr_webhook_blocked_host', esc_html__( 'This webhook URL points to a blocked network address.', 'wpr-addons' ) );
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Whether a remote host resolves to a private/local address.
+	 *
+	 * @param string $host Hostname or IP.
+	 * @return bool
+	 */
+	public static function wpr_is_blocked_remote_host( $host ) {
+		$host = trim( strtolower( (string) $host ) );
+
+		if ( '' === $host ) {
+			return true;
+		}
+
+		if ( in_array( $host, [ 'localhost', 'localhost.localdomain' ], true ) ) {
+			return true;
+		}
+
+		$ips = [];
+
+		if ( filter_var( $host, FILTER_VALIDATE_IP ) ) {
+			$ips[] = $host;
+		} else {
+			$ipv4 = @gethostbynamel( $host );
+			if ( is_array( $ipv4 ) ) {
+				$ips = array_merge( $ips, $ipv4 );
+			}
+
+			if ( function_exists( 'dns_get_record' ) ) {
+				$ipv6_records = @dns_get_record( $host, DNS_AAAA );
+				if ( is_array( $ipv6_records ) ) {
+					foreach ( $ipv6_records as $record ) {
+						if ( ! empty( $record['ipv6'] ) ) {
+							$ips[] = $record['ipv6'];
+						}
+					}
+				}
+			}
+		}
+
+		$ips = array_unique( array_filter( $ips ) );
+		// DNS resolution can be unreliable; don't block solely on empty results.
+		if ( empty( $ips ) ) {
+			return false;
+		}
+
+		foreach ( $ips as $ip ) {
+			if ( self::wpr_is_private_or_local_ip( $ip ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Whether an IP is private, reserved, or link-local.
+	 *
+	 * @param string $ip IP address.
+	 * @return bool
+	 */
+	public static function wpr_is_private_or_local_ip( $ip ) {
+		if ( ! filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+			return true;
+		}
+
+		if ( false === filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) ) {
+			return true;
+		}
+
+		if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
+			$packed = @inet_pton( $ip );
+			if ( false === $packed || strlen( $packed ) !== 16 ) {
+				return true;
+			}
+
+			$first  = ord( $packed[0] );
+			$second = ord( $packed[1] );
+
+			// fc00::/7 unique local, fe80::/10 link-local.
+			if ( 0xfc === ( $first & 0xfe ) ) {
+				return true;
+			}
+
+			if ( 0xfe === $first && 0x80 === ( $second & 0xc0 ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
