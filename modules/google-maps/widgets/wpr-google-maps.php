@@ -641,6 +641,30 @@ class Wpr_Google_Maps extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
+			'infow_window_width',
+			[
+				'label' => esc_html__( 'Width', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => 50,
+						'max' => 500,
+					],
+					'%' => [
+						'min' => 10,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-google-map .gm-style-iw-c' => 'max-width: {{SIZE}}{{UNIT}} !important;',
+					'{{WRAPPER}} .wpr-google-map .gm-style-iw-d' => 'max-width: {{SIZE}}{{UNIT}} !important;',
+				],
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
 			'infow_window_padding',
 			[
 				'label' => esc_html__( 'Padding', 'wpr-addons' ),
@@ -655,7 +679,6 @@ class Wpr_Google_Maps extends Widget_Base {
 				'selectors' => [
 					'{{WRAPPER}} .wpr-google-map .gm-style-iw-c .wpr-gm-iwindow' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'separator' => 'before',
 			]
 		);
 

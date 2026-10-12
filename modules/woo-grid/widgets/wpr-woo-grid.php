@@ -4937,7 +4937,7 @@ class Wpr_Woo_Grid extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'product_rating_size',
 			[
 				'label' => esc_html__( 'Size', 'wpr-addons' ),
