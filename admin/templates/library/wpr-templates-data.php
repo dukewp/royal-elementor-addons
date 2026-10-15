@@ -519,6 +519,19 @@ class WPR_Templates_Data {
 					'label' => 'new',
 					'priority' => 5,
 				],
+				'v3' => [
+					'name' => 'Furniture Shop V3',
+					'pages' => 'home,shop,shop-v2,shop-list-view,cart,wishlist,compare,checkout,about,faq,blog,single-blog,contact,',
+					'plugins' => '{"woocommerce":'. $is_woo_active .'}',
+					'tags' => 'shop shopping woo-commerce woocommerce estore ecommerce product online furniture home designer chair shelf sofa bed eshopping market reseller ecommerce shop e commerce collection',
+					'theme-builder' => true,
+					'woo-builder' => true,
+					'off-canvas' => true,
+					'price' => $is_pro_active ? 'free' : 'pro',
+					'expert' => $is_expert ? 'free' : 'expert',
+					'label' => 'new',
+					'priority' => 4,
+				],
 			],
 			'electrician' => [
 				'v1' => [
@@ -2744,6 +2757,12 @@ class WPR_Templates_Data {
 				'name' => 'Furniture Shop V2',
 				'pages' => ['home','shop','cart','compare','about','warranty','faq','blog','contact'],
 				'preview' => ['home','shop','cart','compare','about','warranty','faq','blog','contact'],
+				'price' => $is_pro_active ? 'free' : 'pro',
+			],
+			'furniture-shop-v3' => [
+				'name' => 'Furniture Shop V3',
+				'pages' => ['home','shop','shop-v2','shop-list-view','about','faq','blog','contact'],
+				'preview' => ['home','shop-furniture-shop-v3','shop-v2','shop-list-view','about','faq','blog-furniture-shop-v3','contact'],
 				'price' => $is_pro_active ? 'free' : 'pro',
 			],
 			'restaurant-v1' => [
