@@ -1,7 +1,7 @@
 === Royal Addons for Elementor – Addons and Templates Kit for Elementor ===
 Contributors: wproyal, rubeushagrid13, cyberpinky, elementoraddonswpr, ggedenidze1982, wprduke
 Tags: elementor, elementor templates, elementor addons, elementor widgets, header footer builder, elementor mega menu, elementor woocommerce builder, theme builder, header footer builder, elementor post grid, elementor product grid, addons for elementor
-Stable tag: 1.7.1064
+Stable tag: 1.7.1069
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 5.6
@@ -503,6 +503,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 15. Elementor Premade Blocks
 
 == Changelog ===
+= Royal Elementor Addons v1.7.1069 - 2026-10-15 =
+* FIXED: Form Builder email settings are stored on the owning post and checked against that post before send.
+* FIXED: Form notification recipients substituted from submitted fields must be a single email address.
+* FIXED: Mailchimp subscribe actions require a nonce and the audience configured on the widget.
+* FIXED: Google Maps height is output as an integer.
+* FIXED: Grid and product-grid filters reject private post-meta keys.
+* FIXED: Compare popup only returns content for publicly viewable post types.
+* TESTED: Tested up to WordPress 7.1
+
 = Royal Elementor Addons v1.7.1064 - 2026-06-25 =
 * ADDED: Elementor Template Kit: Jewelry V3 - [**Jewelry V3**](https://demosites.royal-elementor-addons.com/jewelry-v3/?ref=rea-wpo-pp-details-tab).
 * ADDED: Elementor Template Kit: Skincare V2 - [**Skincare V2**](https://demosites.royal-elementor-addons.com/skincare-v2//?ref=rea-wpo-pp-details-tab).

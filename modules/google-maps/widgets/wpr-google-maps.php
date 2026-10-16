@@ -793,13 +793,17 @@ class Wpr_Google_Maps extends Widget_Base {
 		$settings = $this->get_settings();
 		
 		if ( 'without_api_key' === $settings['gm_integration'] ) {
-			$latitude  = $settings['gm_latitude'] ?? '';
-			$longitude = $settings['gm_longtitude'] ?? '';
-			$gm_location_title = $settings['gm_location_title'] ?? '';
-			$zoom = !empty($settings['gm_zoom_depth']['size']) ? intval($settings['gm_zoom_depth']['size']) : 14;
+			$latitude  = isset( $settings['gm_latitude'] ) ? sanitize_text_field( $settings['gm_latitude'] ) : '';
+			$longitude = isset( $settings['gm_longtitude'] ) ? sanitize_text_field( $settings['gm_longtitude'] ) : '';
+			$gm_location_title = isset( $settings['gm_location_title'] ) ? sanitize_text_field( $settings['gm_location_title'] ) : '';
+			$zoom = !empty($settings['gm_zoom_depth']['size']) ? absint($settings['gm_zoom_depth']['size']) : 14;
+			$map_height = isset( $settings['gm_height']['size'] ) ? absint( $settings['gm_height']['size'] ) : 500;
+			if ( $map_height < 1 ) {
+				$map_height = 500;
+			}
 	
 			if ($latitude && $longitude) {
-				$map_src = "https://www.google.com/maps?q={$latitude},{$longitude}&z={$zoom}&output=embed";
+				$map_src = 'https://www.google.com/maps?q=' . rawurlencode( $latitude ) . ',' . rawurlencode( $longitude ) . '&z=' . $zoom . '&output=embed';
 			} else {
 				$map_src = "https://www.google.com/maps?q=" . rawurlencode($gm_location_title) . "&z={$zoom}&output=embed";
 			}
@@ -808,7 +812,7 @@ class Wpr_Google_Maps extends Widget_Base {
 			echo '<iframe 
 					src="' . esc_url($map_src) . '" 
 					width="100%"
-					height="'. esc_attr( $settings['gm_height']['size'] ) .'"
+					height="'. esc_attr( $map_height ) .'"
 					style="border:0;" 
 					allowfullscreen="" 
 					loading="lazy"
