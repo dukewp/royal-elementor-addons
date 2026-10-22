@@ -1452,8 +1452,33 @@
 				subMenuDeep = $navMenu.find( '.wpr-sub-menu li.menu-item-has-children' );
 
 			if ( $scope.find('.wpr-mobile-toggle').length ) {
-				$scope.find('a').on('click', function() { // GOGA - sub mega menu condition needs testing
-                    if ( this.pathname == window.location.pathname && !($(this).parent('li').children().length > 1)  && !($(this).closest('.wpr-sub-mega-menu').length > 0) ) {
+				// Same-page anchors must close the mobile menu. Off-canvas leaves body overflow hidden otherwise.
+				$mobileNavMenu.find('a').on('click', function( e ) {
+					if ( $(e.target).closest('.wpr-mobile-sub-icon').length ) {
+						return;
+					}
+
+					var href = $(this).attr('href');
+					if ( ! href || href === '#' ) {
+						return;
+					}
+
+					var isSamePage = this.pathname == window.location.pathname && this.hostname == window.location.hostname;
+					if ( ! isSamePage ) {
+						return;
+					}
+
+					var isHashLink = !! this.hash;
+					var isLeaf = !($(this).parent('li').children().length > 1) && !($(this).closest('.wpr-sub-mega-menu, .wpr-mobile-sub-mega-menu').length > 0);
+
+					if ( $scope.hasClass('wpr-mobile-menu-display-offcanvas') ) {
+						if ( isHashLink || isLeaf ) {
+							closeMobileOffcanvas();
+						}
+						return;
+					}
+
+					if ( isLeaf ) {
 						$scope.find('.wpr-mobile-toggle').trigger('click');
 					}
 				});
@@ -1570,7 +1595,7 @@
 				var $toggle = $mobileNavMenu.find('.wpr-mobile-toggle');
 
 				$scope.find('.wpr-mobile-mega-menu-wrap').removeClass('wpr-mobile-mega-menu-open');
-				$('body').css('overflow', 'visible');
+				$('body').css('overflow', '');
 				getMobileMenuSection().removeClass('wpr-section-full-height');
 				$toggle.removeClass('wpr-mobile-toggle-open');
 				$toggle.trigger('focusout');
@@ -2006,7 +2031,8 @@
 				experimentActionCount = $scope.hasClass('elementor-widget-wpr-woo-grid') ? 'wpr_get_filtered_count_products' : 
 									 $scope.hasClass('elementor-widget-wpr-media-grid') ? 'wpr_get_media_filtered_count' : 'wpr_get_filtered_count_posts',
 				experimentActionContent = $scope.hasClass('elementor-widget-wpr-woo-grid') ? 'wpr_woo_grid_filters_ajax' :
-									   $scope.hasClass('elementor-widget-wpr-media-grid') ? 'wpr_filter_grid_media' : 'wpr_grid_filters_ajax';
+									   $scope.hasClass('elementor-widget-wpr-media-grid') ? 'wpr_filter_grid_media' : 'wpr_grid_filters_ajax',
+				isMediaGridWidget = $scope.hasClass('elementor-widget-wpr-media-grid');
 
 			if ( ! iGrid.length ) {
 				return;
@@ -2021,6 +2047,21 @@
 
 			// Settings
 			var settings = iGrid.attr( 'data-settings' );
+
+			// Media Grid: per-widget nonce + document/widget ids (shared WprConfig.nonce is not authorization).
+			function wprGridAjaxAuth() {
+				if ( ! isMediaGridWidget ) {
+					return { nonce: WprConfig.nonce };
+				}
+
+				var parsed = ( typeof settings === 'object' && settings ) ? settings : {};
+
+				return {
+					nonce: parsed.wpr_media_nonce || '',
+					wpr_widget_id: parsed.wpr_widget_id || $scope.attr('data-id') || '',
+					wpr_document_id: parsed.wpr_document_id || $scope.closest('[data-elementor-id]').attr('data-elementor-id') || '',
+				};
+			}
 
 			// Grid
 			if ( typeof settings !== typeof undefined && settings !== false ) {
@@ -2954,14 +2995,13 @@
 							var	thisTaxonomy = '*' !== $(this).attr( 'data-filter') ? $(this).data('ajax-filter')[0] : '*',
 								thisFilter = '*' !== $(this).attr( 'data-filter') ? $(this).data('ajax-filter')[1] : '*';
 
-								let data = {
+								let data = $.extend({
 									action: experimentActionCount,
-									nonce: WprConfig.nonce,
 									wpr_offset: 0,
 									wpr_filter: thisFilter,
 									wpr_taxonomy: thisTaxonomy,
 									grid_settings: settings.grid_settings,
-								};
+								}, wprGridAjaxAuth());
 
 							$.ajax({
 								type: 'POST',
@@ -3469,7 +3509,10 @@
 
 			function filtersExperiment() {
 				let currentRequest = null;
+				let filterRequestId = 0;
 				$scope.find('.wpr-grid-filters').on('click', 'span', function(event) {
+					var requestId = ++filterRequestId;
+
 					if (currentRequest) {
 						currentRequest.abort(); // Abort the previous request
 					}
@@ -3509,7 +3552,8 @@
 					event.stopPropagation();
 					event.stopImmediatePropagation();
 
-					iGrid.isotopewpr('remove', iGrid.children('.wpr-grid-item'));
+					// Drop products and the empty-state heading. Isotope only removes its own items, and the heading is not .wpr-grid-item (same clear as advanced filters).
+					iGrid.isotopewpr('remove', iGrid.children());
 					if ( iGrid.find('.wpr-grid-loader-wrap').length < 1 ) {
 						iGrid.append(loader);
 					}
@@ -3517,15 +3561,14 @@
 					$.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
-						data: {
+						data: $.extend({
 							action: experimentActionCount,
-							nonce: WprConfig.nonce,
 							// wpr_offset: +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length,
 							wpr_offset: +settings.grid_settings.query_offset,
 							wpr_filter: thisFilter,
 							wpr_taxonomy: thisTaxonomy,
 							grid_settings: settings.grid_settings,
-						},
+						}, wprGridAjaxAuth()),
 						success: function(response) {
 							var pageCount = response.data.page_count;
 							var foundPosts = response.data.query_found;
@@ -3536,16 +3579,23 @@
 							currentRequest = $.ajax({
 								type: 'POST',
 								url: WprConfig.ajaxurl,
-								data: {
+								data: $.extend({
 									action: experimentActionContent,
-									nonce: WprConfig.nonce,
 									wpr_item_length: +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length,
 									wpr_filter: thisFilter,
 									wpr_taxonomy: thisTaxonomy,
 									grid_settings: settings.grid_settings,
-								},
+								}, wprGridAjaxAuth()),
 								success: function( response ) {
+									if ( requestId !== filterRequestId ) {
+										return;
+									}
+
 									setTimeout(function() {
+										if ( requestId !== filterRequestId ) {
+											return;
+										}
+
 										// iGrid.addClass('wpr-zero-opacity');
 										// $scope.find('.wpr-grid').html($(response));
 										// WprElements.isotopeLayout( settings, '', '', $scope );
@@ -3647,28 +3697,26 @@
 					$.ajax({
 						type: 'POST',
 						url: WprConfig.ajaxurl,
-						data: {
+						data: $.extend({
 							action: experimentActionCount,
-							nonce: WprConfig.nonce,
 							wpr_offset: +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length,
 							wpr_filter: thisFilter,
 							wpr_taxonomy: thisTaxonomy,
 							grid_settings: settings.grid_settings,
-						},
+						}, wprGridAjaxAuth()),
 						success: function(response) {
 							var pageCount = response.data.page_count;
 
 							$.ajax({
 								type: 'POST',
 								url: WprConfig.ajaxurl,
-								data: {
+								data: $.extend({
 									action: experimentActionContent,
-									nonce: WprConfig.nonce,
 									wpr_offset: +settings.grid_settings.query_offset + $scope.find('.wpr-grid-item').length,
 									wpr_filter: thisFilter,
 									wpr_taxonomy: thisTaxonomy,
 									grid_settings: settings.grid_settings,
-								},
+								}, wprGridAjaxAuth()),
 								success: function( response ) {
 									pagesLoadedExperiment++;
 									var items;
@@ -4751,8 +4799,11 @@
 					type: 'POST',
 					data: {
 						action: 'mailchimp_subscribe',
+						nonce: WprConfig.nonce,
 						fields: $(this).serialize(),
-						listId: mailchimpForm.data( 'list-id' )
+						listId: mailchimpForm.data( 'list-id' ),
+						widget_id: mailchimpForm.data( 'widget-id' ),
+						document_id: mailchimpForm.data( 'document-id' )
 					},
 					success: function(data) {
 						if ( 'yes' == mailchimpForm.data('clear-fields') ) {
@@ -9979,6 +10030,7 @@
 							nonce: WprConfig.nonce,
 							form_content: data,
 							wpr_form_id: $scope.find('input[name="form_id"]').val(),
+							wpr_form_document_id: $scope.find('input[name="wpr_form_document_id"]').val(),
 						},
 						success: function(response) {
 							if ( !response.success ) {
@@ -10020,6 +10072,7 @@
 							nonce: WprConfig.nonce,
 							form_content: data,
 							wpr_form_id: $scope.find('input[name="form_id"]').val(),
+							wpr_form_document_id: $scope.find('input[name="wpr_form_document_id"]').val(),
 							form_name: $scope.find('form').attr('name')
 						},
 						success: function(response) {
@@ -10102,7 +10155,9 @@
 							action: 'wpr_form_builder_mailchimp',
 							nonce: WprConfig.nonce,
 							form_data: formData,
-							listId: submitButton.data( 'list-id' )
+							listId: submitButton.data( 'list-id' ),
+							wpr_form_id: $scope.find('input[name="form_id"]').val(),
+							wpr_form_document_id: $scope.find('input[name="wpr_form_document_id"]').val()
 							// security: mailchimpSubscription.security
 						},
 						beforeSend: function () {
