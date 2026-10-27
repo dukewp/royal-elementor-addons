@@ -2612,7 +2612,7 @@ div[class*="wpr-sub-menu-fx"] .wpr-mega-menu .wpr-sub-mega-menu.wpr-animate-sub 
     border-bottom-right-radius: 0 !important;
 }
 
-.wpr-grid:not([data-settings*="list"]) .wpr-grid-media-wrap + .wpr-grid-item-below-content {
+.wpr-grid:not([data-settings*='"layout":"list"']) .wpr-grid-media-wrap + .wpr-grid-item-below-content {
     border-top: 0 !important;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
