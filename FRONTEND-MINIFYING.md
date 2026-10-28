@@ -36,4 +36,16 @@ This process:
 - Creates backup at `assets/css/frontend.min.prebuild.backup.css`
 - Stops if the file already looks minified, unless you pass `--force`
 
-To minify the client copy without touching this working file, use `C:\Users\Goga\Local Sites\rea-prod-frontend-minify` and `npm run build:frontend-css` there. That script only writes inside rea-prod.
+## Minify the rea-prod copy
+
+When asked to minify rea-prod JS or CSS, do not search and do not run the commands above in this plugin. Those rewrite the rea.local working files.
+
+Tooling is already installed at `C:\Users\Goga\Local Sites\rea-prod-frontend-minify`. It only reads and writes rea-prod.
+
+1. Copy the readable rea.local file onto the same relative path under `C:\Users\Goga\Local Sites\rea-prod\app\public\wp-content\plugins\royal-elementor-addons\`.
+   - JS: `assets/js/frontend.min.js`
+   - CSS: `assets/css/frontend.min.css`
+2. From the tooling folder, run `npm run build:frontend-safe` for JS or `npm run build:frontend-css` for CSS.
+3. The script writes `frontend.min.prebuild.backup.js` or `frontend.min.prebuild.backup.css` next to the rea-prod file, then rewrites that rea-prod file. It stops if the file already looks minified. Do not pass `--force` unless asked.
+
+Upload the minified file from rea-prod. Leave the readable copy on rea.local.

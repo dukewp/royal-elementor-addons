@@ -13,3 +13,4 @@ alwaysApply: true
 - The only editable frontend bundle is **`assets/js/frontend.min.js`**.
 - Enqueued script path in PHP may say `frontend.js` or `frontend.min.js` per build; still edit **`frontend.min.js`** when the task is “change frontend JS.”
 - If something appears to require both files, **only change `frontend.min.js`**.
+- To minify rea-prod JS, do not search. Copy this readable file to the same path under `C:\Users\Goga\Local Sites\rea-prod\app\public\wp-content\plugins\royal-elementor-addons\`, then run `npm run build:frontend-safe` in `C:\Users\Goga\Local Sites\rea-prod-frontend-minify`. Never overwrite the rea.local file. Full steps are in `FRONTEND-MINIFYING.md`.

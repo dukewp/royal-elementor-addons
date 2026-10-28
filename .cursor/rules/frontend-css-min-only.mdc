@@ -14,5 +14,5 @@ alwaysApply: true
 - Enqueued style path in PHP may say `frontend.css` or `frontend.min.css` per build; still edit **`frontend.min.css`** when the task is “change frontend CSS.”
 - If something appears to require both files, **only change `frontend.min.css`**.
 - Keep additions readable (non-minified) and scoped to REA selectors (e.g. `.wpr-*`).
-- Do not minify CSS manually in chat edits; minification is handled afterward by the maintainer.
+- Do not minify CSS manually in chat edits. To minify rea-prod CSS, do not search. Copy this readable file to the same path under `C:\Users\Goga\Local Sites\rea-prod\app\public\wp-content\plugins\royal-elementor-addons\`, then run `npm run build:frontend-css` in `C:\Users\Goga\Local Sites\rea-prod-frontend-minify`. Never overwrite the rea.local file. Full steps are in `FRONTEND-MINIFYING.md`.
 - Do not inject widget styles inline in PHP render methods.
