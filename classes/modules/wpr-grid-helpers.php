@@ -266,6 +266,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 		return true;
 	}
 
+	/**
+	 * `_price` is public catalog data only on WooCommerce product queries.
+	 *
+	 * @param array $settings Grid settings.
+	 * @return bool
+	 */
+	public static function wpr_query_allows_price_meta( $settings ) {
+		if ( empty( $settings ) || ! is_array( $settings ) ) {
+			return false;
+		}
+
+		$source = isset( $settings['query_source'] ) ? $settings['query_source'] : '';
+
+		if ( 'current' === $source ) {
+			$types = isset( $settings['current_query_source'] ) ? (array) $settings['current_query_source'] : [];
+		} elseif ( 'related' === $source ) {
+			$types = [ get_post_type( get_the_ID() ) ];
+		} else {
+			$types = (array) $source;
+		}
+
+		$types = array_filter( array_map( 'sanitize_key', $types ) );
+
+		if ( empty( $types ) ) {
+			return false;
+		}
+
+		foreach ( $types as $type ) {
+			if ( 'product' !== $type && 'product_variation' !== $type ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	// Main Query Args
 	public static function get_main_query_args($settings, $params) {
 		$author = ! empty( $settings[ 'query_author' ] ) ? implode( ',', $settings[ 'query_author' ] ) : '';
@@ -522,7 +558,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$cleanedKey = str_replace('wpr_af_', '', $key);
 						$prev_cleaned_key = $cleanedKey;
 
-						if ( ! Utilities::wpr_is_allowed_filter_key( $cleanedKey ) ) {
+						if ( ! Utilities::wpr_is_allowed_filter_key( $cleanedKey, self::wpr_query_allows_price_meta( $settings ) ) ) {
 							continue;
 						}
 

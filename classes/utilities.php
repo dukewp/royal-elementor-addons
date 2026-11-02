@@ -1921,6 +1921,10 @@ class Utilities {
 	 * Find a published document containing a widget, for pages served from cache
 	 * before the document id was added to the markup.
 	 *
+	 * The duplicate count always runs against published posts. A cached id is
+	 * not trusted: it can be primed while the real page is still unpublished,
+	 * then kept after that page is published.
+	 *
 	 * @param string $widget_id   Elementor element ID.
 	 * @param string $widget_type Expected widget type.
 	 * @return int Document ID, or 0.
@@ -1934,17 +1938,11 @@ class Utilities {
 		}
 
 		$cache_key = 'wpr_widget_doc_' . md5( $widget_type . '|' . $widget_id );
-		$cached    = get_transient( $cache_key );
-		if ( false !== $cached ) {
-			$cached = absint( $cached );
-			if ( $cached && self::wpr_get_authorized_widget( $cached, $widget_id, $widget_type ) ) {
-				return $cached;
-			}
-		}
+		delete_transient( $cache_key );
 
 		$like = '%' . $wpdb->esc_like( '"id":"' . $widget_id . '"' ) . '%';
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- result is cached in a transient.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- a cached document id skips the duplicate check and can point at the wrong form.
 		$post_ids = $wpdb->get_col( $wpdb->prepare(
 			"SELECT pm.post_id FROM {$wpdb->postmeta} pm
 			INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
@@ -1967,8 +1965,6 @@ class Utilities {
 		if ( 1 !== $matches ) {
 			return 0;
 		}
-
-		set_transient( $cache_key, $document_id, DAY_IN_SECONDS );
 
 		return $document_id;
 	}
@@ -2181,13 +2177,15 @@ class Utilities {
 	/**
 	 * Advanced-filter keys taken from the request.
 	 *
-	 * Rejects private (underscore-prefixed) meta keys. `_price` stays allowed
-	 * because the product grid maps that alias to a fixed numeric price range.
+	 * Rejects private (underscore-prefixed) meta keys. `_price` is allowed
+	 * only when the caller passes $allow_price, and only product queries may
+	 * do that. On any other post type the same key is private meta.
 	 *
-	 * @param string $key Filter key with the wpr_af_ prefix already removed.
+	 * @param string $key         Filter key with the wpr_af_ prefix already removed.
+	 * @param bool   $allow_price Whether this query may filter the public product price.
 	 * @return bool
 	 */
-	public static function wpr_is_allowed_filter_key( $key ) {
+	public static function wpr_is_allowed_filter_key( $key, $allow_price = false ) {
 		$key = sanitize_text_field( (string) $key );
 
 		if ( '' === $key ) {
@@ -2195,7 +2193,7 @@ class Utilities {
 		}
 
 		if ( '_price' === $key ) {
-			return true;
+			return (bool) $allow_price;
 		}
 
 		if ( '_' === $key[0] ) {

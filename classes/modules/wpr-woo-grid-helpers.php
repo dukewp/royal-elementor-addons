@@ -431,7 +431,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						$cleanedKey = str_replace('wpr_af_', '', $key);
 						$prev_cleaned_key = $cleanedKey;
 
-						if ( ! Utilities::wpr_is_allowed_filter_key( $cleanedKey ) ) {
+						// Product grids may filter _price. This query is locked to post type product.
+						if ( ! Utilities::wpr_is_allowed_filter_key( $cleanedKey, true ) ) {
 							continue;
 						}
 
