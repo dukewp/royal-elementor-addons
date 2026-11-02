@@ -541,12 +541,43 @@ class Utilities {
 
 
 	/**
+	** Whether the current user may render this post as nested Elementor content.
+	** Published posts that are not password-protected are public. Draft, pending,
+	** private, future, and trash posts render only when read_post is granted.
+	** Password-protected posts stay hidden until unlocked, except for users who
+	** can already edit that post.
+	*/
+	public static function can_render_elementor_template( $post_id ) {
+		$post = get_post( absint( $post_id ) );
+
+		if ( ! ( $post instanceof \WP_Post ) ) {
+			return false;
+		}
+
+		if ( post_password_required( $post ) && ! current_user_can( 'edit_post', $post->ID ) ) {
+			return false;
+		}
+
+		if ( 'publish' === $post->post_status ) {
+			return true;
+		}
+
+		return current_user_can( 'read_post', $post->ID );
+	}
+
+
+	/**
 	** Render Elementor Template
 	*/
 	public static function render_elementor_template( $slug, $template_id = null ) {
 		if ( empty( $template_id ) ) {
 			$template_id = Utilities::get_template_id( $slug );
 		}
+
+		if ( ! self::can_render_elementor_template( $template_id ) ) {
+			return;
+		}
+
 		$type = get_post_meta(get_the_ID(), '_wpr_template_type', true) || get_post_meta($template_id, '_elementor_template_type', true);
 		$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 		$get_elementor_content = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template_id, $has_css);
@@ -1096,6 +1127,10 @@ class Utilities {
 				}
 			}
 
+			if ( ! self::can_render_elementor_template( $template_id ) ) {
+				wp_send_json_error( [ 'message' => esc_html__( 'Invalid request.', 'wpr-addons' ) ] );
+			}
+
 			$type = get_post_meta( $post_id, '_wpr_template_type', true ) || get_post_meta( $template_id, '_elementor_template_type', true );
 			$has_css = 'internal' === get_option( 'elementor_css_print_method' ) || '' !== $type;
 			$content_html = \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template_id, $has_css );
@@ -1485,6 +1520,81 @@ class Utilities {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Allowed keys for wpr-animations / wpr-animations-alt controls.
+	 *
+	 * Includes the free list, or the Pro list when Pro is active, plus "none".
+	 *
+	 * @return string[]
+	 */
+	public static function get_allowed_animation_keys() {
+		$keys = [ 'none' ];
+
+		if ( ! class_exists( '\WprAddons\Includes\Controls\WPR_Control_Animations' ) ) {
+			return $keys;
+		}
+
+		foreach ( \WprAddons\Includes\Controls\WPR_Control_Animations::get_animations() as $group ) {
+			if ( is_array( $group ) ) {
+				$keys = array_merge( $keys, array_map( 'strval', array_keys( $group ) ) );
+			}
+		}
+
+		return array_values( array_unique( $keys ) );
+	}
+
+	/**
+	 * Build a hover-animation class from widget settings.
+	 *
+	 * Animation, size, and timing are checked against their control allowlists
+	 * before they are concatenated. Unknown values fall back to safe defaults.
+	 *
+	 * @param array  $data   Widget or repeater settings.
+	 * @param string $object Setting prefix, e.g. "watermark" or "overlay".
+	 * @return string Class string. Leading space when an animation is active.
+	 */
+	public static function build_animation_class( $data, $object ) {
+		$class = '';
+
+		if ( ! is_array( $data ) || ! is_string( $object ) || '' === $object ) {
+			return $class;
+		}
+
+		$object = sanitize_html_class( $object );
+
+		if ( '' === $object ) {
+			return $class;
+		}
+
+		$animation = self::validate_option(
+			$data[ $object . '_animation' ] ?? '',
+			self::get_allowed_animation_keys(),
+			'none'
+		);
+		$size = self::validate_option(
+			$data[ $object . '_animation_size' ] ?? '',
+			[ 'small', 'medium', 'large' ],
+			'large'
+		);
+		$timing = self::validate_option(
+			$data[ $object . '_animation_timing' ] ?? '',
+			array_keys( self::wpr_animation_timings() ),
+			'ease-default'
+		);
+
+		if ( 'none' !== $animation ) {
+			$class .= ' wpr-' . $object . '-' . $animation;
+			$class .= ' wpr-anim-size-' . $size;
+			$class .= ' wpr-anim-timing-' . $timing;
+
+			if ( 'yes' === ( $data[ $object . '_animation_tr' ] ?? '' ) ) {
+				$class .= ' wpr-anim-transparency';
+			}
+		}
+
+		return $class;
 	}
 
 	/**

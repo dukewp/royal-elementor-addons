@@ -378,19 +378,7 @@ class WPR_Media_Grid_Helpers {
 
 	// Get Animation Class
 	public static function get_animation_class( $data, $object ) {
-		$class = '';
-
-		if ( 'none' !== $data[ $object . '_animation' ] ) {
-			$class .= ' wpr-' . $object . '-' . $data[ $object . '_animation' ];
-			$class .= ' wpr-anim-size-' . $data[ $object . '_animation_size' ];
-			$class .= ' wpr-anim-timing-' . $data[ $object . '_animation_timing' ];
-
-			if ( 'yes' === $data[ $object . '_animation_tr' ] ) {
-				$class .= ' wpr-anim-transparency';
-			}
-		}
-
-		return $class;
+		return Utilities::build_animation_class( $data, $object );
 	}
 
 	// Get Image Effect Class
