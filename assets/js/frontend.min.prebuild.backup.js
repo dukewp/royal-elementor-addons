@@ -11293,16 +11293,30 @@
 				updateMiniCart();
 			});
 			
-			// function updateVH() {
-			// 	let vh = window.innerHeight * 0.01;
-			// 	document.documentElement.style.setProperty('--vh', `${vh}px`);
-			// }
-			
-			// // Run the function initially
-			// updateVH();
-			
-			// // Recalculate on window resize (for when the user rotates the device or resizes the viewport)
-			// window.addEventListener('resize', updateVH);
+			// Visible screen, excluding the phone status bar, address bar and bottom toolbar.
+			// 100vh includes the area behind those bars until the page is scrolled.
+			function fitSidebarToVisibleScreen() {
+				var viewport = window.visualViewport;
+				var height = viewport ? viewport.height : window.innerHeight;
+
+				$scope.find('.wpr-mini-cart, .wpr-shopping-cart-wrap').css({
+					height: height + 'px'
+				});
+			}
+
+			function resetSidebarScreenFit() {
+				$scope.find('.wpr-mini-cart, .wpr-shopping-cart-wrap').css({
+					height: ''
+				});
+			}
+
+			if ( $scope.hasClass('wpr-mini-cart-sidebar') && window.visualViewport ) {
+				window.visualViewport.addEventListener('resize', function() {
+					if ( 'none' !== $scope.find('.wpr-mini-cart').css('display') ) {
+						fitSidebarToVisibleScreen();
+					}
+				});
+			}
 			
             
             function updateMiniCart() {
@@ -11336,6 +11350,10 @@
                     } else {
                         $scope.find('.wpr-mini-cart').fadeOut(animationSpeed);
                     }
+                    if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
+                        $('body').removeClass('wpr-mini-cart-sidebar-body');
+                        resetSidebarScreenFit();
+                    }
                 }
 
 				if ( e.target.classList.value.includes('wpr-shopping-cart-wrap') ) {
@@ -11362,6 +11380,7 @@
                         $scope.find('.wpr-mini-cart-slide-out').css('animation-speed', animationSpeed);
                         $scope.find('.wpr-shopping-cart-wrap').fadeOut(animationSpeed);
                         $('body').removeClass('wpr-mini-cart-sidebar-body');
+                        resetSidebarScreenFit();
                         setTimeout(function() {
                             // $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-out');
                             $scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-out');
@@ -11384,6 +11403,7 @@
                                 $scope.find('.wpr-mini-cart').fadeIn(animationSpeed);
                             }
                             if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
+                                fitSidebarToVisibleScreen();
                                 $scope.find('.wpr-shopping-cart-wrap').fadeIn(animationSpeed);
                                 // $scope.find('.widget_shopping_cart_content').addClass('wpr-mini-cart-slide-in');
                                 $scope.find('.wpr-shopping-cart-inner-wrap').addClass('wpr-mini-cart-slide-in');
@@ -11405,6 +11425,10 @@
                                 $scope.find('.wpr-mini-cart').slideUp(animationSpeed);
                             } else {
                                 $scope.find('.wpr-mini-cart').fadeOut(animationSpeed);
+                            }
+                            if ( $scope.hasClass('wpr-mini-cart-sidebar') ) {
+                                $('body').removeClass('wpr-mini-cart-sidebar-body');
+                                resetSidebarScreenFit();
                             }
                         }
                     });
@@ -11438,6 +11462,7 @@
                     $scope.find('.wpr-mini-cart-slide-out').css('animation-speed', animationSpeed);
                     $scope.find('.wpr-shopping-cart-wrap').fadeOut(animationSpeed);
                     $('body').removeClass('wpr-mini-cart-sidebar-body');
+                    resetSidebarScreenFit();
                     setTimeout(function() {
                         // $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-out');
                         $scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-out');
@@ -14244,27 +14269,27 @@
 			for ( var i=0; i < prefixClass.length - 1; i++ ) {
 
 				if ( -1 !== prefixClass[i].search(/mobile\d/) ) {
-					columnsMobile = prefixClass[i].slice(-1);
+					columnsMobile = (prefixClass[i].match(/(\d+)$/) || [])[1];
 				}
 
 				if ( -1 !== prefixClass[i].search(/mobile_extra\d/) ) {
-					columnsMobileExtra = prefixClass[i].slice(-1);
+					columnsMobileExtra = (prefixClass[i].match(/(\d+)$/) || [])[1];
 				}
 
 				if ( -1 !== prefixClass[i].search(/tablet\d/) ) {
-					columnsTablet = prefixClass[i].slice(-1);
+					columnsTablet = (prefixClass[i].match(/(\d+)$/) || [])[1];
 				}
 
 				if ( -1 !== prefixClass[i].search(/tablet_extra\d/) ) {
-					columnsTabletExtra = prefixClass[i].slice(-1);
+					columnsTabletExtra = (prefixClass[i].match(/(\d+)$/) || [])[1];
 				}
 
 				if ( -1 !== prefixClass[i].search(/widescreen\d/) ) {
-					columnsWideScreen = prefixClass[i].slice(-1);
+					columnsWideScreen = (prefixClass[i].match(/(\d+)$/) || [])[1];
 				}
 
 				if ( -1 !== prefixClass[i].search(/laptop\d/) ) {
-					columnsLaptop = prefixClass[i].slice(-1);
+					columnsLaptop = (prefixClass[i].match(/(\d+)$/) || [])[1];
 				}
 			}
 
@@ -14319,8 +14344,8 @@
 			}
 
 			// Limit Columns for Higher Screens
-			if ( columns > 8 ) {
-				columns = 8;
+			if ( columns > 10 ) {
+				columns = 10;
 			}
 
 			if ( 'string' == typeof(columns) && -1 !== columns.indexOf('pro') ) {
@@ -14821,6 +14846,9 @@
 			$scope.find('.wpr-mini-cart-slide-out').css('animation-speed', animationSpeed);
 			$scope.find('.wpr-shopping-cart-wrap').fadeOut(animationSpeed);
 			$('body').removeClass('wpr-mini-cart-sidebar-body');
+			$scope.find('.wpr-mini-cart, .wpr-shopping-cart-wrap').css({
+				height: ''
+			});
 			setTimeout(function() {
 				// $scope.find('.widget_shopping_cart_content').removeClass('wpr-mini-cart-slide-out');
 				$scope.find('.wpr-shopping-cart-inner-wrap').removeClass('wpr-mini-cart-slide-out');
