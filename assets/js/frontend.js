@@ -5184,11 +5184,61 @@
 		}, // End widgetAdvancedSlider
 
 		widgetTestimonialCarousel: function( $scope ) {
-			var testimonialCarousel = $scope.find( '.wpr-testimonial-carousel' );
-			var settings = JSON.parse( testimonialCarousel.attr( 'data-slick' ) );
-			
+			// Only the carousel this widget rendered. A nested copy written into
+			// Text Editor HTML (or any other descendant) must not be initialised.
+			var testimonialCarousel = $scope.children( '.elementor-widget-container' ).children( '.wpr-testimonial-carousel-wrap' ).children( '.wpr-testimonial-carousel' );
+
+			if ( ! testimonialCarousel.length ) {
+				testimonialCarousel = $scope.children( '.wpr-testimonial-carousel-wrap' ).children( '.wpr-testimonial-carousel' );
+			}
+
+			testimonialCarousel = testimonialCarousel.first();
+
+			if ( ! testimonialCarousel.length ) {
+				return;
+			}
+
+			var rawSettings = testimonialCarousel.attr( 'data-slick' ),
+				settings = {},
+				carouselWrap = testimonialCarousel.parent( '.wpr-testimonial-carousel-wrap' );
+
+			// Slick merges data-slick after the options passed to .slick() and
+			// inserts prevArrow/nextArrow/appendArrows/appendDots with jQuery
+			// when the value looks like HTML. Drop the attribute first.
+			testimonialCarousel.removeAttr( 'data-slick' );
+			testimonialCarousel.removeData( 'slick' );
+
+			if ( rawSettings ) {
+				try {
+					settings = JSON.parse( rawSettings );
+				} catch ( e ) {
+					settings = {};
+				}
+			}
+
+			if ( ! settings || typeof settings !== 'object' ) {
+				settings = {};
+			}
+
+			var widgetId = String( $scope.attr( 'data-id' ) || '' ).replace( /[^A-Za-z0-9_-]/g, '' ),
+				sliderSlidesToScroll = parseInt( settings.sliderSlidesToScroll, 10 ),
+				sliderSpeed = parseInt( settings.speed, 10 ),
+				sliderAutoplaySpeed = parseInt( settings.autoplaySpeed, 10 );
+
+			if ( isNaN( sliderSlidesToScroll ) || sliderSlidesToScroll < 1 ) {
+				sliderSlidesToScroll = 1;
+			}
+
+			if ( isNaN( sliderSpeed ) || sliderSpeed < 0 ) {
+				sliderSpeed = 300;
+			}
+
+			if ( isNaN( sliderAutoplaySpeed ) || sliderAutoplaySpeed < 0 ) {
+				sliderAutoplaySpeed = 3000;
+			}
+
 			// Slider Columns
-			var sliderClass = $scope.attr('class'),
+			var sliderClass = $scope.attr('class') || '',
 				sliderColumnsDesktop = sliderClass.match(/wpr-testimonial-slider-columns-\d/) ? +sliderClass.match(/wpr-testimonial-slider-columns-\d/).join().slice(-1) : 2,
 				sliderColumnsWideScreen = sliderClass.match(/columns--widescreen\d/) ? +sliderClass.match(/columns--widescreen\d/).join().slice(-1) : sliderColumnsDesktop,
 				sliderColumnsLaptop = sliderClass.match(/columns--laptop\d/) ? +sliderClass.match(/columns--laptop\d/).join().slice(-1) : sliderColumnsDesktop,
@@ -5196,12 +5246,21 @@
 				sliderColumnsTabletExtra = sliderClass.match(/columns--tablet_extra\d/) ? +sliderClass.match(/columns--tablet_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobileExtra = sliderClass.match(/columns--mobile_extra\d/) ? +sliderClass.match(/columns--mobile_extra\d/).join().slice(-1) : sliderColumnsTablet,
 				sliderColumnsMobile = sliderClass.match(/columns--mobile\d/) ? +sliderClass.match(/columns--mobile\d/).join().slice(-1) : 1,
-				sliderSlidesToScroll = settings.sliderSlidesToScroll,
 				dataSlideEffect = testimonialCarousel.attr('data-slide-effect');
 
 			testimonialCarousel.slick({
-				appendArrows: $scope.find('.wpr-testimonial-controls'),
-				appendDots: $scope.find('.wpr-testimonial-dots'),
+				rtl: settings.rtl === true,
+				infinite: settings.infinite === true,
+				speed: sliderSpeed,
+				arrows: settings.arrows !== false,
+				dots: settings.dots !== false,
+				autoplay: settings.autoplay === true,
+				autoplaySpeed: sliderAutoplaySpeed,
+				pauseOnHover: settings.pauseOnHover === true || settings.pauseOnHover === 'yes',
+				prevArrow: '#wpr-testimonial-prev-' + widgetId,
+				nextArrow: '#wpr-testimonial-next-' + widgetId,
+				appendArrows: carouselWrap.children('.wpr-testimonial-controls'),
+				appendDots: carouselWrap.children('.wpr-testimonial-controls').children('.wpr-testimonial-dots'),
 				customPaging: function (slider, i) {
 					var slideNumber = (i + 1),
 						totalSlides = slider.slideCount;
@@ -14073,7 +14132,7 @@
 						textNode.nodeValue = text;
 					}
 				} else {
-					$btn.html( text );
+					$btn.text( text );
 				}
 			}
 
