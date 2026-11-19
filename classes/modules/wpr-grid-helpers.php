@@ -1063,28 +1063,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';
 		$class .= $dropcap_class;
 
-		if ( '' === get_the_excerpt() ) {
+		$excerpt = \WprAddons\Plugin::instance()->get_widget_excerpt();
+
+		if ( '' === $excerpt ) {
 			return;
 		}
-
-		$excerpt = get_the_excerpt();
-
-		// Convert HTML entities to their respective characters
-		$decoded_excerpt = html_entity_decode($excerpt, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-
-		// Trim the string to the desired length
-		$trimmed_excerpt = mb_substr($decoded_excerpt, 0, $settings['element_letter_count'], 'UTF-8');
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
 				if ( 'word_count' === $settings['element_trim_text_by'] ) {
 					$show_dots = $settings['element_show_dots'] === 'yes' ? '...' : '';
-					$the_excerpt = str_replace('Edit Template', '', get_the_excerpt());
-					echo '<p>'. esc_html(wp_trim_words( $the_excerpt, $settings['element_word_count'], $show_dots )) .'</p>';
+					$the_excerpt = str_replace('Edit Template', '', $excerpt);
+					echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( \WprAddons\Plugin::trim_excerpt_html( $the_excerpt, $settings['element_word_count'], $show_dots, 'words' ) ) );
 				} else {
 					// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
-					// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';	
-					echo '<p>' . esc_html($trimmed_excerpt) . '...' . '</p>';
+					// echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
+					echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( \WprAddons\Plugin::trim_excerpt_html( $excerpt, $settings['element_letter_count'], '', 'chars' ), '...' ) );
 				}
 			echo '</div>';
 		echo '</div>';
@@ -1363,7 +1357,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'tooltip' => $settings['element_sharing_tooltip'],
 			'url' => esc_url( get_the_permalink() ),
 			'title' => esc_html( get_the_title() ),
-			'text' => esc_html( get_the_excerpt() ),
+			'text' => esc_html( \WprAddons\Plugin::excerpt_plain_text( \WprAddons\Plugin::instance()->get_widget_excerpt() ) ),
 			'image' => esc_url( get_the_post_thumbnail_url() ),
 		];
 

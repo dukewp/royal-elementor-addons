@@ -739,7 +739,7 @@ class Wpr_Sharing_Buttons extends Widget_Base {
 				'tooltip' => 'no',
 				'url' => esc_url( get_the_permalink() ),
 				'title' => esc_html( get_the_title() ),
-				'text' => esc_html( get_the_excerpt() ),
+				'text' => esc_html( \WprAddons\Plugin::excerpt_plain_text( \WprAddons\Plugin::instance()->get_widget_excerpt() ) ),
 				'image' => esc_url( get_the_post_thumbnail_url() )
 			];
 

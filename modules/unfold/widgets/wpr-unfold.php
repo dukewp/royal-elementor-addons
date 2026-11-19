@@ -729,12 +729,30 @@ class Wpr_Unfold extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Button labels are printed into JSON and later read back from an attribute.
+	 * esc_attr() keeps existing entities, so decode and strip tags before encode.
+	 *
+	 * @param string $text Raw control value.
+	 * @return string
+	 */
+	private function get_unfold_button_text( $text ) {
+		if ( ! is_string( $text ) || '' === $text ) {
+			return '';
+		}
+
+		return wp_strip_all_tags( html_entity_decode( $text, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+	}
+
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
+		$expand_text   = $this->get_unfold_button_text( $settings['unfold_expand_btn_text'] ?? '' );
+		$collapse_text = $this->get_unfold_button_text( $settings['unfold_collapse_btn_text'] ?? '' );
+
 		$config = [
-			'expand_text' => ! empty( $settings['unfold_expand_btn_text'] ) ? esc_attr( $settings['unfold_expand_btn_text'] ) : '',
-			'collapse_text' => ! empty( $settings['unfold_collapse_btn_text'] ) ? esc_attr( $settings['unfold_collapse_btn_text'] ) : '',
+			'expand_text' => $expand_text,
+			'collapse_text' => $collapse_text,
 			'collapse_height' => ! empty( $settings['unfold_collapsed_height']['size'] ) ? intval( $settings['unfold_collapsed_height']['size'] ) : 79,
 			'transition_duration' => ! empty( $settings['unfold_transition_duration'] ) ? intval( $settings['unfold_transition_duration'] ) : 300,
 		];
@@ -743,7 +761,7 @@ class Wpr_Unfold extends Widget_Base {
 
 		$this->add_render_attribute( 'wrapper', [
 			'class' => $wrapper_class,
-			'data-config' => wp_json_encode( $config ),
+			'data-config' => wp_json_encode( $config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT ),
 		] );
 
 		?>
@@ -763,7 +781,7 @@ class Wpr_Unfold extends Widget_Base {
 			</div>
 
 			<button class="wpr-unfold-btn">
-				<?php echo ! empty( $settings['unfold_expand_btn_text'] ) ? esc_html( $settings['unfold_expand_btn_text'] ) : ''; ?>
+				<?php echo esc_html( $expand_text ); ?>
 				<?php Icons_Manager::render_icon( $settings['unfold_expand_btn_icon'], [ 'aria-hidden' => 'true', 'class' => 'wpr-unfold-expand-icon' ] ); ?>
 				<?php Icons_Manager::render_icon( $settings['unfold_collapse_btn_icon'], [ 'aria-hidden' => 'true', 'class' => 'wpr-unfold-collapse-icon' ] ); ?>
 			</button>

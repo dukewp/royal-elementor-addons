@@ -1197,19 +1197,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	// Render Post Excerpt
 	public  static function render_product_excerpt( $settings, $class ) {
-		if ( '' === get_the_excerpt() ) {
+		if ( '' === \WprAddons\Plugin::instance()->get_widget_excerpt() ) {
 			return;
 		}
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+			$excerpt = \WprAddons\Plugin::instance()->get_widget_excerpt();
 			if ( 'word_count' === $settings['element_trim_text_by']) {
-			  echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+			  echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( \WprAddons\Plugin::trim_excerpt_html( $excerpt, $settings['element_word_count'], '', 'words' ) ) );
 			} else if ( 'letter_count' === $settings['element_trim_text_by'] ) {
 			  // echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
-			  echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
+			  echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( \WprAddons\Plugin::trim_excerpt_html( $excerpt, $settings['element_letter_count'], '', 'chars' ), '...' ) );
 			} else {
-				echo '<p>'.  get_the_excerpt()  .'</p>';	
+				echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( $excerpt ) );
 			}
 			echo '</div>';
 		echo '</div>';
@@ -1369,7 +1370,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'tooltip' => $settings['element_sharing_tooltip'],
 			'url' => esc_url( get_the_permalink() ),
 			'title' => esc_html( get_the_title() ),
-			'text' => esc_html( get_the_excerpt() ),
+			'text' => esc_html( \WprAddons\Plugin::excerpt_plain_text( \WprAddons\Plugin::instance()->get_widget_excerpt() ) ),
 			'image' => esc_url( get_the_post_thumbnail_url() ),
 		];
 
@@ -2411,7 +2412,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							$class .= ' elementor-repeater-item-'. $data['_id'];
 							$class .= ' wpr-grid-item-display-'. $data['element_display'];
 							$class .= ' wpr-grid-item-align-'. $data['element_align_hr'];
-							$class .= WPR_Grid_Helpers::get_animation_class( $data, 'element' );
+							$class .= WPR_Woo_Grid_Helpers::get_animation_class( $data, 'element' );
 
 							// Element
 							WPR_Woo_Grid_Helpers::get_elements( $data['element_select'], $data, $class, $post_id, $settings );

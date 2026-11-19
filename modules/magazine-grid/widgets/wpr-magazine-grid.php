@@ -5255,17 +5255,18 @@ class Wpr_Magazine_Grid extends Widget_Base {
 		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';
 		$class .= $dropcap_class;
 
-		if ( '' === get_the_excerpt() ) {
+		if ( '' === \WprAddons\Plugin::instance()->get_widget_excerpt() ) {
 			return;
 		}
 
 		echo '<div class="'. esc_attr($class) .'">';
 			echo '<div class="inner-block">';
+				$excerpt = \WprAddons\Plugin::instance()->get_widget_excerpt();
 				if ( 'word_count' === $settings['element_trim_text_by']) {
-					echo '<p>'. esc_html(wp_trim_words( get_the_excerpt(), $settings['element_word_count'] )) .'</p>';
+					echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( \WprAddons\Plugin::trim_excerpt_html( $excerpt, $settings['element_word_count'], '', 'words' ) ) );
 				} else if ( 'letter_count' === $settings['element_trim_text_by'] ) {
 					// echo '<p>'. substr(html_entity_decode(get_the_title()), 0, $settings['element_letter_count']) .'...' . '</p>';
-					echo '<p>'. esc_html(implode('', array_slice( str_split(get_the_excerpt()), 0, $settings['element_letter_count'] ))) .'...' .'</p>';
+					echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( \WprAddons\Plugin::trim_excerpt_html( $excerpt, $settings['element_letter_count'], '', 'chars' ), '...' ) );
 				}
 			echo '</div>';
 		echo '</div>';

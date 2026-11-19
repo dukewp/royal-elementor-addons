@@ -22,6 +22,20 @@ class WPR_DC_Conditions_Manager {
 	 */
 	private $ua_parsed = null;
 
+	/**
+	 * Guard against excerpt filters that re-enter while plain text is built.
+	 *
+	 * @var bool
+	 */
+	private static $filtering_excerpt = false;
+
+	/**
+	 * Request cache of visitor-safe excerpts, keyed by post, user, and length.
+	 *
+	 * @var array<string, string>
+	 */
+	private $excerpt_cache = [];
+
 	public function __construct() {
 		$this->load_sections();
 		$this->setup_hooks();
@@ -115,6 +129,10 @@ class WPR_DC_Conditions_Manager {
 		// Page Types is a SELECT2. Elementor does not validate its values on save,
 		// so drop anything that is not one of the control options before it is stored.
 		add_filter( 'elementor/document/save/data', [ 'WPR_DC_Section_Archive', 'sanitize_saved_document' ] );
+
+		// Excerpts (REST excerpt, RSS, embeds) read Elementor's plain-text post_content
+		// and never hit before_render/after_render. Rebuild those from elements this visitor may see.
+		add_filter( 'get_the_excerpt', [ $this, 'filter_restricted_excerpt' ], 99, 2 );
 	}
 
 	/**
@@ -176,16 +194,106 @@ class WPR_DC_Conditions_Manager {
 
 		$settings = $element->get_settings_for_display();
 
-		// Check master toggle
-		if ( empty( $settings['wpr_dc_enabled'] ) || 'yes' !== $settings['wpr_dc_enabled'] ) {
+		if ( $this->visitor_should_see( $settings ) ) {
 			return;
 		}
 
-		$mode     = ! empty( $settings['wpr_dc_mode'] ) ? $settings['wpr_dc_mode'] : 'show';
-		$logic    = ! empty( $settings['wpr_dc_logic'] ) ? $settings['wpr_dc_logic'] : 'any';
 		$css_only = ! empty( $settings['wpr_dc_css_only'] ) && 'yes' === $settings['wpr_dc_css_only'];
+		WPR_DC_Render_Handler::instance()->start_hiding( $element, $settings, $css_only );
+	}
 
-		// Collect results from evaluable sections (skip general, fallback, interaction)
+	/**
+	 * Drop restricted element text from auto-generated excerpts.
+	 *
+	 * WordPress builds excerpts from post_content. Elementor skips builder
+	 * rendering for that pass, so before_render never runs. REST, RSS, and
+	 * embeds all use this filter.
+	 *
+	 * @param string       $excerpt Generated or manual excerpt.
+	 * @param \WP_Post|null $post   Post object.
+	 * @return string
+	 */
+	public function filter_restricted_excerpt( $excerpt, $post ) {
+		if ( self::$filtering_excerpt ) {
+			return '';
+		}
+
+		if ( ! $post instanceof \WP_Post ) {
+			return $excerpt;
+		}
+
+		// A manual excerpt is author-written text, not the Elementor element dump.
+		if ( '' !== trim( (string) $post->post_excerpt ) ) {
+			return $excerpt;
+		}
+
+		$raw = get_post_meta( $post->ID, '_elementor_data', true );
+		if ( ! is_string( $raw ) || false === strpos( $raw, 'wpr_dc_enabled' ) ) {
+			return $excerpt;
+		}
+
+		$length = (int) apply_filters( 'excerpt_length', 55 );
+		if ( $length < 1 ) {
+			$length = 55;
+		}
+		$more      = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
+		$cache_key = $post->ID . '|' . get_current_user_id() . '|' . $length . '|' . $more;
+
+		if ( isset( $this->excerpt_cache[ $cache_key ] ) ) {
+			return $this->excerpt_cache[ $cache_key ];
+		}
+
+		// Meta mentions visibility, but Elementor is unavailable. Do not return the stored dump.
+		if ( ! class_exists( '\Elementor\Plugin' ) || empty( \Elementor\Plugin::$instance->documents ) ) {
+			$this->excerpt_cache[ $cache_key ] = '';
+			return '';
+		}
+
+		$document = \Elementor\Plugin::$instance->documents->get( $post->ID );
+		$data     = ( $document && $document->is_built_with_elementor() ) ? $document->get_elements_data() : null;
+
+		if ( ! is_array( $data ) ) {
+			$this->excerpt_cache[ $cache_key ] = '';
+			return '';
+		}
+
+		if ( ! $this->data_has_enabled_conditions( $data ) ) {
+			return $excerpt;
+		}
+
+		self::$filtering_excerpt = true;
+
+		try {
+			$plain = $this->plain_text_from_elements( $this->strip_hidden_elements( $data ) );
+		} catch ( \Throwable $e ) {
+			$plain = '';
+		} finally {
+			self::$filtering_excerpt = false;
+		}
+
+		// Keep links and other formatting. wp_trim_words() would turn those tags into plain text.
+		$safe = \WprAddons\Plugin::trim_excerpt_html( $plain, $length, $more, 'words' );
+		$this->excerpt_cache[ $cache_key ] = $safe;
+
+		return $safe;
+	}
+
+	/**
+	 * Whether the current visitor is allowed to see an element.
+	 * Visibility logic that is off, or enabled with no conditions, stays visible.
+	 *
+	 * @param array $settings Element settings.
+	 * @return bool
+	 */
+	private function visitor_should_see( $settings ) {
+		if ( empty( $settings['wpr_dc_enabled'] ) || 'yes' !== $settings['wpr_dc_enabled'] ) {
+			return true;
+		}
+
+		$mode  = ! empty( $settings['wpr_dc_mode'] ) ? $settings['wpr_dc_mode'] : 'show';
+		$logic = ! empty( $settings['wpr_dc_logic'] ) ? $settings['wpr_dc_logic'] : 'any';
+
+		// General, fallback, and interaction do not decide visibility.
 		$skip_ids = [ 'wpr_dc_general', 'wpr_dc_fallback', 'wpr_dc_interaction' ];
 		$results  = [];
 
@@ -201,24 +309,98 @@ class WPR_DC_Conditions_Manager {
 			}
 		}
 
-		// No conditions configured — always show
 		if ( empty( $results ) ) {
-			return;
+			return true;
 		}
 
-		// Apply logic
 		if ( 'all' === $logic ) {
 			$conditions_met = ! in_array( false, $results, true );
 		} else {
 			$conditions_met = in_array( true, $results, true );
 		}
 
-		// Determine if element should be shown
-		$should_show = ( 'show' === $mode ) ? $conditions_met : ! $conditions_met;
+		return ( 'show' === $mode ) ? $conditions_met : ! $conditions_met;
+	}
 
-		if ( ! $should_show ) {
-			WPR_DC_Render_Handler::instance()->start_hiding( $element, $settings, $css_only );
+	/**
+	 * @param array $elements Elementor elements.
+	 * @return bool
+	 */
+	private function data_has_enabled_conditions( $elements ) {
+		foreach ( $elements as $element ) {
+			if ( ! is_array( $element ) ) {
+				continue;
+			}
+
+			$settings = ( isset( $element['settings'] ) && is_array( $element['settings'] ) ) ? $element['settings'] : [];
+
+			if ( ! empty( $settings['wpr_dc_enabled'] ) && 'yes' === $settings['wpr_dc_enabled'] ) {
+				return true;
+			}
+
+			if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) && $this->data_has_enabled_conditions( $element['elements'] ) ) {
+				return true;
+			}
 		}
+
+		return false;
+	}
+
+	/**
+	 * Remove elements (and their children) the current visitor must not see.
+	 * CSS-only hiding still drops the text here, because excerpts have no CSS.
+	 *
+	 * @param array $elements Elementor elements.
+	 * @return array
+	 */
+	private function strip_hidden_elements( $elements ) {
+		$kept = [];
+
+		foreach ( $elements as $element ) {
+			if ( ! is_array( $element ) ) {
+				continue;
+			}
+
+			$settings = ( isset( $element['settings'] ) && is_array( $element['settings'] ) ) ? $element['settings'] : [];
+
+			try {
+				$visible = $this->visitor_should_see( $settings );
+			} catch ( \Throwable $e ) {
+				$visible = empty( $settings['wpr_dc_enabled'] ) || 'yes' !== $settings['wpr_dc_enabled'];
+			}
+
+			if ( ! $visible ) {
+				continue;
+			}
+
+			if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
+				$element['elements'] = $this->strip_hidden_elements( $element['elements'] );
+			}
+
+			$kept[] = $element;
+		}
+
+		return $kept;
+	}
+
+	/**
+	 * Plain text for a filtered element tree, matching Elementor's stored post_content pass.
+	 *
+	 * @param array $elements Elementor elements.
+	 * @return string
+	 */
+	private function plain_text_from_elements( $elements ) {
+		$dynamic_tags = \Elementor\Plugin::$instance->dynamic_tags;
+		$parsing_mode = $dynamic_tags->get_parsing_mode();
+		$dynamic_tags->set_parsing_mode( \Elementor\Core\DynamicTags\Manager::MODE_REMOVE );
+
+		try {
+			$plain = \Elementor\Plugin::$instance->db->get_plain_text_from_data( $elements );
+		} finally {
+			$dynamic_tags->set_parsing_mode( $parsing_mode );
+		}
+
+		return is_string( $plain ) ? $plain : '';
 	}
 
 	/**

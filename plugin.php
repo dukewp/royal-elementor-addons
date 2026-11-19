@@ -1247,8 +1247,336 @@ class Plugin {
 		}
 
 		add_filter( 'pre_get_posts', [$this, 'wpr_custom_posts_per_page'] );
-		add_filter('excerpt_more', [$this, 'wpr_custom_excerpt_more']);
-		add_filter('excerpt_length', [$this, 'wpr_custom_excerpt_length']);
+	}
+
+	/**
+	 * Excerpt used by Royal Addons widgets that trim again to their own word or letter count.
+	 * The longer length is attached only for this call.
+	 *
+	 * @param int|\WP_Post|null $post Optional post.
+	 * @return string
+	 */
+	public function get_widget_excerpt( $post = null ) {
+		add_filter( 'excerpt_more', [ $this, 'wpr_custom_excerpt_more' ] );
+		add_filter( 'excerpt_length', [ $this, 'wpr_custom_excerpt_length' ] );
+
+		try {
+			return get_the_excerpt( $post );
+		} finally {
+			remove_filter( 'excerpt_more', [ $this, 'wpr_custom_excerpt_more' ] );
+			remove_filter( 'excerpt_length', [ $this, 'wpr_custom_excerpt_length' ] );
+		}
+	}
+
+	/**
+	 * Shorten an excerpt without stripping the formatting tags it already contains.
+	 *
+	 * @param string $html  Excerpt HTML.
+	 * @param int    $limit Word or character limit.
+	 * @param string $more  Suffix used only when the text is cut.
+	 * @param string $by    words|chars. Characters are counted in the visible text.
+	 * @return string
+	 */
+	public static function trim_excerpt_html( $html, $limit, $more = '', $by = 'words' ) {
+		$html  = wp_kses_post( (string) $html );
+		$limit = (int) $limit;
+		$by    = 'chars' === $by ? 'chars' : 'words';
+
+		if ( '' === trim( wp_strip_all_tags( $html ) ) ) {
+			return '';
+		}
+
+		if ( $limit < 1 || self::excerpt_visible_length( $html, $by ) <= $limit ) {
+			return $html;
+		}
+
+		$parts = preg_split( '/(<[^>]*>)/', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
+		if ( ! is_array( $parts ) ) {
+			return $html;
+		}
+
+		$void = [
+			'area' => true,
+			'base' => true,
+			'br' => true,
+			'col' => true,
+			'embed' => true,
+			'hr' => true,
+			'img' => true,
+			'input' => true,
+			'link' => true,
+			'meta' => true,
+			'source' => true,
+			'track' => true,
+			'wbr' => true,
+		];
+
+		$out     = '';
+		$open    = [];
+		$pending = [];
+		$count   = 0;
+		$cut     = false;
+
+		foreach ( $parts as $part ) {
+			if ( '' === $part ) {
+				continue;
+			}
+
+			if ( '<' === $part[0] ) {
+				if ( preg_match( '/^<\s*\/\s*([a-zA-Z0-9]+)/', $part, $match ) ) {
+					$tag = strtolower( $match[1] );
+					$pending_index = self::excerpt_pending_tag_index( $pending, $tag );
+
+					if ( false !== $pending_index ) {
+						$pending = array_slice( $pending, 0, $pending_index );
+						continue;
+					}
+
+					$open_index = self::excerpt_open_tag_index( $open, $tag );
+					if ( false === $open_index ) {
+						continue;
+					}
+
+					self::excerpt_flush_pending_tags( $out, $open, $pending );
+					$out  .= '</' . $tag . '>';
+					$open  = array_slice( $open, 0, $open_index );
+					continue;
+				}
+
+				if ( ! preg_match( '/^<\s*([a-zA-Z0-9]+)/', $part, $match ) ) {
+					continue;
+				}
+
+				$tag  = strtolower( $match[1] );
+				$self = isset( $void[ $tag ] ) || ( strlen( rtrim( $part ) ) > 1 && '/>' === substr( rtrim( $part ), -2 ) );
+				$pending[] = [
+					'raw' => $part,
+					'name' => $self ? '' : $tag,
+				];
+				continue;
+			}
+
+			$decoded = html_entity_decode( $part, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+			$taken   = self::excerpt_take_text( $decoded, $limit - $count, $by );
+
+			if ( '' === $taken['text'] && $taken['cut'] ) {
+				$cut = true;
+				break;
+			}
+
+			self::excerpt_flush_pending_tags( $out, $open, $pending );
+			$out   .= ( $taken['text'] === $decoded ) ? $part : esc_html( $taken['text'] );
+			$count += $taken['used'];
+
+			if ( $taken['cut'] ) {
+				$cut = true;
+				break;
+			}
+		}
+
+		if ( ! $cut ) {
+			self::excerpt_flush_pending_tags( $out, $open, $pending );
+		}
+
+		$out = rtrim( $out );
+		if ( $cut && '' !== $more ) {
+			$out .= $more;
+		}
+
+		while ( $open ) {
+			$out .= '</' . array_pop( $open ) . '>';
+		}
+
+		return wp_kses_post( $out );
+	}
+
+	/**
+	 * Wrap loose excerpt text in a paragraph. Block markup is left as it is.
+	 *
+	 * @param string $html   Excerpt HTML.
+	 * @param string $suffix Text appended inside the last element, such as an ellipsis.
+	 * @return string
+	 */
+	public static function excerpt_html_markup( $html, $suffix = '' ) {
+		$html = wp_kses_post( (string) $html );
+
+		if ( '' === trim( wp_strip_all_tags( $html ) ) && '' === $suffix ) {
+			return '';
+		}
+
+		if ( '' !== $suffix ) {
+			if ( preg_match( '/((?:<\/[a-z0-9]+>\s*)+)$/i', $html, $match, PREG_OFFSET_CAPTURE ) ) {
+				$position = $match[0][1];
+				$html     = substr( $html, 0, $position ) . $suffix . substr( $html, $position );
+			} else {
+				$html .= $suffix;
+			}
+			$html = wp_kses_post( $html );
+		}
+
+		if ( preg_match( '/<(p|div|ul|ol|li|h[1-6]|blockquote|table|figure)\b/i', $html ) ) {
+			return $html;
+		}
+
+		return '<p>' . $html . '</p>';
+	}
+
+	/**
+	 * Plain share text. Tags are removed so they are not shown as literal text.
+	 *
+	 * @param string $html Excerpt HTML.
+	 * @return string
+	 */
+	public static function excerpt_plain_text( $html ) {
+		$text = html_entity_decode( (string) $html, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+		$text = wp_strip_all_tags( $text );
+		$text = preg_replace( '/\s+/u', ' ', $text );
+
+		return trim( (string) $text );
+	}
+
+	/**
+	 * @param string $html Excerpt HTML.
+	 * @param string $by   words|chars.
+	 * @return int
+	 */
+	private static function excerpt_visible_length( $html, $by ) {
+		$text = html_entity_decode( wp_strip_all_tags( $html ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+		$text = trim( (string) $text );
+
+		if ( '' === $text ) {
+			return 0;
+		}
+
+		if ( 'chars' === $by ) {
+			return mb_strlen( $text );
+		}
+
+		$words = preg_split( '/\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY );
+
+		return is_array( $words ) ? count( $words ) : 0;
+	}
+
+	/**
+	 * @param string $text  Decoded text node.
+	 * @param int    $limit Remaining words or characters.
+	 * @param string $by    words|chars.
+	 * @return array{text: string, used: int, cut: bool}
+	 */
+	private static function excerpt_take_text( $text, $limit, $by ) {
+		if ( $limit < 1 ) {
+			return [
+				'text' => '',
+				'used' => 0,
+				'cut' => '' !== trim( $text ),
+			];
+		}
+
+		if ( 'chars' === $by ) {
+			$length = mb_strlen( $text );
+			if ( $length <= $limit ) {
+				return [
+					'text' => $text,
+					'used' => $length,
+					'cut' => false,
+				];
+			}
+
+			return [
+				'text' => mb_substr( $text, 0, $limit ),
+				'used' => $limit,
+				'cut' => true,
+			];
+		}
+
+		$bits  = preg_split( '/(\s+)/u', $text, -1, PREG_SPLIT_DELIM_CAPTURE );
+		$used  = 0;
+		$taken = '';
+
+		if ( ! is_array( $bits ) ) {
+			return [
+				'text' => '',
+				'used' => 0,
+				'cut' => false,
+			];
+		}
+
+		foreach ( $bits as $bit ) {
+			if ( '' === $bit ) {
+				continue;
+			}
+
+			if ( preg_match( '/^\s+$/u', $bit ) ) {
+				if ( $used < $limit ) {
+					$taken .= $bit;
+				}
+				continue;
+			}
+
+			if ( $used >= $limit ) {
+				return [
+					'text' => $taken,
+					'used' => $used,
+					'cut' => true,
+				];
+			}
+
+			$taken .= $bit;
+			$used++;
+		}
+
+		return [
+			'text' => $text,
+			'used' => $used,
+			'cut' => false,
+		];
+	}
+
+	/**
+	 * @param string[] $open Open tag names, earliest first.
+	 * @param string   $tag  Tag to find.
+	 * @return int|false
+	 */
+	private static function excerpt_open_tag_index( $open, $tag ) {
+		for ( $index = count( $open ) - 1; $index >= 0; $index-- ) {
+			if ( $open[ $index ] === $tag ) {
+				return $index;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param array[] $pending Pending tags. Each item has raw markup and a name for non-void tags.
+	 * @param string  $tag     Tag to find.
+	 * @return int|false
+	 */
+	private static function excerpt_pending_tag_index( $pending, $tag ) {
+		for ( $index = count( $pending ) - 1; $index >= 0; $index-- ) {
+			if ( isset( $pending[ $index ]['name'] ) && $pending[ $index ]['name'] === $tag ) {
+				return $index;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param string  $out     Built HTML.
+	 * @param string[] $open   Flushed open tags.
+	 * @param array[] $pending Tag markup waiting for visible text.
+	 */
+	private static function excerpt_flush_pending_tags( &$out, &$open, &$pending ) {
+		foreach ( $pending as $tag ) {
+			$out .= $tag['raw'];
+
+			if ( '' !== $tag['name'] ) {
+				$open[] = $tag['name'];
+			}
+		}
+
+		$pending = [];
 	}
 	
 	/*
@@ -1259,7 +1587,8 @@ class Plugin {
 	}
 
 	/*
-	** Custom function to modify excerpt more length
+	** Custom function to modify excerpt more length.
+	** Only attached from get_widget_excerpt(), so the rest of the site keeps WordPress's length.
 	*/
 	function wpr_custom_excerpt_length($length) {
 		return 999;

@@ -842,6 +842,7 @@ function wpr_addons_settings_page() {
                     <option value="hi" <?php selected(get_option('wpr_google_map_language'), 'hi'); ?>><?php esc_html_e('Hindi', 'wpr-addons'); ?></option>
                     <option value="ar" <?php selected(get_option('wpr_google_map_language'), 'ar'); ?>><?php esc_html_e('Arabic', 'wpr-addons'); ?></option>
                 </select>
+                <p class="wpr-settings-group-description"><?php esc_html_e( 'Also used by the Google Reviews widget for review text and dates (Google Places API and SerpApi).', 'wpr-addons' ); ?></p>
             </div>
 
             <div class="wpr-setting">

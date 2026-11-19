@@ -218,7 +218,7 @@ class Wpr_Post_Content extends Widget_Base {
 				if ( 'content' === $settings['post_content_display'] ) {
 					the_content();
 				} else {
-					the_excerpt();
+					echo apply_filters( 'the_excerpt', \WprAddons\Plugin::instance()->get_widget_excerpt() );
 				}
 			}
 		echo '</div>';

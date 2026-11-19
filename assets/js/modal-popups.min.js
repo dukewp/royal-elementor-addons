@@ -15,6 +15,25 @@
 			});
 		},
 
+		// Selector only. jQuery's $() parses a string that starts with "<" as HTML.
+		getCustomTriggerElements: function( selector ) {
+			if ( typeof selector !== 'string' ) {
+				return $();
+			}
+
+			selector = selector.trim();
+
+			if ( ! selector || selector.indexOf( '<' ) !== -1 ) {
+				return $();
+			}
+
+			try {
+				return $( document ).find( selector );
+			} catch ( error ) {
+				return $();
+			}
+		},
+
 		openPopupInit: function() {
 			$( '.wpr-template-popup' ).each( function() {
 				var popup = $(this),
@@ -121,11 +140,13 @@
 
 				// Custom Trigger
 				} else if ( 'custom' === settings.popup_trigger ) {
-					$( settings.popup_custom_trigger ).on( 'click', function() {
+					var $customTrigger = WprPopups.getCustomTriggerElements( settings.popup_custom_trigger );
+
+					$customTrigger.on( 'click', function() {
 						WprPopups.openPopup( popup, settings );
 					});
 
-					$( settings.popup_custom_trigger ).css( 'cursor', 'pointer' );
+					$customTrigger.css( 'cursor', 'pointer' );
 				}
 
 				// Enable Scrollbar

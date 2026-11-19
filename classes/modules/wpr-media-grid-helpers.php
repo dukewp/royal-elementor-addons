@@ -460,13 +460,13 @@ class WPR_Media_Grid_Helpers {
 		$dropcap_class = 'yes' === $settings['element_dropcap'] ? ' wpr-enable-dropcap' : '';
 		$class .= $dropcap_class;
 
-		if ( '' === get_the_excerpt() ) {
+		if ( '' === \WprAddons\Plugin::instance()->get_widget_excerpt() ) {
 			return;
 		}
 
 		echo '<div class="' . esc_attr( $class ) . '">';
 			echo '<div class="inner-block">';
-				echo '<p>' . esc_html( wp_trim_words( get_the_excerpt(), $settings['element_word_count'] ) ) . '</p>';
+				echo wp_kses_post( \WprAddons\Plugin::excerpt_html_markup( \WprAddons\Plugin::trim_excerpt_html( \WprAddons\Plugin::instance()->get_widget_excerpt(), $settings['element_word_count'], '', 'words' ) ) );
 			echo '</div>';
 		echo '</div>';
 	}
@@ -622,7 +622,7 @@ class WPR_Media_Grid_Helpers {
 			'tooltip' => $settings['element_sharing_tooltip'],
 			'url' => esc_url( get_permalink( get_queried_object_id() ) ),
 			'title' => esc_html( get_the_title() ),
-			'text' => esc_html( get_the_excerpt() ),
+			'text' => esc_html( \WprAddons\Plugin::excerpt_plain_text( \WprAddons\Plugin::instance()->get_widget_excerpt() ) ),
 			'image' => esc_url( wp_get_attachment_url( get_the_ID() ) ),
 		];
 
