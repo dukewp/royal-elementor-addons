@@ -1212,6 +1212,34 @@ class Wpr_Mega_Menu extends Widget_Base {
 			]
 		);
 
+		$this->add_responsive_control(
+			'sub_mega_menu_position_left',
+			[
+				'label' => esc_html__( 'Left Position', 'wpr-addons' ),
+				'description' => esc_html__( 'This option is only applicable for horizontal menu and used in special cases when default positioning is not working as expected.', 'wpr-addons' ),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range' => [
+					'px' => [
+						'min' => -1000,
+						'max' => 1000,
+					],
+					'%' => [
+						'min' => -100,
+						'max' => 100,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}} .wpr-nav-menu-horizontal .wpr-sub-mega-menu' => 'left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.wpr-main-menu-align-center .wpr-nav-menu-horizontal .wpr-mega-menu-pos-default.wpr-mega-menu-width-custom .wpr-sub-mega-menu' => 'left: {{SIZE}}{{UNIT}}; transform: translateY({{menu_items_sub_offset.SIZE}}{{menu_items_sub_offset.UNIT}});',
+				],
+				'condition' => [
+					'menu_layout' => 'horizontal',
+				],
+				'separator' => 'before',
+			]
+		);
+
 		$this->end_controls_section(); // End Controls Section
 
 		// Section: WP Sub Menu ---------
