@@ -1,0 +1,12 @@
+---
+description: Minify modal-popups.min.js in place from the plugin folder, with no backup file
+globs: assets/js/modal-popups*.js
+alwaysApply: true
+---
+
+# Royal Elementor Addons – Modal popups JS
+
+Minify `assets/js/modal-popups.min.js` from the plugin folder, the same way as `npm run build:frontend-safe`. Do not write a backup.
+
+- In the plugin directory, run `npm run build:modal-popups-local`.
+- That rewrites `assets/js/modal-popups.min.js` in the folder where you run it. It does not write a backup and it does not touch the other site. Full steps are in `FRONTEND-MINIFYING.md`.

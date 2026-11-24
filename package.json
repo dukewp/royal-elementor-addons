@@ -5,6 +5,7 @@
   "description": "Deterministic frontend.min.js and frontend.min.css build tooling",
   "scripts": {
     "build:frontend-safe": "node scripts/build-frontend-safe.mjs",
+    "build:modal-popups-local": "node scripts/build-modal-popups.mjs",
     "build:frontend-css": "node scripts/build-frontend-css.mjs"
   },
   "devDependencies": {
