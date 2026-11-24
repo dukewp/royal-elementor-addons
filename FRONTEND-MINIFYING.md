@@ -44,18 +44,12 @@ This process:
 - Creates backup at `assets/css/frontend.min.prebuild.backup.css`
 - Stops if the file already looks minified, unless you pass `--force`
 
-## Minify the rea-prod copy
+## Which site
 
-When asked to minify rea-prod frontend JS or CSS, do not search and do not run those commands in this plugin. Those rewrite the rea.local working files.
+rea.local and rea-prod are separate. Minify only the plugin folder you are working in. Do not copy files from one site onto the other unless the user explicitly names that site. Do not use `rea-prod-frontend-minify` unless the user explicitly says rea-prod.
 
-Tooling is already installed at `C:\Users\Goga\Local Sites\rea-prod-frontend-minify`. The frontend JS and CSS commands read and write only rea-prod. The modal popups commands are separate and each one is locked to one site.
+From this plugin folder:
 
-1. Copy the readable rea.local file onto the rea-prod plugin.
-   - Frontend JS: `assets/js/frontend.min.js` to the same path.
-   - CSS: `assets/css/frontend.min.css` to the same path.
-2. From the tooling folder, run `npm run build:frontend-safe` for frontend JS or `npm run build:frontend-css` for CSS.
-3. The frontend JS and CSS scripts write `frontend.min.prebuild.backup.js` or `frontend.min.prebuild.backup.css` next to the rea-prod file, then rewrite that rea-prod file. Each script stops if the file already looks minified. Do not pass `--force` unless asked.
-
-Modal popups is separate. From the plugin folder you are working in, run `npm run build:modal-popups-local`. That rewrites only that folder's `assets/js/modal-popups.min.js`. No backup file is written.
-
-Upload the minified file from rea-prod. Leave the readable copy on rea.local.
+- `npm run build:frontend-safe` rewrites `assets/js/frontend.min.js` and writes `frontend.min.prebuild.backup.js` beside it.
+- `npm run build:frontend-css` rewrites `assets/css/frontend.min.css` and writes `frontend.min.prebuild.backup.css` beside it.
+- `npm run build:modal-popups-local` rewrites `assets/js/modal-popups.min.js`. No backup file is written.
