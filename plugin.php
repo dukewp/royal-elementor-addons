@@ -95,6 +95,7 @@ class Plugin {
 				'wpr_override_woo_templates'=> get_option( 'wpr_override_woo_templates', 'on' ),
 				'wpr-column-slider'         => get_option( 'wpr-column-slider', 'on' ),
 				'wpr-equal-height'          => get_option( 'wpr-equal-height', 'on' ),
+				'wpr-popups'                => get_option( 'wpr-popups', 'on' ),
 			];
 		}
 		return isset( self::$wpr_extension_options[ $key ] ) ? self::$wpr_extension_options[ $key ] : $default;
@@ -198,8 +199,10 @@ class Plugin {
 			// Premade Blocks
 			require WPR_ADDONS_PATH . 'admin/premade-blocks.php';
 
-			// Theme Builder
-			require WPR_ADDONS_PATH . 'admin/popups.php';
+			// Popup Builder
+			if ( 'on' === $this->wpr_get_extension_option( 'wpr-popups' ) ) {
+				require WPR_ADDONS_PATH . 'admin/popups.php';
+			}
 
 			// Secondary Image
 			require WPR_ADDONS_PATH . 'admin/metabox/wpr-secondary-image.php';
@@ -361,6 +364,10 @@ class Plugin {
 		$documents_manager->register_document_type( 'wpr-theme-builder', 'Wpr_Theme_Builder' );
 
 		// Popups
+		if ( 'on' !== $this->wpr_get_extension_option( 'wpr-popups' ) ) {
+			return;
+		}
+
 		require WPR_ADDONS_PATH . 'modules/popup/wpr-popup.php';
 
         if ( defined('WPR_ADDONS_PRO_VERSION') && wpr_fs()->can_use_premium_code() ) {
@@ -634,15 +641,17 @@ class Plugin {
 			true
 		);
 
-		wp_enqueue_script(
-			'wpr-modal-popups-js',
-			WPR_ADDONS_URL . 'assets/js/modal-popups'. $this->script_suffix() .'.js',
-			[
-				'jquery',
-			],
-			Plugin::instance()->get_version(),
-			true
-		);
+		if ( 'on' === $this->wpr_get_extension_option( 'wpr-popups' ) ) {
+			wp_enqueue_script(
+				'wpr-modal-popups-js',
+				WPR_ADDONS_URL . 'assets/js/modal-popups'. $this->script_suffix() .'.js',
+				[
+					'jquery',
+				],
+				Plugin::instance()->get_version(),
+				true
+			);
+		}
 
 		// $custom_token = $this->wpr_generate_custom_token();
 

@@ -35,7 +35,9 @@ class WPR_Templates_Library {
 		new WPR_Templates_Shortcode();
 
 		// Init Popups
-		new WPR_Templates_Modal_Popups();
+		if ( 'on' === get_option( 'wpr-popups', 'on' ) ) {
+			new WPR_Templates_Modal_Popups();
+		}
 
 		// Init Theme Builder
 		new WPR_Render_Templates();
